@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
+		8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
+		8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
+		8EC23B56153712BB007352FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B54153712BB007352FD /* InfoPlist.strings */; };
+		8EC23B58153712BB007352FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B57153712BB007352FD /* main.m */; };
+		8EC23B5C153712BB007352FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B5B153712BB007352FD /* AppDelegate.m */; };
+		8EC23B8015371402007352FD /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7315371382007352FD /* LadioTailViewController.m */; };
+		8EC23B8115371402007352FD /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6915371382007352FD /* HeadlineViewController.m */; };
+		8EC23B8215371402007352FD /* NewlyHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7715371382007352FD /* NewlyHeadlineViewController.m */; };
+		8EC23B8315371402007352FD /* ListenersHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7515371382007352FD /* ListenersHeadlineViewController.m */; };
+		8EC23B8415371402007352FD /* TitleHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */; };
+		8EC23B8515371402007352FD /* DjHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6515371382007352FD /* DjHeadlineViewController.m */; };
+		8EC23B8615371402007352FD /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6315371382007352FD /* ChannelViewController.m */; };
+		8EC23B8715371402007352FD /* FetchHeadline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6715371382007352FD /* FetchHeadline.m */; };
+		8EC23B8815371402007352FD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7915371382007352FD /* Player.m */; };
+		8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
+		8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7D15371382007352FD /* SVProgressHUD.m */; };
+		8EC23B8D1537145A007352FD /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6C15371382007352FD /* Channel.m */; };
+		8EC23B8E1537145A007352FD /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6E15371382007352FD /* Headline.m */; };
+		8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7015371382007352FD /* HeadlineManager.m */; };
+		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8EC23B47153712BB007352FD /* Ladio Tail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ladio Tail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EC23B4B153712BB007352FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8EC23B4D153712BB007352FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8EC23B4F153712BB007352FD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8EC23B53153712BB007352FD /* LadioTailForIPhone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LadioTailForIPhone-Info.plist"; sourceTree = "<group>"; };
+		8EC23B55153712BB007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8EC23B57153712BB007352FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8EC23B59153712BB007352FD /* LadioTailForIPhone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LadioTailForIPhone-Prefix.pch"; sourceTree = "<group>"; };
+		8EC23B5A153712BB007352FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8EC23B5B153712BB007352FD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8EC23B6215371382007352FD /* ChannelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
+		8EC23B6315371382007352FD /* ChannelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
+		8EC23B6415371382007352FD /* DjHeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DjHeadlineViewController.h; sourceTree = "<group>"; };
+		8EC23B6515371382007352FD /* DjHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DjHeadlineViewController.m; sourceTree = "<group>"; };
+		8EC23B6615371382007352FD /* FetchHeadline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FetchHeadline.h; sourceTree = "<group>"; };
+		8EC23B6715371382007352FD /* FetchHeadline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchHeadline.m; sourceTree = "<group>"; };
+		8EC23B6815371382007352FD /* HeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadlineViewController.h; sourceTree = "<group>"; };
+		8EC23B6915371382007352FD /* HeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlineViewController.m; sourceTree = "<group>"; };
+		8EC23B6B15371382007352FD /* Channel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		8EC23B6C15371382007352FD /* Channel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
+		8EC23B6D15371382007352FD /* Headline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headline.h; sourceTree = "<group>"; };
+		8EC23B6E15371382007352FD /* Headline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Headline.m; sourceTree = "<group>"; };
+		8EC23B6F15371382007352FD /* HeadlineManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadlineManager.h; sourceTree = "<group>"; };
+		8EC23B7015371382007352FD /* HeadlineManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlineManager.m; sourceTree = "<group>"; };
+		8EC23B7115371382007352FD /* LadioLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LadioLib.h; sourceTree = "<group>"; };
+		8EC23B7215371382007352FD /* LadioTailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LadioTailViewController.h; sourceTree = "<group>"; };
+		8EC23B7315371382007352FD /* LadioTailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LadioTailViewController.m; sourceTree = "<group>"; };
+		8EC23B7415371382007352FD /* ListenersHeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListenersHeadlineViewController.h; sourceTree = "<group>"; };
+		8EC23B7515371382007352FD /* ListenersHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListenersHeadlineViewController.m; sourceTree = "<group>"; };
+		8EC23B7615371382007352FD /* NewlyHeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewlyHeadlineViewController.h; sourceTree = "<group>"; };
+		8EC23B7715371382007352FD /* NewlyHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewlyHeadlineViewController.m; sourceTree = "<group>"; };
+		8EC23B7815371382007352FD /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		8EC23B7915371382007352FD /* Player.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		8EC23B7B15371382007352FD /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		8EC23B7C15371382007352FD /* SVProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		8EC23B7D15371382007352FD /* SVProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		8EC23B7E15371382007352FD /* TitleHeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleHeadlineViewController.h; sourceTree = "<group>"; };
+		8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TitleHeadlineViewController.m; sourceTree = "<group>"; };
+		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8EC23B44153712BB007352FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
+				8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */,
+				8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */,
+				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8EC23B3C153712BB007352FD = {
+			isa = PBXGroup;
+			children = (
+				8EC23B51153712BB007352FD /* LadioTailForIPhone */,
+				8EC23B4A153712BB007352FD /* Frameworks */,
+				8EC23B48153712BB007352FD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8EC23B48153712BB007352FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B47153712BB007352FD /* Ladio Tail.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8EC23B4A153712BB007352FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B901537147B007352FD /* AVFoundation.framework */,
+				8EC23B4B153712BB007352FD /* UIKit.framework */,
+				8EC23B4D153712BB007352FD /* Foundation.framework */,
+				8EC23B4F153712BB007352FD /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8EC23B51153712BB007352FD /* LadioTailForIPhone */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B8915371432007352FD /* MainStoryboard.storyboard */,
+				8EC23B6A15371382007352FD /* LadioLib */,
+				8EC23B7A15371382007352FD /* SVProgressHUD */,
+				8EC23B5A153712BB007352FD /* AppDelegate.h */,
+				8EC23B5B153712BB007352FD /* AppDelegate.m */,
+				8EC23B7215371382007352FD /* LadioTailViewController.h */,
+				8EC23B7315371382007352FD /* LadioTailViewController.m */,
+				8EC23B6815371382007352FD /* HeadlineViewController.h */,
+				8EC23B6915371382007352FD /* HeadlineViewController.m */,
+				8EC23B7615371382007352FD /* NewlyHeadlineViewController.h */,
+				8EC23B7715371382007352FD /* NewlyHeadlineViewController.m */,
+				8EC23B7415371382007352FD /* ListenersHeadlineViewController.h */,
+				8EC23B7515371382007352FD /* ListenersHeadlineViewController.m */,
+				8EC23B7E15371382007352FD /* TitleHeadlineViewController.h */,
+				8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */,
+				8EC23B6415371382007352FD /* DjHeadlineViewController.h */,
+				8EC23B6515371382007352FD /* DjHeadlineViewController.m */,
+				8EC23B6215371382007352FD /* ChannelViewController.h */,
+				8EC23B6315371382007352FD /* ChannelViewController.m */,
+				8EC23B6615371382007352FD /* FetchHeadline.h */,
+				8EC23B6715371382007352FD /* FetchHeadline.m */,
+				8EC23B7815371382007352FD /* Player.h */,
+				8EC23B7915371382007352FD /* Player.m */,
+				8EC23B52153712BB007352FD /* Supporting Files */,
+			);
+			path = LadioTailForIPhone;
+			sourceTree = "<group>";
+		};
+		8EC23B52153712BB007352FD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B53153712BB007352FD /* LadioTailForIPhone-Info.plist */,
+				8EC23B54153712BB007352FD /* InfoPlist.strings */,
+				8EC23B57153712BB007352FD /* main.m */,
+				8EC23B59153712BB007352FD /* LadioTailForIPhone-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8EC23B6A15371382007352FD /* LadioLib */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B6B15371382007352FD /* Channel.h */,
+				8EC23B6C15371382007352FD /* Channel.m */,
+				8EC23B6D15371382007352FD /* Headline.h */,
+				8EC23B6E15371382007352FD /* Headline.m */,
+				8EC23B6F15371382007352FD /* HeadlineManager.h */,
+				8EC23B7015371382007352FD /* HeadlineManager.m */,
+				8EC23B7115371382007352FD /* LadioLib.h */,
+			);
+			path = LadioLib;
+			sourceTree = "<group>";
+		};
+		8EC23B7A15371382007352FD /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				8EC23B7B15371382007352FD /* SVProgressHUD.bundle */,
+				8EC23B7C15371382007352FD /* SVProgressHUD.h */,
+				8EC23B7D15371382007352FD /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8EC23B46153712BB007352FD /* Ladio Tail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8EC23B5F153712BB007352FD /* Build configuration list for PBXNativeTarget "Ladio Tail" */;
+			buildPhases = (
+				8EC23B43153712BB007352FD /* Sources */,
+				8EC23B44153712BB007352FD /* Frameworks */,
+				8EC23B45153712BB007352FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ladio Tail";
+			productName = LadioTailForIPhone;
+			productReference = 8EC23B47153712BB007352FD /* Ladio Tail.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8EC23B3E153712BB007352FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = Y.Hirano;
+			};
+			buildConfigurationList = 8EC23B41153712BB007352FD /* Build configuration list for PBXProject "LadioTailForIPhone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8EC23B3C153712BB007352FD;
+			productRefGroup = 8EC23B48153712BB007352FD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8EC23B46153712BB007352FD /* Ladio Tail */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8EC23B45153712BB007352FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EC23B56153712BB007352FD /* InfoPlist.strings in Resources */,
+				8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8EC23B43153712BB007352FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EC23B58153712BB007352FD /* main.m in Sources */,
+				8EC23B5C153712BB007352FD /* AppDelegate.m in Sources */,
+				8EC23B8015371402007352FD /* LadioTailViewController.m in Sources */,
+				8EC23B8115371402007352FD /* HeadlineViewController.m in Sources */,
+				8EC23B8215371402007352FD /* NewlyHeadlineViewController.m in Sources */,
+				8EC23B8315371402007352FD /* ListenersHeadlineViewController.m in Sources */,
+				8EC23B8415371402007352FD /* TitleHeadlineViewController.m in Sources */,
+				8EC23B8515371402007352FD /* DjHeadlineViewController.m in Sources */,
+				8EC23B8615371402007352FD /* ChannelViewController.m in Sources */,
+				8EC23B8715371402007352FD /* FetchHeadline.m in Sources */,
+				8EC23B8815371402007352FD /* Player.m in Sources */,
+				8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */,
+				8EC23B8D1537145A007352FD /* Channel.m in Sources */,
+				8EC23B8E1537145A007352FD /* Headline.m in Sources */,
+				8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8EC23B54153712BB007352FD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8EC23B55153712BB007352FD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8EC23B8915371432007352FD /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8EC23B8A15371433007352FD /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8EC23B5D153712BB007352FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8EC23B5E153712BB007352FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8EC23B60153712BB007352FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
+				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8EC23B61153712BB007352FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
+				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8EC23B41153712BB007352FD /* Build configuration list for PBXProject "LadioTailForIPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8EC23B5D153712BB007352FD /* Debug */,
+				8EC23B5E153712BB007352FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8EC23B5F153712BB007352FD /* Build configuration list for PBXNativeTarget "Ladio Tail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8EC23B60153712BB007352FD /* Debug */,
+				8EC23B61153712BB007352FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8EC23B3E153712BB007352FD /* Project object */;
+}

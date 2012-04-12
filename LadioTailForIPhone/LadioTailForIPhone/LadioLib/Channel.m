@@ -1,0 +1,136 @@
+/*
+ * Copyright (c) 2012 Y.Hirano
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#import "Channel.h"
+
+@implementation Channel
+
+@synthesize surl;
+@synthesize tims;
+@synthesize srv ;
+@synthesize prt;
+@synthesize mnt;
+@synthesize type;
+@synthesize nam;
+@synthesize gnl;
+@synthesize desc;
+@synthesize dj;
+@synthesize song;
+@synthesize url;
+@synthesize cln;
+@synthesize clns;
+@synthesize max;
+@synthesize bit;
+@synthesize smpl;
+@synthesize chs;
+
+- (id)init
+{
+    if(self = [super init]){
+        surl = nil;
+        tims = nil;
+        srv = nil;
+        prt = 0;
+        mnt = nil;
+        type = nil;
+        nam = nil;
+        gnl = nil;
+        desc = nil;
+        dj = nil;
+        song = nil;
+        url = nil;
+        cln = CHANNEL_UNKNOWN_LISTENER_NUM;
+        clns = CHANNEL_UNKNOWN_LISTENER_NUM;
+        max = CHANNEL_UNKNOWN_LISTENER_NUM;
+        bit = CHANNEL_UNKNOWN_BITRATE_NUM;
+        smpl = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
+        chs = CHANNEL_UNKNOWN_CHANNEL_NUM;
+    }
+    return self;
+}
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"<%@ :%p ,surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@ url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>",
+            NSStringFromClass([self class]), self, surl, tims, srv, prt, mnt, type, nam, gnl, desc, dj, song, url, cln, clns, max, bit, smpl, chs];
+}
+
+- (void)setSurlFromString:(NSString*)u
+{
+    surl = [NSURL URLWithString:u];
+}
+
+- (void)setTimsFromString:(NSString*)t
+{
+    @autoreleasepool {
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        tims = [format dateFromString:t];
+    }
+}
+
+- (NSString*)getTimsToString
+{
+    @autoreleasepool {
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        return [format stringFromDate:tims];
+    }
+}
+
+- (void)setUrlFromString:(NSString*)u
+{
+    url = [NSURL URLWithString:u];
+}
+
+- (NSURL*)getPlayUrl
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d%@", srv, prt, mnt]];
+}
+
+- (NSComparisonResult) compareNewly:(Channel*)_channel
+{
+    return [self.tims compare:_channel.tims];
+}
+
+- (NSComparisonResult) compareListeners:(Channel*)_channel
+{
+    if (self.cln > _channel.cln) {
+        return NSOrderedAscending;
+    } else if (self.cln < _channel.cln) {
+        return NSOrderedDescending;
+    } else {
+        return NSOrderedSame;
+    }
+}
+
+- (NSComparisonResult) compareTitle:(Channel*)_channel
+{
+    return [self.nam localizedCaseInsensitiveCompare:_channel.nam];
+}
+
+- (NSComparisonResult) compareDj:(Channel*)_channel
+{
+    return [self.dj localizedCaseInsensitiveCompare:_channel.dj];
+}
+
+@end
