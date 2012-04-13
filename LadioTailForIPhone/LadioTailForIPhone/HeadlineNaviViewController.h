@@ -22,16 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChannelViewController : UIViewController <UITableViewDelegate>
-
-@property (strong) Channel *channel;
-
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
+@interface HeadlineNaviViewController : UINavigationController
 
 @end

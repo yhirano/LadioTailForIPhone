@@ -56,19 +56,26 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineSuceed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineFailed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
 
-    // 番組画面からの戻るボタンのテキストを書き換える
+    // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:backButtonStr
                                        style:UIBarButtonItemStyleBordered
                                        target:nil
                                        action:nil];
+    backButtonItem.tintColor = [UIColor darkGrayColor];
     self.navigationItem.backBarButtonItem = backButtonItem;
 
+    // 更新ボタンの色を変更する
+    updateBarButtonItem.tintColor = [UIColor darkGrayColor];
+    
+    // 再生ボタンの装飾を変更する
+    playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
+    playingBarButtonItem.tintColor = [UIColor colorWithRed:(176 / 255.0) green:0 blue:(15 / 255.0) alpha:0];
     // 再生中ボタンを保持する
     tempPlayingBarButtonItem = playingBarButtonItem;
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
-    
+
     // 再生状態が切り替わるごとに再生ボタンの表示を切り替える
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChanged:) name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
 }
@@ -119,34 +126,48 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ChannelCell";
+    Channel *channel = (Channel *) [channels objectAtIndex:indexPath.row];
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *cellIdentifier;
+    
+    // タイトルのみが存在する場合
+    if ((channel.nam != nil && ![channel.nam isEqual:@""])
+        && !(channel.dj != nil && ![channel.dj isEqual:@""])) {
+        cellIdentifier = @"ChannelTitleOnlyCell";
+    }
+    // DJのみが存在する場合
+    else if (!(channel.nam != nil && ![channel.nam isEqual:@""])
+        && (channel.dj != nil && ![channel.dj isEqual:@""])) {
+        cellIdentifier = @"ChannelDjOnlyCell";
+    } else {
+        cellIdentifier = @"ChannelCell";
+    }
+    
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-
-    Channel *channel = (Channel *) [channels objectAtIndex:indexPath.row];
 
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    UILabel *dateLabel = (UILabel *) [cell viewWithTag:4];
 
-    if (channel != nil) {
+    if (channel.nam != nil && ![channel.nam isEqual:@""]) {
         titleLabel.text = channel.nam;
+    } else {
+        titleLabel.text = @"";
+    }
+    if (channel.dj != nil && ![channel.dj isEqual:@""]) {
         djLabel.text = channel.dj;
-        NSString* listenerNumStr;
-        if (channel.cln == CHANNEL_UNKNOWN_LISTENER_NUM) {
-            listenerNumStr = @"";
-        } else if (channel.cln == 1) {
-            listenerNumStr = NSLocalizedString(@"%d listener", @"リスナー数 単数");
-        } else {
-            listenerNumStr = NSLocalizedString(@"%d listeners", @"リスナー数 複数");
-        }
-        listenersLabel.text = [[NSString alloc] initWithFormat:listenerNumStr, channel.cln];
-        dateLabel.text = [channel getTimsToString];
+    } else {
+        djLabel.text = @"";
+    }
+    if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
+        listenersLabel.text = [[NSString alloc]initWithFormat:@"%d", channel.cln];
+    } else {
+        listenersLabel.text = @"";
     }
 
     return cell;
@@ -226,10 +247,8 @@
     NSString *navigationTitleStr;
     if (channels == nil || [channels count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    } else if ([channels count] == 1) {
-        navigationTitleStr = NSLocalizedString(@"ON AIR - %d channel", @"番組一覧にトップに表示されるONAIR 番組が単数ある場合");
     } else {
-        navigationTitleStr = NSLocalizedString(@"ON AIR - %d channels", @"番組一覧にトップに表示されるONAIR 番組が複数ある場合");
+        navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
     navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [channels count]];
 

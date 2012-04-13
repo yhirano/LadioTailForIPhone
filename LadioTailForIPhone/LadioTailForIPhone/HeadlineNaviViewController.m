@@ -20,18 +20,39 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import "HeadlineNaviViewController.h"
 
-@interface ChannelViewController : UIViewController <UITableViewDelegate>
+@interface HeadlineNaviViewController ()
 
-@property (strong) Channel *channel;
+@end
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
+@implementation HeadlineNaviViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        ;
+    }
+    return self;
+}
 
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // ナビゲーションバーの色を変える
+    self.navigationBar.tintColor = [UIColor colorWithRed:0.04 green:0.04 blue:0.04 alpha:0];
+}
 
-- (IBAction)play:(id)sender;
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
 @end
