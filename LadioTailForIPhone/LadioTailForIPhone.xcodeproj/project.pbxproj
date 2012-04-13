@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
 		8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
 		8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
 		8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
@@ -31,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8EAFBF611537C2EA00DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8EAFBF631537C8E000DDBB6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8EAFBF651537C90700DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8EC23B47153712BB007352FD /* Ladio Tail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ladio Tail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC23B4B153712BB007352FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8EC23B4D153712BB007352FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -150,6 +154,7 @@
 		8EC23B52153712BB007352FD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8EAFBF621537C8E000DDBB6A /* Localizable.strings */,
 				8EC23B53153712BB007352FD /* LadioTailForIPhone-Info.plist */,
 				8EC23B54153712BB007352FD /* InfoPlist.strings */,
 				8EC23B57153712BB007352FD /* main.m */,
@@ -217,6 +222,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = 8EC23B3C153712BB007352FD;
 			productRefGroup = 8EC23B48153712BB007352FD /* Products */;
@@ -235,6 +241,7 @@
 			files = (
 				8EC23B56153712BB007352FD /* InfoPlist.strings in Resources */,
 				8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */,
+				8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,10 +273,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8EAFBF621537C8E000DDBB6A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8EAFBF631537C8E000DDBB6A /* en */,
+				8EAFBF651537C90700DDBB6A /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		8EC23B54153712BB007352FD /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8EC23B55153712BB007352FD /* en */,
+				8EAFBF611537C2EA00DDBB6A /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

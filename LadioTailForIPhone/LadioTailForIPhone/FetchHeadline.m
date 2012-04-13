@@ -48,7 +48,8 @@
 + (void)fetchHeadlineFailed:(NSNotification *)notification
 {
     [self removeFetchHeadlineNotifications];
-    [SVProgressHUD dismissWithError:@"Error"];
+    NSString* errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗"); 
+    [SVProgressHUD dismissWithError:errorStr];
 }
 
 + (void)addFetchHeadlineNotifications

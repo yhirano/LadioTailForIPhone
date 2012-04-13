@@ -110,13 +110,15 @@
     if (channel != nil) {
         titleLabel.text = channel.nam;
         djLabel.text = channel.dj;
+        NSString* listenerNumStr;
         if (channel.cln == CHANNEL_UNKNOWN_LISTENER_NUM) {
-            listenersLabel.text = @"";
+            listenerNumStr = @"";
         } else if (channel.cln == 1) {
-            listenersLabel.text = [[NSString alloc] initWithFormat:@"%d listener", channel.cln];
+            listenerNumStr = NSLocalizedString(@"%d listener", @"リスナー数 単数"); 
         } else {
-            listenersLabel.text = [[NSString alloc] initWithFormat:@"%d listeners", channel.cln];
+            listenerNumStr = NSLocalizedString(@"%d listeners", @"リスナー数 複数"); 
         }
+        listenersLabel.text = [[NSString alloc] initWithFormat:listenerNumStr, channel.cln];
         dateLabel.text = [channel getTimsToString];
     }
 
@@ -144,18 +146,23 @@
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification
 {
+    // ヘッドラインの取得開始時に更新ボタンを無効にする
     updateBarButtonItem.enabled = NO;
 }
 
 - (void)fetchHeadlineSuceed:(NSNotification *)notification
 {
+    // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
+    // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 }
 
 - (void)fetchHeadlineFailed:(NSNotification *)notification
 {
+    // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
+    // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 }
 
