@@ -42,4 +42,8 @@ enum
 
 - (BOOL)isPlayUrl:(NSURL *)url;
 
+- (NSURL*)getPlayUrl;
+
+- (int)getState;
+
 @end

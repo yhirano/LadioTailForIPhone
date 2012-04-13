@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *playingBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *headlineTableView;
 
 - (IBAction)update:(id)sender;

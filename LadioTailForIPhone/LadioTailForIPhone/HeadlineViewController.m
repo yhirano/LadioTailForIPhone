@@ -22,6 +22,7 @@
 
 #import "LadioLib/LadioLib.h"
 #import "FetchHeadline.h"
+#import "Player.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
@@ -38,9 +39,11 @@
 @implementation HeadlineViewController
 {
     NSArray *channels;
+    UIBarButtonItem *tempPlayingBarButtonItem;
 }
 @synthesize navigateionItem;
 @synthesize updateBarButtonItem;
+@synthesize playingBarButtonItem;
 @synthesize headlineTableView;
 
 - (void)viewDidLoad
@@ -60,18 +63,32 @@
                                        target:nil
                                        action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
+
+    // 再生中ボタンを保持する
+    tempPlayingBarButtonItem = playingBarButtonItem;
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    [self updatePlayingButton];
+    
+    // 再生状態が切り替わるごとに再生ボタンの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChanged:) name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
 }
 
 - (void)viewDidUnload
 {
+    channels = nil;
+    tempPlayingBarButtonItem = nil;
+    
     [self setHeadlineTableView:nil];
     [self setUpdateBarButtonItem:nil];
     [self setNavigateionItem:nil];
+    [self setPlayingBarButtonItem:nil];
     [super viewDidUnload];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -144,14 +161,28 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // 番組情報を繊維先のViewに設定
-    if ([[segue identifier] isEqualToString:@"ChannelView"]) {
+    // テーブルから番組を選択した
+    if ([[segue identifier] isEqualToString:@"SelectChannel"]) {
+        // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             Channel *channel = [channels objectAtIndex:[headlineTableView indexPathForSelectedRow].row];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
+    // 再生中ボタンを選択した
+    else if([[segue identifier] isEqualToString:@"PlayingChannel"]) {
+        // 番組情報を繊維先のViewに設定
+        // 番組情報を繊維先のViewに設定
+        UIViewController *viewCon = [segue destinationViewController];
+        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
+            NSURL *playingUrl = [[Player getPlayer] getPlayUrl];
+            Headline *headline = [HeadlineManager getHeadline];
+            Channel *channel = [headline getChannel:playingUrl];
+            ((ChannelViewController *) viewCon).channel = channel;
+        }
+    }
+        
 }
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification
@@ -174,6 +205,11 @@
     updateBarButtonItem.enabled = YES;
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
+}
+
+- (void)playStateChanged:(NSNotification *)notification
+{
+    [self updatePlayingButton];
 }
 
 - (int)getSortType
@@ -199,6 +235,20 @@
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
+}
+
+- (void)updatePlayingButton
+{
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    switch ([[Player getPlayer] getState]) {
+        case PLARER_STATE_PLAY:
+            self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
+            break;
+        case PLARER_STATE_IDLE:
+        default:
+            self.navigationItem.rightBarButtonItem = nil;
+            break;
+    }
 }
 
 - (IBAction)update:(id)sender

@@ -21,6 +21,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "Channel.h"
 
 /// ヘッドラインの取得を開始した際のNotification
 #define NOTIFICATION_NAME_FETCH_HEADLINE_STARTED @"FetchHeadlineStarted"
@@ -69,4 +70,12 @@ enum
  * @see CHANNEL_SORT_TYPE_NONE
  */
 - (NSArray *)getChannels:(int)sortType;
+
+/**
+ * 一致する再生URLを持つ番組を取得する
+ * 
+ * @param playUrl 再生URL
+ * @return Channel。見つからない場合はnil。
+ */
+- (Channel*)getChannel:(NSURL*)playUrl;
 @end

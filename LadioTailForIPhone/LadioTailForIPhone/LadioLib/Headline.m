@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import "Channel.h"
 #import "Headline.h"
 
 /// ねとらじのヘッドラインのURL DAT v2
@@ -432,5 +431,20 @@
         default:
             return channels;
     }
+}
+
+- (Channel*)getChannel:(NSURL*)playUrl
+{
+    if (playUrl == nil) {
+        return nil;
+    }
+    
+    for (Channel* c in channels) {
+        NSURL* url = [c getPlayUrl];
+        if([playUrl isEqual:url]) {
+            return c;
+        }
+    }
+    return nil;
 }
 @end

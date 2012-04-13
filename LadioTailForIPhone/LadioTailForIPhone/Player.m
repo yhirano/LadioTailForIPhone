@@ -90,25 +90,41 @@ static Player *instance = nil;
 - (void)stop
 {
     [player pause];
+    playUrl = nil;
     state = PLARER_STATE_IDLE;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
 }
 
 - (BOOL)isPlayUrl:(NSURL *)url
 {
+    if ([self getPlayUrl] == nil) {
+        return NO;
+    } else {
+        return ([playUrl isEqual:url]);
+    }
+}
+
+- (NSURL*)getPlayUrl
+{
     switch (state) {
         case PLARER_STATE_PLAY:
-            return ([playUrl isEqual:url]);
+            return playUrl;
         case PLARER_STATE_IDLE:
         default:
-            return NO;
+            return nil;
     }
 }
 
 - (void)stopped:(NSNotification *)notification
 {
+    playUrl = nil;
     state = PLARER_STATE_IDLE;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+}
+
+- (int)getState
+{
+    return state;
 }
 
 @end
