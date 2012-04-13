@@ -52,6 +52,8 @@ static Player *instance = nil;
 {
     if (self = [super init]) {
         state = PLARER_STATE_IDLE;
+
+        // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopped:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopped:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:nil];
     }
@@ -70,6 +72,7 @@ static Player *instance = nil;
         case PLARER_STATE_IDLE:
             state = PLARER_STATE_PLAY;
             playUrl = url;
+            NSLog(@"Play started %@", [playUrl absoluteString]);
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
             player = [AVPlayer playerWithURL:url];
             [player play];
@@ -78,6 +81,8 @@ static Player *instance = nil;
             if (![playUrl isEqual:url]) {
                 [player pause];
                 playUrl = url;
+                NSLog(@"Play started %@", [playUrl absoluteString]);
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
                 player = [AVPlayer playerWithURL:url];
                 [player play];
             }
@@ -92,6 +97,7 @@ static Player *instance = nil;
     [player pause];
     playUrl = nil;
     state = PLARER_STATE_IDLE;
+    NSLog(@"Play stopped by user operation.");
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
 }
 
@@ -119,6 +125,7 @@ static Player *instance = nil;
 {
     playUrl = nil;
     state = PLARER_STATE_IDLE;
+    NSLog(@"Play stopped.");
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
 }
 
