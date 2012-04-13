@@ -24,6 +24,7 @@
 
 @interface HeadlineViewController : UIViewController <UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *headlineTableView;
 

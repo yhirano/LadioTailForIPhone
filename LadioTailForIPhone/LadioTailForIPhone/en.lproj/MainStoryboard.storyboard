@@ -11,7 +11,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9P-1u-bWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController definesPresentationContext="YES" id="HaG-Pd-DS6" customClass="LadioTailViewController" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="xiu-RR-A5C">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -102,6 +102,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="headlineTableView" destination="Zcg-0a-Ezu" id="g9P-Eq-zwJ"/>
+                        <outlet property="navigateionItem" destination="cIB-qf-6WW" id="lvm-k0-Cn1"/>
                         <outlet property="updateBarButtonItem" destination="e20-Y9-DZQ" id="Orx-66-VJs"/>
                     </connections>
                 </viewController>
@@ -183,6 +184,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="headlineTableView" destination="dh8-Rj-oIZ" id="pg6-uZ-53E"/>
+                        <outlet property="navigateionItem" destination="OH9-jU-3gF" id="RFu-uM-lG1"/>
                         <outlet property="updateBarButtonItem" destination="fRz-oT-Gh5" id="ZTt-Aw-jG6"/>
                     </connections>
                 </viewController>
@@ -301,6 +303,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="headlineTableView" destination="VCJ-tn-0bU" id="VJI-dj-GYR"/>
+                        <outlet property="navigateionItem" destination="bx5-dU-C5H" id="2yf-lB-89w"/>
                         <outlet property="updateBarButtonItem" destination="sbi-Ef-RSV" id="Bdt-K8-kLC"/>
                     </connections>
                 </viewController>
@@ -382,6 +385,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="headlineTableView" destination="u0t-zx-GFA" id="Y3m-7Z-1Ne"/>
+                        <outlet property="navigateionItem" destination="HrN-aj-aC6" id="IUl-ZC-4Aa"/>
                         <outlet property="updateBarButtonItem" destination="gYE-Wf-YLg" id="CPg-X0-JVA"/>
                     </connections>
                 </viewController>
@@ -465,45 +469,12 @@
             <point key="canvasLocation" x="478" y="1279"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="ChannelViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="play:"/>
-                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="DjHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DjHeadlineViewController.h"/>
-        </class>
-        <class className="HeadlineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="update:"/>
-                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="updateBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="LadioTailViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
-        </class>
-        <class className="ListenersHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ListenersHeadlineViewController.h"/>
-        </class>
-        <class className="NewlyHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewlyHeadlineViewController.h"/>
-        </class>
-        <class className="TitleHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TitleHeadlineViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="70J-J5-gtw"/>
+        <segue reference="7V0-cs-9rE"/>
     </inferredMetricsTieBreakers>
 </document>

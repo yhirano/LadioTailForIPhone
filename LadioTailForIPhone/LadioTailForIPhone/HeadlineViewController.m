@@ -39,6 +39,7 @@
 {
     NSArray *channels;
 }
+@synthesize navigateionItem;
 @synthesize updateBarButtonItem;
 @synthesize headlineTableView;
 
@@ -51,12 +52,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineStarted:) name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineSuceed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineFailed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
+
+    // 番組画面からの戻るボタンのテキストを書き換える
+    NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:backButtonStr
+                                       style:UIBarButtonItemStyleBordered
+                                       target:nil
+                                       action:nil];
+    self.navigationItem.backBarButtonItem = backButtonItem;
 }
 
 - (void)viewDidUnload
 {
     [self setHeadlineTableView:nil];
     [self setUpdateBarButtonItem:nil];
+    [self setNavigateionItem:nil];
     [super viewDidUnload];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
@@ -114,9 +124,9 @@
         if (channel.cln == CHANNEL_UNKNOWN_LISTENER_NUM) {
             listenerNumStr = @"";
         } else if (channel.cln == 1) {
-            listenerNumStr = NSLocalizedString(@"%d listener", @"リスナー数 単数"); 
+            listenerNumStr = NSLocalizedString(@"%d listener", @"リスナー数 単数");
         } else {
-            listenerNumStr = NSLocalizedString(@"%d listeners", @"リスナー数 複数"); 
+            listenerNumStr = NSLocalizedString(@"%d listeners", @"リスナー数 複数");
         }
         listenersLabel.text = [[NSString alloc] initWithFormat:listenerNumStr, channel.cln];
         dateLabel.text = [channel getTimsToString];
@@ -175,6 +185,19 @@
 {
     Headline *headline = [HeadlineManager getHeadline];
     channels = [headline getChannels:self.getSortType];
+
+    // ナビゲーションタイトルを更新
+    NSString *navigationTitleStr;
+    if (channels == nil || [channels count] == 0) {
+        navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    } else if ([channels count] == 1) {
+        navigationTitleStr = NSLocalizedString(@"ON AIR - %d channel", @"番組一覧にトップに表示されるONAIR 番組が単数ある場合");
+    } else {
+        navigationTitleStr = NSLocalizedString(@"ON AIR - %d channels", @"番組一覧にトップに表示されるONAIR 番組が複数ある場合");
+    }
+    navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [channels count]];
+
+    // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
 }
 

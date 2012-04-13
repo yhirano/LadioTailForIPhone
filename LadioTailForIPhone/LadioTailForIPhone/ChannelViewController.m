@@ -43,14 +43,19 @@
 {
     [super viewDidLoad];
 
+    // 再生状況に合わせて再生ボタンの内容を切り替える
     [self playButtonChange:nil];
+
+    // 再生状況の変化を受け取って再生ボタンの内容を切り替える
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playButtonChange:) name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
 
+    // タイトルを表示する
     topNavigationItem.title = channel.nam;
 }
 
 - (void)viewDidUnload
 {
+    // 再生状況変化の通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
 
     [self setTopNavigationItem:nil];
