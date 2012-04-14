@@ -176,118 +176,55 @@
 
 - (NSComparisonResult) compareTitle:(Channel*)_channel
 {
-    // 名前で比較
-    {
-        NSString *sNam = [self.nam
-                          stringByTrimmingCharactersInSet:
-                          [NSCharacterSet whitespaceCharacterSet]];
-        NSString *aNam = [_channel.nam
-                          stringByTrimmingCharactersInSet:
-                          [NSCharacterSet whitespaceCharacterSet]];
-        
-        // 空の場合はソート順位を下げる
-        if (!([sNam length] == 0) && ([aNam length] == 0)) {
-            return NSOrderedAscending;
-        }
-        if (([sNam length] == 0) && !([aNam length] ==0)) {
-            return NSOrderedDescending;
-        }
-        
-        // 名前で比較
-        NSComparisonResult result = [sNam localizedCaseInsensitiveCompare:aNam];
-        
-        // ソート順位が確定した
-        if (result != NSOrderedSame) {
-            return result;
+    NSComparisonResult result = NSOrderedSame;
+    
+    // タイトルで比較
+    result = [Channel compareString:self.nam compared:_channel.nam];
+    if (result == NSOrderedSame) {
+        // タイトルおなじ場合はDJで比較
+        result = [Channel compareString:self.dj compared:_channel.dj];
+        // タイトルとDJがおなじ場合は日付で比較
+        if (result == NSOrderedSame) {
+            result = [self compareNewly:_channel];
         }
     }
-    
-    // ソート順位が確定しない場合はDJで比較
-    {
-        NSString *sDj = [self.dj
-                         stringByTrimmingCharactersInSet:
-                         [NSCharacterSet whitespaceCharacterSet]];
-        NSString *aDj = [_channel.dj
-                         stringByTrimmingCharactersInSet:
-                         [NSCharacterSet whitespaceCharacterSet]];
-        
-        // 空の場合はソート順位を下げる
-        if (!([sDj length] == 0) && ([aDj length] == 0)) {
-            return NSOrderedAscending;
-        }
-        if (([sDj length] == 0) && !([aDj length] == 0)) {
-            return NSOrderedDescending;
-        }
-        
-        // DJで比較
-        NSComparisonResult result = [sDj localizedCaseInsensitiveCompare:aDj];
-        
-        // ソート順位が確定した
-        if (result != NSOrderedSame) {
-            return result;
-        }
-    }
-    
-    // まだ確定しない場合は日付で比較
-    return [self compareNewly:_channel];
+    return result;
 }
 
 - (NSComparisonResult) compareDj:(Channel*)_channel
 {
-    // DJで比較
-    {
-        NSString *sDj = [self.dj
-                         stringByTrimmingCharactersInSet:
-                         [NSCharacterSet whitespaceCharacterSet]];
-        NSString *aDj = [_channel.dj
-                         stringByTrimmingCharactersInSet:
-                         [NSCharacterSet whitespaceCharacterSet]];
-        
-        // 空の場合はソート順位を下げる
-        if (!([sDj length] == 0) && ([aDj length] == 0)) {
-            return NSOrderedAscending;
-        }
-        if (([sDj length] == 0) && !([aDj length] == 0)) {
-            return NSOrderedDescending;
-        }
-        
-        // DJで比較
-        NSComparisonResult result = [sDj localizedCaseInsensitiveCompare:aDj];
-        
-        // ソート順位が確定した
-        if (result != NSOrderedSame) {
-            return result;
-        }
-    }
-
-    // ソート順位が確定しない場合は名前で比較
-    {
-        NSString *sNam = [self.nam
-                          stringByTrimmingCharactersInSet:
-                          [NSCharacterSet whitespaceCharacterSet]];
-        NSString *aNam = [_channel.nam
-                          stringByTrimmingCharactersInSet:
-                          [NSCharacterSet whitespaceCharacterSet]];
-        
-        // 空の場合はソート順位を下げる
-        if (!([sNam length] == 0) && ([aNam length] == 0)) {
-            return NSOrderedAscending;
-        }
-        if (([sNam length] == 0) && !([aNam length] ==0)) {
-            return NSOrderedDescending;
-        }
-        
-        // 名前で比較
-        NSComparisonResult result = [sNam localizedCaseInsensitiveCompare:aNam];
-        
-        // ソート順位が確定した
-        if (result != NSOrderedSame) {
-            return result;
-        }
-    }
+    NSComparisonResult result = NSOrderedSame;
     
-    // まだ確定しない場合は日付で比較
-    return [self compareNewly:_channel];
+    // DJで比較
+    result = [Channel compareString:self.dj compared:_channel.dj];
+    if (result == NSOrderedSame) {
+        // DJがおなじ場合はタイトルで比較
+        result = [Channel compareString:self.nam compared:_channel.nam];
+        // タイトルとDJがおなじ場合は日付で比較
+        if (result == NSOrderedSame) {
+            result = [self compareNewly:_channel];
+        }
+    }
+    return result;
+}
+
++ (NSComparisonResult) compareString:(NSString*)str1 compared:(NSString*)str2
+{
+    if (!([str1 length] == 0) && ([str2 length] == 0)) {
+        return NSOrderedAscending;
+    } else if (([str1 length] == 0) && !([str2 length] == 0)) {
+        return NSOrderedDescending;
+    } else if (([str1 length] == 0) && ([str2 length] == 0)) {
+        return NSOrderedSame;
+    } else {
+        NSString *trimStr1 = [str1
+                              stringByTrimmingCharactersInSet:
+                              [NSCharacterSet whitespaceCharacterSet]];
+        NSString *trimStr2 = [str2
+                              stringByTrimmingCharactersInSet:
+                              [NSCharacterSet whitespaceCharacterSet]];
+        return [trimStr1 localizedCaseInsensitiveCompare:trimStr2];
+    }
 }
 
 @end
