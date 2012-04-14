@@ -41,10 +41,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // メイン画面のDelegateを設定する
-    // Storyboard上で設定できなかったため
-    self.delegate = self;
 }
 
 - (void)viewDidUnload
