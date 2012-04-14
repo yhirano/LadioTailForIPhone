@@ -110,6 +110,8 @@
 
 - (NSURL *)getPlayUrl;
 
+- (BOOL) isMatch:(NSArray*)searchWords;
+
 - (NSComparisonResult)compareNewly:(Channel *)_channel;
 
 - (NSComparisonResult)compareListeners:(Channel *)_channel;

@@ -113,6 +113,42 @@
     return [_channel.tims compare:self.tims];
 }
 
+- (BOOL) isMatch:(NSArray*)searchWords
+{
+    // フィルタリング単語が指定されていない場合は無条件に合致する
+    if ([searchWords count] == 0) {
+        return YES;
+    }
+
+    // 検索単語を辞書に登録する
+    // 辞書は Key:検索単語 Value:マッチしたか
+    NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc]initWithCapacity:[searchWords count]];
+    for (NSString* word in searchWords) {
+        [searchDictionary setObject:[NSNumber numberWithBool:NO] forKey:word];
+    }
+
+    // 検索対象文字列を配列にする
+    NSArray *searchedWords = [[NSArray alloc] initWithObjects:nam, gnl, desc, dj, nil];
+
+    // 検索文字と検索対象文字を比較する
+    for (NSString *searchedWord in searchedWords) {
+        for (NSString* searchWord in [searchDictionary allKeys]) {
+            // 見つかった場合は検索辞書の該当単語にYESを代入
+            if ([searchedWord rangeOfString:searchWord options:(NSCaseInsensitiveSearch|NSLiteralSearch|NSWidthInsensitiveSearch)].location != NSNotFound) {
+                [searchDictionary setObject:[NSNumber numberWithBool:YES] forKey:searchWord];
+            }
+        }
+    }
+
+    // すべての検索単語がマッチした場合にのみYESを返す
+    for (NSNumber *match in [searchDictionary allValues]) {
+        if ([match boolValue] == NO) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (NSComparisonResult) compareListeners:(Channel*)_channel
 {
     if (self.cln > _channel.cln) {

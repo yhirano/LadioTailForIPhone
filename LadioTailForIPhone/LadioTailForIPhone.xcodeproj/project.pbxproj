@@ -33,6 +33,7 @@
 		8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7015371382007352FD /* HeadlineManager.m */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
 		8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B7B15371382007352FD /* SVProgressHUD.bundle */; };
+		8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE96CAA1539391E00251F7D /* SearchWordManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,8 @@
 		8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TitleHeadlineViewController.m; sourceTree = "<group>"; };
 		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8EE96CA91539391E00251F7D /* SearchWordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWordManager.h; sourceTree = "<group>"; };
+		8EE96CAA1539391E00251F7D /* SearchWordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWordManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 				8EC23B6315371382007352FD /* ChannelViewController.m */,
 				8EC23B6615371382007352FD /* FetchHeadline.h */,
 				8EC23B6715371382007352FD /* FetchHeadline.m */,
+				8EE96CA91539391E00251F7D /* SearchWordManager.h */,
+				8EE96CAA1539391E00251F7D /* SearchWordManager.m */,
 				8EC23B7815371382007352FD /* Player.h */,
 				8EC23B7915371382007352FD /* Player.m */,
 				8E16282E15385E55007A2DBE /* Images */,
@@ -291,6 +296,7 @@
 				8EC23B8E1537145A007352FD /* Headline.m in Sources */,
 				8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */,
 				8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */,
+				8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

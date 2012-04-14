@@ -22,6 +22,7 @@
 
 #import "LadioLib/LadioLib.h"
 #import "FetchHeadline.h"
+#import "SearchWordManager.h"
 #import "Player.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
@@ -44,6 +45,7 @@
 @synthesize navigateionItem;
 @synthesize updateBarButtonItem;
 @synthesize playingBarButtonItem;
+@synthesize headlineSearchBar;
 @synthesize headlineTableView;
 
 - (void)viewDidLoad
@@ -52,9 +54,21 @@
 
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えや
     // テーブル更新を行う
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineStarted:) name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineSuceed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchHeadlineFailed:) name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(fetchHeadlineStarted:)
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(fetchHeadlineSuceed:)
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(fetchHeadlineFailed:)
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
+     object:nil];
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
@@ -68,7 +82,7 @@
     // 更新ボタンの色を変更する
     updateBarButtonItem.tintColor = [UIColor darkGrayColor];
     
-    // 再生ボタンの装飾を変更する
+    // 再生中ボタンの装飾を変更する
     playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
     playingBarButtonItem.tintColor = [UIColor colorWithRed:(176 / 255.0) green:0 blue:(15 / 255.0) alpha:0];
     // 再生中ボタンを保持する
@@ -76,8 +90,26 @@
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
 
+    // 検索バーの色を変える
+    headlineSearchBar.tintColor = [UIColor darkGrayColor];
+
+    // 検索バーが空でもサーチキーを押せるようにする
+    // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
+    for (UIView *subview in headlineSearchBar.subviews)
+    {
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            ((UITextField *)subview).enablesReturnKeyAutomatically = NO;
+            break;
+        }
+    }
+
     // 再生状態が切り替わるごとに再生ボタンの表示を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChanged:) name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(playStateChanged:)
+     name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+     object:nil];
 }
 
 - (void)viewDidUnload
@@ -85,16 +117,29 @@
     channels = nil;
     tempPlayingBarButtonItem = nil;
     
-    [self setHeadlineTableView:nil];
     [self setUpdateBarButtonItem:nil];
     [self setNavigateionItem:nil];
     [self setPlayingBarButtonItem:nil];
+    [self setHeadlineSearchBar:nil];
+    [self setHeadlineTableView:nil];
     [super viewDidUnload];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+     object:nil];
 
 }
 
@@ -103,11 +148,32 @@
     // タブの切り替えごとにヘッドラインテーブルを更新する
     // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
     [self updateHeadlineTable];
+
+    // タブの切り替えごとに検索バーを更新する
+    // 別タブで入力した検索バーのテキストをこのタブでも使うため
+    NSString *searchWord = [SearchWordManager getSearchWordManager].searchWord;
+    if (searchWord == nil) {
+        searchWord = @"";
+    }
+    headlineSearchBar.text = searchWord;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    // 検索バーに入力された文字列を保持
+    [SearchWordManager getSearchWordManager].searchWord = searchText;
+
+    [self updateHeadlineTable];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+	[searchBar resignFirstResponder];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -239,7 +305,7 @@
 - (void)updateHeadlineTable
 {
     Headline *headline = [HeadlineManager getHeadline];
-    channels = [headline getChannels:self.getSortType];
+    channels = [headline getChannels:self.getSortType searchWord:[SearchWordManager getSearchWordManager].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";

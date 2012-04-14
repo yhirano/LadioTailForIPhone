@@ -413,24 +413,74 @@
 
 - (NSArray *)getChannels
 {
-    return [self getChannels:CHANNEL_SORT_TYPE_NONE];
+    return [self getChannels:CHANNEL_SORT_TYPE_NONE searchWord:nil];
 }
 
 - (NSArray *)getChannels:(int)sortType
 {
+    return [self getChannels:sortType searchWord:nil];
+}
+
+- (NSArray *)getChannels:(int)sortType searchWord:(NSString*)searchWord
+{
+    NSMutableArray *result = [channels mutableCopy];
+
+    // フィルタリング
+    if (!([searchWord length] == 0)) {
+        NSMutableArray *removeList = [[NSMutableArray alloc] init];
+        for (Channel *channel in result) {
+            if ([channel isMatch:[Headline splitStringByWhiteSpace:searchWord]] == NO) {
+                [removeList addObject:channel];
+            }
+        }
+        if ([removeList count] != 0) {
+            for (Channel *removeCannel in removeList) {
+                [result removeObject:removeCannel];
+            }
+        }
+    }
+    
     switch (sortType) {
         case CHANNEL_SORT_TYPE_NEWLY:
-            return [channels sortedArrayUsingSelector:@selector(compareNewly:)];
+            return [result sortedArrayUsingSelector:@selector(compareNewly:)];
         case CHANNEL_SORT_TYPE_LISTENERS:
-            return [channels sortedArrayUsingSelector:@selector(compareListeners:)];
+            return [result sortedArrayUsingSelector:@selector(compareListeners:)];
         case CHANNEL_SORT_TYPE_TITLE:
-            return [channels sortedArrayUsingSelector:@selector(compareTitle:)];
+            return [result sortedArrayUsingSelector:@selector(compareTitle:)];
         case CHANNEL_SORT_TYPE_DJ:
-            return [channels sortedArrayUsingSelector:@selector(compareDj:)];
+            return [result sortedArrayUsingSelector:@selector(compareDj:)];
         case CHANNEL_SORT_TYPE_NONE:
         default:
-            return channels;
+            return result;
     }
+}
+
+/**
+ * 指定した文字列を、ホワイトスペースで区切って配列にして返す
+ *
+ * @param 文字列
+ * @return ホワイトスペースで区切った結果
+ */
++ (NSArray*) splitStringByWhiteSpace:(NSString*)word
+{
+    // 文字列を空白文字で分割し、検索単語列を生成する
+    NSCharacterSet *separator = [NSCharacterSet characterSetWithCharactersInString:@" \t　"];
+    NSMutableArray *words = [[word componentsSeparatedByCharactersInSet:separator] mutableCopy];
+
+    // 空白文字を除外する
+    NSMutableArray *removeList = [[NSMutableArray alloc] init];
+    for (NSString* word in words) {
+        if ([word length] == 0) {
+            [removeList addObject:word];
+        }
+    }
+    if ([removeList count] != 0) {
+        for (NSString *removeWord in removeList) {
+            [words removeObject:removeWord];
+        }
+    }
+
+    return words;
 }
 
 - (Channel*)getChannel:(NSURL*)playUrl

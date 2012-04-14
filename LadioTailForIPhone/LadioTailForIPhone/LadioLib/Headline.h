@@ -52,17 +52,17 @@ enum
 - (void)fetchHeadline;
 
 /**
- * 番組を取得する
+ * 番組リストを取得する
  *
- * @return 番組
+ * @return 番組リスト
  */
 - (NSArray *)getChannels;
 
 /**
- * 指定したソート順で番組を取得する
+ * 指定したソート順で番組リストを取得する
  *
  * @param sortType ソート種類
- * @return 番組
+ * @return 番組リスト
  * @see CHANNEL_SORT_TYPE_NEWLY
  * @see CHANNEL_SORT_TYPE_LISTENERS
  * @see CHANNEL_SORT_TYPE_TITLE
@@ -70,6 +70,22 @@ enum
  * @see CHANNEL_SORT_TYPE_NONE
  */
 - (NSArray *)getChannels:(int)sortType;
+
+/**
+ * 番組リストを取得する
+ * 
+ * @param sortType ソート種類
+ * @param searchWord フィルタリング単語。ここで指定した文字列をスペースに分かち書きしたそれぞれの文字列に対して、
+ *            すべてに合致する番組のみtrueを返す（AND検索）。
+ *            フィルタリング単語を指定しない場合は空も時価かnilを指定すること。
+ * @return 番組リスト
+ * @see CHANNEL_SORT_TYPE_NEWLY
+ * @see CHANNEL_SORT_TYPE_LISTENERS
+ * @see CHANNEL_SORT_TYPE_TITLE
+ * @see CHANNEL_SORT_TYPE_DJ
+ * @see CHANNEL_SORT_TYPE_NONE
+ */
+- (NSArray *)getChannels:(int)sortType searchWord:(NSString*)searchWord;
 
 /**
  * 一致する再生URLを持つ番組を取得する
