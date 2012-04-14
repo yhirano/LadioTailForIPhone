@@ -132,13 +132,13 @@
                                     "</div>";
     static NSString *htmlLink = @"<a href=\"%@\">%@</a>";
 
-    NSString *html;
+    NSString *html = @"";
     
     // タイトル
     if (!([channel.nam length] == 0)) {
         NSString* t = NSLocalizedString(@"Title", @"番組タイトル");
         NSString* v = channel.nam;
-        html = [[NSString alloc] initWithFormat:htmlContent, @"", t, v];
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // DJ
     if (!([channel.dj length] == 0)) {
