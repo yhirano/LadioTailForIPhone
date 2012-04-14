@@ -91,6 +91,7 @@ static Player *instance = nil;
         
         switch (state) {
             case PlayerStatePlay:
+                // 再生中中は停止
                 [player pause];
                 // スルー
             case PlayerStateIdle:
@@ -113,7 +114,6 @@ static Player *instance = nil;
 {
     @synchronized(self) {
         [player pause];
-        playUrl = nil;
         state = PlayerStateIdle;
         NSLog(@"Play stopped by user operation.");
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
