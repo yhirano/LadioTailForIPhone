@@ -242,7 +242,7 @@
     channels = [headline getChannels:self.getSortType];
 
     // ナビゲーションタイトルを更新
-    NSString *navigationTitleStr;
+    NSString *navigationTitleStr = @"";
     if (channels == nil || [channels count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     } else {
