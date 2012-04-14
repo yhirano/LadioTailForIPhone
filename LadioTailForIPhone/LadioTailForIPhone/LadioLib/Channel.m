@@ -136,12 +136,10 @@
                           [NSCharacterSet whitespaceCharacterSet]];
         
         // 空の場合はソート順位を下げる
-        if ((sNam != nil && ![sNam isEqual:@""])
-            && !(aNam != nil && ![aNam isEqual:@""])) {
+        if (!([sNam length] == 0) && ([aNam length] == 0)) {
             return NSOrderedAscending;
         }
-        if (!(sNam != nil && ![sNam isEqual:@""])
-            && (aNam != nil && ![aNam isEqual:@""])) {
+        if (([sNam length] == 0) && !([aNam length] ==0)) {
             return NSOrderedDescending;
         }
         
@@ -164,12 +162,10 @@
                          [NSCharacterSet whitespaceCharacterSet]];
         
         // 空の場合はソート順位を下げる
-        if ((sDj != nil && ![sDj isEqual:@""])
-            && !(aDj != nil && ![aDj isEqual:@""])) {
+        if (!([sDj length] == 0) && ([aDj length] == 0)) {
             return NSOrderedAscending;
         }
-        if (!(sDj != nil && ![sDj isEqual:@""])
-            && (aDj != nil && ![aDj isEqual:@""])) {
+        if (([sDj length] == 0) && !([aDj length] == 0)) {
             return NSOrderedDescending;
         }
         
@@ -198,12 +194,10 @@
                          [NSCharacterSet whitespaceCharacterSet]];
         
         // 空の場合はソート順位を下げる
-        if ((sDj != nil && ![sDj isEqual:@""])
-            && !(aDj != nil && ![aDj isEqual:@""])) {
+        if (!([sDj length] == 0) && ([aDj length] == 0)) {
             return NSOrderedAscending;
         }
-        if (!(sDj != nil && ![sDj isEqual:@""])
-            && (aDj != nil && ![aDj isEqual:@""])) {
+        if (([sDj length] == 0) && !([aDj length] == 0)) {
             return NSOrderedDescending;
         }
         
@@ -226,12 +220,10 @@
                           [NSCharacterSet whitespaceCharacterSet]];
         
         // 空の場合はソート順位を下げる
-        if ((sNam != nil && ![sNam isEqual:@""])
-            && !(aNam != nil && ![aNam isEqual:@""])) {
+        if (!([sNam length] == 0) && ([aNam length] == 0)) {
             return NSOrderedAscending;
         }
-        if (!(sNam != nil && ![sNam isEqual:@""])
-            && (aNam != nil && ![aNam isEqual:@""])) {
+        if (([sNam length] == 0) && !([aNam length] ==0)) {
             return NSOrderedDescending;
         }
         

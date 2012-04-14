@@ -78,7 +78,7 @@ static Player *instance = nil;
             [player play];
             break;
         case PLARER_STATE_PLAY:
-            if (![playUrl isEqual:url]) {
+            if ([self isPlayUrl:url] == NO) {
                 [player pause];
                 playUrl = url;
                 NSLog(@"Play started %@", [playUrl absoluteString]);
@@ -106,7 +106,7 @@ static Player *instance = nil;
     if ([self getPlayUrl] == nil) {
         return NO;
     } else {
-        return ([playUrl isEqual:url]);
+        return ([[playUrl absoluteString] isEqualToString:[url absoluteString]]);
     }
 }
 

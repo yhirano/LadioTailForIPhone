@@ -131,13 +131,11 @@
     NSString *cellIdentifier;
     
     // タイトルのみが存在する場合
-    if ((channel.nam != nil && ![channel.nam isEqual:@""])
-        && !(channel.dj != nil && ![channel.dj isEqual:@""])) {
+    if (!([channel.nam length] == 0) && ([channel.dj length] == 0)) {
         cellIdentifier = @"ChannelTitleOnlyCell";
     }
     // DJのみが存在する場合
-    else if (!(channel.nam != nil && ![channel.nam isEqual:@""])
-        && (channel.dj != nil && ![channel.dj isEqual:@""])) {
+    else if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
         cellIdentifier = @"ChannelDjOnlyCell";
     } else {
         cellIdentifier = @"ChannelCell";
@@ -154,12 +152,12 @@
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
 
-    if (channel.nam != nil && ![channel.nam isEqual:@""]) {
+    if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
         titleLabel.text = @"";
     }
-    if (channel.dj != nil && ![channel.dj isEqual:@""]) {
+    if (!([channel.dj length] == 0)) {
         djLabel.text = channel.dj;
     } else {
         djLabel.text = @"";

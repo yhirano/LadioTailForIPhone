@@ -111,7 +111,7 @@
     Channel *channel = nil;
 
     for (NSString *line in lines) {
-        if ([line isEqualToString:@""] && channel != nil) {
+        if ([line length] == 0 && channel != nil) {
             [channelList addObject:channel];
             channel = nil;
             continue;
@@ -441,7 +441,7 @@
     
     for (Channel* c in channels) {
         NSURL* url = [c getPlayUrl];
-        if([playUrl isEqual:url]) {
+        if([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
             return c;
         }
     }
