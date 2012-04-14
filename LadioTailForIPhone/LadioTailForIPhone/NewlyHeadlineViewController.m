@@ -25,9 +25,9 @@
 
 @implementation NewlyHeadlineViewController
 
-- (int)getSortType
+- (ChannelSortType)getSortType
 {
-    return CHANNEL_SORT_TYPE_NEWLY;
+    return ChannelSortTypeNewly;
 }
 
 @end

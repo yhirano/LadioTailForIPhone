@@ -27,7 +27,7 @@ static Player *instance = nil;
 @interface Player ()
 {
     AVPlayer *player;
-    int state;
+    PlayerState state;
     NSURL *playUrl;
 }
 
@@ -51,7 +51,7 @@ static Player *instance = nil;
 - (id)init
 {
     if (self = [super init]) {
-        state = PLARER_STATE_IDLE;
+        state = PlayerStateIdle;
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopped:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
@@ -69,15 +69,15 @@ static Player *instance = nil;
 - (void)play:(NSURL *)url
 {
     switch (state) {
-        case PLARER_STATE_IDLE:
-            state = PLARER_STATE_PLAY;
+        case PlayerStateIdle:
+            state = PlayerStatePlay;
             playUrl = url;
             NSLog(@"Play started %@", [playUrl absoluteString]);
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
             player = [AVPlayer playerWithURL:url];
             [player play];
             break;
-        case PLARER_STATE_PLAY:
+        case PlayerStatePlay:
             if ([self isPlayUrl:url] == NO) {
                 [player pause];
                 playUrl = url;
@@ -96,7 +96,7 @@ static Player *instance = nil;
 {
     [player pause];
     playUrl = nil;
-    state = PLARER_STATE_IDLE;
+    state = PlayerStateIdle;
     NSLog(@"Play stopped by user operation.");
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
 }
@@ -113,9 +113,9 @@ static Player *instance = nil;
 - (NSURL*)getPlayUrl
 {
     switch (state) {
-        case PLARER_STATE_PLAY:
+        case PlayerStatePlay:
             return playUrl;
-        case PLARER_STATE_IDLE:
+        case PlayerStateIdle:
         default:
             return nil;
     }
@@ -124,12 +124,12 @@ static Player *instance = nil;
 - (void)stopped:(NSNotification *)notification
 {
     playUrl = nil;
-    state = PLARER_STATE_IDLE;
+    state = PlayerStateIdle;
     NSLog(@"Play stopped.");
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
 }
 
-- (int)getState
+- (PlayerState)getState
 {
     return state;
 }

@@ -25,9 +25,9 @@
 
 @implementation DjHeadlineViewController
 
-- (int)getSortType
+- (ChannelSortType)getSortType
 {
-    return CHANNEL_SORT_TYPE_DJ;
+    return ChannelSortTypeDj;
 }
 
 @end

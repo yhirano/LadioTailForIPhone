@@ -413,15 +413,15 @@
 
 - (NSArray *)getChannels
 {
-    return [self getChannels:CHANNEL_SORT_TYPE_NONE searchWord:nil];
+    return [self getChannels:ChannelSortTypeNone searchWord:nil];
 }
 
-- (NSArray *)getChannels:(int)sortType
+- (NSArray *)getChannels:(ChannelSortType)sortType
 {
     return [self getChannels:sortType searchWord:nil];
 }
 
-- (NSArray *)getChannels:(int)sortType searchWord:(NSString*)searchWord
+- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString*)searchWord
 {
     NSMutableArray *result = [channels mutableCopy];
 
@@ -441,15 +441,15 @@
     }
     
     switch (sortType) {
-        case CHANNEL_SORT_TYPE_NEWLY:
+        case ChannelSortTypeNewly:
             return [result sortedArrayUsingSelector:@selector(compareNewly:)];
-        case CHANNEL_SORT_TYPE_LISTENERS:
+        case ChannelSortTypeListeners:
             return [result sortedArrayUsingSelector:@selector(compareListeners:)];
-        case CHANNEL_SORT_TYPE_TITLE:
+        case ChannelSortTypeTitle:
             return [result sortedArrayUsingSelector:@selector(compareTitle:)];
-        case CHANNEL_SORT_TYPE_DJ:
+        case ChannelSortTypeDj:
             return [result sortedArrayUsingSelector:@selector(compareDj:)];
-        case CHANNEL_SORT_TYPE_NONE:
+        case ChannelSortTypeNone:
         default:
             return result;
     }

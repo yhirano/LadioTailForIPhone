@@ -23,11 +23,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
-enum
+enum _PlayerState
 {
-    PLARER_STATE_IDLE,
-    PLARER_STATE_PLAY,
+    PlayerStateIdle,
+    PlayerStatePlay,
 };
+
+typedef NSInteger PlayerState;
 
 /// ヘッドラインの取得を開始した際のNotification
 #define NOTIFICATION_NAME_PLAY_STATE_CHANGED @"PlayStateChanged"
@@ -44,6 +46,6 @@ enum
 
 - (NSURL*)getPlayUrl;
 
-- (int)getState;
+- (PlayerState)getState;
 
 @end

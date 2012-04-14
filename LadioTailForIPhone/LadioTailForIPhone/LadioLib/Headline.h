@@ -30,14 +30,16 @@
 /// ヘッドラインの取得に失敗した際のNotification
 #define NOTIFICATION_NAME_FETCH_HEADLINE_FAILED @"FetchHeadlineFailed"
 
-enum
+enum _ChannelSortType
 {
-    CHANNEL_SORT_TYPE_NEWLY,
-    CHANNEL_SORT_TYPE_LISTENERS,
-    CHANNEL_SORT_TYPE_TITLE,
-    CHANNEL_SORT_TYPE_DJ,
-    CHANNEL_SORT_TYPE_NONE,
+    ChannelSortTypeNone,
+    ChannelSortTypeNewly,
+    ChannelSortTypeListeners,
+    ChannelSortTypeTitle,
+    ChannelSortTypeDj,
 };
+
+typedef NSInteger ChannelSortType;
 
 /**
  * ヘッドライン
@@ -69,7 +71,7 @@ enum
  * @see CHANNEL_SORT_TYPE_DJ
  * @see CHANNEL_SORT_TYPE_NONE
  */
-- (NSArray *)getChannels:(int)sortType;
+- (NSArray *)getChannels:(ChannelSortType)sortType;
 
 /**
  * 番組リストを取得する
@@ -85,7 +87,7 @@ enum
  * @see CHANNEL_SORT_TYPE_DJ
  * @see CHANNEL_SORT_TYPE_NONE
  */
-- (NSArray *)getChannels:(int)sortType searchWord:(NSString*)searchWord;
+- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString*)searchWord;
 
 /**
  * 一致する再生URLを持つ番組を取得する

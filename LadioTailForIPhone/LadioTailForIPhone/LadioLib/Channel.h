@@ -34,7 +34,6 @@
 /// チャンネル数が不明
 #define CHANNEL_UNKNOWN_CHANNEL_NUM -1
 
-
 /**
  * 番組
  */
@@ -52,7 +51,7 @@
 @property (strong) NSString *srv;
 
 /// 配信サーバポート番号
-@property int prt;
+@property NSInteger prt;
 
 /// 配信サーバマウント
 @property (strong) NSString *mnt;
@@ -79,22 +78,22 @@
 @property (strong) NSURL *url;
 
 /// 現リスナ数
-@property int cln;
+@property NSInteger cln;
 
 /// 総リスナ数
-@property int clns;
+@property NSInteger clns;
 
 /// 最大リスナ数
-@property int max;
+@property NSInteger max;
 
 /// ビットレート（Kbps）
-@property int bit;
+@property NSInteger bit;
 
 /// サンプリングレート
-@property int smpl;
+@property NSInteger smpl;
 
 /// チャンネル数
-@property int chs;
+@property NSInteger chs;
 
 - (id)init;
 

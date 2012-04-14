@@ -34,7 +34,7 @@
 
 - (void)fetchHeadlineFailed:(NSNotification *)notification;
 
-- (int)getSortType;
+- (ChannelSortType)getSortType;
 @end
 
 @implementation HeadlineViewController
@@ -297,9 +297,9 @@
     [self updatePlayingButton];
 }
 
-- (int)getSortType
+- (ChannelSortType)getSortType
 {
-    return CHANNEL_SORT_TYPE_NONE;
+    return ChannelSortTypeNone;
 }
 
 - (void)updateHeadlineTable
@@ -324,10 +324,10 @@
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     switch ([[Player getPlayer] getState]) {
-        case PLARER_STATE_PLAY:
+        case PlayerStatePlay:
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
             break;
-        case PLARER_STATE_IDLE:
+        case PlayerStateIdle:
         default:
             self.navigationItem.rightBarButtonItem = nil;
             break;
