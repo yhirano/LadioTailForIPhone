@@ -124,11 +124,25 @@
     // 辞書は Key:検索単語 Value:マッチしたか
     NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc]initWithCapacity:[searchWords count]];
     for (NSString* word in searchWords) {
-        [searchDictionary setObject:[NSNumber numberWithBool:NO] forKey:word];
+        if (!([word length] == 0)) {
+            [searchDictionary setObject:[NSNumber numberWithBool:NO] forKey:word];
+        }
     }
 
     // 検索対象文字列を配列にする
-    NSArray *searchedWords = [[NSArray alloc] initWithObjects:nam, gnl, desc, dj, nil];
+    NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:4];
+    if (!([nam length] == 0)) {
+        [searchedWords addObject:nam];
+    }
+    if (!([gnl length] == 0)) {
+        [searchedWords addObject:gnl];
+    }
+    if (!([desc length] == 0)) {
+        [searchedWords addObject:desc];
+    }
+    if (!([dj length] == 0)) {
+        [searchedWords addObject:dj];
+    }
 
     // 検索文字と検索対象文字を比較する
     for (NSString *searchedWord in searchedWords) {
