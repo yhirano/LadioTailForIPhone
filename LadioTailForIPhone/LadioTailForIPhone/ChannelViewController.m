@@ -202,7 +202,7 @@
         if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
             v = [NSString
                  stringWithFormat:@"%@%@ %d",
-                 v, NSLocalizedString(@"Max num", @"番組最大リスナー数"), channel.clns];
+                 v, NSLocalizedString(@"Max num", @"番組最大リスナー数"), channel.max];
         }
         
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
