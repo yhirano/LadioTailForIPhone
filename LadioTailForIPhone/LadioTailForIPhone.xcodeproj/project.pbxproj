@@ -27,11 +27,12 @@
 		8EC23B8715371402007352FD /* FetchHeadline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6715371382007352FD /* FetchHeadline.m */; };
 		8EC23B8815371402007352FD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7915371382007352FD /* Player.m */; };
 		8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
-		8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7D15371382007352FD /* SVProgressHUD.m */; };
+		8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7D15371382007352FD /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8EC23B8D1537145A007352FD /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6C15371382007352FD /* Channel.m */; };
 		8EC23B8E1537145A007352FD /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6E15371382007352FD /* Headline.m */; };
 		8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7015371382007352FD /* HeadlineManager.m */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+		8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B7B15371382007352FD /* SVProgressHUD.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -263,6 +264,7 @@
 				8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */,
 				8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */,
 				8E16283015385E55007A2DBE /* headphones.png in Resources */,
+				8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
