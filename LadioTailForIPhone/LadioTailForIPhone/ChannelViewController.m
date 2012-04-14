@@ -21,19 +21,14 @@
  */
 
 #import "Player.h"
-#import "ChannelInfo.h"
 #import "LadioLib/LadioLib.h"
 #import "ChannelViewController.h"
 
-@interface ChannelViewController()
-{
-    NSMutableArray* channelInfoList;
-}
-@end
 @implementation ChannelViewController
 
 @synthesize channel;
 @synthesize topNavigationItem;
+@synthesize descriptionWebView;
 @synthesize playButton;
 @synthesize bottomView;
 
@@ -66,7 +61,6 @@
         topNavigationItem.title = channel.dj;
     }
 
-
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = bottomView.bounds;
@@ -77,143 +71,7 @@
     [bottomView.layer insertSublayer:gradient atIndex:0];
     
     // 表示情報を生成する
-    channelInfoList = [[NSMutableArray alloc] init];
-    if (channel != nil) {
-        // タイトル
-        if (channel.nam != nil && ![channel.nam isEqual:@""]) {
-            NSString* t = NSLocalizedString(@"Title", @"番組タイトル");
-            NSString* v = channel.nam;
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // DJ
-        if (channel.dj != nil && ![channel.dj isEqual:@""]) {
-            NSString* t = NSLocalizedString(@"DJ", @"番組DJ");
-            NSString* v = channel.dj;
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // ジャンル
-        if (channel.gnl != nil && ![channel.gnl isEqual:@""]) {
-            NSString* t = NSLocalizedString(@"Genre", @"番組ジャンル");
-            NSString* v = channel.gnl;
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // 詳細
-        if (channel.desc != nil && ![channel.desc isEqual:@""]) {
-            NSString* t = NSLocalizedString(@"Description", @"番組詳細");
-            NSString* v = channel.desc;
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // 曲
-        if (channel.song != nil && ![channel.song isEqual:@""]) {
-            NSString* t = NSLocalizedString(@"Song", @"番組曲");
-            NSString* v = channel.song;
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // リスナー数
-        if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM
-            || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
-            || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-            // リスナー数
-            NSString* t = NSLocalizedString(@"Listener num", @"番組リスナー数");
-            NSString* v;
-            if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                v = [NSString
-                     stringWithFormat:@"%@ %d",
-                     NSLocalizedString(@"Listener num", @"番組リスナー数"), channel.cln];
-                if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
-                    || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                    v = [NSString stringWithFormat:@"%@%@", v, @" / "];
-                }
-            }
-
-            // 述べリスナー数
-            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                v = [NSString
-                     stringWithFormat:@"%@%@ %d",
-                     v, NSLocalizedString(@"Total num", @"番組述べリスナー数"), channel.clns];
-                if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                    v = [NSString stringWithFormat:@"%@%@", v, @" / "];
-                }
-            }
-
-            // 最大リスナー数
-            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                v = [NSString
-                     stringWithFormat:@"%@%@ %d",
-                     v, NSLocalizedString(@"Max num", @"番組最大リスナー数"), channel.clns];
-            }
-
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // 開始時刻
-        if (channel.tims != nil) {
-            NSString* t = NSLocalizedString(@"StartTime", @"番組開始時刻");
-            NSString* v = [channel getTimsToString];
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-        // フォーマット
-        if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM
-            || channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
-            || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
-            || (channel.type != nil && ![channel.type isEqual:@""])) {
-            NSString* t = NSLocalizedString(@"Format", @"番組フォーマット");
-            NSString* v;
-            // ビットレート
-            if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
-                v = [NSString stringWithFormat:@"%dkbps", channel.bit];
-                if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
-                    || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
-                    || (channel.type != nil && ![channel.type isEqual:@""])) {
-                    v = [NSString stringWithFormat:@"%@%@", v, @" / "];
-                }
-            }
-
-            // チャンネル数
-            if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
-                NSString* chsStr;
-                switch (channel.chs) {
-                    case 1:
-                        chsStr = NSLocalizedString(@"Mono", @"モノラル");
-                        break;
-                    case 2:
-                        chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
-                        break;
-                    default:
-                        chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
-                        break;
-                }
-                
-                v = [NSString stringWithFormat:@"%@%@", v, chsStr];
-                if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
-                    || (channel.type != nil && ![channel.type isEqual:@""])) {
-                    v = [NSString stringWithFormat:@"%@%@", v, @" / "];
-                }
-            }
-            
-            // サンプリングレート数
-            if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
-                v = [NSString stringWithFormat:@"%@%dHz", v, channel.smpl];
-                if (channel.type != nil && ![channel.type isEqual:@""]) {
-                    v = [NSString stringWithFormat:@"%@%@", v, @" / "];
-                }
-            }
-
-            // 種類
-            if (channel.type != nil && ![channel.type isEqual:@""]) {
-                v = [NSString stringWithFormat:@"%@%@", v, channel.type];
-            }
-
-            ChannelInfo* ci = [[ChannelInfo alloc] initWithTitle:t value:v];
-            [channelInfoList addObject:ci];
-        }
-    }
+    [self writeDescription];
 }
 
 - (void)viewDidUnload
@@ -224,6 +82,7 @@
     [self setTopNavigationItem:nil];
     [self setPlayButton:nil];
     [self setBottomView:nil];
+    [self setDescriptionWebView:nil];
     [super viewDidUnload];
 }
 
@@ -232,34 +91,185 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+// リンクをクリック時、Safariを起動する為の処理
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return 1;
+    if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther)
+    {
+        NSString* scheme = [[request URL] scheme];
+        if([scheme compare:@"about"] == NSOrderedSame) {
+            return YES;
+        }
+        if([scheme compare:@"http"] == NSOrderedSame) {
+            [[UIApplication sharedApplication] openURL: [request URL]];
+            return NO;
+        }
+    }
+    return YES;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)writeDescription
 {
-    return [channelInfoList count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"InfoCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if (channel == nil) {
+        return;
     }
     
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *valueLabel = (UILabel *) [cell viewWithTag:2];
-
-    ChannelInfo* channelInfo = [channelInfoList objectAtIndex:indexPath.row];
-    titleLabel.text = channelInfo.title;
-    valueLabel.text = channelInfo.value;
     
-    return cell;
+    
+    static NSString *htmlBase = @"<html>"
+                                 "  <body>"
+                                 "    %@"
+                                 "  </body>"
+                                 "</html>";
+    static NSString *htmlContent = @"%@"
+                                    "<div style=\"margin-bottom:0.5em;\">"
+                                    "  <div style=\"font-size:small;\">"
+                                    "    %@"
+                                    "  </div>"
+                                    "  <div style=\"margin-left:0.5em;\">"
+                                    "    %@"
+                                    "  </div>"
+                                    "</div>";
+    static NSString *htmlLink = @"<a href=\"%@\">%@</a>";
+
+    NSString *html;
+    
+    // タイトル
+    if (channel.nam != nil && ![channel.nam isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"Title", @"番組タイトル");
+        NSString* v = channel.nam;
+        html = [[NSString alloc] initWithFormat:htmlContent, @"", t, v];
+    }
+    // DJ
+    if (channel.dj != nil && ![channel.dj isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"DJ", @"番組DJ");
+        NSString* v = channel.dj;
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // ジャンル
+    if (channel.gnl != nil && ![channel.gnl isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"Genre", @"番組ジャンル");
+        NSString* v = channel.gnl;
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // 詳細
+    if (channel.desc != nil && ![channel.desc isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"Description", @"番組詳細");
+        NSString* v = channel.desc;
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // 曲
+    if (channel.song != nil && ![channel.song isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"Song", @"番組曲");
+        NSString* v = channel.song;
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // URL
+    NSString *urlStr = [channel.url absoluteString];
+    if (urlStr != nil && ![urlStr isEqual:@""]) {
+        NSString* t = NSLocalizedString(@"Site", @"番組サイト");
+        NSString* v = [[NSString alloc] initWithFormat:htmlLink, urlStr, urlStr];
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // リスナー数
+    if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM
+        || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
+        || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+        // リスナー数
+        NSString* t = NSLocalizedString(@"Listener num", @"番組リスナー数");
+        NSString* v;
+        if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString
+                 stringWithFormat:@"%@ %d",
+                 NSLocalizedString(@"Listener num", @"番組リスナー数"), channel.cln];
+            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
+                || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                v = [NSString stringWithFormat:@"%@%@", v, @" / "];
+            }
+        }
+        
+        // 述べリスナー数
+        if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString
+                 stringWithFormat:@"%@%@ %d",
+                 v, NSLocalizedString(@"Total num", @"番組述べリスナー数"), channel.clns];
+            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                v = [NSString stringWithFormat:@"%@%@", v, @" / "];
+            }
+        }
+        
+        // 最大リスナー数
+        if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString
+                 stringWithFormat:@"%@%@ %d",
+                 v, NSLocalizedString(@"Max num", @"番組最大リスナー数"), channel.clns];
+        }
+        
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // 開始時刻
+    if (channel.tims != nil) {
+        NSString* t = NSLocalizedString(@"StartTime", @"番組開始時刻");
+        NSString* v = [channel getTimsToString];
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+    // フォーマット
+    if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM
+        || channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+        || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+        || (channel.type != nil && ![channel.type isEqual:@""])) {
+        NSString* t = NSLocalizedString(@"Format", @"番組フォーマット");
+        NSString* v;
+        // ビットレート
+        if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
+            v = [NSString stringWithFormat:@"%dkbps", channel.bit];
+            if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+                || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+                || (channel.type != nil && ![channel.type isEqual:@""])) {
+                v = [NSString stringWithFormat:@"%@%@", v, @" / "];
+            }
+        }
+        
+        // チャンネル数
+        if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
+            NSString* chsStr;
+            switch (channel.chs) {
+                case 1:
+                    chsStr = NSLocalizedString(@"Mono", @"モノラル");
+                    break;
+                case 2:
+                    chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
+                    break;
+                default:
+                    chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
+                    break;
+            }
+            
+            v = [NSString stringWithFormat:@"%@%@", v, chsStr];
+            if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+                || (channel.type != nil && ![channel.type isEqual:@""])) {
+                v = [NSString stringWithFormat:@"%@%@", v, @" / "];
+            }
+        }
+        
+        // サンプリングレート数
+        if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
+            v = [NSString stringWithFormat:@"%@%dHz", v, channel.smpl];
+            if (channel.type != nil && ![channel.type isEqual:@""]) {
+                v = [NSString stringWithFormat:@"%@%@", v, @" / "];
+            }
+        }
+        
+        // 種類
+        if (channel.type != nil && ![channel.type isEqual:@""]) {
+            v = [NSString stringWithFormat:@"%@%@", v, channel.type];
+        }
+        
+        html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
+    }
+
+    html = [[NSString alloc] initWithFormat:htmlBase, html];
+    [self.descriptionWebView loadHTMLString:html baseURL:nil];
 }
 
 - (IBAction)play:(id)sender

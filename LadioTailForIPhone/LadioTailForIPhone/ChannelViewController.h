@@ -22,11 +22,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChannelViewController : UIViewController <UITableViewDelegate>
+@interface ChannelViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong) Channel *channel;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
+
+@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
 
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 

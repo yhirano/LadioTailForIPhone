@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E16282615383AB3007A2DBE /* HeadlineNaviViewController.m */; };
-		8E16282A15384BBB007A2DBE /* ChannelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E16282915384BBB007A2DBE /* ChannelInfo.m */; };
 		8E16283015385E55007A2DBE /* headphones.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E16282F15385E55007A2DBE /* headphones.png */; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
 		8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
@@ -39,8 +38,6 @@
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E16282515383AB3007A2DBE /* HeadlineNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlineNaviViewController.h; sourceTree = "<group>"; };
 		8E16282615383AB3007A2DBE /* HeadlineNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineNaviViewController.m; sourceTree = "<group>"; };
-		8E16282815384BBB007A2DBE /* ChannelInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelInfo.h; sourceTree = "<group>"; };
-		8E16282915384BBB007A2DBE /* ChannelInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelInfo.m; sourceTree = "<group>"; };
 		8E16282F15385E55007A2DBE /* headphones.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones.png; sourceTree = "<group>"; };
 		8EAFBF611537C2EA00DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8EAFBF631537C8E000DDBB6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -168,8 +165,6 @@
 				8EC23B6715371382007352FD /* FetchHeadline.m */,
 				8EC23B7815371382007352FD /* Player.h */,
 				8EC23B7915371382007352FD /* Player.m */,
-				8E16282815384BBB007A2DBE /* ChannelInfo.h */,
-				8E16282915384BBB007A2DBE /* ChannelInfo.m */,
 				8E16282E15385E55007A2DBE /* Images */,
 				8EC23B52153712BB007352FD /* Supporting Files */,
 			);
@@ -294,7 +289,6 @@
 				8EC23B8E1537145A007352FD /* Headline.m in Sources */,
 				8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */,
 				8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */,
-				8E16282A15384BBB007A2DBE /* ChannelInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
