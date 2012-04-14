@@ -27,6 +27,37 @@
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
+/// 更新ボタンの色
+#define UPDATE_BUTTON_COLOR [UIColor darkGrayColor]
+/// 戻るボタンの色
+#define BACK_BUTTON_COLOR [UIColor darkGrayColor]
+/// 再生中ボタンの色
+#define PLAYING_BUTTON_COLOR [UIColor colorWithRed:(176 / 255.0) green:0 blue:(15 / 255.0) alpha:1]
+/// 検索バーの色
+#define SEARCH_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
+/// テーブルの背景の色
+#define HEADLINE_TABLE_BACKGROUND_COLOR [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
+/// テーブルの境界線の色
+#define HEADLINE_TABLE_SEPARATOR_COLOR [[UIColor alloc]initWithRed:(75 / 255.0) green:(75 / 255.0) blue:(75 / 255.0) alpha:1]
+/// テーブルセルの暗い側の色
+#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
+/// テーブルセルの明るい側の色
+#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
+/// テーブルセルのタイトルのテキストカラー
+#define HEADLINE_CELL_TITLE_TEXT_COLOR [UIColor whiteColor]
+/// テーブルセルのDJのテキストカラー
+#define HEADLINE_CELL_DJ_TEXT_COLOR [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
+/// テーブルセルのリスナー数のテキストカラー
+#define HEADLINE_CELL_LISTENERS_TEXT_COLOR [UIColor whiteColor]
+/// テーブルセルの選択の色
+#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
+/// テーブルセルのタイトルのテキスト選択時カラー
+#define HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR [UIColor blackColor]
+/// テーブルセルのDJのテキスト選択時カラー
+#define HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR [UIColor blackColor]
+/// テーブルセルのリスナー数のテキスト選択時カラー
+#define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
+
 @interface HeadlineViewController ()
 - (void)fetchHeadlineStarted:(NSNotification *)notification;
 
@@ -76,22 +107,22 @@
                                        style:UIBarButtonItemStyleBordered
                                        target:nil
                                        action:nil];
-    backButtonItem.tintColor = [UIColor darkGrayColor];
+    backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 更新ボタンの色を変更する
-    updateBarButtonItem.tintColor = [UIColor darkGrayColor];
+    updateBarButtonItem.tintColor = UPDATE_BUTTON_COLOR;
     
     // 再生中ボタンの装飾を変更する
     playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
-    playingBarButtonItem.tintColor = [UIColor colorWithRed:(176 / 255.0) green:0 blue:(15 / 255.0) alpha:0];
+    playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
     // 再生中ボタンを保持する
     tempPlayingBarButtonItem = playingBarButtonItem;
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
 
     // 検索バーの色を変える
-    headlineSearchBar.tintColor = [UIColor darkGrayColor];
+    headlineSearchBar.tintColor = SEARCH_BAR_COLOR;
 
     // 検索バーが空でもサーチキーを押せるようにする
     // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
@@ -110,6 +141,11 @@
      selector:@selector(playStateChanged:)
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
      object:nil];
+
+    // テーブルの背景の色を変える
+    headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
+    // テーブルの境界線の色を変える
+    headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 }
 
 - (void)viewDidUnload
@@ -207,7 +243,6 @@
         cellIdentifier = @"ChannelCell";
     }
     
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (cell == nil) {
@@ -235,6 +270,34 @@
     }
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // テーブルセルの背景の色を変える
+    if (indexPath.row % 2 == 0) {
+        cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK;
+    } else {
+        cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
+    }
+
+    // テーブルセルのテキストの色を変える
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
+    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
+    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
+    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
+
+    // テーブルセルの選択時の色を変える
+    titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+    djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+    listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
+
+    // テーブルセルの選択色を変える
+    UIView *selectedBackgroundView = [[UIView alloc] init];
+    selectedBackgroundView.backgroundColor = HEADLINE_CELL_SELECTED_BACKGROUND_COLOR;
+    cell.selectedBackgroundView = selectedBackgroundView;
 }
 
 // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
@@ -267,7 +330,6 @@
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
-        
 }
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification

@@ -24,6 +24,13 @@
 #import "LadioLib/LadioLib.h"
 #import "ChannelViewController.h"
 
+/// 詳細表示画面の背景色
+#define DESCRIPTION_BACKGROUND_COLOR "#3C3C3C"
+/// 詳細表示画面のテキスト色
+#define DESCRIPTION_TEXT_COLOR "#FFFFFF"
+/// 詳細表示画面のリンクテキスト色
+#define DESCRIPTION_LINK_TEXT_COLOR "#FFBE1E"
+
 @implementation ChannelViewController
 
 @synthesize channel;
@@ -113,20 +120,40 @@
     if (channel == nil) {
         return;
     }
-    
-    
-    
+
     static NSString *htmlBase = @"<html>"
+                                 "  <head>"
+                                 "    <style type=\"text/css\">"
+                                 "      body {"
+                                 "        background-color:" DESCRIPTION_BACKGROUND_COLOR ";"
+                                 "        color:" DESCRIPTION_TEXT_COLOR ";"
+                                 "      }"
+                                 "      a {"
+                                 "        color:" DESCRIPTION_LINK_TEXT_COLOR ";"
+                                 "      }"
+                                 "      div.content {"
+                                 "        margin-bottom:0.5em;"
+                                 "      }"
+                                 "      div.tag {"
+                                 "        font-size:small;"
+                                 "      }"
+                                 "      div.value {"
+                                 "        margin-left:0.5em;"
+                                 "        font-weight:bold;"
+                                 "        word-break:break-all;"
+                                 "      }"
+                                 "    </style>"
+                                 "  </head>"
                                  "  <body>"
                                  "    %@"
                                  "  </body>"
                                  "</html>";
     static NSString *htmlContent = @"%@"
-                                    "<div style=\"margin-bottom:0.5em;\">"
-                                    "  <div style=\"font-size:small;\">"
+                                    "<div class=\"content\">"
+                                    "  <div class=\"tag\">"
                                     "    %@"
                                     "  </div>"
-                                    "  <div style=\"margin-left:0.5em;\">"
+                                    "  <div class=\"value\">"
                                     "    %@"
                                     "  </div>"
                                     "</div>";
@@ -289,9 +316,9 @@
     NSURL *url = [channel getPlayUrl];
     Player *player = [Player getPlayer];
     if ([player isPlayUrl:url]) {
-        [playButton setTitle:@"Stop" forState:UIControlStateNormal];
+        [playButton setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
     } else {
-        [playButton setTitle:@"Play" forState:UIControlStateNormal];
+        [playButton setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
     }
 }
 @end

@@ -22,6 +22,9 @@
 
 #import "HeadlineNaviViewController.h"
 
+/// ナビゲーションバーの色
+#define NAVIGATION_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
+
 @interface HeadlineNaviViewController ()
 
 @end
@@ -42,7 +45,7 @@
     [super viewDidLoad];
     
     // ナビゲーションバーの色を変える
-    self.navigationBar.tintColor = [UIColor colorWithRed:0.04 green:0.04 blue:0.04 alpha:0];
+    self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
 }
 
 - (void)viewDidUnload
