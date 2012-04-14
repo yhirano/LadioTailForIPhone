@@ -32,7 +32,7 @@
 /// 戻るボタンの色
 #define BACK_BUTTON_COLOR [UIColor darkGrayColor]
 /// 再生中ボタンの色
-#define PLAYING_BUTTON_COLOR [UIColor colorWithRed:(176 / 255.0) green:0 blue:(15 / 255.0) alpha:1]
+#define PLAYING_BUTTON_COLOR [[UIColor alloc]initWithRed:(191 / 255.0) green:(126 / 255.0) blue:(0 / 255.0) alpha:1]
 /// 検索バーの色
 #define SEARCH_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
 /// テーブルの背景の色
