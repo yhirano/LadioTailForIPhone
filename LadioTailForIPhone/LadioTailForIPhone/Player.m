@@ -51,7 +51,9 @@ static Player *instance = nil;
 - (id)init
 {
     if (self = [super init]) {
-        state = PlayerStateIdle;
+        @synchronized(self) {
+            state = PlayerStateIdle;
+        }
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopped:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
@@ -70,21 +72,25 @@ static Player *instance = nil;
 {
     switch (state) {
         case PlayerStateIdle:
-            state = PlayerStatePlay;
-            playUrl = url;
-            NSLog(@"Play started %@", [playUrl absoluteString]);
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
-            player = [AVPlayer playerWithURL:url];
-            [player play];
-            break;
-        case PlayerStatePlay:
-            if ([self isPlayUrl:url] == NO) {
-                [player pause];
+            @synchronized(self) {
+                state = PlayerStatePlay;
                 playUrl = url;
                 NSLog(@"Play started %@", [playUrl absoluteString]);
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
                 player = [AVPlayer playerWithURL:url];
                 [player play];
+            }
+            break;
+        case PlayerStatePlay:
+            if ([self isPlayUrl:url] == NO) {
+                @synchronized(self) {
+                    [player pause];
+                    playUrl = url;
+                    NSLog(@"Play started %@", [playUrl absoluteString]);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+                    player = [AVPlayer playerWithURL:url];
+                    [player play];
+                }
             }
             break;
         default:
@@ -94,44 +100,55 @@ static Player *instance = nil;
 
 - (void)stop
 {
-    [player pause];
-    playUrl = nil;
-    state = PlayerStateIdle;
-    NSLog(@"Play stopped by user operation.");
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    @synchronized(self) {
+        [player pause];
+        playUrl = nil;
+        state = PlayerStateIdle;
+        NSLog(@"Play stopped by user operation.");
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    }
 }
 
 - (BOOL)isPlayUrl:(NSURL *)url
 {
-    if ([self getPlayUrl] == nil) {
-        return NO;
-    } else {
-        return ([[playUrl absoluteString] isEqualToString:[url absoluteString]]);
+    NSURL *pUrl = [self getPlayUrl];
+    @synchronized(self) {
+        if (pUrl == nil) {
+            return NO;
+        } else {
+            return ([[pUrl absoluteString] isEqualToString:[url absoluteString]]);
+        }
     }
 }
 
 - (NSURL*)getPlayUrl
 {
-    switch (state) {
-        case PlayerStatePlay:
-            return playUrl;
-        case PlayerStateIdle:
-        default:
-            return nil;
+    @synchronized(self) {
+        switch (state) {
+            case PlayerStatePlay:
+                return playUrl;
+            case PlayerStateIdle:
+            default:
+                return nil;
+        }
     }
 }
 
 - (void)stopped:(NSNotification *)notification
 {
-    playUrl = nil;
-    state = PlayerStateIdle;
-    NSLog(@"Play stopped.");
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    @synchronized(self) {
+        playUrl = nil;
+        state = PlayerStateIdle;
+        NSLog(@"Play stopped.");
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    }
 }
 
 - (PlayerState)getState
 {
-    return state;
+    @synchronized(self) {
+        return state;
+    }
 }
 
 @end
