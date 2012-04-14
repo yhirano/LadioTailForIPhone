@@ -320,5 +320,11 @@
     } else {
         [playButton setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
     }
+    
+    if ([player getState] == PlayerStatePrepare) {
+        playButton.enabled = NO;
+    } else {
+        playButton.enabled = YES;
+    }
 }
 @end

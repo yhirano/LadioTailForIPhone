@@ -23,16 +23,17 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
+/// ヘッドラインの取得を開始した際のNotification
+#define NOTIFICATION_NAME_PLAY_STATE_CHANGED @"PlayStateChanged"
+
 enum _PlayerState
 {
     PlayerStateIdle,
+    PlayerStatePrepare,
     PlayerStatePlay,
 };
 
 typedef NSInteger PlayerState;
-
-/// ヘッドラインの取得を開始した際のNotification
-#define NOTIFICATION_NAME_PLAY_STATE_CHANGED @"PlayStateChanged"
 
 @interface Player : NSObject <AVAudioSessionDelegate>
 

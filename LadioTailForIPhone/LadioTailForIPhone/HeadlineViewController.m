@@ -385,14 +385,10 @@
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
-    switch ([[Player getPlayer] getState]) {
-        case PlayerStatePlay:
-            self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
-            break;
-        case PlayerStateIdle:
-        default:
-            self.navigationItem.rightBarButtonItem = nil;
-            break;
+    if ([[Player getPlayer] getState] == PlayerStatePlay) {
+        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
     }
 }
 
