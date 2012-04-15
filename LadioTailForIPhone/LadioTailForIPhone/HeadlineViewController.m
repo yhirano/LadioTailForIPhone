@@ -179,7 +179,7 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     // タブの切り替えごとにヘッドラインテーブルを更新する
     // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
@@ -192,6 +192,11 @@
         searchWord = @"";
     }
     headlineSearchBar.text = searchWord;
+
+    // viewWillAppear:animated はsuperを呼び出す必要有り
+    // テーブルの更新前に呼ぶらしい
+    // http://d.hatena.ne.jp/kimada/20090917/1253187128
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
