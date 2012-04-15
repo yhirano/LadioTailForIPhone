@@ -252,6 +252,7 @@
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
 
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
@@ -269,6 +270,8 @@
         listenersLabel.text = @"";
     }
 
+    playImageView.hidden = ![[Player getPlayer]isPlayUrl:[channel getPlayUrl]];
+    
     return cell;
 }
 
