@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "FavoriteManager.h"
 #import "Channel.h"
 
 @implementation Channel
@@ -42,6 +43,7 @@
 @synthesize bit;
 @synthesize smpl;
 @synthesize chs;
+@synthesize favorite;
 
 - (id)init
 {
@@ -107,10 +109,16 @@
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d%@", srv, prt, mnt]];
 }
 
-- (NSComparisonResult) compareNewly:(Channel*)_channel
+- (BOOL)favorite
 {
-    // 新しい方が上に来る
-    return [_channel.tims compare:self.tims];
+    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    return [favoriteManager isFavorite:mnt];
+}
+
+- (void)setFavorite:(BOOL)favorite
+{
+    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    [favoriteManager addFavorite:mnt];
 }
 
 - (BOOL) isMatch:(NSArray*)searchWords
@@ -163,53 +171,105 @@
     return YES;
 }
 
+- (NSComparisonResult) compareNewly:(Channel*)_channel
+{
+    NSComparisonResult result;
+    
+    // お気に入りで比較する
+    result = [Channel compareFavorite:self compared:_channel];
+    if (result != NSOrderedSame) {
+        return result;
+    }
+    
+    // 新しい方が前に来る
+    result = [_channel.tims compare:self.tims];
+    
+    return result;
+}
+
 - (NSComparisonResult) compareListeners:(Channel*)_channel
 {
-    if (self.cln > _channel.cln) {
-        return NSOrderedAscending;
-    } else if (self.cln < _channel.cln) {
-        return NSOrderedDescending;
-    } else {
-        return NSOrderedSame;
+    NSComparisonResult result;
+
+    // お気に入りで比較する
+    result = [Channel compareFavorite:self compared:_channel];
+    if (result != NSOrderedSame) {
+        return result;
     }
+
+    // リスナー数で比較する
+    // 多い方が前に来る
+    if (self.cln > _channel.cln) {
+        result = NSOrderedAscending;
+    } else if (self.cln < _channel.cln) {
+        result = NSOrderedDescending;
+    } else {
+        result = NSOrderedSame;
+    }
+
+    return result;
 }
 
 - (NSComparisonResult) compareTitle:(Channel*)_channel
 {
-    NSComparisonResult result = NSOrderedSame;
+    NSComparisonResult result;
+
+    // お気に入りで比較する
+    result = [Channel compareFavorite:self compared:_channel];
+    if (result != NSOrderedSame) {
+        return result;
+    }
     
     // タイトルで比較
     result = [Channel compareString:self.nam compared:_channel.nam];
-    if (result == NSOrderedSame) {
-        // タイトルおなじ場合はDJで比較
-        result = [Channel compareString:self.dj compared:_channel.dj];
-        // タイトルとDJがおなじ場合は日付で比較
-        if (result == NSOrderedSame) {
-            result = [self compareNewly:_channel];
-        }
+    if (result != NSOrderedSame) {
+        return result;
     }
+
+    // タイトルおなじ場合はDJで比較
+    result = [Channel compareString:self.dj compared:_channel.dj];
+    if (result != NSOrderedSame) {
+        return result;
+    }
+
+    // タイトルとDJがおなじ場合は日付で比較
+    result = [self compareNewly:_channel];
+
     return result;
 }
 
 - (NSComparisonResult) compareDj:(Channel*)_channel
 {
-    NSComparisonResult result = NSOrderedSame;
-    
+    NSComparisonResult result;
+
+    // お気に入りで比較する
+    result = [Channel compareFavorite:self compared:_channel];
+    if (result != NSOrderedSame) {
+        return result;
+    }
+
     // DJで比較
     result = [Channel compareString:self.dj compared:_channel.dj];
-    if (result == NSOrderedSame) {
-        // DJがおなじ場合はタイトルで比較
-        result = [Channel compareString:self.nam compared:_channel.nam];
-        // タイトルとDJがおなじ場合は日付で比較
-        if (result == NSOrderedSame) {
-            result = [self compareNewly:_channel];
-        }
+    if (result != NSOrderedSame) {
+        return result;
     }
+
+    // DJがおなじ場合はタイトルで比較
+    result = [Channel compareString:self.nam compared:_channel.nam];
+    if (result != NSOrderedSame) {
+        return result;
+    }
+
+    // タイトルとDJがおなじ場合は日付で比較
+    result = [self compareNewly:_channel];
+
     return result;
 }
 
 + (NSComparisonResult) compareString:(NSString*)str1 compared:(NSString*)str2
 {
+    // 文字列で比較する。
+    // 文字列が空の場合は後ろに来る。
     if (!([str1 length] == 0) && ([str2 length] == 0)) {
         return NSOrderedAscending;
     } else if (([str1 length] == 0) && !([str2 length] == 0)) {
@@ -225,6 +285,22 @@
                               [NSCharacterSet whitespaceCharacterSet]];
         return [trimStr1 localizedCaseInsensitiveCompare:trimStr2];
     }
+}
+
++ (NSComparisonResult) compareFavorite:(Channel*)channel1 compared:(Channel*)channel2
+{
+    NSComparisonResult result;
+
+    // お気に入りで比較する。
+    // お気に入りがある場合は前に来る。
+    if (channel1.favorite == YES && channel2.favorite == NO) {
+        result = NSOrderedAscending;
+    } else if (channel1.favorite == NO && channel2.favorite == YES) {
+        result = NSOrderedDescending;
+    } else {
+        result = NSOrderedSame;
+    }
+    return result;
 }
 
 @end

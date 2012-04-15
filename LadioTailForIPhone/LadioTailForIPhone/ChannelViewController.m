@@ -21,6 +21,7 @@
  */
 
 #import "Player.h"
+#import "FavoriteManager.h"
 #import "LadioLib/LadioLib.h"
 #import "ChannelViewController.h"
 
@@ -76,7 +77,10 @@
                        (id)[UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
                        nil];
     [bottomView.layer insertSublayer:gradient atIndex:0];
-    
+
+    // お気に入りボタンを更新
+    [self updateFavoriteButton];
+
     // 表示情報を生成する
     [self writeDescription];
 }
@@ -113,6 +117,17 @@
         }
     }
     return YES;
+}
+
+- (void)updateFavoriteButton
+{
+    UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
+    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    if ([favoriteManager isFavorite:channel.mnt]) {
+        [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
+    } else {
+        [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
+    }
 }
 
 - (void)writeDescription
@@ -309,6 +324,14 @@
     } else {
         [player play:url];
     }
+}
+
+- (IBAction)favorite:(id)sender {
+    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    [favoriteManager switchFavorite:channel.mnt];
+    
+    // お気に入りボタンを更新
+    [self updateFavoriteButton];
 }
 
 - (void)playButtonChange:(NSNotification *)notification

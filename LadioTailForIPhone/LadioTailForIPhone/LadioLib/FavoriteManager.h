@@ -20,22 +20,46 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+/**
+ * お気に入りを管理するシングルトンクラス
+ */
+@interface FavoriteManager : NSObject
+/**
+ * FavoriteManagerを取得する
+ * 
+ * @return FavoriteManager
+ */
++ (FavoriteManager *)getFavoriteManager;
 
-@property (strong) Channel *channel;
+/**
+ * お気に入りを追加する
+ *
+ * @param mount お気に入りに追加する番組のマウント
+ */
+- (void)addFavorite:(NSString*)mount;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
+/**
+ * お気に入りを削除する
+ *
+ * @param mount お気に入りかｒ削除する番組のマウント
+ */
+- (void)removeFavorite:(NSString*)mount;
 
-@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
+/**
+ * お気に入りに登録済みの場合は削除し、登録されていない場合は登録する
+ *
+ * @param mount お気に入りかｒ削除する番組のマウント
+ */
+- (void)switchFavorite:(NSString*)mount;
 
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
-
-- (IBAction)favorite:(id)sender;
+/**
+ * お気に入りかを取得する
+ *
+ * @param mount お気に入りかを確認する番組のマウント
+ * @return お気に入りの場合はYES、それ以外はNO
+ */
+- (BOOL)isFavorite:(NSString*)mount;
 
 @end

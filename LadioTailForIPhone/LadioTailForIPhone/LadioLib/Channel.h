@@ -95,6 +95,9 @@
 /// チャンネル数
 @property NSInteger chs;
 
+/// お気に入りに登録済みか
+@property BOOL favorite;
+
 - (id)init;
 
 - (NSString *)description;
