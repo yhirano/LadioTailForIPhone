@@ -43,9 +43,9 @@
 
 - (void)fetchHeadline
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:self];
-
     channels = nil;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:self];
 
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

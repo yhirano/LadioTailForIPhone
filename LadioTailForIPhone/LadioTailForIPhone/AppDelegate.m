@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import "FetchHeadline.h"
 #import "AppDelegate.h"
 
 @implementation AppDelegate
@@ -46,8 +45,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // アクティブになった際にヘッドラインを取得する
-    [FetchHeadline fetchHeadline];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

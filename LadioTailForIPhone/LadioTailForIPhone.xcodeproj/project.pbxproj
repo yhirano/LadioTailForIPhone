@@ -48,7 +48,6 @@
 		8EC23B8415371402007352FD /* TitleHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */; };
 		8EC23B8515371402007352FD /* DjHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6515371382007352FD /* DjHeadlineViewController.m */; };
 		8EC23B8615371402007352FD /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6315371382007352FD /* ChannelViewController.m */; };
-		8EC23B8715371402007352FD /* FetchHeadline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6715371382007352FD /* FetchHeadline.m */; };
 		8EC23B8815371402007352FD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7915371382007352FD /* Player.m */; };
 		8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
 		8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7D15371382007352FD /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -108,8 +107,6 @@
 		8EC23B6315371382007352FD /* ChannelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
 		8EC23B6415371382007352FD /* DjHeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DjHeadlineViewController.h; sourceTree = "<group>"; };
 		8EC23B6515371382007352FD /* DjHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DjHeadlineViewController.m; sourceTree = "<group>"; };
-		8EC23B6615371382007352FD /* FetchHeadline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FetchHeadline.h; sourceTree = "<group>"; };
-		8EC23B6715371382007352FD /* FetchHeadline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchHeadline.m; sourceTree = "<group>"; };
 		8EC23B6815371382007352FD /* HeadlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadlineViewController.h; sourceTree = "<group>"; };
 		8EC23B6915371382007352FD /* HeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlineViewController.m; sourceTree = "<group>"; };
 		8EC23B6B15371382007352FD /* Channel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
@@ -239,8 +236,6 @@
 				8EC23B6515371382007352FD /* DjHeadlineViewController.m */,
 				8EC23B6215371382007352FD /* ChannelViewController.h */,
 				8EC23B6315371382007352FD /* ChannelViewController.m */,
-				8EC23B6615371382007352FD /* FetchHeadline.h */,
-				8EC23B6715371382007352FD /* FetchHeadline.m */,
 				8EE96CA91539391E00251F7D /* SearchWordManager.h */,
 				8EE96CAA1539391E00251F7D /* SearchWordManager.m */,
 				8EC23B7815371382007352FD /* Player.h */,
@@ -388,7 +383,6 @@
 				8EC23B8415371402007352FD /* TitleHeadlineViewController.m in Sources */,
 				8EC23B8515371402007352FD /* DjHeadlineViewController.m in Sources */,
 				8EC23B8615371402007352FD /* ChannelViewController.m in Sources */,
-				8EC23B8715371402007352FD /* FetchHeadline.m in Sources */,
 				8EC23B8815371402007352FD /* Player.m in Sources */,
 				8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */,
 				8EC23B8D1537145A007352FD /* Channel.m in Sources */,

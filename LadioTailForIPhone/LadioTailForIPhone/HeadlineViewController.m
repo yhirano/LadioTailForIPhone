@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
+#import "SVProgressHUD/SVProgressHUD.h"
 #import "LadioLib/LadioLib.h"
-#import "FetchHeadline.h"
 #import "SearchWordManager.h"
 #import "Player.h"
 #import "ChannelViewController.h"
@@ -176,7 +176,6 @@
      removeObserver:self
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
      object:nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -344,24 +343,39 @@
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification
 {
+    // 進捗ウィンドウを表示する
+    [SVProgressHUD show];
+
     // ヘッドラインの取得開始時に更新ボタンを無効にする
     updateBarButtonItem.enabled = NO;
+
+    // ヘッドラインテーブルを更新する
+    [self updateHeadlineTable];
 }
 
 - (void)fetchHeadlineSuceed:(NSNotification *)notification
 {
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
+
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
+
+    // 進捗ウィンドウを消す
+    [SVProgressHUD dismiss];
 }
 
 - (void)fetchHeadlineFailed:(NSNotification *)notification
 {
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
+
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
+
+    // 進捗ウィンドウにエラー表示
+    NSString* errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗"); 
+    [SVProgressHUD dismissWithError:errorStr afterDelay:3];
 }
 
 - (void)playStateChanged:(NSNotification *)notification
@@ -404,6 +418,7 @@
 
 - (IBAction)update:(id)sender
 {
-    [FetchHeadline fetchHeadline];
+    Headline *headline = [HeadlineManager getHeadline];
+    [headline fetchHeadline];
 }
 @end
