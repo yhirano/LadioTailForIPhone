@@ -304,7 +304,7 @@
 
     NSURL *url = [channel getPlayUrl];
     Player *player = [Player getPlayer];
-    if ([player isPlayUrl:url]) {
+    if ([player isPlaying:url]) {
         [player stop];
     } else {
         [player play:url];
@@ -315,7 +315,7 @@
 {
     NSURL *url = [channel getPlayUrl];
     Player *player = [Player getPlayer];
-    if ([player isPlayUrl:url]) {
+    if ([player isPlaying:url]) {
         [playButton setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
     } else {
         [playButton setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];

@@ -270,7 +270,7 @@
         listenersLabel.text = @"";
     }
 
-    playImageView.hidden = ![[Player getPlayer]isPlayUrl:[channel getPlayUrl]];
+    playImageView.hidden = ![[Player getPlayer]isPlaying:[channel getPlayUrl]];
     
     return cell;
 }

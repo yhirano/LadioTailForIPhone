@@ -43,7 +43,7 @@ typedef NSInteger PlayerState;
 
 - (void)stop;
 
-- (BOOL)isPlayUrl:(NSURL *)url;
+- (BOOL)isPlaying:(NSURL *)url;
 
 - (NSURL*)getPlayUrl;
 

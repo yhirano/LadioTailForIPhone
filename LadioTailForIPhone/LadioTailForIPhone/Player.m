@@ -85,7 +85,7 @@ static Player *instance = nil;
 {
     @synchronized(self) {
         // 既に再生中のURLとおなじ場合は何もしない
-        if ([self isPlayUrl:url]) {
+        if ([self isPlaying:url]) {
             return;
         }
         
@@ -120,14 +120,14 @@ static Player *instance = nil;
     }
 }
 
-- (BOOL)isPlayUrl:(NSURL *)url
+- (BOOL)isPlaying:(NSURL *)url
 {
     @synchronized(self) {
-        NSURL *pUrl = [self getPlayUrl];
-        if (pUrl == nil) {
+        NSURL *playingUrl = [self getPlayUrl];
+        if (playingUrl == nil) {
             return NO;
         } else {
-            return ([[pUrl absoluteString] isEqualToString:[url absoluteString]]);
+            return ([[playingUrl absoluteString] isEqualToString:[url absoluteString]]);
         }
     }
 }
