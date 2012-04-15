@@ -25,11 +25,22 @@
 /// ねとらじのヘッドラインのURL DAT v2
 #define NETLADIO_HEADLINE_DAT_V2_URL @"http://yp.ladio.net/stats/list.v2.dat"
 
+/// ヘッドラインのインスタンス
+static Headline *instance = nil;
+
 @implementation Headline
 {
 @private
     NSArray *channels;
     NSMutableData *receivedData;
+}
+
++ (Headline*) sharedInstance
+{
+    if (instance == nil) {
+        instance = [[Headline alloc] init];
+    }
+    return instance;
 }
 
 - (id)init

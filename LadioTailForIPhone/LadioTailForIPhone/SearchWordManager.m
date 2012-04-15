@@ -14,7 +14,7 @@ static SearchWordManager *instance = nil;
 
 @synthesize searchWord;
 
-+ (SearchWordManager*)getSearchWordManager
++ (SearchWordManager*)sharedInstance
 {
     if (instance == nil) {
         instance = [[SearchWordManager alloc] init];

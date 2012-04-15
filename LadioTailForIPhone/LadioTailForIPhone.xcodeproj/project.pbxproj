@@ -55,7 +55,6 @@
 		8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7D15371382007352FD /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8EC23B8D1537145A007352FD /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6C15371382007352FD /* Channel.m */; };
 		8EC23B8E1537145A007352FD /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6E15371382007352FD /* Headline.m */; };
-		8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B7015371382007352FD /* HeadlineManager.m */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
 		8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B7B15371382007352FD /* SVProgressHUD.bundle */; };
 		8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE96CAA1539391E00251F7D /* SearchWordManager.m */; };
@@ -118,8 +117,6 @@
 		8EC23B6C15371382007352FD /* Channel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 		8EC23B6D15371382007352FD /* Headline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headline.h; sourceTree = "<group>"; };
 		8EC23B6E15371382007352FD /* Headline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Headline.m; sourceTree = "<group>"; };
-		8EC23B6F15371382007352FD /* HeadlineManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadlineManager.h; sourceTree = "<group>"; };
-		8EC23B7015371382007352FD /* HeadlineManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlineManager.m; sourceTree = "<group>"; };
 		8EC23B7115371382007352FD /* LadioLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LadioLib.h; sourceTree = "<group>"; };
 		8EC23B7215371382007352FD /* LadioTailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LadioTailViewController.h; sourceTree = "<group>"; };
 		8EC23B7315371382007352FD /* LadioTailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LadioTailViewController.m; sourceTree = "<group>"; };
@@ -279,8 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				8EC23B7115371382007352FD /* LadioLib.h */,
-				8EC23B6F15371382007352FD /* HeadlineManager.h */,
-				8EC23B7015371382007352FD /* HeadlineManager.m */,
 				8EC23B6D15371382007352FD /* Headline.h */,
 				8EC23B6E15371382007352FD /* Headline.m */,
 				8EC23B6B15371382007352FD /* Channel.h */,
@@ -404,7 +399,6 @@
 				8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */,
 				8EC23B8D1537145A007352FD /* Channel.m in Sources */,
 				8EC23B8E1537145A007352FD /* Headline.m in Sources */,
-				8EC23B8F1537145A007352FD /* HeadlineManager.m in Sources */,
 				8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */,
 				8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */,
 				8E1BA68E153A55BD00070E71 /* FavoriteManager.m in Sources */,

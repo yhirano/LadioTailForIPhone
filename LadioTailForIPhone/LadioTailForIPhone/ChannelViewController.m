@@ -129,7 +129,7 @@
 - (void)updateFavoriteButton
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
-    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     if ([favoriteManager isFavorite:channel.mnt]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
     } else {
@@ -325,7 +325,7 @@
 {
 
     NSURL *url = [channel getPlayUrl];
-    Player *player = [Player getPlayer];
+    Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
     } else {
@@ -334,7 +334,7 @@
 }
 
 - (IBAction)favorite:(id)sender {
-    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     [favoriteManager switchFavorite:channel.mnt];
     
     // お気に入りボタンを更新
@@ -344,7 +344,7 @@
 - (void)playButtonChange:(NSNotification *)notification
 {
     NSURL *url = [channel getPlayUrl];
-    Player *player = [Player getPlayer];
+    Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [playButton setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
     } else {

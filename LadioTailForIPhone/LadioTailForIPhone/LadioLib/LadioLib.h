@@ -20,6 +20,5 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineManager.h"
 #import "Headline.h"
 #import "Channel.h"

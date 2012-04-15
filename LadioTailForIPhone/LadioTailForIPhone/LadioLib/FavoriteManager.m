@@ -27,7 +27,7 @@
 static FavoriteManager *instance = nil;
 
 @implementation FavoriteManager
-+ (FavoriteManager *)getFavoriteManager
++ (FavoriteManager *)sharedInstance
 {
     if (instance == nil) {
         instance = [[FavoriteManager alloc] init];

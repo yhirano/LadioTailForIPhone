@@ -111,13 +111,13 @@
 
 - (BOOL)favorite
 {
-    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     return [favoriteManager isFavorite:mnt];
 }
 
 - (void)setFavorite:(BOOL)favorite
 {
-    FavoriteManager *favoriteManager = [FavoriteManager getFavoriteManager];
+    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     [favoriteManager addFavorite:mnt];
 }
 

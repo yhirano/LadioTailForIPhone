@@ -37,7 +37,7 @@ typedef NSInteger PlayerState;
 
 @interface Player : NSObject <AVAudioSessionDelegate>
 
-+ (Player *)getPlayer;
++ (Player *)sharedInstance;
 
 - (void)play:(NSURL *)url;
 

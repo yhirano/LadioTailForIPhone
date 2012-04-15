@@ -46,7 +46,10 @@ typedef NSInteger ChannelSortType;
  */
 @interface Headline : NSObject
 
-- (id)init;
+/**
+ * ヘッドラインインスタンスを取得
+ */
++ (Headline*)sharedInstance;
 
 /**
  * ヘッドラインをネット上から取得する

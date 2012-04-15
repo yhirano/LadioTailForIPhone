@@ -17,6 +17,6 @@
 
 @property NSString* searchWord;
 
-+ (SearchWordManager*)getSearchWordManager;
++ (SearchWordManager*)sharedInstance;
 
 @end

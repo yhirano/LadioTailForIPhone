@@ -31,7 +31,7 @@
  * 
  * @return FavoriteManager
  */
-+ (FavoriteManager *)getFavoriteManager;
++ (FavoriteManager *)sharedInstance;
 
 /**
  * お気に入りを追加する

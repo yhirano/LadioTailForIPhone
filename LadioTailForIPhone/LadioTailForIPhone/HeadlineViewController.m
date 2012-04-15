@@ -189,7 +189,7 @@
 
     // タブの切り替えごとに検索バーを更新する
     // 別タブで入力した検索バーのテキストをこのタブでも使うため
-    NSString *searchWord = [SearchWordManager getSearchWordManager].searchWord;
+    NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
     if (searchWord == nil) {
         searchWord = @"";
     }
@@ -204,7 +204,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
-    if ([FBNetworkReachability sharedInstance].reachable && [[HeadlineManager getHeadline] getChannels] == 0) {
+    if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] getChannels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
@@ -219,7 +219,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
-    [SearchWordManager getSearchWordManager].searchWord = searchText;
+    [SearchWordManager sharedInstance].searchWord = searchText;
 
     [self updateHeadlineTable];
 }
@@ -284,7 +284,7 @@
         listenersLabel.text = @"";
     }
 
-    playImageView.hidden = ![[Player getPlayer]isPlaying:[channel getPlayUrl]];
+    playImageView.hidden = ![[Player sharedInstance]isPlaying:[channel getPlayUrl]];
     favoriteImageView.hidden = !channel.favorite;
     
     return cell;
@@ -342,8 +342,8 @@
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSURL *playingUrl = [[Player getPlayer] getPlayUrl];
-            Headline *headline = [HeadlineManager getHeadline];
+            NSURL *playingUrl = [[Player sharedInstance] getPlayUrl];
+            Headline *headline = [Headline sharedInstance];
             Channel *channel = [headline getChannel:playingUrl];
             ((ChannelViewController *) viewCon).channel = channel;
         }
@@ -399,14 +399,14 @@
 
 - (void)fetchHeadline
 {
-    Headline *headline = [HeadlineManager getHeadline];
+    Headline *headline = [Headline sharedInstance];
     [headline fetchHeadline];
 }
 
 - (void)updateHeadlineTable
 {
-    Headline *headline = [HeadlineManager getHeadline];
-    showedChannels = [headline getChannels:self.getSortType searchWord:[SearchWordManager getSearchWordManager].searchWord];
+    Headline *headline = [Headline sharedInstance];
+    showedChannels = [headline getChannels:self.getSortType searchWord:[SearchWordManager sharedInstance].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
@@ -424,7 +424,7 @@
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
-    if ([[Player getPlayer] getState] == PlayerStatePlay) {
+    if ([[Player sharedInstance] getState] == PlayerStatePlay) {
         self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
     } else {
         self.navigationItem.rightBarButtonItem = nil;

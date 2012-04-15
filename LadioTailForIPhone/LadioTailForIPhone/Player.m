@@ -35,7 +35,7 @@ static Player *instance = nil;
 
 @implementation Player
 
-+ (Player *)getPlayer
++ (Player *)sharedInstance
 {
     if (instance == nil) {
         instance = [[Player alloc] init];
@@ -43,7 +43,6 @@ static Player *instance = nil;
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [[AVAudioSession sharedInstance] setDelegate:self];
         [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-
     }
     return instance;
 }
