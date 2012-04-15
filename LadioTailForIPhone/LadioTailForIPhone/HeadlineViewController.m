@@ -21,6 +21,7 @@
  */
 
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "FBNetworkReachability/FBNetworkReachability.h"
 #import "LadioLib/LadioLib.h"
 #import "SearchWordManager.h"
 #import "Player.h"
@@ -70,7 +71,9 @@
 
 @implementation HeadlineViewController
 {
-    NSArray *channels;
+    /// テーブルに表示している番組
+    NSArray *showedChannels;
+
     UIBarButtonItem *tempPlayingBarButtonItem;
 }
 @synthesize navigateionItem;
@@ -150,7 +153,7 @@
 
 - (void)viewDidUnload
 {
-    channels = nil;
+    showedChannels = nil;
     tempPlayingBarButtonItem = nil;
     
     [self setUpdateBarButtonItem:nil];
@@ -198,6 +201,16 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
+    if ([FBNetworkReachability sharedInstance].reachable && [[HeadlineManager getHeadline] getChannels] == 0) {
+        // 番組表を取得する
+        // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
+        [self fetchHeadline];
+    }
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -223,16 +236,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (channels != nil) {
-        return [channels count];
-    } else {
-        return 0;
-    }
+    return [showedChannels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [channels objectAtIndex:indexPath.row];
+    Channel *channel = (Channel *) [showedChannels objectAtIndex:indexPath.row];
 
     NSString *cellIdentifier;
     
@@ -323,7 +332,7 @@
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [channels objectAtIndex:[headlineTableView indexPathForSelectedRow].row];
+            Channel *channel = [showedChannels objectAtIndex:[headlineTableView indexPathForSelectedRow].row];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -388,19 +397,25 @@
     return ChannelSortTypeNone;
 }
 
+- (void)fetchHeadline
+{
+    Headline *headline = [HeadlineManager getHeadline];
+    [headline fetchHeadline];
+}
+
 - (void)updateHeadlineTable
 {
     Headline *headline = [HeadlineManager getHeadline];
-    channels = [headline getChannels:self.getSortType searchWord:[SearchWordManager getSearchWordManager].searchWord];
+    showedChannels = [headline getChannels:self.getSortType searchWord:[SearchWordManager getSearchWordManager].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
-    if (channels == nil || [channels count] == 0) {
+    if ([showedChannels count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     } else {
         navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
-    navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [channels count]];
+    navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels count]];
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
@@ -418,7 +433,6 @@
 
 - (IBAction)update:(id)sender
 {
-    Headline *headline = [HeadlineManager getHeadline];
-    [headline fetchHeadline];
+    [self fetchHeadline];
 }
 @end

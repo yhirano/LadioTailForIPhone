@@ -16,6 +16,8 @@
 		8E1BA69B153A721000070E71 /* navbar_favorite_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA695153A721000070E71 /* navbar_favorite_yellow.png */; };
 		8E1BA69C153A721000070E71 /* navbar_favorite_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA696153A721000070E71 /* navbar_favorite_yellow@2x.png */; };
 		8E1BA69E153A721000070E71 /* star_fav_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA698153A721000070E71 /* star_fav_yellow.png */; };
+		8E1BA6B2153AA33600070E71 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BA6B1153AA33600070E71 /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E30D15D153996DE00647D21 /* playback_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D15B153996DE00647D21 /* playback_play.png */; };
 		8E30D15E153996DE00647D21 /* playback_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D15C153996DE00647D21 /* playback_stop.png */; };
 		8E30D1681539A62D00647D21 /* tab_dj.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D1601539A62D00647D21 /* tab_dj.png */; };
@@ -71,6 +73,9 @@
 		8E1BA695153A721000070E71 /* navbar_favorite_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar_favorite_yellow.png; sourceTree = "<group>"; };
 		8E1BA696153A721000070E71 /* navbar_favorite_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_favorite_yellow@2x.png"; sourceTree = "<group>"; };
 		8E1BA698153A721000070E71 /* star_fav_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fav_yellow.png; sourceTree = "<group>"; };
+		8E1BA6B0153AA33600070E71 /* FBNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBNetworkReachability.h; sourceTree = "<group>"; };
+		8E1BA6B1153AA33600070E71 /* FBNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBNetworkReachability.m; sourceTree = "<group>"; };
+		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E30D15B153996DE00647D21 /* playback_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playback_play.png; sourceTree = "<group>"; };
 		8E30D15C153996DE00647D21 /* playback_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playback_stop.png; sourceTree = "<group>"; };
 		8E30D1601539A62D00647D21 /* tab_dj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_dj.png; sourceTree = "<group>"; };
@@ -141,10 +146,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */,
-				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
 				8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */,
 				8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */,
+				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
 				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
+				8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +178,15 @@
 				8E30D1671539A62D00647D21 /* tab_title@2x.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		8E1BA6AF153AA33600070E71 /* FBNetworkReachability */ = {
+			isa = PBXGroup;
+			children = (
+				8E1BA6B0153AA33600070E71 /* FBNetworkReachability.h */,
+				8E1BA6B1153AA33600070E71 /* FBNetworkReachability.m */,
+			);
+			path = FBNetworkReachability;
 			sourceTree = "<group>";
 		};
 		8EC23B3C153712BB007352FD = {
@@ -203,6 +218,7 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */,
 				8E16282215383107007A2DBE /* QuartzCore.framework */,
 				8EC23B901537147B007352FD /* AVFoundation.framework */,
 				8EC23B4B153712BB007352FD /* UIKit.framework */,
@@ -218,6 +234,7 @@
 				8EC23B8915371432007352FD /* MainStoryboard.storyboard */,
 				8EC23B6A15371382007352FD /* LadioLib */,
 				8EC23B7A15371382007352FD /* SVProgressHUD */,
+				8E1BA6AF153AA33600070E71 /* FBNetworkReachability */,
 				8EC23B5A153712BB007352FD /* AppDelegate.h */,
 				8EC23B5B153712BB007352FD /* AppDelegate.m */,
 				8EC23B7215371382007352FD /* LadioTailViewController.h */,
@@ -391,6 +408,7 @@
 				8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */,
 				8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */,
 				8E1BA68E153A55BD00070E71 /* FavoriteManager.m in Sources */,
+				8E1BA6B2153AA33600070E71 /* FBNetworkReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
