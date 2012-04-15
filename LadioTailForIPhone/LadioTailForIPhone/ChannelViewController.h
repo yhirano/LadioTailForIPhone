@@ -28,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
 
 @property (weak, nonatomic) IBOutlet UIButton *playButton;

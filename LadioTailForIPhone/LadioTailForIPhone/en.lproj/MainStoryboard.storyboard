@@ -446,6 +446,7 @@
                     <connections>
                         <outlet property="bottomView" destination="dCA-ip-Jy9" id="Fbc-Ri-0rt"/>
                         <outlet property="descriptionWebView" destination="bLh-Zp-H9I" id="yDH-Wd-zQe"/>
+                        <outlet property="favoriteBarButtonItem" destination="gZN-oP-BxW" id="tD4-Vb-vSR"/>
                         <outlet property="playButton" destination="I9s-8g-ncC" id="Fb5-3i-LuA"/>
                         <outlet property="topNavigationItem" destination="4py-bV-tQ6" id="Fb9-RK-oLX"/>
                     </connections>

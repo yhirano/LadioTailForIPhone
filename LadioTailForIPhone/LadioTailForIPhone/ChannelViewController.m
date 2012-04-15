@@ -25,6 +25,8 @@
 #import "LadioLib/LadioLib.h"
 #import "ChannelViewController.h"
 
+/// お気に入りボタンの色
+#define FAVORITE_BUTTON_COLOR [UIColor darkGrayColor]
 /// 詳細表示画面の背景色
 #define DESCRIPTION_BACKGROUND_COLOR "#3C3C3C"
 /// 詳細表示画面のテキスト色
@@ -36,6 +38,7 @@
 
 @synthesize channel;
 @synthesize topNavigationItem;
+@synthesize favoriteBarButtonItem;
 @synthesize descriptionWebView;
 @synthesize playButton;
 @synthesize bottomView;
@@ -69,6 +72,9 @@
         topNavigationItem.title = channel.dj;
     }
 
+    // お気に入りボタンの色を変える
+    favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
+
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = bottomView.bounds;
@@ -94,6 +100,7 @@
     [self setPlayButton:nil];
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
+    [self setFavoriteBarButtonItem:nil];
     [super viewDidUnload];
 }
 
