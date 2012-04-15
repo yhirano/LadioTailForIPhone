@@ -112,7 +112,7 @@
 
 - (NSURL *)getPlayUrl;
 
-- (BOOL) isMatch:(NSArray*)searchWords;
+- (BOOL)isMatch:(NSArray *)searchWords;
 
 - (NSComparisonResult)compareNewly:(Channel *)_channel;
 

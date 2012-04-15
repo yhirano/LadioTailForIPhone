@@ -43,7 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     // ナビゲーションバーの色を変える
     self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
 }

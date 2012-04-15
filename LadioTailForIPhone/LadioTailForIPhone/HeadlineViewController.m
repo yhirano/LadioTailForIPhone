@@ -106,16 +106,16 @@
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:backButtonStr
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
+                                       initWithTitle:backButtonStr
                                        style:UIBarButtonItemStyleBordered
-                                       target:nil
-                                       action:nil];
+                                       target:nil action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 更新ボタンの色を変更する
     updateBarButtonItem.tintColor = UPDATE_BUTTON_COLOR;
-    
+
     // 再生中ボタンの装飾を変更する
     playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
     playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
@@ -129,11 +129,9 @@
 
     // 検索バーが空でもサーチキーを押せるようにする
     // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
-    for (UIView *subview in headlineSearchBar.subviews)
-    {
-        if ([subview isKindOfClass:[UITextField class]])
-        {
-            ((UITextField *)subview).enablesReturnKeyAutomatically = NO;
+    for (UIView *subview in headlineSearchBar.subviews) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            ((UITextField *) subview).enablesReturnKeyAutomatically = NO;
             break;
         }
     }
@@ -155,7 +153,7 @@
 {
     showedChannels = nil;
     tempPlayingBarButtonItem = nil;
-    
+
     [self setUpdateBarButtonItem:nil];
     [self setNavigateionItem:nil];
     [self setPlayingBarButtonItem:nil];
@@ -226,7 +224,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-	[searchBar resignFirstResponder];
+    [searchBar resignFirstResponder];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -244,7 +242,7 @@
     Channel *channel = (Channel *) [showedChannels objectAtIndex:indexPath.row];
 
     NSString *cellIdentifier;
-    
+
     // タイトルのみが存在する場合
     if (!([channel.nam length] == 0) && ([channel.dj length] == 0)) {
         cellIdentifier = @"ChannelTitleOnlyCell";
@@ -255,7 +253,7 @@
     } else {
         cellIdentifier = @"ChannelCell";
     }
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (cell == nil) {
@@ -279,14 +277,14 @@
         djLabel.text = @"";
     }
     if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-        listenersLabel.text = [[NSString alloc]initWithFormat:@"%d", channel.cln];
+        listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
     } else {
         listenersLabel.text = @"";
     }
 
-    playImageView.hidden = ![[Player sharedInstance]isPlaying:[channel getPlayUrl]];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel getPlayUrl]];
     favoriteImageView.hidden = !channel.favorite;
-    
+
     return cell;
 }
 
@@ -337,7 +335,7 @@
         }
     }
     // 再生中ボタンを選択した
-    else if([[segue identifier] isEqualToString:@"PlayingChannel"]) {
+    else if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
         // 番組情報を繊維先のViewに設定
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
@@ -383,7 +381,7 @@
     [self updateHeadlineTable];
 
     // 進捗ウィンドウにエラー表示
-    NSString* errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗"); 
+    NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
     [SVProgressHUD dismissWithError:errorStr afterDelay:3];
 }
 

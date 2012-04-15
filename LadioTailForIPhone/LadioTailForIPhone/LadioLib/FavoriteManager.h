@@ -38,21 +38,21 @@
  *
  * @param mount お気に入りに追加する番組のマウント
  */
-- (void)addFavorite:(NSString*)mount;
+- (void)addFavorite:(NSString *)mount;
 
 /**
  * お気に入りを削除する
  *
  * @param mount お気に入りかｒ削除する番組のマウント
  */
-- (void)removeFavorite:(NSString*)mount;
+- (void)removeFavorite:(NSString *)mount;
 
 /**
  * お気に入りに登録済みの場合は削除し、登録されていない場合は登録する
  *
  * @param mount お気に入りかｒ削除する番組のマウント
  */
-- (void)switchFavorite:(NSString*)mount;
+- (void)switchFavorite:(NSString *)mount;
 
 /**
  * お気に入りかを取得する
@@ -60,6 +60,6 @@
  * @param mount お気に入りかを確認する番組のマウント
  * @return お気に入りの場合はYES、それ以外はNO
  */
-- (BOOL)isFavorite:(NSString*)mount;
+- (BOOL)isFavorite:(NSString *)mount;
 
 @end

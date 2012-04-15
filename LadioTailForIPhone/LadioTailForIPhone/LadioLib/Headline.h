@@ -49,7 +49,7 @@ typedef NSInteger ChannelSortType;
 /**
  * ヘッドラインインスタンスを取得
  */
-+ (Headline*)sharedInstance;
++ (Headline *)sharedInstance;
 
 /**
  * ヘッドラインをネット上から取得する
@@ -90,7 +90,7 @@ typedef NSInteger ChannelSortType;
  * @see CHANNEL_SORT_TYPE_DJ
  * @see CHANNEL_SORT_TYPE_NONE
  */
-- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString*)searchWord;
+- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString *)searchWord;
 
 /**
  * 一致する再生URLを持つ番組を取得する
@@ -98,5 +98,5 @@ typedef NSInteger ChannelSortType;
  * @param playUrl 再生URL
  * @return Channel。見つからない場合はnil。
  */
-- (Channel*)getChannel:(NSURL*)playUrl;
+- (Channel *)getChannel:(NSURL *)playUrl;
 @end

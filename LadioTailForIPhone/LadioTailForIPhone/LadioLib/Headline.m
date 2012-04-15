@@ -35,7 +35,7 @@ static Headline *instance = nil;
     NSMutableData *receivedData;
 }
 
-+ (Headline*) sharedInstance
++ (Headline *)sharedInstance
 {
     if (instance == nil) {
         instance = [[Headline alloc] init];
@@ -432,7 +432,7 @@ static Headline *instance = nil;
     return [self getChannels:sortType searchWord:nil];
 }
 
-- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString*)searchWord
+- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
     NSMutableArray *result = [channels mutableCopy];
 
@@ -450,7 +450,7 @@ static Headline *instance = nil;
             }
         }
     }
-    
+
     switch (sortType) {
         case ChannelSortTypeNewly:
             return [result sortedArrayUsingSelector:@selector(compareNewly:)];
@@ -472,7 +472,7 @@ static Headline *instance = nil;
  * @param 文字列
  * @return ホワイトスペースで区切った結果
  */
-+ (NSArray*) splitStringByWhiteSpace:(NSString*)word
++ (NSArray *)splitStringByWhiteSpace:(NSString *)word
 {
     // 文字列を空白文字で分割し、検索単語列を生成する
     NSCharacterSet *separator = [NSCharacterSet characterSetWithCharactersInString:@" \t　"];
@@ -480,7 +480,7 @@ static Headline *instance = nil;
 
     // 空白文字を除外する
     NSMutableArray *removeList = [[NSMutableArray alloc] init];
-    for (NSString* word in words) {
+    for (NSString *word in words) {
         if ([word length] == 0) {
             [removeList addObject:word];
         }
@@ -494,15 +494,15 @@ static Headline *instance = nil;
     return words;
 }
 
-- (Channel*)getChannel:(NSURL*)playUrl
+- (Channel *)getChannel:(NSURL *)playUrl
 {
     if (playUrl == nil) {
         return nil;
     }
-    
-    for (Channel* c in channels) {
-        NSURL* url = [c getPlayUrl];
-        if([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
+
+    for (Channel *c in channels) {
+        NSURL *url = [c getPlayUrl];
+        if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
             return c;
         }
     }

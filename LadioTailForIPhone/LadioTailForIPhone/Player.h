@@ -45,7 +45,7 @@ typedef NSInteger PlayerState;
 
 - (BOOL)isPlaying:(NSURL *)url;
 
-- (NSURL*)getPlayUrl;
+- (NSURL *)getPlayUrl;
 
 - (PlayerState)getState;
 

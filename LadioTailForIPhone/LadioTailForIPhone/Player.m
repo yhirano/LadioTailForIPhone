@@ -50,7 +50,7 @@ static Player *instance = nil;
 - (id)init
 {
     if (self = [super init]) {
-        @synchronized(self) {
+        @synchronized (self) {
             state = PlayerStateIdle;
         }
 
@@ -82,12 +82,12 @@ static Player *instance = nil;
 
 - (void)play:(NSURL *)url
 {
-    @synchronized(self) {
+    @synchronized (self) {
         // 既に再生中のURLとおなじ場合は何もしない
         if ([self isPlaying:url]) {
             return;
         }
-        
+
         switch (state) {
             case PlayerStatePlay:
                 // 再生中中は停止
@@ -106,12 +106,12 @@ static Player *instance = nil;
             default:
                 break;
         }
-    }    
+    }
 }
 
 - (void)stop
 {
-    @synchronized(self) {
+    @synchronized (self) {
         [player pause];
         state = PlayerStateIdle;
         NSLog(@"Play stopped by user operation.");
@@ -121,7 +121,7 @@ static Player *instance = nil;
 
 - (BOOL)isPlaying:(NSURL *)url
 {
-    @synchronized(self) {
+    @synchronized (self) {
         NSURL *playingUrl = [self getPlayUrl];
         if (playingUrl == nil) {
             return NO;
@@ -131,9 +131,9 @@ static Player *instance = nil;
     }
 }
 
-- (NSURL*)getPlayUrl
+- (NSURL *)getPlayUrl
 {
-    @synchronized(self) {
+    @synchronized (self) {
         switch (state) {
             case PlayerStatePlay:
                 return playUrl;
@@ -147,14 +147,14 @@ static Player *instance = nil;
 
 - (PlayerState)getState
 {
-    @synchronized(self) {
+    @synchronized (self) {
         return state;
     }
 }
 
 - (void)stopped:(NSNotification *)notification
 {
-    @synchronized(self) {
+    @synchronized (self) {
         playUrl = nil;
         state = PlayerStateIdle;
         NSLog(@"Play stopped.");
@@ -163,16 +163,17 @@ static Player *instance = nil;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-                        change:(NSDictionary *)change context:(void *)context {
+                        change:(NSDictionary *)change context:(void *)context
+{
     if (object == player && [keyPath isEqualToString:@"status"]) {
         if (player.status == AVPlayerStatusReadyToPlay) {
-            @synchronized(self) {
+            @synchronized (self) {
                 state = PlayerStatePlay;
                 NSLog(@"Play started.");
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
             }
         } else if (player.status == AVPlayerStatusFailed) {
-            @synchronized(self) {
+            @synchronized (self) {
                 state = PlayerStateIdle;
                 NSLog(@"Play failed.");
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];

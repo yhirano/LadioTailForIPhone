@@ -27,7 +27,7 @@
 
 @synthesize surl;
 @synthesize tims;
-@synthesize srv ;
+@synthesize srv;
 @synthesize prt;
 @synthesize mnt;
 @synthesize type;
@@ -47,7 +47,7 @@
 
 - (id)init
 {
-    if(self = [super init]){
+    if (self = [super init]) {
         surl = nil;
         tims = nil;
         srv = nil;
@@ -70,18 +70,19 @@
     return self;
 }
 
-- (NSString*)description
+- (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ :%p ,surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@ url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>",
+    return [NSString
+            stringWithFormat:@"<%@ :%p ,surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@ url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>",
             NSStringFromClass([self class]), self, surl, tims, srv, prt, mnt, type, nam, gnl, desc, dj, song, url, cln, clns, max, bit, smpl, chs];
 }
 
-- (void)setSurlFromString:(NSString*)u
+- (void)setSurlFromString:(NSString *)u
 {
     surl = [NSURL URLWithString:u];
 }
 
-- (void)setTimsFromString:(NSString*)t
+- (void)setTimsFromString:(NSString *)t
 {
     @autoreleasepool {
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -90,7 +91,7 @@
     }
 }
 
-- (NSString*)getTimsToString
+- (NSString *)getTimsToString
 {
     @autoreleasepool {
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -99,12 +100,12 @@
     }
 }
 
-- (void)setUrlFromString:(NSString*)u
+- (void)setUrlFromString:(NSString *)u
 {
     url = [NSURL URLWithString:u];
 }
 
-- (NSURL*)getPlayUrl
+- (NSURL *)getPlayUrl
 {
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d%@", srv, prt, mnt]];
 }
@@ -121,7 +122,7 @@
     [favoriteManager addFavorite:mnt];
 }
 
-- (BOOL) isMatch:(NSArray*)searchWords
+- (BOOL)isMatch:(NSArray *)searchWords
 {
     // フィルタリング単語が指定されていない場合は無条件に合致する
     if ([searchWords count] == 0) {
@@ -130,8 +131,8 @@
 
     // 検索単語を辞書に登録する
     // 辞書は Key:検索単語 Value:マッチしたか
-    NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc]initWithCapacity:[searchWords count]];
-    for (NSString* word in searchWords) {
+    NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
+    for (NSString *word in searchWords) {
         if (!([word length] == 0)) {
             [searchDictionary setObject:[NSNumber numberWithBool:NO] forKey:word];
         }
@@ -154,9 +155,9 @@
 
     // 検索文字と検索対象文字を比較する
     for (NSString *searchedWord in searchedWords) {
-        for (NSString* searchWord in [searchDictionary allKeys]) {
+        for (NSString *searchWord in [searchDictionary allKeys]) {
             // 見つかった場合は検索辞書の該当単語にYESを代入
-            if ([searchedWord rangeOfString:searchWord options:(NSCaseInsensitiveSearch|NSLiteralSearch|NSWidthInsensitiveSearch)].location != NSNotFound) {
+            if ([searchedWord rangeOfString:searchWord options:(NSCaseInsensitiveSearch | NSLiteralSearch | NSWidthInsensitiveSearch)].location != NSNotFound) {
                 [searchDictionary setObject:[NSNumber numberWithBool:YES] forKey:searchWord];
             }
         }
@@ -171,23 +172,23 @@
     return YES;
 }
 
-- (NSComparisonResult) compareNewly:(Channel*)_channel
+- (NSComparisonResult)compareNewly:(Channel *)_channel
 {
     NSComparisonResult result;
-    
+
     // お気に入りで比較する
     result = [Channel compareFavorite:self compared:_channel];
     if (result != NSOrderedSame) {
         return result;
     }
-    
+
     // 新しい方が前に来る
     result = [_channel.tims compare:self.tims];
-    
+
     return result;
 }
 
-- (NSComparisonResult) compareListeners:(Channel*)_channel
+- (NSComparisonResult)compareListeners:(Channel *)_channel
 {
     NSComparisonResult result;
 
@@ -210,7 +211,7 @@
     return result;
 }
 
-- (NSComparisonResult) compareTitle:(Channel*)_channel
+- (NSComparisonResult)compareTitle:(Channel *)_channel
 {
     NSComparisonResult result;
 
@@ -219,7 +220,7 @@
     if (result != NSOrderedSame) {
         return result;
     }
-    
+
     // タイトルで比較
     result = [Channel compareString:self.nam compared:_channel.nam];
     if (result != NSOrderedSame) {
@@ -238,7 +239,7 @@
     return result;
 }
 
-- (NSComparisonResult) compareDj:(Channel*)_channel
+- (NSComparisonResult)compareDj:(Channel *)_channel
 {
     NSComparisonResult result;
 
@@ -266,7 +267,7 @@
     return result;
 }
 
-+ (NSComparisonResult) compareString:(NSString*)str1 compared:(NSString*)str2
++ (NSComparisonResult)compareString:(NSString *)str1 compared:(NSString *)str2
 {
     // 文字列で比較する。
     // 文字列が空の場合は後ろに来る。
@@ -278,16 +279,16 @@
         return NSOrderedSame;
     } else {
         NSString *trimStr1 = [str1
-                              stringByTrimmingCharactersInSet:
-                              [NSCharacterSet whitespaceCharacterSet]];
+                stringByTrimmingCharactersInSet:
+                        [NSCharacterSet whitespaceCharacterSet]];
         NSString *trimStr2 = [str2
-                              stringByTrimmingCharactersInSet:
-                              [NSCharacterSet whitespaceCharacterSet]];
+                stringByTrimmingCharactersInSet:
+                        [NSCharacterSet whitespaceCharacterSet]];
         return [trimStr1 localizedCaseInsensitiveCompare:trimStr2];
     }
 }
 
-+ (NSComparisonResult) compareFavorite:(Channel*)channel1 compared:(Channel*)channel2
++ (NSComparisonResult)compareFavorite:(Channel *)channel1 compared:(Channel *)channel2
 {
     NSComparisonResult result;
 

@@ -35,7 +35,7 @@ static FavoriteManager *instance = nil;
     return instance;
 }
 
-- (void)addFavorite:(NSString*)mount
+- (void)addFavorite:(NSString *)mount
 {
     // 登録済みの場合は何もしない
     if ([self isFavorite:mount]) {
@@ -52,7 +52,7 @@ static FavoriteManager *instance = nil;
     [defaults synchronize];
 }
 
-- (void)removeFavorite:(NSString*)mount
+- (void)removeFavorite:(NSString *)mount
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *favorites = [[defaults arrayForKey:FAVORITES_KEY_V1] mutableCopy];
@@ -69,7 +69,7 @@ static FavoriteManager *instance = nil;
     [defaults synchronize];
 }
 
-- (void)switchFavorite:(NSString*)mount
+- (void)switchFavorite:(NSString *)mount
 {
     if ([self isFavorite:mount]) {
         [self removeFavorite:mount];
@@ -78,13 +78,13 @@ static FavoriteManager *instance = nil;
     }
 }
 
-- (BOOL)isFavorite:(NSString*)mount
+- (BOOL)isFavorite:(NSString *)mount
 {
     BOOL result = NO;
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *favorites = [defaults arrayForKey:FAVORITES_KEY_V1];
-    
+
     // 登録されているお気に入りを探索
     for (NSString *favoritedMount in favorites) {
         if ([favoritedMount isEqualToString:mount]) {
@@ -92,7 +92,7 @@ static FavoriteManager *instance = nil;
             break;
         }
     }
-    
+
     return result;
 }
 
