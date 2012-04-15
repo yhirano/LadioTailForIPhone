@@ -99,4 +99,5 @@ typedef NSInteger ChannelSortType;
  * @return Channel。見つからない場合はnil。
  */
 - (Channel *)getChannel:(NSURL *)playUrl;
+
 @end

@@ -26,6 +26,7 @@
  * お気に入りを管理するシングルトンクラス
  */
 @interface FavoriteManager : NSObject
+
 /**
  * FavoriteManagerを取得する
  * 

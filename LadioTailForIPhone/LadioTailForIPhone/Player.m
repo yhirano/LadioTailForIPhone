@@ -24,16 +24,14 @@
 
 static Player *instance = nil;
 
-@interface Player ()
+
+@implementation Player
 {
+@private
     AVPlayer *player;
     PlayerState state;
     NSURL *playUrl;
 }
-
-@end
-
-@implementation Player
 
 + (Player *)sharedInstance
 {

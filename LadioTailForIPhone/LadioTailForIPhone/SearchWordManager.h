@@ -15,7 +15,7 @@
  */
 @interface SearchWordManager : NSObject
 
-@property NSString *searchWord;
+@property (strong) NSString *searchWord;
 
 + (SearchWordManager *)sharedInstance;
 

@@ -508,4 +508,5 @@ static Headline *instance = nil;
     }
     return nil;
 }
+
 @end

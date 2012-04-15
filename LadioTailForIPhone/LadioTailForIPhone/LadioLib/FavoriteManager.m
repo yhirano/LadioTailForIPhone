@@ -27,6 +27,7 @@
 static FavoriteManager *instance = nil;
 
 @implementation FavoriteManager
+
 + (FavoriteManager *)sharedInstance
 {
     if (instance == nil) {

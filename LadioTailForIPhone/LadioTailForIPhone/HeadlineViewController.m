@@ -59,23 +59,16 @@
 /// テーブルセルのリスナー数のテキスト選択時カラー
 #define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
 
-@interface HeadlineViewController ()
-- (void)fetchHeadlineStarted:(NSNotification *)notification;
-
-- (void)fetchHeadlineSuceed:(NSNotification *)notification;
-
-- (void)fetchHeadlineFailed:(NSNotification *)notification;
-
-- (ChannelSortType)getSortType;
-@end
-
 @implementation HeadlineViewController
 {
+@private
     /// テーブルに表示している番組
     NSArray *showedChannels;
 
+    /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem;
 }
+
 @synthesize navigateionItem;
 @synthesize updateBarButtonItem;
 @synthesize playingBarButtonItem;
@@ -433,4 +426,5 @@
 {
     [self fetchHeadline];
 }
+
 @end
