@@ -354,7 +354,13 @@
     }
 
     html = [[NSString alloc] initWithFormat:htmlBase, html];
-    [self.descriptionWebView loadHTMLString:html baseURL:nil];
+
+    // WebViewへのhtmlの書き込みは loadHTMLString:baseURL: だと遅い（ビューが表示されてからワンテンポ後に表示）ので
+    // JavaScriptの document.write() で直接書き込む
+    // http://d.hatena.ne.jp/PoohKid/20110920/1316523493
+    html = [html stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *jsString = [NSString stringWithFormat:@"document.write(\"%@\"); document.close();", html];
+    [self.descriptionWebView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent*)event
