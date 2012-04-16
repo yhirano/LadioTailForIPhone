@@ -31,8 +31,16 @@ static Headline *instance = nil;
 @implementation Headline
 {
 @private
+    /// 番組データリスト
     NSArray *channels;
+    /// channelsのロック
+    NSObject *channelsLock;
+    /// 受信データバッファ
     NSMutableData *receivedData;
+    /// ヘッドラインを取得中か
+    BOOL isFetching;
+    /// isFetchingのロック
+    NSObject *isFetchingLock;
 }
 
 + (Headline *)sharedInstance
@@ -47,14 +55,41 @@ static Headline *instance = nil;
 {
     if (self = [super init]) {
         channels = nil;
+        channelsLock = [[NSObject alloc] init];
         receivedData = nil;
+        isFetching = NO;
+        isFetchingLock = [[NSObject alloc] init];
     }
     return self;
 }
 
+- (void) dealloc
+{
+    isFetchingLock = nil;
+    channelsLock = nil;
+}
+
 - (void)fetchHeadline
 {
-    channels = nil;
+    // ヘッドライン取得中は何もしないで戻る
+    @synchronized (isFetchingLock) {
+        if (isFetching) {
+            NSLog(@"fetchHeadline call isn't processing. Fetching NetLadio headline now.");
+            return;
+        }
+    }
+
+    // ヘッドライン取得中のフラグを立てる
+    @synchronized (isFetchingLock) {
+        isFetching = YES;
+    }
+
+    @synchronized (channelsLock) {
+        channels = nil;
+#if DEBUG
+        NSLog(@"%@'s channels clear for fetch headline.", NSStringFromClass([self class]));
+#endif /* #if DEBUG */
+    }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:self];
 
@@ -85,6 +120,11 @@ static Headline *instance = nil;
             [error localizedDescription],
             [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 
+    // ヘッドライン取得中のフラグを下げる
+    @synchronized (isFetchingLock) {
+        isFetching = NO;
+    }
+
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:self];
 }
 
@@ -97,26 +137,31 @@ static Headline *instance = nil;
     NSArray *lines = [data componentsSeparatedByString:@"\n"];
     receivedData = nil;
 
-    NSError *expError = nil;
+    NSError *surlExpError, *timsExpError, *srvExpError, *prtExpError, *mntExpError, *typeExpError,
+             *namExpError, *gnlExpError, *descExpError, *djExpError, *songExpError, *urlExpError,
+             *clnExpError, *clnsExpError, *maxExpError, *bitExpError, *smplExpError, *chsExpError;
+    surlExpError = timsExpError = srvExpError = prtExpError = mntExpError = typeExpError =
+    namExpError = gnlExpError = descExpError = djExpError = songExpError = urlExpError =
+    clnExpError = clnsExpError = maxExpError = bitExpError = smplExpError = chsExpError = nil;
 
-    const NSRegularExpression *surlExp = [NSRegularExpression regularExpressionWithPattern:@"^SURL=(.*)" options:0 error:&expError];
-    const NSRegularExpression *timsExp = [NSRegularExpression regularExpressionWithPattern:@"^TIMS=(.*)" options:0 error:&expError];
-    const NSRegularExpression *srvExp = [NSRegularExpression regularExpressionWithPattern:@"^SRV=(.*)" options:0 error:&expError];
-    const NSRegularExpression *prtExp = [NSRegularExpression regularExpressionWithPattern:@"^PRT=(.*)" options:0 error:&expError];
-    const NSRegularExpression *mntExp = [NSRegularExpression regularExpressionWithPattern:@"^MNT=(.*)" options:0 error:&expError];
-    const NSRegularExpression *typeExp = [NSRegularExpression regularExpressionWithPattern:@"^TYPE=(.*)" options:0 error:&expError];
-    const NSRegularExpression *namExp = [NSRegularExpression regularExpressionWithPattern:@"^NAM=(.*)" options:0 error:&expError];
-    const NSRegularExpression *gnlExp = [NSRegularExpression regularExpressionWithPattern:@"^GNL=(.*)" options:0 error:&expError];
-    const NSRegularExpression *descExp = [NSRegularExpression regularExpressionWithPattern:@"^DESC=(.*)" options:0 error:&expError];
-    const NSRegularExpression *djExp = [NSRegularExpression regularExpressionWithPattern:@"^DJ=(.*)" options:0 error:&expError];
-    const NSRegularExpression *songExp = [NSRegularExpression regularExpressionWithPattern:@"^SONG=(.*)" options:0 error:&expError];
-    const NSRegularExpression *urlExp = [NSRegularExpression regularExpressionWithPattern:@"^URL=(.*)" options:0 error:&expError];
-    const NSRegularExpression *clnExp = [NSRegularExpression regularExpressionWithPattern:@"^CLN=(\\d+)" options:0 error:&expError];
-    const NSRegularExpression *clnsExp = [NSRegularExpression regularExpressionWithPattern:@"^CLNS=(\\d+)" options:0 error:&expError];
-    const NSRegularExpression *maxExp = [NSRegularExpression regularExpressionWithPattern:@"^MAX=(\\d+)" options:0 error:&expError];
-    const NSRegularExpression *bitExp = [NSRegularExpression regularExpressionWithPattern:@"^BIT=(\\d+)" options:0 error:&expError];
-    const NSRegularExpression *smplExp = [NSRegularExpression regularExpressionWithPattern:@"^SMPL=(\\d+)" options:0 error:&expError];
-    const NSRegularExpression *chsExp = [NSRegularExpression regularExpressionWithPattern:@"^CHS=(\\d+)" options:0 error:&expError];
+    const NSRegularExpression *surlExp = [NSRegularExpression regularExpressionWithPattern:@"^SURL=(.*)" options:0 error:&surlExpError];
+    const NSRegularExpression *timsExp = [NSRegularExpression regularExpressionWithPattern:@"^TIMS=(.*)" options:0 error:&timsExpError];
+    const NSRegularExpression *srvExp = [NSRegularExpression regularExpressionWithPattern:@"^SRV=(.*)" options:0 error:&srvExpError];
+    const NSRegularExpression *prtExp = [NSRegularExpression regularExpressionWithPattern:@"^PRT=(.*)" options:0 error:&prtExpError];
+    const NSRegularExpression *mntExp = [NSRegularExpression regularExpressionWithPattern:@"^MNT=(.*)" options:0 error:&mntExpError];
+    const NSRegularExpression *typeExp = [NSRegularExpression regularExpressionWithPattern:@"^TYPE=(.*)" options:0 error:&typeExpError];
+    const NSRegularExpression *namExp = [NSRegularExpression regularExpressionWithPattern:@"^NAM=(.*)" options:0 error:&namExpError];
+    const NSRegularExpression *gnlExp = [NSRegularExpression regularExpressionWithPattern:@"^GNL=(.*)" options:0 error:&gnlExpError];
+    const NSRegularExpression *descExp = [NSRegularExpression regularExpressionWithPattern:@"^DESC=(.*)" options:0 error:&descExpError];
+    const NSRegularExpression *djExp = [NSRegularExpression regularExpressionWithPattern:@"^DJ=(.*)" options:0 error:&djExpError];
+    const NSRegularExpression *songExp = [NSRegularExpression regularExpressionWithPattern:@"^SONG=(.*)" options:0 error:&songExpError];
+    const NSRegularExpression *urlExp = [NSRegularExpression regularExpressionWithPattern:@"^URL=(.*)" options:0 error:&urlExpError];
+    const NSRegularExpression *clnExp = [NSRegularExpression regularExpressionWithPattern:@"^CLN=(\\d+)" options:0 error:&clnExpError];
+    const NSRegularExpression *clnsExp = [NSRegularExpression regularExpressionWithPattern:@"^CLNS=(\\d+)" options:0 error:&clnsExpError];
+    const NSRegularExpression *maxExp = [NSRegularExpression regularExpressionWithPattern:@"^MAX=(\\d+)" options:0 error:&maxExpError];
+    const NSRegularExpression *bitExp = [NSRegularExpression regularExpressionWithPattern:@"^BIT=(\\d+)" options:0 error:&bitExpError];
+    const NSRegularExpression *smplExp = [NSRegularExpression regularExpressionWithPattern:@"^SMPL=(\\d+)" options:0 error:&smplExpError];
+    const NSRegularExpression *chsExp = [NSRegularExpression regularExpressionWithPattern:@"^CHS=(\\d+)" options:0 error:&chsExpError];
 
     NSMutableArray *channelList = [NSMutableArray array];
     Channel *channel = nil;
@@ -128,8 +173,8 @@ static Headline *instance = nil;
             continue;
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (surlExpError != nil) {
+            NSLog(@"Expression error : %@", surlExpError);
         } else {
             NSTextCheckingResult *match = [surlExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -144,8 +189,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (timsExpError != nil) {
+            NSLog(@"Expression error : %@", timsExpError);
         } else {
             NSTextCheckingResult *match = [timsExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -160,8 +205,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (srvExpError != nil) {
+            NSLog(@"Expression error : %@", srvExpError);
         } else {
             NSTextCheckingResult *match = [srvExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -176,8 +221,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (prtExpError != nil) {
+            NSLog(@"Expression error : %@", prtExpError);
         } else {
             NSTextCheckingResult *match = [prtExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -192,8 +237,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (mntExpError != nil) {
+            NSLog(@"Expression error : %@", mntExpError);
         } else {
             NSTextCheckingResult *match = [mntExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -208,8 +253,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (typeExpError != nil) {
+            NSLog(@"Expression error : %@", typeExpError);
         } else {
             NSTextCheckingResult *match = [typeExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -224,8 +269,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (namExpError != nil) {
+            NSLog(@"Expression error : %@", namExpError);
         } else {
             NSTextCheckingResult *match = [namExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -240,8 +285,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (gnlExpError != nil) {
+            NSLog(@"Expression error : %@", gnlExpError);
         } else {
             NSTextCheckingResult *match = [gnlExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -256,8 +301,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (descExpError != nil) {
+            NSLog(@"Expression error : %@", descExpError);
         } else {
             NSTextCheckingResult *match = [descExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -272,8 +317,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (djExpError != nil) {
+            NSLog(@"Expression error : %@", djExpError);
         } else {
             NSTextCheckingResult *match = [djExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -288,8 +333,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (songExpError != nil) {
+            NSLog(@"Expression error : %@", songExpError);
         } else {
             NSTextCheckingResult *match = [songExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -304,8 +349,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (urlExpError != nil) {
+            NSLog(@"Expression error : %@", urlExpError);
         } else {
             NSTextCheckingResult *match = [urlExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -320,8 +365,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (clnExpError != nil) {
+            NSLog(@"Expression error : %@", clnExpError);
         } else {
             NSTextCheckingResult *match = [clnExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -336,8 +381,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (clnsExpError != nil) {
+            NSLog(@"Expression error : %@", clnsExpError);
         } else {
             NSTextCheckingResult *match = [clnsExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -352,8 +397,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (maxExpError != nil) {
+            NSLog(@"Expression error : %@", maxExpError);
         } else {
             NSTextCheckingResult *match = [maxExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -368,8 +413,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (bitExpError != nil) {
+            NSLog(@"Expression error : %@", bitExpError);
         } else {
             NSTextCheckingResult *match = [bitExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -384,8 +429,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (smplExpError != nil) {
+            NSLog(@"Expression error : %@", smplExpError);
         } else {
             NSTextCheckingResult *match = [smplExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -400,8 +445,8 @@ static Headline *instance = nil;
             }
         }
 
-        if (expError != nil) {
-            NSLog(@"Expression error : %@", expError);
+        if (chsExpError != nil) {
+            NSLog(@"Expression error : %@", chsExpError);
         } else {
             NSTextCheckingResult *match = [chsExp firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
             if (match.numberOfRanges >= 2) {
@@ -417,7 +462,17 @@ static Headline *instance = nil;
         }
     }
 
-    channels = [[NSArray alloc] initWithArray:channelList];
+    @synchronized (channelsLock) {
+        channels = [[NSArray alloc] initWithArray:channelList];
+#if DEBUG
+        NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.", NSStringFromClass([self class]), [channels count]);
+#endif /* #if DEBUG */
+    }
+
+    // ヘッドライン取得中のフラグを下げる
+    @synchronized (isFetchingLock) {
+        isFetching = NO;
+    }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:self];
 }
@@ -434,7 +489,13 @@ static Headline *instance = nil;
 
 - (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
-    NSMutableArray *result = [channels mutableCopy];
+    NSMutableArray *result = nil;
+    @synchronized (channelsLock) {
+        result = [channels mutableCopy];
+#if DEBUG
+        NSLog(@"%@'s copied channels for return channels. There are %d channels.", NSStringFromClass([self class]), [result count]);
+#endif /* #if DEBUG */
+    }
 
     // フィルタリング
     if (!([searchWord length] == 0)) {
@@ -500,10 +561,12 @@ static Headline *instance = nil;
         return nil;
     }
 
-    for (Channel *c in channels) {
-        NSURL *url = [c getPlayUrl];
-        if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
-            return c;
+    @synchronized (channelsLock) {
+        for (Channel *c in channels) {
+            NSURL *url = [c getPlayUrl];
+            if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
+                return c;
+            }
         }
     }
     return nil;
