@@ -59,6 +59,9 @@
 /// テーブルセルのリスナー数のテキスト選択時カラー
 #define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
 
+/// ヘッドライン取得失敗時にエラーを表示する秒数
+#define DELAY_FETCH_HEADLINE_MESSAGE 3
+
 @implementation HeadlineViewController
 {
 @private
@@ -419,7 +422,7 @@
 
     // 進捗ウィンドウにエラー表示
     NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
-    [SVProgressHUD dismissWithError:errorStr afterDelay:3];
+    [SVProgressHUD dismissWithError:errorStr afterDelay:DELAY_FETCH_HEADLINE_MESSAGE];
 }
 
 - (void)playStateChanged:(NSNotification *)notification
