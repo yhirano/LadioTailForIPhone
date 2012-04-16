@@ -82,13 +82,6 @@ static Headline *instance = nil;
         isFetching = YES;
     }
 
-    @synchronized (channelsLock) {
-        channels = nil;
-#if DEBUG
-        NSLog(@"%@'s channels clear for fetch headline.", NSStringFromClass([self class]));
-#endif /* #if DEBUG */
-    }
-
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:self];
 
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];

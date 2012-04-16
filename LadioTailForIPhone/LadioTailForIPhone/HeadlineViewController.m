@@ -58,6 +58,12 @@
 #define HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR [UIColor blackColor]
 /// テーブルセルのリスナー数のテキスト選択時カラー
 #define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
+// Pull Refreshのテキスト色
+#define PULL_REFRESH_TEXT_COLOR [UIColor darkGrayColor]
+// Pull Refreshの矢印イメージ
+#define PULL_REFRESH_ARROW_IMAGE @"EGOTableViewPullRefresh.bundle/grayArrow.png"
+// Pull Refreshの背景色
+#define PULL_REFRESH_TEXT_BACKGROUND_COLOR [UIColor lightGrayColor]
 
 /// ヘッドライン取得失敗時にエラーを表示する秒数
 #define DELAY_FETCH_HEADLINE_MESSAGE 3
@@ -163,13 +169,15 @@
                                                                     0.0f,
                                                                     0.0f - headlineTableView.bounds.size.height,
                                                                     self.view.frame.size.width,
-                                                                    headlineTableView.bounds.size.height)];
+                                                                    headlineTableView.bounds.size.height)
+                                           arrowImageName:PULL_REFRESH_ARROW_IMAGE
+                                           textColor:PULL_REFRESH_TEXT_COLOR];
+        view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
+
         view.delegate = self;
         [headlineTableView addSubview:view];
         refreshHeaderView = view;
     }
-	//  update the last update date
-    [refreshHeaderView refreshLastUpdatedDate];
 #endif // #if PULL_REFRESH_HEADLINE
 }
 
@@ -444,9 +452,6 @@
 
     // ヘッドラインの取得開始時に更新ボタンを無効にする
     updateBarButtonItem.enabled = NO;
-
-    // ヘッドラインテーブルを更新する
-    [self updateHeadlineTable];
 }
 
 - (void)fetchHeadlineSuceed:(NSNotification *)notification
