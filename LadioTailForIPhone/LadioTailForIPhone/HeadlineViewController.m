@@ -201,13 +201,32 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
+    // リモコン対応
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] getChannels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // リモコン対応
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+
+    [super viewWillDisappear:animated];
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    // リモコン対応
+    return YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -338,7 +357,6 @@
     // 再生中ボタンを選択した
     else if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
         // 番組情報を繊維先のViewに設定
-        // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSURL *playingUrl = [[Player sharedInstance] getPlayUrl];
@@ -347,6 +365,12 @@
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent*)event
+{
+    // リモコンからのボタンクリック
+    [[Player sharedInstance] playFromRemoteControl:event];
 }
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification

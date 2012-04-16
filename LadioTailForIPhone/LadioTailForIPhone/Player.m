@@ -97,6 +97,11 @@ static Player *instance = nil;
     }
 }
 
+- (void)play
+{
+    [self playProc:playUrl];
+}
+
 - (void)play:(NSURL *)url
 {
     @synchronized (self) {
@@ -107,18 +112,12 @@ static Player *instance = nil;
 
         switch (state) {
             case PlayerStatePlay:
-                // 再生中中は停止
-                [player pause];
-                [player removeObserver:self forKeyPath:@"status"];
-                // スルー
+                // 再生中は停止
+                [self stopProc];
+                // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
-                state = PlayerStatePrepare;
-                playUrl = url;
-                NSLog(@"Play start %@", [playUrl absoluteString]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
-                player = [AVPlayer playerWithURL:url];
-                [player addObserver:self forKeyPath:@"status" options:0 context:nil];
-                [player play];
+                // 再生開始
+                [self playProc:url];
                 break;
             case PlayerStatePrepare:
             default:
@@ -127,15 +126,59 @@ static Player *instance = nil;
     }
 }
 
+- (void)playFromRemoteControl:(UIEvent*)event
+{
+	switch (event.subtype) {
+		case UIEventSubtypeRemoteControlTogglePlayPause:
+			switch ([self getState]) {
+                case PlayerStateIdle:
+                    [self play];
+                    break;
+                case PlayerStatePlay:
+                    [self stop];
+                    break;
+                case PlayerStatePrepare: // 再生準備中の場合は何もしない
+                default:
+                    break;
+            }
+            break;
+		default:
+            break;
+	}
+}
+
 - (void)stop
 {
     @synchronized (self) {
-        [player pause];
-        [player removeObserver:self forKeyPath:@"status"];
-        state = PlayerStateIdle;
+        [self stopProc];
         NSLog(@"Play stopped by user operation.");
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
     }
+}
+
+/// 再生処理
+- (void)playProc:(NSURL*)url
+{
+    // URLが空の場合は何もしない
+    if (url == nil) {
+        return;
+    }
+
+    state = PlayerStatePrepare;
+    playUrl = url;
+    NSLog(@"Play start %@", [playUrl absoluteString]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    player = [AVPlayer playerWithURL:url];
+    [player addObserver:self forKeyPath:@"status" options:0 context:nil];
+    [player play];
+}
+
+/// 停止処理
+- (void)stopProc
+{
+    [player pause];
+    [player removeObserver:self forKeyPath:@"status"];
+    state = PlayerStateIdle;
 }
 
 - (BOOL)isPlaying:(NSURL *)url
@@ -203,23 +246,18 @@ static Player *instance = nil;
 
 - (void)beginInterruption
 {
-#if DEBUG
-	NSLog(@"audio settion beginInterruption");
-#endif /* #if DEBUG */
+	NSLog(@"audio settion begin interruption.");
+    [self stop];
 }
 
 - (void)endInterruption
 {
-#if DEBUG
-	NSLog(@"audio settion endInterruption");
-#endif /* #if DEBUG */
+	NSLog(@"audio settion end interruption.");
 }
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags
 {
-#if DEBUG
-	NSLog(@"audio settion endInterruptionWithFlags %d", flags);
-#endif /* #if DEBUG */
+	NSLog(@"audio settion end interruption with flags %d", flags);
 }
 
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable

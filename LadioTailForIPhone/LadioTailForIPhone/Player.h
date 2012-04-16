@@ -39,9 +39,26 @@ typedef NSInteger PlayerState;
 
 + (Player *)sharedInstance;
 
+/**
+ * 前回停止したコンテンツを再生する
+ */
+- (void)play;
+
+/**
+ * 指定のURLのコンテンツを再生する
+ *
+ * @param url 再生するURL
+ */
 - (void)play:(NSURL *)url;
 
 - (void)stop;
+
+/**
+ * リモコンイベントの内容により再生・停止する
+ *
+ * @param event リモコンからのイベント
+ */
+- (void)playFromRemoteControl:(UIEvent*)event;
 
 - (BOOL)isPlaying:(NSURL *)url;
 

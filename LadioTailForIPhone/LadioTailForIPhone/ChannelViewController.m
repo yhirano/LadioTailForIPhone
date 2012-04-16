@@ -104,6 +104,30 @@
     [super viewDidUnload];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    // リモコン対応
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // リモコン対応
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+
+    [super viewWillDisappear:animated];
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    // リモコン対応
+    return YES;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -311,9 +335,14 @@
     [self.descriptionWebView loadHTMLString:html baseURL:nil];
 }
 
+- (void)remoteControlReceivedWithEvent:(UIEvent*)event
+{
+    // リモコンからのボタンクリック
+    [[Player sharedInstance] playFromRemoteControl:event];
+}
+
 - (IBAction)play:(id)sender
 {
-
     NSURL *url = [channel getPlayUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
