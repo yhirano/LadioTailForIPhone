@@ -21,8 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+@interface ChannelViewController : UIViewController <UIWebViewDelegate, ADBannerViewDelegate>
 
 @property (strong) Channel *channel;
 
@@ -36,8 +37,20 @@
 
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
+
 - (IBAction)play:(id)sender;
 
 - (IBAction)favorite:(id)sender;
+
+/**
+ * iADバナーの表示・非表示を切り替える。
+ * iADバナー表示テスト用のメソッド。
+ *
+ * iADがロードされた後でないと正常に動作しない。
+ *
+ * @param sender sender
+ */
+- (IBAction)toggleDisplayOfBanner:(id)sender;
 
 @end

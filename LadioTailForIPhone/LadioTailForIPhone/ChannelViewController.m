@@ -34,7 +34,15 @@
 /// 詳細表示画面のリンクテキスト色
 #define DESCRIPTION_LINK_TEXT_COLOR "#FFBE1E"
 
+/// iADビューの表示アニメーションの時間
+#define AD_VIEW_ANIMATION_DURATION 1.0
+
 @implementation ChannelViewController
+{
+@private
+    /// バナーが表示済みか
+    BOOL isBannerVisible;
+}
 
 @synthesize channel;
 @synthesize topNavigationItem;
@@ -42,6 +50,7 @@
 @synthesize descriptionWebView;
 @synthesize playButton;
 @synthesize bottomView;
+@synthesize adBannerView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -101,6 +110,7 @@
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
     [self setFavoriteBarButtonItem:nil];
+    [self setAdBannerView:nil];
     [super viewDidUnload];
 }
 
@@ -111,10 +121,22 @@
     // リモコン対応
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
+
+    // 初期状態ではバナーを表示していないのでフラグを下げる
+    isBannerVisible = NO;
+
+    // Ad BannerViewのデリゲートを設定
+    // 本画面の終了時にデリゲートを削除したいために、StoryBoard上ではなく
+    // コード上で定義した
+    adBannerView.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // Ad BannerViewのデリゲートを削除
+    // 本画面が消えた後にAd BannerViewが読み込み終わった場合に反応しないようにしている
+    adBannerView.delegate = nil;
+
     // リモコン対応
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
@@ -341,6 +363,52 @@
     [[Player sharedInstance] playFromRemoteControl:event];
 }
 
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView*)banner willLeaveApplication:(BOOL)willLeave
+{
+    // 広告を表示するかどうか判断するメソッド。
+    // いつでも表示OKの場合はYESを返却します。
+    return YES;
+}
+
+// iADバナーが読み込み終わった
+- (void)bannerViewDidLoadAd:(ADBannerView*)banner
+{
+    // iADバナー未表示状態の場合
+    if (isBannerVisible == NO) {
+        NSLog(@"Show iAD banner.");
+
+
+        [UIView
+         animateWithDuration:AD_VIEW_ANIMATION_DURATION
+         animations:^{
+             // AdBannerViewの高さ分だけ上に移動
+             adBannerView.frame = CGRectOffset(banner.frame, 0, -adBannerView.frame.size.height);
+         }
+         ];
+
+        isBannerVisible = YES;
+    }
+}
+
+// iADバナーの読み込みに失敗
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError*)error
+{
+    // iADバナー表示済み状態の場合
+    if (isBannerVisible == YES) {
+        NSLog(@"Hide iAD banner by iAD error.");
+
+        [UIView
+         animateWithDuration:AD_VIEW_ANIMATION_DURATION
+         animations:^{
+             // AdBannerViewの高さ分だけ下に移動
+             adBannerView.frame = CGRectOffset(banner.frame, 0, adBannerView.frame.size.height);
+         }
+         ];
+
+        isBannerVisible = NO;
+    }
+}
+
 - (IBAction)play:(id)sender
 {
     NSURL *url = [channel getPlayUrl];
@@ -359,6 +427,15 @@
 
     // お気に入りボタンを更新
     [self updateFavoriteButton];
+}
+
+- (IBAction)toggleDisplayOfBanner:(id)sender
+{
+    if (isBannerVisible) {
+        [self bannerView:adBannerView didFailToReceiveAdWithError:nil];
+    } else {
+        [self bannerViewDidLoadAd:adBannerView];
+    }
 }
 
 - (void)playButtonChange:(NSNotification *)notification

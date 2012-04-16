@@ -402,6 +402,22 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <webView contentMode="scaleToFill" id="bLh-Zp-H9I">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="316"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="abJ-NL-ORS" id="rnf-wR-zHp"/>
+                                </connections>
+                            </webView>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lra-Xf-RIg">
+                                <rect key="frame" x="0.0" y="366" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <requiredContentSizeIdentifiers>
+                                    <string>ADBannerContentSizeLandscape</string>
+                                    <string>ADBannerContentSizePortrait</string>
+                                </requiredContentSizeIdentifiers>
+                            </adBannerView>
                             <view contentMode="scaleToFill" id="dCA-ip-Jy9">
                                 <rect key="frame" x="0.0" y="366" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -424,25 +440,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <webView contentMode="scaleToFill" id="bLh-Zp-H9I">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="abJ-NL-ORS" id="rnf-wR-zHp"/>
-                                </connections>
-                            </webView>
-                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lra-Xf-RIg">
-                                <rect key="frame" x="0.0" y="316" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="deviceRGB"/>
-                                <requiredContentSizeIdentifiers>
-                                    <string>ADBannerContentSizeLandscape</string>
-                                    <string>ADBannerContentSizePortrait</string>
-                                </requiredContentSizeIdentifiers>
-                            </adBannerView>
                         </subviews>
-                        <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="4py-bV-tQ6">
                         <barButtonItem key="rightBarButtonItem" image="navbar_favorite_white.png" id="gZN-oP-BxW">
@@ -453,6 +452,7 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="adBannerView" destination="Lra-Xf-RIg" id="t7s-61-1oX"/>
                         <outlet property="bottomView" destination="dCA-ip-Jy9" id="Fbc-Ri-0rt"/>
                         <outlet property="descriptionWebView" destination="bLh-Zp-H9I" id="yDH-Wd-zQe"/>
                         <outlet property="favoriteBarButtonItem" destination="gZN-oP-BxW" id="tD4-Vb-vSR"/>
@@ -918,6 +918,8 @@
             <relationships>
                 <relationship kind="action" name="favorite:"/>
                 <relationship kind="action" name="play:"/>
+                <relationship kind="action" name="toggleDisplayOfBanner:"/>
+                <relationship kind="outlet" name="adBannerView" candidateClass="ADBannerView"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
@@ -961,6 +963,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="7V0-cs-9rE"/>
+        <segue reference="TZu-BD-qa9"/>
     </inferredMetricsTieBreakers>
 </document>
