@@ -142,6 +142,9 @@
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
      object:nil];
 
+    // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
+    // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
+    headlineTableView.rowHeight = 54;
     // テーブルの背景の色を変える
     headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
@@ -337,13 +340,6 @@
     UIView *selectedBackgroundView = [[UIView alloc] init];
     selectedBackgroundView.backgroundColor = HEADLINE_CELL_SELECTED_BACKGROUND_COLOR;
     cell.selectedBackgroundView = selectedBackgroundView;
-}
-
-// StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
-// http://blog.suz-lab.com/2010/03/uitableviewcell.html
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 54.0;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
