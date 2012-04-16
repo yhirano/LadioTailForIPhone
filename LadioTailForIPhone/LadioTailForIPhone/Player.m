@@ -38,10 +38,6 @@ static Player *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Player alloc] init];
-        
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [[AVAudioSession sharedInstance] setDelegate:self];
-        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
     });
     return instance;
 }
@@ -51,6 +47,19 @@ static Player *instance = nil;
     if (self = [super init]) {
         @synchronized (self) {
             state = PlayerStateIdle;
+        }
+
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [[AVAudioSession sharedInstance] setDelegate:self];
+        NSError *setCategoryError = nil;
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+        if (setCategoryError) {
+            NSLog(@"Audio session setCategory error.");
+        }
+        NSError *setActiveError = nil;
+        [audioSession setActive:YES error:&setActiveError];
+        if (setActiveError) {
+            NSLog(@"Audio session setActive error.");
         }
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
@@ -79,6 +88,13 @@ static Player *instance = nil;
      removeObserver:self
      name:AVPlayerItemFailedToPlayToEndTimeNotification
      object:nil];
+
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setActiveError = nil;
+    [audioSession setActive:NO error:&setActiveError];
+    if (setActiveError) {
+        NSLog(@"Audio session setActive error.");
+    }
 }
 
 - (void)play:(NSURL *)url
@@ -183,6 +199,34 @@ static Player *instance = nil;
             }
         }
     }
+}
+
+- (void)beginInterruption
+{
+#if DEBUG
+	NSLog(@"audio settion beginInterruption");
+#endif /* #if DEBUG */
+}
+
+- (void)endInterruption
+{
+#if DEBUG
+	NSLog(@"audio settion endInterruption");
+#endif /* #if DEBUG */
+}
+
+- (void)endInterruptionWithFlags:(NSUInteger)flags
+{
+#if DEBUG
+	NSLog(@"audio settion endInterruptionWithFlags %d", flags);
+#endif /* #if DEBUG */
+}
+
+- (void)inputIsAvailableChanged:(BOOL)isInputAvailable
+{
+#if DEBUG
+	NSLog(@"audio settion inputIsAvailableChanged %d", isInputAvailable);
+#endif /* #if DEBUG */
 }
 
 @end
