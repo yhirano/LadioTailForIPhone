@@ -150,13 +150,6 @@
     showedChannels = nil;
     tempPlayingBarButtonItem = nil;
 
-    [self setUpdateBarButtonItem:nil];
-    [self setNavigateionItem:nil];
-    [self setPlayingBarButtonItem:nil];
-    [self setHeadlineSearchBar:nil];
-    [self setHeadlineTableView:nil];
-    [super viewDidUnload];
-
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
@@ -176,6 +169,13 @@
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
+
+    [self setUpdateBarButtonItem:nil];
+    [self setNavigateionItem:nil];
+    [self setPlayingBarButtonItem:nil];
+    [self setHeadlineSearchBar:nil];
+    [self setHeadlineTableView:nil];
+    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
