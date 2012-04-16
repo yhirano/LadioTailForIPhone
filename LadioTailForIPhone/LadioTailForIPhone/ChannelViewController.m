@@ -387,8 +387,8 @@
         [UIView
          animateWithDuration:AD_VIEW_ANIMATION_DURATION
          animations:^{
-             // AdBannerViewの高さ分だけ上に移動
-             adBannerView.frame = CGRectOffset(banner.frame, 0, -adBannerView.frame.size.height);
+             // AdBannerViewの高さ分だけ左に移動
+             adBannerView.frame = CGRectOffset(banner.frame, -adBannerView.frame.size.width, 0);
          }
          ];
 
@@ -406,8 +406,8 @@
         [UIView
          animateWithDuration:AD_VIEW_ANIMATION_DURATION
          animations:^{
-             // AdBannerViewの高さ分だけ下に移動
-             adBannerView.frame = CGRectOffset(banner.frame, 0, adBannerView.frame.size.height);
+             // AdBannerViewの高さ分だけ右に移動
+             adBannerView.frame = CGRectOffset(banner.frame, adBannerView.frame.size.width, 0);
          }
          ];
 
