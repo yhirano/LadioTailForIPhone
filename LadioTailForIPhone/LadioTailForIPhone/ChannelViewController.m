@@ -25,6 +25,9 @@
 #import "LadioLib/LadioLib.h"
 #import "ChannelViewController.h"
 
+/// リンクをクリックするとSafariが開く
+#define OPEN_SAFARI_WHEN_CLICK_LINK 1
+
 /// お気に入りボタンの色
 #define FAVORITE_BUTTON_COLOR [UIColor darkGrayColor]
 /// 詳細表示画面の背景色
@@ -155,7 +158,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-// リンクをクリック時、Safariを起動する為の処理
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
@@ -164,12 +166,18 @@
             return YES;
         }
         if ([scheme compare:@"http"] == NSOrderedSame) {
+#if OPEN_SAFARI_WHEN_CLICK_LINK
+            // リンクをクリック時、Safariを起動する
             [[UIApplication sharedApplication] openURL:[request URL]];
             return NO;
+#else
+            return YES;
+#endif /* OPEN_SAFARI_WHEN_CLICK_LINK */
         }
     }
     return YES;
 }
+
 
 - (void)updateFavoriteButton
 {
