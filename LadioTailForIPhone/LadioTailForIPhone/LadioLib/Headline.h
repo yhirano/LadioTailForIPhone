@@ -57,6 +57,13 @@ typedef NSInteger ChannelSortType;
 - (void)fetchHeadline;
 
 /**
+ * ヘッドラインをネット上から取得中かを取得する
+ *
+ * @return ヘッドラインを取得中か
+ */
+- (BOOL)isFetchingHeadline;
+
+/**
  * 番組リストを取得する
  *
  * @return 番組リスト

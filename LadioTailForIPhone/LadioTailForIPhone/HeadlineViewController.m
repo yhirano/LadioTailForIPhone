@@ -70,6 +70,11 @@
 
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem;
+
+#if PULL_REFRESH_HEADLINE
+    /// PullRefreshView
+    EGORefreshTableHeaderView *refreshHeaderView;
+#endif /* #if PULL_REFRESH_HEADLINE */
 }
 
 @synthesize navigateionItem;
@@ -149,6 +154,23 @@
     headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
     headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
+
+#if PULL_REFRESH_HEADLINE
+    // PullRefreshViewの生成
+    if (refreshHeaderView == nil) {
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc]
+                                           initWithFrame:CGRectMake(
+                                                                    0.0f,
+                                                                    0.0f - headlineTableView.bounds.size.height,
+                                                                    self.view.frame.size.width,
+                                                                    headlineTableView.bounds.size.height)];
+        view.delegate = self;
+        [headlineTableView addSubview:view];
+        refreshHeaderView = view;
+    }
+	//  update the last update date
+    [refreshHeaderView refreshLastUpdatedDate];
+#endif // #if PULL_REFRESH_HEADLINE
 }
 
 - (void)viewDidUnload
@@ -342,6 +364,45 @@
     cell.selectedBackgroundView = selectedBackgroundView;
 }
 
+#pragma mark UIScrollViewDelegate Methods
+
+#if PULL_REFRESH_HEADLINE
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView
+{
+    // EGOTableViewPullRefreshに必要
+    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
+{
+    // EGOTableViewPullRefreshに必要
+    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+#endif /* #if PULL_REFRESH_HEADLINE */
+
+#pragma -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+#if PULL_REFRESH_HEADLINE
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self fetchHeadline];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    // should return if data source model is reloading
+    return [[Headline sharedInstance] isFetchingHeadline];
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    return [NSDate date]; // should return date data source was last changed
+}
+#endif /* #if PULL_REFRESH_HEADLINE */
+
+#pragma mark -
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // テーブルから番組を選択した
@@ -397,6 +458,11 @@
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
 
+#if PULL_REFRESH_HEADLINE
+    // Pull refreshを終了する
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView];
+#endif /* #if PULL_REFRESH_HEADLINE */
+
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 
@@ -412,6 +478,11 @@
 
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
+
+#if PULL_REFRESH_HEADLINE
+    // Pull refreshを終了する
+    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView];
+#endif /* #if PULL_REFRESH_HEADLINE */
 
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];

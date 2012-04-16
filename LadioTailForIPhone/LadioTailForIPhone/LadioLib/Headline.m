@@ -78,10 +78,7 @@ static Headline *instance = nil;
             NSLog(@"fetchHeadline call isn't processing. Fetching NetLadio headline now.");
             return;
         }
-    }
-
-    // ヘッドライン取得中のフラグを立てる
-    @synchronized (isFetchingLock) {
+        // ヘッドライン取得中のフラグを立てる
         isFetching = YES;
     }
 
@@ -476,6 +473,13 @@ static Headline *instance = nil;
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:self];
+}
+
+- (BOOL)isFetchingHeadline;
+{
+    @synchronized (isFetchingLock) {
+        return isFetching;
+    }
 }
 
 - (NSArray *)getChannels

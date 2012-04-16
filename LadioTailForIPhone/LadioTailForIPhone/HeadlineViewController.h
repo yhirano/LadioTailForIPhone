@@ -21,8 +21,17 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate>
+/// Pull refreshでヘッドラインを有効にするか
+/// 動作が怪しいので現状無効にする
+#define PULL_REFRESH_HEADLINE 0
+
+@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate
+#if PULL_REFRESH_HEADLINE
+                                                     , EGORefreshTableHeaderDelegate
+#endif /* #if PULL_REFRESH_HEADLINE */
+                                                     >
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 
