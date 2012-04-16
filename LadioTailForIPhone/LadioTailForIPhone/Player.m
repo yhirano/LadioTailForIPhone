@@ -35,13 +35,14 @@ static Player *instance = nil;
 
 + (Player *)sharedInstance
 {
-    if (instance == nil) {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         instance = [[Player alloc] init];
-
+        
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [[AVAudioSession sharedInstance] setDelegate:self];
         [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-    }
+    });
     return instance;
 }
 

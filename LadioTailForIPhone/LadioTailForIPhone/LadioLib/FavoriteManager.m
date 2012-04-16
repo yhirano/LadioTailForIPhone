@@ -30,9 +30,10 @@ static FavoriteManager *instance = nil;
 
 + (FavoriteManager *)sharedInstance
 {
-    if (instance == nil) {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         instance = [[FavoriteManager alloc] init];
-    }
+    });
     return instance;
 }
 

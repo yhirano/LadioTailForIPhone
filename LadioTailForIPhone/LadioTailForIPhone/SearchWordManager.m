@@ -16,9 +16,10 @@ static SearchWordManager *instance = nil;
 
 + (SearchWordManager *)sharedInstance
 {
-    if (instance == nil) {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         instance = [[SearchWordManager alloc] init];
-    }
+    });
     return instance;
 }
 

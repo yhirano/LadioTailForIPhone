@@ -45,9 +45,10 @@ static Headline *instance = nil;
 
 + (Headline *)sharedInstance
 {
-    if (instance == nil) {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];
-    }
+    });
     return instance;
 }
 
