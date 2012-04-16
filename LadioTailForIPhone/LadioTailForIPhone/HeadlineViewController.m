@@ -96,6 +96,9 @@
      selector:@selector(fetchHeadlineFailed:)
      name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
      object:nil];
+#ifdef DEBUG
+    NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
@@ -170,6 +173,9 @@
      removeObserver:self
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
      object:nil];
+#ifdef DEBUG
+    NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -343,6 +349,10 @@
 
 - (void)fetchHeadlineStarted:(NSNotification *)notification
 {
+#ifdef DEBUG
+    NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+
     // 進捗ウィンドウを表示する
     [SVProgressHUD show];
 
@@ -355,6 +365,10 @@
 
 - (void)fetchHeadlineSuceed:(NSNotification *)notification
 {
+#ifdef DEBUG
+    NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
 
@@ -367,6 +381,10 @@
 
 - (void)fetchHeadlineFailed:(NSNotification *)notification
 {
+#ifdef DEBUG
+    NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     updateBarButtonItem.enabled = YES;
 
