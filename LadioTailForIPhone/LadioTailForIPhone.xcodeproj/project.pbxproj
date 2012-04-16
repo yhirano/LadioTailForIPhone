@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E16282715383AB3007A2DBE /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E16282615383AB3007A2DBE /* HeadlineNaviViewController.m */; };
-		8E16283015385E55007A2DBE /* headphones.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E16282F15385E55007A2DBE /* headphones.png */; };
+		8E16283015385E55007A2DBE /* headphones_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E16282F15385E55007A2DBE /* headphones_white.png */; };
 		8E1BA68E153A55BD00070E71 /* FavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BA68D153A55BD00070E71 /* FavoriteManager.m */; };
 		8E1BA699153A721000070E71 /* navbar_favorite_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA693153A721000070E71 /* navbar_favorite_white.png */; };
 		8E1BA69A153A721000070E71 /* navbar_favorite_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA694153A721000070E71 /* navbar_favorite_white@2x.png */; };
@@ -57,6 +57,8 @@
 		8EC23B8D1537145A007352FD /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6C15371382007352FD /* Channel.m */; };
 		8EC23B8E1537145A007352FD /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6E15371382007352FD /* Headline.m */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+		8ED4CDEC153C5A6300C7C17F /* headphones_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDEB153C5A6300C7C17F /* headphones_black.png */; };
+		8ED4CDEE153C5C6200C7C17F /* star_fav_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDED153C5C6200C7C17F /* star_fav_black.png */; };
 		8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B7B15371382007352FD /* SVProgressHUD.bundle */; };
 		8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE96CAA1539391E00251F7D /* SearchWordManager.m */; };
 /* End PBXBuildFile section */
@@ -65,7 +67,7 @@
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E16282515383AB3007A2DBE /* HeadlineNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlineNaviViewController.h; sourceTree = "<group>"; };
 		8E16282615383AB3007A2DBE /* HeadlineNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineNaviViewController.m; sourceTree = "<group>"; };
-		8E16282F15385E55007A2DBE /* headphones.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones.png; sourceTree = "<group>"; };
+		8E16282F15385E55007A2DBE /* headphones_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones_white.png; sourceTree = "<group>"; };
 		8E1BA68C153A55BD00070E71 /* FavoriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteManager.h; sourceTree = "<group>"; };
 		8E1BA68D153A55BD00070E71 /* FavoriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteManager.m; sourceTree = "<group>"; };
 		8E1BA693153A721000070E71 /* navbar_favorite_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar_favorite_white.png; sourceTree = "<group>"; };
@@ -135,6 +137,8 @@
 		8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TitleHeadlineViewController.m; sourceTree = "<group>"; };
 		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8ED4CDEB153C5A6300C7C17F /* headphones_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones_black.png; sourceTree = "<group>"; };
+		8ED4CDED153C5C6200C7C17F /* star_fav_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fav_black.png; sourceTree = "<group>"; };
 		8EE96CA91539391E00251F7D /* SearchWordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWordManager.h; sourceTree = "<group>"; };
 		8EE96CAA1539391E00251F7D /* SearchWordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWordManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,13 +164,15 @@
 		8E16282E15385E55007A2DBE /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				8E16282F15385E55007A2DBE /* headphones.png */,
+				8ED4CDEB153C5A6300C7C17F /* headphones_black.png */,
+				8E16282F15385E55007A2DBE /* headphones_white.png */,
 				8E1BA693153A721000070E71 /* navbar_favorite_white.png */,
 				8E1BA694153A721000070E71 /* navbar_favorite_white@2x.png */,
 				8E1BA695153A721000070E71 /* navbar_favorite_yellow.png */,
 				8E1BA696153A721000070E71 /* navbar_favorite_yellow@2x.png */,
 				8E30D15B153996DE00647D21 /* playback_play.png */,
 				8E30D15C153996DE00647D21 /* playback_stop.png */,
+				8ED4CDED153C5C6200C7C17F /* star_fav_black.png */,
 				8E1BA698153A721000070E71 /* star_fav_yellow.png */,
 				8E30D1601539A62D00647D21 /* tab_dj.png */,
 				8E30D1611539A62D00647D21 /* tab_dj@2x.png */,
@@ -355,7 +361,7 @@
 				8EC23B56153712BB007352FD /* InfoPlist.strings in Resources */,
 				8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */,
 				8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */,
-				8E16283015385E55007A2DBE /* headphones.png in Resources */,
+				8E16283015385E55007A2DBE /* headphones_white.png in Resources */,
 				8EE96CA81539051600251F7D /* SVProgressHUD.bundle in Resources */,
 				8E30D15D153996DE00647D21 /* playback_play.png in Resources */,
 				8E30D15E153996DE00647D21 /* playback_stop.png in Resources */,
@@ -380,6 +386,8 @@
 				8E1BA69B153A721000070E71 /* navbar_favorite_yellow.png in Resources */,
 				8E1BA69C153A721000070E71 /* navbar_favorite_yellow@2x.png in Resources */,
 				8E1BA69E153A721000070E71 /* star_fav_yellow.png in Resources */,
+				8ED4CDEC153C5A6300C7C17F /* headphones_black.png in Resources */,
+				8ED4CDEE153C5C6200C7C17F /* star_fav_black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
