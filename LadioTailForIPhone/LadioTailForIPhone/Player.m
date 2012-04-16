@@ -69,6 +69,8 @@ static Player *instance = nil;
 
 - (void)dealloc
 {
+    [self stop];
+
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:AVPlayerItemDidPlayToEndTimeNotification
@@ -91,6 +93,7 @@ static Player *instance = nil;
             case PlayerStatePlay:
                 // 再生中中は停止
                 [player pause];
+                [player removeObserver:self forKeyPath:@"status"];
                 // スルー
             case PlayerStateIdle:
                 state = PlayerStatePrepare;
@@ -112,6 +115,7 @@ static Player *instance = nil;
 {
     @synchronized (self) {
         [player pause];
+        [player removeObserver:self forKeyPath:@"status"];
         state = PlayerStateIdle;
         NSLog(@"Play stopped by user operation.");
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
