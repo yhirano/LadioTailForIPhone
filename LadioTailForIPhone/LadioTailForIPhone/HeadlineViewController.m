@@ -388,7 +388,7 @@
 }
 #endif /* #if PULL_REFRESH_HEADLINE */
 
-#pragma -
+#pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate Methods
 
 #if PULL_REFRESH_HEADLINE
