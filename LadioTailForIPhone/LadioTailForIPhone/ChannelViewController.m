@@ -21,6 +21,7 @@
  */
 
 #import "Player.h"
+#import "AdBannerManager.h"
 #import "FavoriteManager.h"
 #import "LadioLib/LadioLib.h"
 #import "WebPageViewController.h"
@@ -40,9 +41,6 @@
 /// 詳細表示画面のリンクテキスト色
 #define DESCRIPTION_LINK_TEXT_COLOR "#FFBE1E"
 
-/// iADビューの表示アニメーションの時間
-#define AD_VIEW_ANIMATION_DURATION 1.0
-
 @implementation ChannelViewController
 {
 @private
@@ -56,7 +54,6 @@
 @synthesize descriptionWebView;
 @synthesize playButton;
 @synthesize bottomView;
-@synthesize adBannerView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -125,7 +122,6 @@
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
     [self setFavoriteBarButtonItem:nil];
-    [self setAdBannerView:nil];
     [super viewDidUnload];
 }
 
@@ -140,27 +136,14 @@
     // WebViewのデリゲートを設定する
     descriptionWebView.delegate = self;
 
-    // 初期状態ではバナーを表示していないのでフラグを下げる
-    isBannerVisible = NO;
-
-    // Ad BannerViewのデリゲートを設定
-    // 本画面の終了時にデリゲートを削除したいために、StoryBoard上ではなく
-    // コード上で定義した
-    adBannerView.delegate = self;
+    // 広告を表示する
+    AdBannerManager *adBannerManager = [AdBannerManager sharedInstance];
+    [adBannerManager setShowPosition:CGPointMake(0, 316) hiddenPosition:CGPointMake(320, 316)];
+    adBannerManager.bannerSibling = self.view;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    // iADバナーを隠す
-    // 画面遷移時に画面外にあるバナーの表示が残るため
-    if (isBannerVisible == NO) {
-        adBannerView.hidden = YES;
-    }
-
-    // Ad BannerViewのデリゲートを削除
-    // 本画面が消えた後にAd BannerViewが読み込み終わった場合に反応しないようにしている
-    adBannerView.delegate = nil;
-
     // WebViewのデリゲートを削除する
     descriptionWebView.delegate = nil;
 
@@ -417,62 +400,6 @@
     }
 }
 
-#pragma mark ADBannerViewDelegate methods
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView*)banner willLeaveApplication:(BOOL)willLeave
-{
-    // 広告を表示するかどうか判断するメソッド。
-    // いつでも表示OKの場合はYESを返却します。
-    return YES;
-}
-
-// iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView*)banner
-{
-    // iADバナー未表示状態の場合
-    if (isBannerVisible == NO) {
-        NSLog(@"Show iAD banner.");
-
-        // iADバナーを表示状態にする
-        adBannerView.hidden = NO;
-
-        [UIView
-         animateWithDuration:AD_VIEW_ANIMATION_DURATION
-         animations:^{
-             // AdBannerViewの高さ分だけ左に移動
-             adBannerView.frame = CGRectOffset(banner.frame, -adBannerView.frame.size.width, 0);
-         }
-         ];
-
-        isBannerVisible = YES;
-    }
-}
-
-// iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError*)error
-{
-    // iADバナー表示済み状態の場合
-    if (isBannerVisible == YES) {
-        NSLog(@"Hide iAD banner by iAD error.");
-
-        [UIView
-         animateWithDuration:AD_VIEW_ANIMATION_DURATION
-         animations:^{
-             // AdBannerViewの高さ分だけ右に移動
-             adBannerView.frame = CGRectOffset(banner.frame, adBannerView.frame.size.width, 0);
-         }
-         completion:^(BOOL finished) {
-             // AdBannerViewを隠す
-             adBannerView.hidden = YES;
-         }
-         ];
-
-        isBannerVisible = NO;
-    }
-}
-
-#pragma mark -
-
 - (IBAction)play:(id)sender
 {
     NSURL *url = [channel getPlayUrl];
@@ -491,15 +418,6 @@
 
     // お気に入りボタンを更新
     [self updateFavoriteButton];
-}
-
-- (IBAction)toggleDisplayOfBanner:(id)sender
-{
-    if (isBannerVisible) {
-        [self bannerView:adBannerView didFailToReceiveAdWithError:nil];
-    } else {
-        [self bannerViewDidLoadAd:adBannerView];
-    }
 }
 
 - (void)playButtonChange:(NSNotification *)notification

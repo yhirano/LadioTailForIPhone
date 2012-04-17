@@ -20,24 +20,17 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "iAd/iAd.h"
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+@interface AdBannerManager : NSObject <ADBannerViewDelegate>
 
-@property (strong) Channel *channel;
+@property (strong)  UIView *bannerSibling;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
+@property BOOL isBannerVisible;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteBarButtonItem;
++ (AdBannerManager *)sharedInstance;
 
-@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
-
-- (IBAction)favorite:(id)sender;
+- (void)setShowPosition:(CGPoint)position hiddenPosition:(CGPoint)hPosition;
 
 @end

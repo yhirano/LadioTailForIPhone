@@ -430,14 +430,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lra-Xf-RIg">
-                                <rect key="frame" x="320" y="316" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <requiredContentSizeIdentifiers>
-                                    <string>ADBannerContentSizeLandscape</string>
-                                    <string>ADBannerContentSizePortrait</string>
-                                </requiredContentSizeIdentifiers>
-                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="deviceRGB"/>
                     </view>
@@ -450,7 +442,6 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="adBannerView" destination="Lra-Xf-RIg" id="t7s-61-1oX"/>
                         <outlet property="bottomView" destination="dCA-ip-Jy9" id="Fbc-Ri-0rt"/>
                         <outlet property="descriptionWebView" destination="bLh-Zp-H9I" id="yDH-Wd-zQe"/>
                         <outlet property="favoriteBarButtonItem" destination="gZN-oP-BxW" id="tD4-Vb-vSR"/>
@@ -539,14 +530,6 @@
                                             <action selector="play:" destination="abJ-NL-ORS" eventType="touchUpInside" id="utz-su-7Y4"/>
                                         </connections>
                                     </button>
-                                    <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pfd-5A-DYj">
-                                        <rect key="frame" x="320" y="0.0" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <requiredContentSizeIdentifiers>
-                                            <string>ADBannerContentSizeLandscape</string>
-                                            <string>ADBannerContentSizePortrait</string>
-                                        </requiredContentSizeIdentifiers>
-                                    </adBannerView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -561,14 +544,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="kF6-5h-S41"/>
                     <connections>
-                        <outlet property="adBannerView" destination="pfd-5A-DYj" id="T7g-aZ-nvs"/>
                         <outlet property="backButton" destination="GOI-Jv-dM3" id="ygt-P2-gus"/>
                         <outlet property="bottomView" destination="XNu-Tt-9CH" id="5N5-lV-fuh"/>
                         <outlet property="forwardButton" destination="Cs4-o8-XUG" id="Bk0-SF-mlm"/>
                         <outlet property="pageWebView" destination="R8j-hH-AEk" id="Tcz-ZZ-QLU"/>
                         <outlet property="reloadButton" destination="JJF-0o-27b" id="hfc-mt-KK4"/>
                         <outlet property="topNavigationItem" destination="kF6-5h-S41" id="5v8-mv-zCg"/>
-                        <outletCollection property="adBannerView" destination="pfd-5A-DYj" id="bdO-RC-03t"/>
                     </connections>
                 </viewController>
             </objects>

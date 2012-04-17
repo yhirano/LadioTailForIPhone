@@ -18,6 +18,7 @@
 		8E1BA69E153A721000070E71 /* star_fav_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA698153A721000070E71 /* star_fav_yellow.png */; };
 		8E1BA6B2153AA33600070E71 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BA6B1153AA33600070E71 /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
+		8E275F63153D9E00007E5A7A /* AdBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E275F62153D9E00007E5A7A /* AdBannerManager.m */; };
 		8E30D15D153996DE00647D21 /* playback_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D15B153996DE00647D21 /* playback_play.png */; };
 		8E30D15E153996DE00647D21 /* playback_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D15C153996DE00647D21 /* playback_stop.png */; };
 		8E30D1681539A62D00647D21 /* tab_dj.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E30D1601539A62D00647D21 /* tab_dj.png */; };
@@ -86,6 +87,8 @@
 		8E1BA6B0153AA33600070E71 /* FBNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBNetworkReachability.h; sourceTree = "<group>"; };
 		8E1BA6B1153AA33600070E71 /* FBNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBNetworkReachability.m; sourceTree = "<group>"; };
 		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8E275F61153D9E00007E5A7A /* AdBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdBannerManager.h; sourceTree = "<group>"; };
+		8E275F62153D9E00007E5A7A /* AdBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdBannerManager.m; sourceTree = "<group>"; };
 		8E30D15B153996DE00647D21 /* playback_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playback_play.png; sourceTree = "<group>"; };
 		8E30D15C153996DE00647D21 /* playback_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playback_stop.png; sourceTree = "<group>"; };
 		8E30D1601539A62D00647D21 /* tab_dj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_dj.png; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 				8E8AB378153D1A700008A2C5 /* WebPageViewController.m */,
 				8EE96CA91539391E00251F7D /* SearchWordManager.h */,
 				8EE96CAA1539391E00251F7D /* SearchWordManager.m */,
+				8E275F61153D9E00007E5A7A /* AdBannerManager.h */,
+				8E275F62153D9E00007E5A7A /* AdBannerManager.m */,
 				8EC23B7815371382007352FD /* Player.h */,
 				8EC23B7915371382007352FD /* Player.m */,
 				8E16282E15385E55007A2DBE /* Images */,
@@ -456,6 +461,7 @@
 				8EE96CAB1539391F00251F7D /* SearchWordManager.m in Sources */,
 				8E1BA68E153A55BD00070E71 /* FavoriteManager.m in Sources */,
 				8E8AB379153D1A700008A2C5 /* WebPageViewController.m in Sources */,
+				8E275F63153D9E00007E5A7A /* AdBannerManager.m in Sources */,
 				8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */,
 				8E1BA6B2153AA33600070E71 /* FBNetworkReachability.m in Sources */,
 				8ED4CDF3153C6B2E00C7C17F /* EGORefreshTableHeaderView.m in Sources */,
