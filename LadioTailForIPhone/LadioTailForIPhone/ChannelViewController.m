@@ -137,6 +137,9 @@
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
 
+    // WebViewのデリゲートを設定する
+    descriptionWebView.delegate = self;
+
     // 初期状態ではバナーを表示していないのでフラグを下げる
     isBannerVisible = NO;
 
@@ -158,6 +161,9 @@
     // 本画面が消えた後にAd BannerViewが読み込み終わった場合に反応しないようにしている
     adBannerView.delegate = nil;
 
+    // WebViewのデリゲートを削除する
+    descriptionWebView.delegate = nil;
+
     // リモコン対応
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
@@ -175,6 +181,8 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma mark UIWebViewDelegate methods
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
@@ -197,6 +205,7 @@
     return YES;
 }
 
+#pragma mark -
 
 - (void)updateFavoriteButton
 {

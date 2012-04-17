@@ -69,6 +69,7 @@
                        nil];
     [bottomView.layer insertSublayer:gradient atIndex:0];
 
+    // ボタン類の表示を更新する
     [self updateViews];
 }
 
@@ -88,6 +89,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // WebViewのデリゲートを設定する
+    pageWebView.delegate = self;
 
     // ページ読み込み中フラグを下げる
     isPageLoading = NO;
@@ -116,7 +120,18 @@
     // Ad BannerViewのデリゲートを削除
     // 本画面が消えた後にAd BannerViewが読み込み終わった場合に反応しないようにしている
     adBannerView.delegate = nil;
+
+    // WebViewのデリゲートを削除する
+    pageWebView.delegate = nil;
     
+    // WebViewの読み込みを中止する
+    [pageWebView stopLoading];
+    
+    if (isPageLoading) {
+        // ネットワークインジケーターを消す
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
+
     // リモコン対応
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
@@ -151,6 +166,7 @@
     // ページ読み込み中フラグを上げる
     isPageLoading = YES;
 
+    // ボタン類の表示を更新する
     [self updateViews];
 }
 
@@ -162,6 +178,7 @@
     // ページ読み込み中フラグを下げる
     isPageLoading = NO;
 
+    // ボタン類の表示を更新する
     [self updateViews];
 }
 
@@ -173,6 +190,7 @@
     // ページ読み込み中フラグを下げる
     isPageLoading = NO;
 
+    // ボタン類の表示を更新する
     [self updateViews];
 }
 
