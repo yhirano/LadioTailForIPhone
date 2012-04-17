@@ -107,7 +107,7 @@ static Headline *instance = nil;
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     receivedData = nil;
-    NSLog(@"NetLadio fetch headline connection failed! Error - %@ %@",
+    NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
             [error localizedDescription],
             [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 
