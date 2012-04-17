@@ -23,11 +23,14 @@
 #import "Player.h"
 #import "FavoriteManager.h"
 #import "LadioLib/LadioLib.h"
+#import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
 /// リンクをクリックするとSafariが開く
-#define OPEN_SAFARI_WHEN_CLICK_LINK 1
+#define OPEN_SAFARI_WHEN_CLICK_LINK 0
 
+/// 戻るボタンの色
+#define BACK_BUTTON_COLOR [UIColor darkGrayColor]
 /// お気に入りボタンの色
 #define FAVORITE_BUTTON_COLOR [UIColor darkGrayColor]
 /// 詳細表示画面の背景色
@@ -79,13 +82,22 @@
     if (!([channel.nam length] == 0)) {
         topNavigationItem.title = channel.nam;
     }
-            // DJが存在する場合はDJを
+    // DJが存在する場合はDJを
     else if (!([channel.dj length] == 0)) {
         topNavigationItem.title = channel.dj;
     }
 
     // お気に入りボタンの色を変える
     favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
+
+    // Web画面からの戻るボタンのテキストと色を書き換える
+    NSString *backButtonStr = channel.nam;
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
+                                       initWithTitle:backButtonStr
+                                       style:UIBarButtonItemStyleBordered
+                                       target:nil action:nil];
+    backButtonItem.tintColor = BACK_BUTTON_COLOR;
+    self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -136,6 +148,12 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // iADバナーを隠す
+    // 画面遷移時に画面外にあるバナーの表示が残るため
+    if (isBannerVisible == NO) {
+        adBannerView.hidden = YES;
+    }
+
     // Ad BannerViewのデリゲートを削除
     // 本画面が消えた後にAd BannerViewが読み込み終わった場合に反応しないようにしている
     adBannerView.delegate = nil;
@@ -171,7 +189,8 @@
             [[UIApplication sharedApplication] openURL:[request URL]];
             return NO;
 #else
-            return YES;
+            [self performSegueWithIdentifier:@"OpenUrl" sender:self];
+            return NO;
 #endif /* OPEN_SAFARI_WHEN_CLICK_LINK */
         }
     }
@@ -377,6 +396,20 @@
     [[Player sharedInstance] playFromRemoteControl:event];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // リンクを押した
+    if ([[segue identifier] isEqualToString:@"OpenUrl"]) {
+        // URLを繊維先のViewに設定
+        UIViewController *viewCon = [segue destinationViewController];
+        if ([viewCon isKindOfClass:[WebPageViewController class]]) {
+            ((WebPageViewController *) viewCon).url = channel.url;
+        }
+    }
+}
+
+#pragma mark ADBannerViewDelegate methods
+
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView*)banner willLeaveApplication:(BOOL)willLeave
 {
     // 広告を表示するかどうか判断するメソッド。
@@ -391,6 +424,8 @@
     if (isBannerVisible == NO) {
         NSLog(@"Show iAD banner.");
 
+        // iADバナーを表示状態にする
+        adBannerView.hidden = NO;
 
         [UIView
          animateWithDuration:AD_VIEW_ANIMATION_DURATION
@@ -417,11 +452,17 @@
              // AdBannerViewの高さ分だけ右に移動
              adBannerView.frame = CGRectOffset(banner.frame, adBannerView.frame.size.width, 0);
          }
+         completion:^(BOOL finished) {
+             // AdBannerViewを隠す
+             adBannerView.hidden = YES;
+         }
          ];
 
         isBannerVisible = NO;
     }
 }
+
+#pragma mark -
 
 - (IBAction)play:(id)sender
 {

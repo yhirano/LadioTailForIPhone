@@ -2,8 +2,17 @@
 http://ja.fonts2u.com/8bitoperator-jve-regular.%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88
 Default.pngの文字列に使用
 
+arrow_right.png
+http://findicons.com/icon/267876/arrow_right
+
+arrow_left.png
+http://findicons.com/icon/267752/arrow_left
+
 clock.png
 http://findicons.com/icon/267764/clock
+
+delete.png
+http://findicons.com/icon/267826/delete
 
 headphones.png
 http://findicons.com/icon/267795/headphones
@@ -14,8 +23,13 @@ http://findicons.com/icon/267891/mic
 playback_play.png
 http://findicons.com/icon/267808/playback_play
 
+playback_reload.png
+http://findicons.com/icon/267719/playback_reload
 playback_stop.png
 http://findicons.com/icon/267918/playback_stop
+
+rnd_br_last.png
+http://findicons.com/icon/267837/rnd_br_last
 
 star_fav.png
 http://findicons.com/icon/267882/star_fav
