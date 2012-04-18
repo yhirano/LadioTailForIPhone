@@ -23,13 +23,6 @@
 #import <Foundation/Foundation.h>
 #import "Channel.h"
 
-/// ヘッドラインの取得を開始した際のNotification
-#define NOTIFICATION_NAME_FETCH_HEADLINE_STARTED @"FetchHeadlineStarted"
-/// ヘッドラインの取得に成功した際のNotification
-#define NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED @"FetchHeadlineSuceed"
-/// ヘッドラインの取得に失敗した際のNotification
-#define NOTIFICATION_NAME_FETCH_HEADLINE_FAILED @"FetchHeadlineFailed"
-
 enum ChannelSortType
 {
     ChannelSortTypeNone,
@@ -41,10 +34,15 @@ enum ChannelSortType
 
 typedef NSInteger ChannelSortType;
 
+
+@protocol HeadlineDelegate;
+
 /**
  * ヘッドライン
  */
 @interface Headline : NSObject
+
+@property (weak) id<HeadlineDelegate> delegate;
 
 /**
  * ヘッドラインインスタンスを取得
@@ -107,5 +105,17 @@ typedef NSInteger ChannelSortType;
  * @return Channel。見つからない場合はnil。
  */
 - (Channel *)channel:(NSURL *)playUrl;
+
+@end
+
+@protocol HeadlineDelegate <NSObject>
+@optional
+
+- (void)headlineDidStartLoad:(Headline *)headline;
+
+- (void)headlineDidFinishLoad:(Headline *)headline;
+
+- (void)headlineFailLoad:(Headline *)headline;
+
 
 @end

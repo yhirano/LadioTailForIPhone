@@ -99,20 +99,10 @@
 {
     [super viewDidLoad];
 
-    // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えや
-    // テーブル更新を行う
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchHeadlineStarted:)
-                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchHeadlineSuceed:)
-                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchHeadlineFailed:)
-                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
-                                               object:nil];
+    // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
+    Headline* headline = [Headline sharedInstance];
+    headline.delegate = self;
+
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -188,9 +178,9 @@
     showedChannels_ = nil;
     tempPlayingBarButtonItem_ = nil;
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
+    Headline* headline = [Headline sharedInstance];
+    headline.delegate = nil;
+
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
@@ -439,20 +429,21 @@
     [[Player sharedInstance] playFromRemoteControl:event];
 }
 
-- (void)fetchHeadlineStarted:(NSNotification *)notification
+#pragma mark HeadlineDelegate
+- (void)headlineDidStartLoad:(Headline *)headline
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-
+    
     // 進捗ウィンドウを表示する
     [SVProgressHUD show];
-
+    
     // ヘッドラインの取得開始時に更新ボタンを無効にする
     updateBarButtonItem_.enabled = NO;
 }
 
-- (void)fetchHeadlineSuceed:(NSNotification *)notification
+- (void)headlineDidFinishLoad:(Headline *)headline
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
@@ -473,7 +464,7 @@
     [SVProgressHUD dismiss];
 }
 
-- (void)fetchHeadlineFailed:(NSNotification *)notification
+- (void)headlineFailLoad:(Headline *)headline
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
@@ -494,6 +485,8 @@
     NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
     [SVProgressHUD dismissWithError:errorStr afterDelay:DELAY_FETCH_HEADLINE_MESSAGE];
 }
+
+#pragma mark -
 
 - (void)playStateChanged:(NSNotification *)notification
 {
