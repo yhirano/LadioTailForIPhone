@@ -150,7 +150,7 @@ static Player *instance = nil;
     @synchronized (self) {
         [self stopProc];
         NSLog(@"Play stopped by user operation.");
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
     }
 }
 
@@ -165,7 +165,7 @@ static Player *instance = nil;
     state_ = PlayerStatePrepare;
     playUrl_ = url;
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
     player_ = [AVPlayer playerWithURL:url];
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
@@ -218,7 +218,7 @@ static Player *instance = nil;
         playUrl_ = nil;
         state_ = PlayerStateIdle;
         NSLog(@"Play stopped.");
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
     }
 }
 
@@ -232,14 +232,14 @@ static Player *instance = nil;
             @synchronized (self) {
                 state_ = PlayerStatePlay;
                 NSLog(@"Play started.");
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
                                                                     object:self];
             }
         } else if (player_.status == AVPlayerStatusFailed) {
             @synchronized (self) {
                 state_ = PlayerStateIdle;
                 NSLog(@"Play failed.");
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
                                                                     object:self];
             }
         }

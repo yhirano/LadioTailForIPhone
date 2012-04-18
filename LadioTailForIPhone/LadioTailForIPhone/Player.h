@@ -23,8 +23,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
-/// ヘッドラインの取得を開始した際のNotification
-#define NOTIFICATION_NAME_PLAY_STATE_CHANGED @"PlayStateChanged"
+/// 再生準備開始のNotification
+#define LadioTailPlayerPrepareNotification @"LadioTailPlayerPrepareNotification"
+/// 再生開始のNotification
+#define LadioTailPlayerDidPlayNotification @"LadioTailPlayerDidPlayNotification"
+/// 再生停止のNotification
+#define LadioTailPlayerDidStopNotification @"LadioTailPlayerDidStopNotification"
 
 enum PlayerState
 {

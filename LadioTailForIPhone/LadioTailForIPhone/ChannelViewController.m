@@ -69,12 +69,20 @@
     [super viewDidLoad];
 
     // 再生状況に合わせて再生ボタンの内容を切り替える
-    [self playButtonChange:nil];
+    [self playButtonChange];
 
     // 再生状況の変化を受け取って再生ボタンの内容を切り替える
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playButtonChange:)
-                                                 name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerPrepareNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
     // ナビゲーションタイトルを表示する
@@ -119,7 +127,9 @@
 - (void)viewDidUnload
 {
     // 再生状況変化の通知を受け取らなくする
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 
     [self setTopNavigationItem:nil];
     [self setPlayButton:nil];
@@ -204,6 +214,25 @@
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
+    }
+}
+
+- (void)playButtonChange
+{
+    // 再生ボタンの画像を切り替える
+    NSURL *url = [channel_ playUrl];
+    Player *player = [Player sharedInstance];
+    if ([player isPlaying:url]) {
+        [playButton_ setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
+    } else {
+        [playButton_ setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
+    }
+    
+    // 再生ボタンの有効無効を切り替える
+    if ([player state] == PlayerStatePrepare) {
+        playButton_.enabled = NO;
+    } else {
+        playButton_.enabled = YES;
     }
 }
 
@@ -435,21 +464,14 @@
     [self updateFavoriteButton];
 }
 
-- (void)playButtonChange:(NSNotification *)notification
-{
-    NSURL *url = [channel_ playUrl];
-    Player *player = [Player sharedInstance];
-    if ([player isPlaying:url]) {
-        [playButton_ setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
-    } else {
-        [playButton_ setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
-    }
+#pragma mark Player notification
 
-    if ([player state] == PlayerStatePrepare) {
-        playButton_.enabled = NO;
-    } else {
-        playButton_.enabled = YES;
-    }
+- (void)playStateChanged:(NSNotification *)notification
+{
+    // 再生状況に合わせて再生ボタンの内容を切り替える
+    [self playButtonChange];
 }
+
+#pragma mark -
 
 @end

@@ -137,12 +137,15 @@
         }
     }
 
-    // 再生状態が切り替わるごとに再生ボタンの表示を切り替える
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(playStateChanged:)
-     name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
-     object:nil];
+    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
 
     // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
     // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
@@ -181,10 +184,8 @@
     Headline* headline = [Headline sharedInstance];
     headline.delegate = nil;
 
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
-     object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -487,11 +488,15 @@
 }
 
 #pragma mark -
+#pragma mark Player notification
 
 - (void)playStateChanged:(NSNotification *)notification
 {
     [self updatePlayingButton];
+    [self.headlineTableView reloadData];
 }
+
+#pragma mark -
 
 - (ChannelSortType)channelSortType
 {
