@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "Player.h"
 #import "LadioTailViewController.h"
 
 @implementation LadioTailViewController
@@ -34,9 +35,48 @@
     [super viewDidUnload];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // リモコン対応
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // リモコン対応
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+    
+    [super viewWillDisappear:animated];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark -
+#pragma mark UIResponder methods
+
+- (BOOL)canBecomeFirstResponder
+{
+    // リモコン対応
+    return YES;
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent*)event
+{
+	switch (event.subtype) {
+		case UIEventSubtypeRemoteControlTogglePlayPause:
+            // リモコンからのボタンクリック
+            [[Player sharedInstance] switchPlayStop];
+            break;
+		default:
+            break;
+	}
 }
 
 @end

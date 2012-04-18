@@ -270,25 +270,12 @@
 {
     [super viewDidAppear:animated];
 
-    // リモコン対応
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
-
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    // リモコン対応
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    [self resignFirstResponder];
-
-    [super viewWillDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -318,21 +305,6 @@
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
-}
-
-#pragma mark -
-#pragma mark UIResponder methods
-
-- (BOOL)canBecomeFirstResponder
-{
-    // リモコン対応
-    return YES;
-}
-
-- (void)remoteControlReceivedWithEvent:(UIEvent*)event
-{
-    // リモコンからのボタンクリック
-    [[Player sharedInstance] playFromRemoteControl:event];
 }
 
 #pragma mark -

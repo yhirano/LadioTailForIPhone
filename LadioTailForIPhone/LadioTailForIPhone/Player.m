@@ -124,25 +124,19 @@ static Player *instance = nil;
     }
 }
 
-- (void)playFromRemoteControl:(UIEvent *)event
+- (void)switchPlayStop
 {
-	switch (event.subtype) {
-		case UIEventSubtypeRemoteControlTogglePlayPause:
-			switch ([self state]) {
-                case PlayerStateIdle:
-                    [self play];
-                    break;
-                case PlayerStatePlay:
-                    [self stop];
-                    break;
-                case PlayerStatePrepare: // 再生準備中の場合は何もしない
-                default:
-                    break;
-            }
+    switch ([self state]) {
+        case PlayerStateIdle:
+            [self play];
             break;
-		default:
+        case PlayerStatePlay:
+            [self stop];
             break;
-	}
+        case PlayerStatePrepare: // 再生準備中の場合は何もしない
+        default:
+            break;
+    }
 }
 
 - (void)stop

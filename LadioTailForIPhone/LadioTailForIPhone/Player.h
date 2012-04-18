@@ -62,11 +62,9 @@ typedef NSInteger PlayerState;
 - (void)stop;
 
 /**
- * リモコンイベントの内容により再生・停止する
- *
- * @param event リモコンからのイベント
+ * 再生・停止を切り替えるする
  */
-- (void)playFromRemoteControl:(UIEvent *)event;
+- (void)switchPlayStop;
 
 - (BOOL)isPlaying:(NSURL *)url;
 

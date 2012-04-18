@@ -141,10 +141,6 @@
     // ページ読み込み中フラグを下げる
     isPageLoading_ = NO;
 
-    // リモコン対応
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
-
     // 広告を表示する
     AdBannerManager *adBannerManager = [AdBannerManager sharedInstance];
     [adBannerManager setShowPosition:CGPointMake(0, 316) hiddenPosition:CGPointMake(320, 316)];
@@ -163,10 +159,6 @@
         // ネットワークインジケーターを消す
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
-
-    // リモコン対応
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    [self resignFirstResponder];
     
     [super viewWillDisappear:animated];
 }
@@ -174,21 +166,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark -
-#pragma mark UIResponder methods
-
-- (BOOL)canBecomeFirstResponder
-{
-    // リモコン対応
-    return YES;
-}
-
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event
-{
-    // リモコンからのボタンクリック
-    [[Player sharedInstance] playFromRemoteControl:event];
 }
 
 #pragma -

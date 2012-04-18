@@ -380,10 +380,6 @@
 {
     [super viewDidAppear:animated];
 
-    // リモコン対応
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
-
     // WebViewのデリゲートを設定する
     descriptionWebView_.delegate = self;
 
@@ -397,10 +393,6 @@
 {
     // WebViewのデリゲートを削除する
     descriptionWebView_.delegate = nil;
-
-    // リモコン対応
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    [self resignFirstResponder];
 
     [super viewWillDisappear:animated];
 }
@@ -420,22 +412,6 @@
             ((WebPageViewController *) viewCon).url = channel_.url;
         }
     }
-}
-
-#pragma mark -
-#pragma mark UIResponder methods
-
-- (BOOL)canBecomeFirstResponder
-{
-    // リモコン対応
-    return YES;
-}
-
-
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event
-{
-    // リモコンからのボタンクリック
-    [[Player sharedInstance] playFromRemoteControl:event];
 }
 
 #pragma mark -
