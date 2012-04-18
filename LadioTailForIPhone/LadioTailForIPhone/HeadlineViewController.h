@@ -45,6 +45,4 @@
 
 - (IBAction)update:(id)sender;
 
-- (void)updateHeadlineTable;
-
 @end

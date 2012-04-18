@@ -39,14 +39,68 @@
 @synthesize reloadButton = reloadButton_;
 @synthesize bottomView = bottomView_;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)updateViews
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        ;
+    NSString* title = [pageWebView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
+    if (!([title length] == 0)) {
+        topNavigationItem_.title = title;
     }
-    return self;
+    
+    backButton_.enabled = pageWebView_.canGoBack;
+    forwardButton_.enabled = pageWebView_.canGoForward;
+    if (isPageLoading_) {
+        [reloadButton_ setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    } else {
+        [reloadButton_ setImage:[UIImage imageNamed:@"playback_reload.png"] forState:UIControlStateNormal];
+    }
 }
+
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)back:(id)sender
+{
+    if (pageWebView_.canGoBack) {
+        [pageWebView_ goBack];
+    }
+}
+
+- (IBAction)forward:(id)sender
+{
+    if (pageWebView_.canGoForward) {
+        [pageWebView_ goForward];
+    }
+}
+
+- (IBAction)goToBottom:(id)sender
+{
+    int pageHeight = pageWebView_.scrollView.contentSize.height;
+    if (pageHeight == 0) {
+        return;
+    }
+    
+    CGPoint movePoint = CGPointMake(
+                                    pageWebView_.scrollView.contentOffset.x,
+                                    pageHeight - pageWebView_.frame.size.height);
+#ifdef DEBUG
+    NSLog(@"Page scroll form %@ to %@.",
+          NSStringFromCGPoint(pageWebView_.scrollView.contentOffset),
+          NSStringFromCGPoint(movePoint));
+#endif /* #ifdef DEBUG */
+    [pageWebView_.scrollView setContentOffset:movePoint animated:YES];
+}
+
+- (IBAction)reload:(id)sender
+{
+    if (isPageLoading_) {
+        [pageWebView_ stopLoading];
+    } else {
+        [pageWebView_ reload];
+    }
+}
+
+#pragma mark -
+#pragma mark UIViewController methods
 
 - (void)viewDidLoad
 {
@@ -117,15 +171,18 @@
     [super viewWillDisappear:animated];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark -
+#pragma mark UIResponder methods
+
 - (BOOL)canBecomeFirstResponder
 {
     // リモコン対応
     return YES;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
@@ -134,6 +191,7 @@
     [[Player sharedInstance] playFromRemoteControl:event];
 }
 
+#pragma -
 #pragma mark UIWebViewDelegate methods
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -172,61 +230,6 @@
     [self updateViews];
 }
 
-- (IBAction)back:(id)sender
-{
-    if (pageWebView_.canGoBack) {
-        [pageWebView_ goBack];
-    }
-}
-
-- (IBAction)forward:(id)sender
-{
-    if (pageWebView_.canGoForward) {
-        [pageWebView_ goForward];
-    }
-}
-
-- (IBAction)goToBottom:(id)sender
-{
-    int pageHeight = pageWebView_.scrollView.contentSize.height;
-    if (pageHeight == 0) {
-        return;
-    }
-
-    CGPoint movePoint = CGPointMake(
-                                    pageWebView_.scrollView.contentOffset.x,
-                                    pageHeight - pageWebView_.frame.size.height);
-#ifdef DEBUG
-    NSLog(@"Page scroll form %@ to %@.",
-        NSStringFromCGPoint(pageWebView_.scrollView.contentOffset),
-        NSStringFromCGPoint(movePoint));
-#endif /* #ifdef DEBUG */
-    [pageWebView_.scrollView setContentOffset:movePoint animated:YES];
-}
-
-- (IBAction)reload:(id)sender
-{
-    if (isPageLoading_) {
-        [pageWebView_ stopLoading];
-    } else {
-        [pageWebView_ reload];
-    }
-}
-
-- (void)updateViews
-{
-    NSString* title = [pageWebView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
-    if (!([title length] == 0)) {
-        topNavigationItem_.title = title;
-    }
-
-    backButton_.enabled = pageWebView_.canGoBack;
-    forwardButton_.enabled = pageWebView_.canGoForward;
-    if (isPageLoading_) {
-        [reloadButton_ setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
-    } else {
-        [reloadButton_ setImage:[UIImage imageNamed:@"playback_reload.png"] forState:UIControlStateNormal];
-    }
-}
+#pragma mark -
 
 @end

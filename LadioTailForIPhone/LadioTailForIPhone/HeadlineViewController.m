@@ -95,6 +95,57 @@
 @synthesize headlineSearchBar = headlineSearchBar_;
 @synthesize headlineTableView = headlineTableView_;
 
+- (ChannelSortType)channelSortType
+{
+    return ChannelSortTypeNone;
+}
+
+- (void)fetchHeadline
+{
+    Headline *headline = [Headline sharedInstance];
+    [headline fetchHeadline];
+}
+
+- (void)updateHeadlineTable
+{
+    Headline *headline = [Headline sharedInstance];
+    showedChannels_ = [headline channels:[self channelSortType]
+                              searchWord:[SearchWordManager sharedInstance].searchWord];
+    
+    // ナビゲーションタイトルを更新
+    NSString *navigationTitleStr = @"";
+    if ([showedChannels_ count] == 0) {
+        navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    } else {
+        navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+    }
+    navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
+    
+    // ヘッドラインテーブルを更新
+    [self.headlineTableView reloadData];
+}
+
+- (void)updatePlayingButton
+{
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    if ([[Player sharedInstance] state] == PlayerStatePlay) {
+        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)update:(id)sender
+{
+    [self fetchHeadline];
+}
+
+#pragma mark -
+#pragma mark UIViewController methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -240,17 +291,51 @@
     [super viewWillDisappear:animated];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // テーブルから番組を選択した
+    if ([[segue identifier] isEqualToString:@"SelectChannel"]) {
+        // 番組情報を繊維先のViewに設定
+        UIViewController *viewCon = [segue destinationViewController];
+        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
+            Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
+            ((ChannelViewController *) viewCon).channel = channel;
+        }
+    }
+    // 再生中ボタンを選択した
+    else if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
+        // 番組情報を繊維先のViewに設定
+        UIViewController *viewCon = [segue destinationViewController];
+        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
+            NSURL *playingUrl = [[Player sharedInstance] playUrl];
+            Headline *headline = [Headline sharedInstance];
+            Channel *channel = [headline channel:playingUrl];
+            ((ChannelViewController *) viewCon).channel = channel;
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark UIResponder methods
+
 - (BOOL)canBecomeFirstResponder
 {
     // リモコン対応
     return YES;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)remoteControlReceivedWithEvent:(UIEvent*)event
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    // リモコンからのボタンクリック
+    [[Player sharedInstance] playFromRemoteControl:event];
 }
 
+#pragma mark -
 #pragma mark UISearchBarDelegate methods
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -400,37 +485,7 @@
 
 #pragma mark -
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // テーブルから番組を選択した
-    if ([[segue identifier] isEqualToString:@"SelectChannel"]) {
-        // 番組情報を繊維先のViewに設定
-        UIViewController *viewCon = [segue destinationViewController];
-        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
-            ((ChannelViewController *) viewCon).channel = channel;
-        }
-    }
-    // 再生中ボタンを選択した
-    else if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
-        // 番組情報を繊維先のViewに設定
-        UIViewController *viewCon = [segue destinationViewController];
-        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSURL *playingUrl = [[Player sharedInstance] playUrl];
-            Headline *headline = [Headline sharedInstance];
-            Channel *channel = [headline channel:playingUrl];
-            ((ChannelViewController *) viewCon).channel = channel;
-        }
-    }
-}
-
-- (void)remoteControlReceivedWithEvent:(UIEvent*)event
-{
-    // リモコンからのボタンクリック
-    [[Player sharedInstance] playFromRemoteControl:event];
-}
-
-#pragma mark HeadlineDelegate
+#pragma mark HeadlineDelegate methods
 - (void)headlineDidStartLoad:(Headline *)headline
 {
 #ifdef DEBUG
@@ -497,50 +552,5 @@
 }
 
 #pragma mark -
-
-- (ChannelSortType)channelSortType
-{
-    return ChannelSortTypeNone;
-}
-
-- (void)fetchHeadline
-{
-    Headline *headline = [Headline sharedInstance];
-    [headline fetchHeadline];
-}
-
-- (void)updateHeadlineTable
-{
-    Headline *headline = [Headline sharedInstance];
-    showedChannels_ = [headline channels:[self channelSortType]
-                                 searchWord:[SearchWordManager sharedInstance].searchWord];
-
-    // ナビゲーションタイトルを更新
-    NSString *navigationTitleStr = @"";
-    if ([showedChannels_ count] == 0) {
-        navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    } else {
-        navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
-    }
-    navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
-
-    // ヘッドラインテーブルを更新
-    [self.headlineTableView reloadData];
-}
-
-- (void)updatePlayingButton
-{
-    // 再生状態に逢わせて再生ボタンの表示を切り替える
-    if ([[Player sharedInstance] state] == PlayerStatePlay) {
-        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
-    } else {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-}
-
-- (IBAction)update:(id)sender
-{
-    [self fetchHeadline];
-}
 
 @end
