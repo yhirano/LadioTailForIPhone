@@ -26,7 +26,7 @@
 /// ヘッドラインの取得を開始した際のNotification
 #define NOTIFICATION_NAME_PLAY_STATE_CHANGED @"PlayStateChanged"
 
-enum _PlayerState
+enum PlayerState
 {
     PlayerStateIdle,
     PlayerStatePrepare,
@@ -36,6 +36,10 @@ enum _PlayerState
 typedef NSInteger PlayerState;
 
 @interface Player : NSObject <AVAudioSessionDelegate>
+
+@property (readonly) PlayerState state;
+@property (strong, readonly) NSURL *playUrl;
+
 
 + (Player *)sharedInstance;
 
@@ -58,12 +62,12 @@ typedef NSInteger PlayerState;
  *
  * @param event リモコンからのイベント
  */
-- (void)playFromRemoteControl:(UIEvent*)event;
+- (void)playFromRemoteControl:(UIEvent *)event;
 
 - (BOOL)isPlaying:(NSURL *)url;
 
-- (NSURL *)getPlayUrl;
+- (NSURL *)playUrl;
 
-- (PlayerState)getState;
+- (PlayerState)state;
 
 @end

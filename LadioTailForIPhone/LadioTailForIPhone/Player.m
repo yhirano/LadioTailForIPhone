@@ -28,10 +28,11 @@ static Player *instance = nil;
 @implementation Player
 {
 @private
-    AVPlayer *player;
-    PlayerState state;
-    NSURL *playUrl;
+    AVPlayer *player_;
 }
+
+@synthesize state = state_;
+@synthesize playUrl = playUrl_;
 
 + (Player *)sharedInstance
 {
@@ -46,7 +47,7 @@ static Player *instance = nil;
 {
     if (self = [super init]) {
         @synchronized (self) {
-            state = PlayerStateIdle;
+            state_ = PlayerStateIdle;
         }
 
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -63,15 +64,14 @@ static Player *instance = nil;
         }
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(stopped:)
-         name:AVPlayerItemDidPlayToEndTimeNotification
-         object:nil];
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self selector:@selector(stopped:)
-         name:AVPlayerItemFailedToPlayToEndTimeNotification
-         object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(stopped:)
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(stopped:)
+                                                     name:AVPlayerItemFailedToPlayToEndTimeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -80,14 +80,12 @@ static Player *instance = nil;
 {
     [self stop];
 
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:AVPlayerItemDidPlayToEndTimeNotification
-     object:nil];
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:AVPlayerItemFailedToPlayToEndTimeNotification
-     object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVPlayerItemDidPlayToEndTimeNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVPlayerItemFailedToPlayToEndTimeNotification
+                                                  object:nil];
 
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *setActiveError = nil;
@@ -99,7 +97,7 @@ static Player *instance = nil;
 
 - (void)play
 {
-    [self playProc:playUrl];
+    [self playProc:playUrl_];
 }
 
 - (void)play:(NSURL *)url
@@ -110,7 +108,7 @@ static Player *instance = nil;
             return;
         }
 
-        switch (state) {
+        switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
                 [self stopProc];
@@ -126,11 +124,11 @@ static Player *instance = nil;
     }
 }
 
-- (void)playFromRemoteControl:(UIEvent*)event
+- (void)playFromRemoteControl:(UIEvent *)event
 {
 	switch (event.subtype) {
 		case UIEventSubtypeRemoteControlTogglePlayPause:
-			switch ([self getState]) {
+			switch ([self state]) {
                 case PlayerStateIdle:
                     [self play];
                     break;
@@ -157,34 +155,34 @@ static Player *instance = nil;
 }
 
 /// 再生処理
-- (void)playProc:(NSURL*)url
+- (void)playProc:(NSURL *)url
 {
     // URLが空の場合は何もしない
     if (url == nil) {
         return;
     }
 
-    state = PlayerStatePrepare;
-    playUrl = url;
-    NSLog(@"Play start %@", [playUrl absoluteString]);
+    state_ = PlayerStatePrepare;
+    playUrl_ = url;
+    NSLog(@"Play start %@", [playUrl_ absoluteString]);
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
-    player = [AVPlayer playerWithURL:url];
-    [player addObserver:self forKeyPath:@"status" options:0 context:nil];
-    [player play];
+    player_ = [AVPlayer playerWithURL:url];
+    [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
+    [player_ play];
 }
 
 /// 停止処理
 - (void)stopProc
 {
-    [player pause];
-    [player removeObserver:self forKeyPath:@"status"];
-    state = PlayerStateIdle;
+    [player_ pause];
+    [player_ removeObserver:self forKeyPath:@"status"];
+    state_ = PlayerStateIdle;
 }
 
 - (BOOL)isPlaying:(NSURL *)url
 {
     @synchronized (self) {
-        NSURL *playingUrl = [self getPlayUrl];
+        NSURL *playingUrl = [self playUrl];
         if (playingUrl == nil) {
             return NO;
         } else {
@@ -193,12 +191,12 @@ static Player *instance = nil;
     }
 }
 
-- (NSURL *)getPlayUrl
+- (NSURL *)playUrl
 {
     @synchronized (self) {
-        switch (state) {
+        switch (state_) {
             case PlayerStatePlay:
-                return playUrl;
+                return playUrl_;
             case PlayerStateIdle:
             case PlayerStatePrepare:
             default:
@@ -207,42 +205,48 @@ static Player *instance = nil;
     }
 }
 
-- (PlayerState)getState
+- (PlayerState)state
 {
     @synchronized (self) {
-        return state;
+        return state_;
     }
 }
 
 - (void)stopped:(NSNotification *)notification
 {
     @synchronized (self) {
-        playUrl = nil;
-        state = PlayerStateIdle;
+        playUrl_ = nil;
+        state_ = PlayerStateIdle;
         NSLog(@"Play stopped.");
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-                        change:(NSDictionary *)change context:(void *)context
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
-    if (object == player && [keyPath isEqualToString:@"status"]) {
-        if (player.status == AVPlayerStatusReadyToPlay) {
+    if (object == player_ && [keyPath isEqualToString:@"status"]) {
+        if (player_.status == AVPlayerStatusReadyToPlay) {
             @synchronized (self) {
-                state = PlayerStatePlay;
+                state_ = PlayerStatePlay;
                 NSLog(@"Play started.");
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                                                                    object:self];
             }
-        } else if (player.status == AVPlayerStatusFailed) {
+        } else if (player_.status == AVPlayerStatusFailed) {
             @synchronized (self) {
-                state = PlayerStateIdle;
+                state_ = PlayerStateIdle;
                 NSLog(@"Play failed.");
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:self];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                                                                    object:self];
             }
         }
     }
 }
+
+#pragma mark AVAudioSessionDelegate methods
 
 - (void)beginInterruption
 {
@@ -266,5 +270,7 @@ static Player *instance = nil;
 	NSLog(@"audio settion inputIsAvailableChanged %d", isInputAvailable);
 #endif /* #if DEBUG */
 }
+
+#pragma mark -
 
 @end

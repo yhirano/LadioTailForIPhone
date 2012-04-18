@@ -25,7 +25,7 @@
 
 @implementation TitleHeadlineViewController
 
-- (ChannelSortType)getSortType
+- (ChannelSortType)channelSortType
 {
     return ChannelSortTypeTitle;
 }

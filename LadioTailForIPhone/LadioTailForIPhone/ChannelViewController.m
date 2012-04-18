@@ -45,21 +45,21 @@
 {
 @private
     /// バナーが表示済みか
-    BOOL isBannerVisible;
+    BOOL isBannerVisible_;
 }
 
-@synthesize channel;
-@synthesize topNavigationItem;
-@synthesize favoriteBarButtonItem;
-@synthesize descriptionWebView;
-@synthesize playButton;
-@synthesize bottomView;
+@synthesize channel = channel_;
+@synthesize topNavigationItem = topNavigationItem_;
+@synthesize favoriteBarButtonItem = favoriteBarButtonItem_;
+@synthesize descriptionWebView = descriptionWebView_;
+@synthesize playButton = playButton_;
+@synthesize bottomView = bottomView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        channel = nil;
+        ;
     }
     return self;
 }
@@ -72,38 +72,42 @@
     [self playButtonChange:nil];
 
     // 再生状況の変化を受け取って再生ボタンの内容を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playButtonChange:) name:NOTIFICATION_NAME_PLAY_STATE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playButtonChange:)
+                                                 name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
+                                               object:nil];
 
     // ナビゲーションタイトルを表示する
-    // タイトルが存在する場合はタイトルを
-    if (!([channel.nam length] == 0)) {
-        topNavigationItem.title = channel.nam;
+    // タイトルが存在する場合はタイトルを表示する
+    if (!([channel_.nam length] == 0)) {
+        topNavigationItem_.title = channel_.nam;
     }
-    // DJが存在する場合はDJを
-    else if (!([channel.dj length] == 0)) {
-        topNavigationItem.title = channel.dj;
+    // DJが存在する場合はDJを表示する
+    else if (!([channel_.dj length] == 0)) {
+        topNavigationItem_.title = channel_.dj;
     }
 
     // お気に入りボタンの色を変える
-    favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
+    favoriteBarButtonItem_.tintColor = FAVORITE_BUTTON_COLOR;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonStr = channel.nam;
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-                                       initWithTitle:backButtonStr
-                                       style:UIBarButtonItemStyleBordered
-                                       target:nil action:nil];
+    NSString *backButtonStr = channel_.nam;
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonStr
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:nil
+                                                                      action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = bottomView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:
+    gradient.frame = bottomView_.bounds;
+    gradient.colors =
+        [NSArray arrayWithObjects:
             (id) [UIColor colorWithRed:0.22 green:0.22 blue:0.22 alpha:1].CGColor,
             (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
             nil];
-    [bottomView.layer insertSublayer:gradient atIndex:0];
+    [bottomView_.layer insertSublayer:gradient atIndex:0];
 
     // お気に入りボタンを更新
     [self updateFavoriteButton];
@@ -134,7 +138,7 @@
     [self becomeFirstResponder];
 
     // WebViewのデリゲートを設定する
-    descriptionWebView.delegate = self;
+    descriptionWebView_.delegate = self;
 
     // 広告を表示する
     AdBannerManager *adBannerManager = [AdBannerManager sharedInstance];
@@ -145,7 +149,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     // WebViewのデリゲートを削除する
-    descriptionWebView.delegate = nil;
+    descriptionWebView_.delegate = nil;
 
     // リモコン対応
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
@@ -167,7 +171,9 @@
 
 #pragma mark UIWebViewDelegate methods
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)            webView:(UIWebView *)webView
+ shouldStartLoadWithRequest:(NSURLRequest *)request
+             navigationType:(UIWebViewNavigationType)navigationType
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
         NSString *scheme = [[request URL] scheme];
@@ -194,7 +200,7 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    if ([favoriteManager isFavorite:channel.mnt]) {
+    if ([favoriteManager isFavorite:channel_.mnt]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
@@ -203,7 +209,7 @@
 
 - (void)writeDescription
 {
-    if (channel == nil) {
+    if (channel_ == nil) {
         return;
     }
 
@@ -248,97 +254,106 @@
     NSString *html = @"";
 
     // タイトル
-    if (!([channel.nam length] == 0)) {
+    if (!([channel_.nam length] == 0)) {
         NSString *t = NSLocalizedString(@"Title", @"番組タイトル");
-        NSString *v = channel.nam;
+        NSString *v = channel_.nam;
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // DJ
-    if (!([channel.dj length] == 0)) {
+    if (!([channel_.dj length] == 0)) {
         NSString *t = NSLocalizedString(@"DJ", @"番組DJ");
-        NSString *v = channel.dj;
+        NSString *v = channel_.dj;
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // ジャンル
-    if (!([channel.gnl length] == 0)) {
+    if (!([channel_.gnl length] == 0)) {
         NSString *t = NSLocalizedString(@"Genre", @"番組ジャンル");
-        NSString *v = channel.gnl;
+        NSString *v = channel_.gnl;
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // 詳細
-    if (!([channel.desc length] == 0)) {
+    if (!([channel_.desc length] == 0)) {
         NSString *t = NSLocalizedString(@"Description", @"番組詳細");
-        NSString *v = channel.desc;
+        NSString *v = channel_.desc;
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // 曲
-    if (!([channel.song length] == 0)) {
+    if (!([channel_.song length] == 0)) {
         NSString *t = NSLocalizedString(@"Song", @"番組曲");
-        NSString *v = channel.song;
+        NSString *v = channel_.song;
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // URL
-    NSString *urlStr = [channel.url absoluteString];
+    NSString *urlStr = [channel_.url absoluteString];
     if (!([urlStr length] == 0)) {
         NSString *t = NSLocalizedString(@"Site", @"番組サイト");
         NSString *v = [[NSString alloc] initWithFormat:htmlLink, urlStr, urlStr];
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // リスナー数
-    if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+    if (channel_.cln != CHANNEL_UNKNOWN_LISTENER_NUM
+            || channel_.clns != CHANNEL_UNKNOWN_LISTENER_NUM
+            || channel_.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
         // リスナー数
         NSString *t = NSLocalizedString(@"Listener num", @"番組リスナー数");
         NSString *v;
-        if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-            v = [NSString
-                 stringWithFormat:@"%@ %d",
-                 NSLocalizedString(@"Listener num", @"番組リスナー数"), channel.cln];
-            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+        if (channel_.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString stringWithFormat:@"%@ %d",
+                                           NSLocalizedString(@"Listener num", @"番組リスナー数"),
+                                           channel_.cln];
+            if (channel_.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel_.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 v = [NSString stringWithFormat:@"%@%@", v, @" / "];
             }
         }
 
         // 述べリスナー数
-        if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
-            v = [NSString
-                 stringWithFormat:@"%@%@ %d",
-                 v, NSLocalizedString(@"Total num", @"番組述べリスナー数"), channel.clns];
-            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+        if (channel_.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString stringWithFormat:@"%@%@ %d",
+                                           v,
+                                           NSLocalizedString(@"Total num", @"番組述べリスナー数"),
+                                           channel_.clns];
+            if (channel_.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 v = [NSString stringWithFormat:@"%@%@", v, @" / "];
             }
         }
 
         // 最大リスナー数
-        if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-            v = [NSString
-                 stringWithFormat:@"%@%@ %d",
-                 v, NSLocalizedString(@"Max num", @"番組最大リスナー数"), channel.max];
+        if (channel_.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            v = [NSString stringWithFormat:@"%@%@ %d",
+                                           v,
+                                           NSLocalizedString(@"Max num", @"番組最大リスナー数"),
+                                           channel_.max];
         }
 
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // 開始時刻
-    if (channel.tims != nil) {
+    if (channel_.tims != nil) {
         NSString *t = NSLocalizedString(@"StartTime", @"番組開始時刻");
-        NSString *v = [channel getTimsToString];
+        NSString *v = [channel_ timsToString];
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
     }
     // フォーマット
-    if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM || channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel.type length] == 0)) {
+    if (channel_.bit != CHANNEL_UNKNOWN_BITRATE_NUM
+            || channel_.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+            || channel_.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+            || !([channel_.type length] == 0)) {
         NSString *t = NSLocalizedString(@"Format", @"番組フォーマット");
         NSString *v;
         // ビットレート
-        if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
-            v = [NSString stringWithFormat:@"%dkbps", channel.bit];
-            if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel.type length] == 0)) {
+        if (channel_.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
+            v = [NSString stringWithFormat:@"%dkbps", channel_.bit];
+            if (channel_.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+                    || channel_.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+                    || !([channel_.type length] == 0)) {
                 v = [NSString stringWithFormat:@"%@%@", v, @" / "];
             }
         }
 
         // チャンネル数
-        if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
+        if (channel_.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
             NSString *chsStr;
-            switch (channel.chs) {
+            switch (channel_.chs) {
                 case 1:
                     chsStr = NSLocalizedString(@"Mono", @"モノラル");
                     break;
@@ -346,27 +361,27 @@
                     chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
                     break;
                 default:
-                    chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
+                    chsStr = [NSString stringWithFormat:@"%dch", channel_.chs];
                     break;
             }
 
             v = [NSString stringWithFormat:@"%@%@", v, chsStr];
-            if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel.type length] == 0)) {
+            if (channel_.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel_.type length] == 0)) {
                 v = [NSString stringWithFormat:@"%@%@", v, @" / "];
             }
         }
 
         // サンプリングレート数
-        if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
-            v = [NSString stringWithFormat:@"%@%dHz", v, channel.smpl];
-            if (!([channel.type length] == 0)) {
+        if (channel_.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
+            v = [NSString stringWithFormat:@"%@%dHz", v, channel_.smpl];
+            if (!([channel_.type length] == 0)) {
                 v = [NSString stringWithFormat:@"%@%@", v, @" / "];
             }
         }
 
         // 種類
-        if (!([channel.type length] == 0)) {
-            v = [NSString stringWithFormat:@"%@%@", v, channel.type];
+        if (!([channel_.type length] == 0)) {
+            v = [NSString stringWithFormat:@"%@%@", v, channel_.type];
         }
 
         html = [[NSString alloc] initWithFormat:htmlContent, html, t, v];
@@ -382,7 +397,7 @@
     [self.descriptionWebView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
-- (void)remoteControlReceivedWithEvent:(UIEvent*)event
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event
 {
     // リモコンからのボタンクリック
     [[Player sharedInstance] playFromRemoteControl:event];
@@ -395,14 +410,14 @@
         // URLを繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = channel.url;
+            ((WebPageViewController *) viewCon).url = channel_.url;
         }
     }
 }
 
 - (IBAction)play:(id)sender
 {
-    NSURL *url = [channel getPlayUrl];
+    NSURL *url = [channel_ playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
@@ -414,7 +429,7 @@
 - (IBAction)favorite:(id)sender
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager switchFavorite:channel.mnt];
+    [favoriteManager switchFavorite:channel_.mnt];
 
     // お気に入りボタンを更新
     [self updateFavoriteButton];
@@ -422,18 +437,18 @@
 
 - (void)playButtonChange:(NSNotification *)notification
 {
-    NSURL *url = [channel getPlayUrl];
+    NSURL *url = [channel_ playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
-        [playButton setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
+        [playButton_ setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
     } else {
-        [playButton setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
+        [playButton_ setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
     }
 
-    if ([player getState] == PlayerStatePrepare) {
-        playButton.enabled = NO;
+    if ([player state] == PlayerStatePrepare) {
+        playButton_.enabled = NO;
     } else {
-        playButton.enabled = YES;
+        playButton_.enabled = YES;
     }
 }
 

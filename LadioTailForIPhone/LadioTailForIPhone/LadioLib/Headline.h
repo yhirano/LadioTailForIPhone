@@ -30,7 +30,7 @@
 /// ヘッドラインの取得に失敗した際のNotification
 #define NOTIFICATION_NAME_FETCH_HEADLINE_FAILED @"FetchHeadlineFailed"
 
-enum _ChannelSortType
+enum ChannelSortType
 {
     ChannelSortTypeNone,
     ChannelSortTypeNewly,
@@ -68,36 +68,37 @@ typedef NSInteger ChannelSortType;
  *
  * @return 番組リスト
  */
-- (NSArray *)getChannels;
+- (NSArray *)channels;
 
 /**
  * 指定したソート順で番組リストを取得する
  *
  * @param sortType ソート種類
  * @return 番組リスト
- * @see CHANNEL_SORT_TYPE_NEWLY
- * @see CHANNEL_SORT_TYPE_LISTENERS
- * @see CHANNEL_SORT_TYPE_TITLE
- * @see CHANNEL_SORT_TYPE_DJ
- * @see CHANNEL_SORT_TYPE_NONE
+ * @see ChannelSortTypeNone
+ * @see ChannelSortTypeNewly
+ * @see ChannelSortTypeListeners
+ * @see ChannelSortTypeTitle
+ * @see ChannelSortTypeDj
  */
-- (NSArray *)getChannels:(ChannelSortType)sortType;
+- (NSArray *)channels:(ChannelSortType)sortType;
 
 /**
  * 番組リストを取得する
  * 
  * @param sortType ソート種類
- * @param searchWord フィルタリング単語。ここで指定した文字列をスペースに分かち書きしたそれぞれの文字列に対して、
- *            すべてに合致する番組のみtrueを返す（AND検索）。
- *            フィルタリング単語を指定しない場合は空も時価かnilを指定すること。
+ * @param searchWord フィルタリング単語。
+ *                   ここで指定した文字列をスペースに分かち書きしたそれぞれの文字列に
+ *                   対して、すべてに合致する番組のみtrueを返す（AND検索）。
+ *                   フィルタリング単語を指定しない場合は空も時価かnilを指定すること。
  * @return 番組リスト
- * @see CHANNEL_SORT_TYPE_NEWLY
- * @see CHANNEL_SORT_TYPE_LISTENERS
- * @see CHANNEL_SORT_TYPE_TITLE
- * @see CHANNEL_SORT_TYPE_DJ
- * @see CHANNEL_SORT_TYPE_NONE
+ * @see ChannelSortTypeNone
+ * @see ChannelSortTypeNewly
+ * @see ChannelSortTypeListeners
+ * @see ChannelSortTypeTitle
+ * @see ChannelSortTypeDj
  */
-- (NSArray *)getChannels:(ChannelSortType)sortType searchWord:(NSString *)searchWord;
+- (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord;
 
 /**
  * 一致する再生URLを持つ番組を取得する
@@ -105,6 +106,6 @@ typedef NSInteger ChannelSortType;
  * @param playUrl 再生URL
  * @return Channel。見つからない場合はnil。
  */
-- (Channel *)getChannel:(NSURL *)playUrl;
+- (Channel *)channel:(NSURL *)playUrl;
 
 @end

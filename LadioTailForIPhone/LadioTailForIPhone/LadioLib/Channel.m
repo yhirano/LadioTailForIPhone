@@ -25,101 +25,88 @@
 
 @implementation Channel
 
-@synthesize surl;
-@synthesize tims;
-@synthesize srv;
-@synthesize prt;
-@synthesize mnt;
-@synthesize type;
-@synthesize nam;
-@synthesize gnl;
-@synthesize desc;
-@synthesize dj;
-@synthesize song;
-@synthesize url;
-@synthesize cln;
-@synthesize clns;
-@synthesize max;
-@synthesize bit;
-@synthesize smpl;
-@synthesize chs;
-@synthesize favorite;
+@synthesize surl = surl_;
+@synthesize tims = tims_;
+@synthesize srv = srv_;
+@synthesize prt = prt_;
+@synthesize mnt = mnt_;
+@synthesize type = type_;
+@synthesize nam = nam_;
+@synthesize gnl = gnl_;
+@synthesize desc = desc_;
+@synthesize dj = dj_;
+@synthesize song = song_;
+@synthesize url = url_;
+@synthesize cln = cln_;
+@synthesize clns = clns_;
+@synthesize max = max_;
+@synthesize bit = bit_;
+@synthesize smpl = smpl_;
+@synthesize chs = chs_;
+@synthesize favorite = favorite_;
 
 - (id)init
 {
     if (self = [super init]) {
-        surl = nil;
-        tims = nil;
-        srv = nil;
-        prt = 0;
-        mnt = nil;
-        type = nil;
-        nam = nil;
-        gnl = nil;
-        desc = nil;
-        dj = nil;
-        song = nil;
-        url = nil;
-        cln = CHANNEL_UNKNOWN_LISTENER_NUM;
-        clns = CHANNEL_UNKNOWN_LISTENER_NUM;
-        max = CHANNEL_UNKNOWN_LISTENER_NUM;
-        bit = CHANNEL_UNKNOWN_BITRATE_NUM;
-        smpl = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
-        chs = CHANNEL_UNKNOWN_CHANNEL_NUM;
+        cln_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        clns_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        max_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        bit_ = CHANNEL_UNKNOWN_BITRATE_NUM;
+        smpl_ = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
+        chs_ = CHANNEL_UNKNOWN_CHANNEL_NUM;
     }
     return self;
 }
 
 - (NSString *)description
 {
-    return [NSString
-            stringWithFormat:@"<%@ :%p ,surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@ url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>",
-            NSStringFromClass([self class]), self, surl, tims, srv, prt, mnt, type, nam, gnl, desc, dj, song, url, cln, clns, max, bit, smpl, chs];
+    NSString *format = @"<%@ :%p , surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@"
+                        " url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d favorite:@%>";
+    return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, surl_, tims_, srv_, prt_, mnt_,
+                                      type_, nam_, gnl_, desc_, dj_,song_, url_, cln_, clns_, max_, bit_, smpl_, chs_,
+                                      (favorite_ ? @"YES" : @"NO")];
 }
 
-- (void)setSurlFromString:(NSString *)u
+- (void)setSurlFromString:(NSString *)url
 {
-    surl = [NSURL URLWithString:u];
+    surl_ = [NSURL URLWithString:url];
 }
 
-- (void)setTimsFromString:(NSString *)t
+- (void)setTimsFromString:(NSString *)tims
 {
-    @autoreleasepool {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-        tims = [format dateFromString:t];
-    }
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    tims_ = [format dateFromString:tims];
 }
 
-- (NSString *)getTimsToString
+- (NSString *)timsToString
 {
-    @autoreleasepool {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-        return [format stringFromDate:tims];
-    }
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    return [format stringFromDate:tims_];
 }
 
-- (void)setUrlFromString:(NSString *)u
+- (void)setUrlFromString:(NSString *)url
 {
-    url = [NSURL URLWithString:u];
+    url_ = [NSURL URLWithString:url];
 }
 
-- (NSURL *)getPlayUrl
+- (NSURL *)playUrl
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d%@", srv, prt, mnt]];
+    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
+    return [NSURL URLWithString:url];
 }
 
 - (BOOL)favorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    return [favoriteManager isFavorite:mnt];
+    return [favoriteManager isFavorite:mnt_];
 }
 
 - (void)setFavorite:(BOOL)favorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager addFavorite:mnt];
+    [favoriteManager addFavorite:mnt_];
 }
 
 - (BOOL)isMatch:(NSArray *)searchWords
@@ -140,24 +127,26 @@
 
     // 検索対象文字列を配列にする
     NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:4];
-    if (!([nam length] == 0)) {
-        [searchedWords addObject:nam];
+    if (!([nam_ length] == 0)) {
+        [searchedWords addObject:nam_];
     }
-    if (!([gnl length] == 0)) {
-        [searchedWords addObject:gnl];
+    if (!([gnl_ length] == 0)) {
+        [searchedWords addObject:gnl_];
     }
-    if (!([desc length] == 0)) {
-        [searchedWords addObject:desc];
+    if (!([desc_ length] == 0)) {
+        [searchedWords addObject:desc_];
     }
-    if (!([dj length] == 0)) {
-        [searchedWords addObject:dj];
+    if (!([dj_ length] == 0)) {
+        [searchedWords addObject:dj_];
     }
 
     // 検索文字と検索対象文字を比較する
     for (NSString *searchedWord in searchedWords) {
         for (NSString *searchWord in [searchDictionary allKeys]) {
             // 見つかった場合は検索辞書の該当単語にYESを代入
-            if ([searchedWord rangeOfString:searchWord options:(NSCaseInsensitiveSearch | NSLiteralSearch | NSWidthInsensitiveSearch)].location != NSNotFound) {
+            if ([searchedWord rangeOfString:searchWord
+                                    options:(NSCaseInsensitiveSearch | NSLiteralSearch | NSWidthInsensitiveSearch)]
+                    .location != NSNotFound) {
                 [searchDictionary setObject:[NSNumber numberWithBool:YES] forKey:searchWord];
             }
         }
@@ -172,37 +161,37 @@
     return YES;
 }
 
-- (NSComparisonResult)compareNewly:(Channel *)_channel
+- (NSComparisonResult)compareNewly:(Channel *)channel
 {
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:_channel];
+    result = [Channel compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // 新しい方が前に来る
-    result = [_channel.tims compare:self.tims];
+    result = [channel.tims compare:self.tims];
 
     return result;
 }
 
-- (NSComparisonResult)compareListeners:(Channel *)_channel
+- (NSComparisonResult)compareListeners:(Channel *)channel
 {
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:_channel];
+    result = [Channel compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // リスナー数で比較する
     // 多い方が前に来る
-    if (self.cln > _channel.cln) {
+    if (self.cln > channel.cln) {
         result = NSOrderedAscending;
-    } else if (self.cln < _channel.cln) {
+    } else if (self.cln < channel.cln) {
         result = NSOrderedDescending;
     } else {
         result = NSOrderedSame;
@@ -211,58 +200,58 @@
     return result;
 }
 
-- (NSComparisonResult)compareTitle:(Channel *)_channel
+- (NSComparisonResult)compareTitle:(Channel *)channel
 {
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:_channel];
+    result = [Channel compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルで比較
-    result = [Channel compareString:self.nam compared:_channel.nam];
+    result = [Channel compareString:self.nam compared:channel.nam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルおなじ場合はDJで比較
-    result = [Channel compareString:self.dj compared:_channel.dj];
+    result = [Channel compareString:self.dj compared:channel.dj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルとDJがおなじ場合は日付で比較
-    result = [self compareNewly:_channel];
+    result = [self compareNewly:channel];
 
     return result;
 }
 
-- (NSComparisonResult)compareDj:(Channel *)_channel
+- (NSComparisonResult)compareDj:(Channel *)channel
 {
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:_channel];
+    result = [Channel compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJで比較
-    result = [Channel compareString:self.dj compared:_channel.dj];
+    result = [Channel compareString:self.dj compared:channel.dj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJがおなじ場合はタイトルで比較
-    result = [Channel compareString:self.nam compared:_channel.nam];
+    result = [Channel compareString:self.nam compared:channel.nam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルとDJがおなじ場合は日付で比較
-    result = [self compareNewly:_channel];
+    result = [self compareNewly:channel];
 
     return result;
 }
@@ -279,11 +268,11 @@
         return NSOrderedSame;
     } else {
         NSString *trimStr1 = [str1
-                stringByTrimmingCharactersInSet:
-                        [NSCharacterSet whitespaceCharacterSet]];
+                              stringByTrimmingCharactersInSet:
+                                  [NSCharacterSet whitespaceCharacterSet]];
         NSString *trimStr2 = [str2
-                stringByTrimmingCharactersInSet:
-                        [NSCharacterSet whitespaceCharacterSet]];
+                              stringByTrimmingCharactersInSet:
+                                  [NSCharacterSet whitespaceCharacterSet]];
         return [trimStr1 localizedCaseInsensitiveCompare:trimStr2];
     }
 }
@@ -294,9 +283,9 @@
 
     // お気に入りで比較する。
     // お気に入りがある場合は前に来る。
-    if (channel1.favorite == YES && channel2.favorite == NO) {
+    if (channel1.favorite && channel2.favorite == NO) {
         result = NSOrderedAscending;
-    } else if (channel1.favorite == NO && channel2.favorite == YES) {
+    } else if (channel1.favorite == NO && channel2.favorite) {
         result = NSOrderedDescending;
     } else {
         result = NSOrderedSame;

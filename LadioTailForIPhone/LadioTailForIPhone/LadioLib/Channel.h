@@ -43,34 +43,34 @@
 @property (strong) NSURL *surl;
 
 /// 放送開始時刻
-@property (strong) NSDate *tims;
+@property (copy) NSDate *tims;
 
 /// 配信サーバホスト名
-@property (strong) NSString *srv;
+@property (copy) NSString *srv;
 
 /// 配信サーバポート番号
 @property NSInteger prt;
 
 /// 配信サーバマウント
-@property (strong) NSString *mnt;
+@property (copy) NSString *mnt;
 
 /// 配信フォーマットの種類
-@property (strong) NSString *type;
+@property (copy) NSString *type;
 
 /// タイトル
-@property (strong) NSString *nam;
+@property (copy) NSString *nam;
 
 /// ジャンル
-@property (strong) NSString *gnl;
+@property (copy) NSString *gnl;
 
 /// 放送内容
-@property (strong) NSString *desc;
+@property (copy) NSString *desc;
 
 /// DJ
-@property (strong) NSString *dj;
+@property (copy) NSString *dj;
 
 /// 現在の曲名情報
-@property (strong) NSString *song;
+@property (copy) NSString *song;
 
 /// WebサイトのURL
 @property (strong) NSURL *url;
@@ -100,24 +100,24 @@
 
 - (NSString *)description;
 
-- (void)setSurlFromString:(NSString *)u;
+- (void)setSurlFromString:(NSString *)url;
 
-- (NSString *)getTimsToString;
+- (NSString *)timsToString;
 
-- (void)setTimsFromString:(NSString *)t;
+- (void)setTimsFromString:(NSString *)tims;
 
-- (void)setUrlFromString:(NSString *)u;
+- (void)setUrlFromString:(NSString *)url;
 
-- (NSURL *)getPlayUrl;
+- (NSURL *)playUrl;
 
 - (BOOL)isMatch:(NSArray *)searchWords;
 
-- (NSComparisonResult)compareNewly:(Channel *)_channel;
+- (NSComparisonResult)compareNewly:(Channel *)channel;
 
-- (NSComparisonResult)compareListeners:(Channel *)_channel;
+- (NSComparisonResult)compareListeners:(Channel *)channel;
 
-- (NSComparisonResult)compareTitle:(Channel *)_channel;
+- (NSComparisonResult)compareTitle:(Channel *)channel;
 
-- (NSComparisonResult)compareDj:(Channel *)_channel;
+- (NSComparisonResult)compareDj:(Channel *)channel;
 
 @end

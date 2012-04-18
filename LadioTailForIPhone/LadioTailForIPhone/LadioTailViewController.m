@@ -22,10 +22,6 @@
 
 #import "LadioTailViewController.h"
 
-@interface LadioTailViewController ()
-
-@end
-
 @implementation LadioTailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

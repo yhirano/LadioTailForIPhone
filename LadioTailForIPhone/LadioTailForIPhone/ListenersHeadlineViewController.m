@@ -25,7 +25,7 @@
 
 @implementation ListenersHeadlineViewController
 
-- (ChannelSortType)getSortType
+- (ChannelSortType)channelSortType
 {
     return ChannelSortTypeListeners;
 }

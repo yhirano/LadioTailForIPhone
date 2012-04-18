@@ -30,13 +30,13 @@ static AdBannerManager *instance = nil;
 @implementation AdBannerManager
 {
 @private
-    ADBannerView *adBannerView;
-    CGRect showRect;
-    CGRect hiddenRect;
+    ADBannerView *adBannerView_;
+    CGRect showRect_;
+    CGRect hiddenRect_;
 }
 
-@synthesize bannerSibling;
-@synthesize isBannerVisible;
+@synthesize bannerSibling = bannerSibling_;
+@synthesize isBannerVisible = isBannerVisible_;
 
 + (AdBannerManager *)sharedInstance
 {
@@ -50,54 +50,54 @@ static AdBannerManager *instance = nil;
 - (id)init
 {
     if (self = [super init]) {
-        isBannerVisible = NO;
+        isBannerVisible_ = NO;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    adBannerView.delegate = nil;
+    adBannerView_.delegate = nil;
 }
 
 - (void)setShowPosition:(CGPoint)position hiddenPosition:(CGPoint)hPosition
 {
-    showRect.origin.x = position.x;
-    showRect.origin.y = position.y;
-    showRect.size.width = 320;
-    showRect.size.height = 50;
-    hiddenRect.origin.x = hPosition.x;
-    hiddenRect.origin.y = hPosition.y;
-    hiddenRect.size.width = 320;
-    hiddenRect.size.height = 50;
+    showRect_.origin.x = position.x;
+    showRect_.origin.y = position.y;
+    showRect_.size.width = 320;
+    showRect_.size.height = 50;
+    hiddenRect_.origin.x = hPosition.x;
+    hiddenRect_.origin.y = hPosition.y;
+    hiddenRect_.size.width = 320;
+    hiddenRect_.size.height = 50;
 
-    [adBannerView setFrame:hiddenRect];
+    [adBannerView_ setFrame:hiddenRect_];
 }
 
-- (UIView*)bannerSibling
+- (UIView *)bannerSibling
 {
-    return bannerSibling;
+    return bannerSibling_;
 }
 
-- (void)setBannerSibling:(UIView*)view
+- (void)setBannerSibling:(UIView *)view
 {
     // adBannerViewを生成
-    if (adBannerView == nil) {
-        adBannerView = [[ADBannerView alloc] initWithFrame: CGRectMake(0, 0, 320, 50)];
-        adBannerView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
-        adBannerView.hidden = YES; // 画面外からの遷移の場合、画面外にあるとViewがちらつくので消す
-        adBannerView.delegate = self;
+    if (adBannerView_ == nil) {
+        adBannerView_ = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        adBannerView_.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
+        adBannerView_.hidden = YES; // 画面外からの遷移の場合、画面外にあるとViewがちらつくので消す
+        adBannerView_.delegate = self;
     }
 
-    if (bannerSibling != view) {
-        [adBannerView removeFromSuperview];
+    if (bannerSibling_ != view) {
+        [adBannerView_ removeFromSuperview];
 
-        bannerSibling = view;
+        bannerSibling_ = view;
 
         // 新しいbannerSiblingが存在する場合
-        if (bannerSibling != nil) {
-            [bannerSibling addSubview:adBannerView];
-            if (isBannerVisible) {
+        if (bannerSibling_ != nil) {
+            [bannerSibling_ addSubview:adBannerView_];
+            if (isBannerVisible_) {
                 [self show];
             }
         }
@@ -108,79 +108,80 @@ static AdBannerManager *instance = nil;
 {
     NSLog(@"Show iAD banner.");
     
-    if (bannerSibling != nil) {
-        [adBannerView setFrame:hiddenRect];
-        
+    if (bannerSibling_ != nil) {
+        [adBannerView_ setFrame:hiddenRect_];
+
         // iADバナーを表示状態にする
-        adBannerView.hidden = NO;
-        
-        [UIView
-         animateWithDuration:AD_VIEW_ANIMATION_DURATION
-         animations:^{
-             adBannerView.frame = showRect;
-         }];
+        adBannerView_.hidden = NO;
+
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                         animations:^{
+                                         adBannerView_.frame = showRect_;
+                                     }];
     } else {
         // iADバナーを表示状態にする
-        adBannerView.hidden = NO;
-        
-        [adBannerView setFrame:showRect];
+        adBannerView_.hidden = NO;
+
+        [adBannerView_ setFrame:showRect_];
     }
-    
-    isBannerVisible = YES;
+
+    isBannerVisible_ = YES;
 }
 
 - (void)hide
 {
     NSLog(@"Hide iAD banner.");
-    
-    if (bannerSibling != nil) {
-        [adBannerView setFrame:showRect];
-        
-        [UIView
-         animateWithDuration:AD_VIEW_ANIMATION_DURATION
-         animations:^{
-             adBannerView.frame = hiddenRect;
-         }
-         completion:^(BOOL finished) {
-             // AdBannerViewを隠す
-             adBannerView.hidden = YES;
-         }];
+
+    if (bannerSibling_ != nil) {
+        [adBannerView_ setFrame:showRect_];
+
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                         animations:^{
+                                         adBannerView_.frame = hiddenRect_;
+                                     }
+                         completion:^(BOOL finished)
+                                    {
+                                        // AdBannerViewを隠す
+                                        adBannerView_.hidden = YES;
+                                    }];
     } else {
         // AdBannerViewを隠す
-        adBannerView.hidden = YES;
-        
-        [adBannerView setFrame:hiddenRect];
+        adBannerView_.hidden = YES;
+
+        [adBannerView_ setFrame:hiddenRect_];
     }
-    
-    isBannerVisible = NO;
+
+    isBannerVisible_ = NO;
 }
 
 #pragma mark ADBannerViewDelegate methods
 
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView*)banner willLeaveApplication:(BOOL)willLeave
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
     // 広告をはいつでも表示可能
     return YES;
 }
 
 // iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView*)banner
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
     NSLog(@"iAD banner load complated.");
 
     // iADバナー未表示状態の場合
-    if (isBannerVisible == NO && adBannerView != nil) {
+    if (isBannerVisible_ == NO && adBannerView_ != nil) {
+        // バナーを表示する
         [self show];
     }
 }
 
 // iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError*)error
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
     NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
 
     // iADバナー表示済み状態の場合
-    if (isBannerVisible == YES && adBannerView != nil) {
+    if (isBannerVisible_ && adBannerView_ != nil) {
+        // バナーを表しない
         [self hide];
     }
 }

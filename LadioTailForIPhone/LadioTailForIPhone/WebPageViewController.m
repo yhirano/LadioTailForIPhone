@@ -28,16 +28,16 @@
 {
 @private
     /// ページを読み込み中か
-    BOOL isPageLoading;
+    BOOL isPageLoading_;
 }
 
-@synthesize url;
-@synthesize topNavigationItem;
-@synthesize pageWebView;
-@synthesize backButton;
-@synthesize forwardButton;
-@synthesize reloadButton;
-@synthesize bottomView;
+@synthesize url = url_;
+@synthesize topNavigationItem = topNavigationItem_;
+@synthesize pageWebView = pageWebView_;
+@synthesize backButton = backButton_;
+@synthesize forwardButton = forwardButton_;
+@synthesize reloadButton = reloadButton_;
+@synthesize bottomView = bottomView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,16 +52,15 @@
 {
     [super viewDidLoad];
 
-    [pageWebView loadRequest:[NSURLRequest requestWithURL:url]];
+    [pageWebView_ loadRequest:[NSURLRequest requestWithURL:url_]];
 
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = bottomView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id) [UIColor colorWithRed:0.22 green:0.22 blue:0.22 alpha:1].CGColor,
-                       (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
-                       nil];
-    [bottomView.layer insertSublayer:gradient atIndex:0];
+    gradient.frame = bottomView_.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id) [UIColor colorWithRed:0.22 green:0.22 blue:0.22 alpha:1].CGColor,
+                                                (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
+                                                nil];
+    [bottomView_.layer insertSublayer:gradient atIndex:0];
 
     // ボタン類の表示を更新する
     [self updateViews];
@@ -83,10 +82,10 @@
     [super viewDidAppear:animated];
 
     // WebViewのデリゲートを設定する
-    pageWebView.delegate = self;
+    pageWebView_.delegate = self;
 
     // ページ読み込み中フラグを下げる
-    isPageLoading = NO;
+    isPageLoading_ = NO;
 
     // リモコン対応
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
@@ -101,12 +100,12 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     // WebViewのデリゲートを削除する
-    pageWebView.delegate = nil;
+    pageWebView_.delegate = nil;
     
     // WebViewの読み込みを中止する
-    [pageWebView stopLoading];
+    [pageWebView_ stopLoading];
     
-    if (isPageLoading) {
+    if (isPageLoading_) {
         // ネットワークインジケーターを消す
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
@@ -129,7 +128,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)remoteControlReceivedWithEvent:(UIEvent*)event
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event
 {
     // リモコンからのボタンクリック
     [[Player sharedInstance] playFromRemoteControl:event];
@@ -137,37 +136,37 @@
 
 #pragma mark UIWebViewDelegate methods
 
-- (void)webViewDidStartLoad:(UIWebView*)webView
+- (void)webViewDidStartLoad:(UIWebView *)webView
 {
     // ネットワークインジケーターを表示
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     // ページ読み込み中フラグを上げる
-    isPageLoading = YES;
+    isPageLoading_ = YES;
 
     // ボタン類の表示を更新する
     [self updateViews];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView*)webView
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     // ネットワークインジケーターを消す
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     // ページ読み込み中フラグを下げる
-    isPageLoading = NO;
+    isPageLoading_ = NO;
 
     // ボタン類の表示を更新する
     [self updateViews];
 }
 
-- (void)webView:(UIWebView*)webView didFailLoadWithError:(NSError*)error
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     // ネットワークインジケーターを消す
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     // ページ読み込み中フラグを下げる
-    isPageLoading = NO;
+    isPageLoading_ = NO;
 
     // ボタン類の表示を更新する
     [self updateViews];
@@ -175,56 +174,58 @@
 
 - (IBAction)back:(id)sender
 {
-    if (pageWebView.canGoBack) {
-        [pageWebView goBack];
+    if (pageWebView_.canGoBack) {
+        [pageWebView_ goBack];
     }
 }
 
 - (IBAction)forward:(id)sender
 {
-    if (pageWebView.canGoForward) {
-        [pageWebView goForward];
+    if (pageWebView_.canGoForward) {
+        [pageWebView_ goForward];
     }
 }
 
 - (IBAction)goToBottom:(id)sender
 {
-    int pageHeight = pageWebView.scrollView.contentSize.height;
+    int pageHeight = pageWebView_.scrollView.contentSize.height;
     if (pageHeight == 0) {
         return;
     }
 
     CGPoint movePoint = CGPointMake(
-                                    pageWebView.scrollView.contentOffset.x,
-                                    pageHeight - pageWebView.frame.size.height);
+                                    pageWebView_.scrollView.contentOffset.x,
+                                    pageHeight - pageWebView_.frame.size.height);
 #ifdef DEBUG
-    NSLog(@"Page scroll form %@ to %@.", NSStringFromCGPoint(pageWebView.scrollView.contentOffset), NSStringFromCGPoint(movePoint));
+    NSLog(@"Page scroll form %@ to %@.",
+        NSStringFromCGPoint(pageWebView_.scrollView.contentOffset),
+        NSStringFromCGPoint(movePoint));
 #endif /* #ifdef DEBUG */
-    [pageWebView.scrollView setContentOffset:movePoint animated:YES];
+    [pageWebView_.scrollView setContentOffset:movePoint animated:YES];
 }
 
 - (IBAction)reload:(id)sender
 {
-    if (isPageLoading) {
-        [pageWebView stopLoading];
+    if (isPageLoading_) {
+        [pageWebView_ stopLoading];
     } else {
-        [pageWebView reload];
+        [pageWebView_ reload];
     }
 }
 
 - (void)updateViews
 {
-    NSString* title = [pageWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString* title = [pageWebView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
     if (!([title length] == 0)) {
-        topNavigationItem.title = title;
+        topNavigationItem_.title = title;
     }
 
-    backButton.enabled = pageWebView.canGoBack;
-    forwardButton.enabled = pageWebView.canGoForward;
-    if (isPageLoading) {
-        [reloadButton setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    backButton_.enabled = pageWebView_.canGoBack;
+    forwardButton_.enabled = pageWebView_.canGoForward;
+    if (isPageLoading_) {
+        [reloadButton_ setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
     } else {
-        [reloadButton setImage:[UIImage imageNamed:@"playback_reload.png"] forState:UIControlStateNormal];
+        [reloadButton_ setImage:[UIImage imageNamed:@"playback_reload.png"] forState:UIControlStateNormal];
     }
 }
 

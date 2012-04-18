@@ -37,21 +37,27 @@
 /// 検索バーの色
 #define SEARCH_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
 /// テーブルの背景の色
-#define HEADLINE_TABLE_BACKGROUND_COLOR [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
+#define HEADLINE_TABLE_BACKGROUND_COLOR \
+    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
 /// テーブルの境界線の色
-#define HEADLINE_TABLE_SEPARATOR_COLOR [[UIColor alloc]initWithRed:(75 / 255.0) green:(75 / 255.0) blue:(75 / 255.0) alpha:1]
+#define HEADLINE_TABLE_SEPARATOR_COLOR \
+    [[UIColor alloc]initWithRed:(75 / 255.0) green:(75 / 255.0) blue:(75 / 255.0) alpha:1]
 /// テーブルセルの暗い側の色
-#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
+#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK \
+    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
 /// テーブルセルの明るい側の色
-#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
+#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT \
+    [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
 /// テーブルセルのタイトルのテキストカラー
 #define HEADLINE_CELL_TITLE_TEXT_COLOR [UIColor whiteColor]
 /// テーブルセルのDJのテキストカラー
-#define HEADLINE_CELL_DJ_TEXT_COLOR [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
+#define HEADLINE_CELL_DJ_TEXT_COLOR \
+    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
 /// テーブルセルのリスナー数のテキストカラー
 #define HEADLINE_CELL_LISTENERS_TEXT_COLOR [UIColor whiteColor]
 /// テーブルセルの選択の色
-#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
+#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR \
+    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
 /// テーブルセルのタイトルのテキスト選択時カラー
 #define HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR [UIColor blackColor]
 /// テーブルセルのDJのテキスト選択時カラー
@@ -72,22 +78,22 @@
 {
 @private
     /// テーブルに表示している番組
-    NSArray *showedChannels;
+    NSArray *showedChannels_;
 
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
-    UIBarButtonItem *tempPlayingBarButtonItem;
+    UIBarButtonItem *tempPlayingBarButtonItem_;
 
 #if PULL_REFRESH_HEADLINE
     /// PullRefreshView
-    EGORefreshTableHeaderView *refreshHeaderView;
+    EGORefreshTableHeaderView *refreshHeaderView_;
 #endif /* #if PULL_REFRESH_HEADLINE */
 }
 
-@synthesize navigateionItem;
-@synthesize updateBarButtonItem;
-@synthesize playingBarButtonItem;
-@synthesize headlineSearchBar;
-@synthesize headlineTableView;
+@synthesize navigateionItem = navigateionItem_;
+@synthesize updateBarButtonItem = updateBarButtonItem_;
+@synthesize playingBarButtonItem = playingBarButtonItem_;
+@synthesize headlineSearchBar = headlineSearchBar_;
+@synthesize headlineTableView = headlineTableView_;
 
 - (void)viewDidLoad
 {
@@ -95,51 +101,46 @@
 
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えや
     // テーブル更新を行う
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(fetchHeadlineStarted:)
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
-     object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(fetchHeadlineSuceed:)
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
-     object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(fetchHeadlineFailed:)
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchHeadlineStarted:)
+                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchHeadlineSuceed:)
+                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchHeadlineFailed:)
+                                                 name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
+                                               object:nil];
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-                                       initWithTitle:backButtonStr
-                                       style:UIBarButtonItemStyleBordered
-                                       target:nil action:nil];
+    UIBarButtonItem *backButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:backButtonStr style:UIBarButtonItemStyleBordered target:nil action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 更新ボタンの色を変更する
-    updateBarButtonItem.tintColor = UPDATE_BUTTON_COLOR;
+    updateBarButtonItem_.tintColor = UPDATE_BUTTON_COLOR;
 
     // 再生中ボタンの装飾を変更する
-    playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
-    playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
+    playingBarButtonItem_.title = NSLocalizedString(@"Playing", @"再生中ボタン");
+    playingBarButtonItem_.tintColor = PLAYING_BUTTON_COLOR;
     // 再生中ボタンを保持する
-    tempPlayingBarButtonItem = playingBarButtonItem;
+    tempPlayingBarButtonItem_ = playingBarButtonItem_;
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
 
     // 検索バーの色を変える
-    headlineSearchBar.tintColor = SEARCH_BAR_COLOR;
+    headlineSearchBar_.tintColor = SEARCH_BAR_COLOR;
 
     // 検索バーが空でもサーチキーを押せるようにする
     // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
-    for (UIView *subview in headlineSearchBar.subviews) {
+    for (UIView *subview in headlineSearchBar_.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
             ((UITextField *) subview).enablesReturnKeyAutomatically = NO;
             break;
@@ -155,49 +156,41 @@
 
     // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
     // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
-    headlineTableView.rowHeight = 54;
+    headlineTableView_.rowHeight = 54;
     // テーブルの背景の色を変える
-    headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
+    headlineTableView_.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
-    headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
+    headlineTableView_.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
 #if PULL_REFRESH_HEADLINE
     // PullRefreshViewの生成
-    if (refreshHeaderView == nil) {
-        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc]
-                                           initWithFrame:CGRectMake(
-                                                                    0.0f,
-                                                                    0.0f - headlineTableView.bounds.size.height,
-                                                                    self.view.frame.size.width,
-                                                                    headlineTableView.bounds.size.height)
-                                           arrowImageName:PULL_REFRESH_ARROW_IMAGE
-                                           textColor:PULL_REFRESH_TEXT_COLOR];
+    if (refreshHeaderView_ == nil) {
+        CGRect pullRefreshViewRect = CGRectMake(
+                0.0f,
+                0.0f - headlineTableView_.bounds.size.height,
+                self.view.frame.size.width,
+                headlineTableView_.bounds.size.height);
+        EGORefreshTableHeaderView *view =
+            [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
+                                              arrowImageName:PULL_REFRESH_ARROW_IMAGE
+                                                   textColor:PULL_REFRESH_TEXT_COLOR];
         view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
 
         view.delegate = self;
-        [headlineTableView addSubview:view];
-        refreshHeaderView = view;
+        [headlineTableView_ addSubview:view];
+        refreshHeaderView_ = view;
     }
 #endif // #if PULL_REFRESH_HEADLINE
 }
 
 - (void)viewDidUnload
 {
-    showedChannels = nil;
-    tempPlayingBarButtonItem = nil;
+    showedChannels_ = nil;
+    tempPlayingBarButtonItem_ = nil;
 
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED
-     object:nil];
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED
-     object:nil];
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED
-     object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_STARTED object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_SUCEED object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_NAME_FETCH_HEADLINE_FAILED object:nil];
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:NOTIFICATION_NAME_PLAY_STATE_CHANGED
@@ -223,10 +216,7 @@
     // タブの切り替えごとに検索バーを更新する
     // 別タブで入力した検索バーのテキストをこのタブでも使うため
     NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
-    if (searchWord == nil) {
-        searchWord = @"";
-    }
-    headlineSearchBar.text = searchWord;
+    headlineSearchBar_.text = searchWord;
 
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
@@ -243,7 +233,7 @@
     [self becomeFirstResponder];
 
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
-    if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] getChannels] == 0) {
+    if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
@@ -270,6 +260,8 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+#pragma mark UISearchBarDelegate methods
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
@@ -283,6 +275,9 @@
     [searchBar resignFirstResponder];
 }
 
+#pragma mark -
+#pragma mark UITableViewDelegate methods
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -290,12 +285,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [showedChannels count];
+    return [showedChannels_ count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [showedChannels objectAtIndex:indexPath.row];
+    Channel *channel = (Channel *) [showedChannels_ objectAtIndex:indexPath.row];
 
     NSString *cellIdentifier;
 
@@ -338,13 +333,15 @@
         listenersLabel.text = @"";
     }
 
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel getPlayUrl]];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
     favoriteImageView.hidden = !channel.favorite;
 
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-  (void)tableView:(UITableView *)tableView
+   willDisplayCell:(UITableViewCell *)cell
+ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // テーブルセルの背景の色を変える
     if (indexPath.row % 2 == 0) {
@@ -372,19 +369,20 @@
     cell.selectedBackgroundView = selectedBackgroundView;
 }
 
+#pragma mark -
 #pragma mark UIScrollViewDelegate Methods
 
 #if PULL_REFRESH_HEADLINE
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // EGOTableViewPullRefreshに必要
-    [refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [refreshHeaderView_ egoRefreshScrollViewDidScroll:scrollView];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     // EGOTableViewPullRefreshに必要
-    [refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [refreshHeaderView_ egoRefreshScrollViewDidEndDragging:scrollView];
 }
 #endif /* #if PULL_REFRESH_HEADLINE */
 
@@ -392,18 +390,18 @@
 #pragma mark EGORefreshTableHeaderDelegate Methods
 
 #if PULL_REFRESH_HEADLINE
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     [self fetchHeadline];
 }
 
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
 {
     // should return if data source model is reloading
     return [[Headline sharedInstance] isFetchingHeadline];
 }
 
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
 {
     return [NSDate date]; // should return date data source was last changed
 }
@@ -418,7 +416,7 @@
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [showedChannels objectAtIndex:[headlineTableView indexPathForSelectedRow].row];
+            Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -427,9 +425,9 @@
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSURL *playingUrl = [[Player sharedInstance] getPlayUrl];
+            NSURL *playingUrl = [[Player sharedInstance] playUrl];
             Headline *headline = [Headline sharedInstance];
-            Channel *channel = [headline getChannel:playingUrl];
+            Channel *channel = [headline channel:playingUrl];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -451,7 +449,7 @@
     [SVProgressHUD show];
 
     // ヘッドラインの取得開始時に更新ボタンを無効にする
-    updateBarButtonItem.enabled = NO;
+    updateBarButtonItem_.enabled = NO;
 }
 
 - (void)fetchHeadlineSuceed:(NSNotification *)notification
@@ -461,11 +459,11 @@
 #endif /* #ifdef DEBUG */
 
     // ヘッドラインの取得終了時に更新ボタンを有効にする
-    updateBarButtonItem.enabled = YES;
+    updateBarButtonItem_.enabled = YES;
 
 #if PULL_REFRESH_HEADLINE
     // Pull refreshを終了する
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView];
+    [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
 #endif /* #if PULL_REFRESH_HEADLINE */
 
     // ヘッドラインテーブルを更新する
@@ -482,11 +480,11 @@
 #endif /* #ifdef DEBUG */
 
     // ヘッドラインの取得終了時に更新ボタンを有効にする
-    updateBarButtonItem.enabled = YES;
+    updateBarButtonItem_.enabled = YES;
 
 #if PULL_REFRESH_HEADLINE
     // Pull refreshを終了する
-    [refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView];
+    [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
 #endif /* #if PULL_REFRESH_HEADLINE */
 
     // ヘッドラインテーブルを更新する
@@ -502,7 +500,7 @@
     [self updatePlayingButton];
 }
 
-- (ChannelSortType)getSortType
+- (ChannelSortType)channelSortType
 {
     return ChannelSortTypeNone;
 }
@@ -516,16 +514,17 @@
 - (void)updateHeadlineTable
 {
     Headline *headline = [Headline sharedInstance];
-    showedChannels = [headline getChannels:self.getSortType searchWord:[SearchWordManager sharedInstance].searchWord];
+    showedChannels_ = [headline channels:[self channelSortType]
+                                 searchWord:[SearchWordManager sharedInstance].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
-    if ([showedChannels count] == 0) {
+    if ([showedChannels_ count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     } else {
         navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
-    navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels count]];
+    navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
@@ -534,8 +533,8 @@
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
-    if ([[Player sharedInstance] getState] == PlayerStatePlay) {
-        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem;
+    if ([[Player sharedInstance] state] == PlayerStatePlay) {
+        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
     } else {
         self.navigationItem.rightBarButtonItem = nil;
     }
