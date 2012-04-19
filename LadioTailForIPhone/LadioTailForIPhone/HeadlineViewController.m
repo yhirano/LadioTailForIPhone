@@ -125,6 +125,11 @@
     [self.headlineTableView reloadData];
 }
 
+- (void)updateUpdateBarButton
+{
+    updateBarButtonItem_.enabled = ![[Headline sharedInstance] isFetchingHeadline];
+}
+
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
@@ -261,6 +266,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 更新ボタンの有効無効を切り替え
+    [self updateUpdateBarButton];
+
     // タブの切り替えごとにヘッドラインテーブルを更新する
     // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
     [self updateHeadlineTable];
@@ -483,7 +491,7 @@
     [SVProgressHUD show];
     
     // ヘッドラインの取得開始時に更新ボタンを無効にする
-    updateBarButtonItem_.enabled = NO;
+    [self updateUpdateBarButton];
 }
 
 - (void)headlineDidFinishLoad:(NSNotification *)notification
@@ -493,7 +501,7 @@
 #endif /* #ifdef DEBUG */
 
     // ヘッドラインの取得終了時に更新ボタンを有効にする
-    updateBarButtonItem_.enabled = YES;
+    [self updateUpdateBarButton];
 
 #if PULL_REFRESH_HEADLINE
     // Pull refreshを終了する
@@ -514,7 +522,7 @@
 #endif /* #ifdef DEBUG */
 
     // ヘッドラインの取得終了時に更新ボタンを有効にする
-    updateBarButtonItem_.enabled = YES;
+    [self updateUpdateBarButton];
 
 #if PULL_REFRESH_HEADLINE
     // Pull refreshを終了する
