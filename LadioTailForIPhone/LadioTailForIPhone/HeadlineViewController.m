@@ -50,20 +50,32 @@
     [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
 /// テーブルセルのタイトルのテキストカラー
 #define HEADLINE_CELL_TITLE_TEXT_COLOR [UIColor whiteColor]
+/// テーブルセルのタイトルのテキスト選択時カラー
+#define HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR [UIColor blackColor]
 /// テーブルセルのDJのテキストカラー
 #define HEADLINE_CELL_DJ_TEXT_COLOR \
     [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
+/// テーブルセルのDJのテキスト選択時カラー
+#define HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR [UIColor blackColor]
 /// テーブルセルのリスナー数のテキストカラー
 #define HEADLINE_CELL_LISTENERS_TEXT_COLOR [UIColor whiteColor]
+/// テーブルセルのリスナー数のテキスト選択時カラー
+#define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
+/// テーブルセルの日付の背景丸さ
+#define HEADLINE_CELL_DATE_CORNER_RADIUS 7
+/// テーブルセルの日付の背景の色（明るい方）
+#define HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT \
+    [[UIColor alloc] initWithRed:(140 / 255.0) green:(140 / 255.0) blue:(140 / 255.0) alpha:1]
+/// テーブルセルの日付の背景の色（暗い方）
+#define HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK \
+[[UIColor alloc] initWithRed:(120 / 255.0) green:(120 / 255.0) blue:(120 / 255.0) alpha:1]
+/// テーブルセルの日付のテキストカラー
+#define HEADLINE_CELL_DATE_TEXT_COLOR [UIColor blackColor]
+/// テーブルセルの日付のテキスト選択時カラー
+#define HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR [UIColor blackColor]
 /// テーブルセルの選択の色
 #define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR \
     [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
-/// テーブルセルのタイトルのテキスト選択時カラー
-#define HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのDJのテキスト選択時カラー
-#define HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのリスナー数のテキスト選択時カラー
-#define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
 // Pull Refreshのテキスト色
 #define PULL_REFRESH_TEXT_COLOR [UIColor darkGrayColor]
 // Pull Refreshの矢印イメージ
@@ -104,6 +116,35 @@
 {
     Headline *headline = [Headline sharedInstance];
     [headline fetchHeadline];
+}
+
+/// 渡された日付と現在の日付から、日付ラベルの背景色を算出する
+- (UIColor *)dateLabelBackgroundColor:(NSDate *)date
+{
+    UIColor *result;
+
+    NSTimeInterval diffTime = [[NSDate date] timeIntervalSinceDate:date];
+
+    // 渡された日付が現在よりも新しい場合（基本的にはこないはず）
+    if (diffTime <= 0) {
+        result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
+    }
+    // 1日以上前
+    else if (diffTime >= (24 * 60 * 60)) {
+        result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
+    } else {
+        double lighty = 1 - (diffTime / (24 * 60 * 60));
+        CGFloat lightRed, lightGreen, lightBlue, lightAlpha, darkRed, darkGreen, darkBlue, darkAlpha;
+        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getRed:&lightRed green:&lightGreen blue:&lightBlue alpha:&lightAlpha];
+        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getRed:&darkRed green:&darkGreen blue:&darkBlue alpha:&darkAlpha];
+        CGFloat red = ((lightRed - darkRed) * lighty) + darkRed;
+        CGFloat green = ((lightGreen - darkGreen) * lighty) + darkGreen;
+        CGFloat blue = ((lightBlue - darkBlue) * lighty) + darkBlue;
+        CGFloat alpha = ((lightAlpha - darkAlpha) * lighty) + darkAlpha;
+        result = [[UIColor alloc] initWithRed:red green:green blue:blue alpha:alpha];
+    }
+
+    return result;
 }
 
 - (void)updateHeadlineTable
@@ -360,12 +401,8 @@
 
     NSString *cellIdentifier;
 
-    // タイトルのみが存在する場合
-    if (!([channel.nam length] == 0) && ([channel.dj length] == 0)) {
-        cellIdentifier = @"ChannelTitleOnlyCell";
-    }
     // DJのみが存在する場合
-    else if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
+    if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
         cellIdentifier = @"ChannelDjOnlyCell";
     } else {
         cellIdentifier = @"ChannelCell";
@@ -380,8 +417,7 @@
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
 
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
@@ -399,8 +435,47 @@
         listenersLabel.text = @"";
     }
 
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
-    favoriteImageView.hidden = !channel.favorite;
+    NSInteger diffTime = (NSInteger)[[NSDate date] timeIntervalSinceDate:channel.tims];
+    NSInteger diffDay = diffTime / (24 * 60 * 60);
+    NSInteger diffHour = (diffTime % (24 * 60 * 60)) / (60 * 60);
+    NSInteger diffMin = (diffTime % (60 * 60)) / 60;
+    // 1分未満
+    if (diffDay < 1 && diffHour < 1 && diffMin < 1) {
+        dateLabel.text = [[NSString alloc] initWithFormat:NSLocalizedString(@"%dmin", @"分"), 1];
+    }
+    // 1日以上前
+    else if (diffDay >= 1) {
+        NSString *daySuffix;
+        if (diffDay == 1) {
+            daySuffix = NSLocalizedString(@"%dday", @"日");
+        } else {
+            daySuffix = NSLocalizedString(@"%ddays", @"日");
+        }
+        dateLabel.text = [[NSString alloc] initWithFormat:daySuffix, diffDay];
+    } else {
+        NSString *diffTimeString = @"";
+        if (diffHour >= 1) {
+            NSString *hourSuffix;
+            if (diffHour == 1) {
+                hourSuffix = NSLocalizedString(@"%dhr ", @"時間");
+            } else {
+                hourSuffix = NSLocalizedString(@"%dhrs ", @"時間");
+            }
+            diffTimeString = [[NSString alloc] initWithFormat:hourSuffix, diffHour];
+        }
+
+        if (diffMin >= 1) {
+            NSString *minSuffix;
+            if (diffMin == 1) {
+                minSuffix = NSLocalizedString(@"%dmin", @"分");
+            } else {
+                minSuffix = NSLocalizedString(@"%dmins", @"分");
+            }
+            NSString *diffMinStr = [[NSString alloc] initWithFormat:minSuffix, diffMin];
+            diffTimeString = [[NSString alloc] initWithFormat:@"%@%@", diffTimeString, diffMinStr];
+        }
+        dateLabel.text = diffTimeString;
+    }
 
     return cell;
 }
@@ -409,6 +484,8 @@
    willDisplayCell:(UITableViewCell *)cell
  forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Channel *channel = (Channel *) [showedChannels_ objectAtIndex:indexPath.row];
+
     // テーブルセルの背景の色を変える
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK;
@@ -416,18 +493,31 @@
         cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
     }
 
-    // テーブルセルのテキストの色を変える
+    // テーブルセルのテキスト等の色を変える
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
     titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
-    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
-    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
-
-    // テーブルセルの選択時の色を変える
     titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+
+    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
+    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
     djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+
+    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
     listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
+
+    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
+    dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
+    dateLabel.clipsToBounds = YES;
+    dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+    dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
+    dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
+
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
+
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    favoriteImageView.hidden = !channel.favorite;
 
     // テーブルセルの選択色を変える
     UIView *selectedBackgroundView = [[UIView alloc] init];
