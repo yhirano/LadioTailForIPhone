@@ -75,6 +75,7 @@
 - (void)setTimsFromString:(NSString *)tims
 {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
     [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
     tims_ = [format dateFromString:tims];
 }
@@ -82,7 +83,8 @@
 - (NSString *)timsToString
 {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    [format setDateStyle:NSDateFormatterMediumStyle];
+    [format setTimeStyle:NSDateFormatterMediumStyle];
     return [format stringFromDate:tims_];
 }
 
