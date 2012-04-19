@@ -22,13 +22,16 @@
 
 #import "Player.h"
 
-static Player *instance = nil;
+/// 再生開始後のタイムアウト処理までの時間
+#define PLAY_TIMEOUT_SEC 15.0
 
+static Player *instance = nil;
 
 @implementation Player
 {
 @private
     AVPlayer *player_;
+    NSTimer *playTimeOutTimer_;
 }
 
 @synthesize state = state_;
@@ -163,6 +166,29 @@ static Player *instance = nil;
     player_ = [AVPlayer playerWithURL:url];
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
+
+    // 再生タイムアウトを監視する
+    if (playTimeOutTimer_ != nil) {
+        [playTimeOutTimer_ invalidate];
+#if DEBUG
+        NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
+    }
+    playTimeOutTimer_ = [NSTimer scheduledTimerWithTimeInterval:PLAY_TIMEOUT_SEC target:self selector:@selector(playTimeOut:) userInfo:nil repeats:NO];
+#if DEBUG
+    NSLog(@"Play time out timer fired.");
+#endif /* #if DEBUG */
+}
+
+- (void)playTimeOut:(NSTimer *)timer
+{
+    @synchronized (self) {
+        playUrl_ = nil;
+        state_ = PlayerStateIdle;
+        NSLog(@"Player time outed.");
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
+        playTimeOutTimer_ = nil;
+    }
 }
 
 /// 停止処理
@@ -171,6 +197,15 @@ static Player *instance = nil;
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
     state_ = PlayerStateIdle;
+
+    // 再生タイムアウトのタイマーが走っている場合は止める（走っていることはないはずだが一応）
+    if (playTimeOutTimer_ != nil) {
+        [playTimeOutTimer_ invalidate];
+        playTimeOutTimer_ = nil;
+#if DEBUG
+        NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
+    }
 }
 
 - (BOOL)isPlaying:(NSURL *)url
@@ -212,6 +247,16 @@ static Player *instance = nil;
         playUrl_ = nil;
         state_ = PlayerStateIdle;
         NSLog(@"Play stopped.");
+
+        // 再生タイムアウトのタイマーが走っている場合は止める
+        if (playTimeOutTimer_ != nil) {
+            [playTimeOutTimer_ invalidate];
+            playTimeOutTimer_ = nil;
+#if DEBUG
+            NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
+        }
+
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
     }
 }
@@ -226,6 +271,16 @@ static Player *instance = nil;
             @synchronized (self) {
                 state_ = PlayerStatePlay;
                 NSLog(@"Play started.");
+
+                // 再生タイムアウトのタイマーが走っている場合は止める
+                if (playTimeOutTimer_ != nil) {
+                    [playTimeOutTimer_ invalidate];
+                    playTimeOutTimer_ = nil;
+#if DEBUG
+                    NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
+                }
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
                                                                     object:self];
             }
@@ -233,6 +288,16 @@ static Player *instance = nil;
             @synchronized (self) {
                 state_ = PlayerStateIdle;
                 NSLog(@"Play failed.");
+
+                // 再生タイムアウトのタイマーが走っている場合は止める
+                if (playTimeOutTimer_ != nil) {
+                    [playTimeOutTimer_ invalidate];
+                    playTimeOutTimer_ = nil;
+#if DEBUG
+                    NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
+                }
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
                                                                     object:self];
             }
