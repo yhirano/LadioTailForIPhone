@@ -151,9 +151,18 @@
     [super viewDidLoad];
 
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
-    Headline* headline = [Headline sharedInstance];
-    headline.delegate = self;
-
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineDidStartLoad:)
+                                                 name:LadioLibHeadlineDidStartLoadNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineDidFinishLoad:)
+                                                 name:LadioLibHeadlineDidFinishLoadNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineFailLoad:)
+                                                 name:LadioLibHeadlineFailLoadNotification 
+                                               object:nil];
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -232,8 +241,9 @@
     showedChannels_ = nil;
     tempPlayingBarButtonItem_ = nil;
 
-    Headline* headline = [Headline sharedInstance];
-    headline.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
@@ -462,8 +472,8 @@
 
 #pragma mark -
 
-#pragma mark HeadlineDelegate methods
-- (void)headlineDidStartLoad:(Headline *)headline
+#pragma mark Headline notifications
+- (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
@@ -476,7 +486,7 @@
     updateBarButtonItem_.enabled = NO;
 }
 
-- (void)headlineDidFinishLoad:(Headline *)headline
+- (void)headlineDidFinishLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
@@ -497,7 +507,7 @@
     [SVProgressHUD dismiss];
 }
 
-- (void)headlineFailLoad:(Headline *)headline
+- (void)headlineFailLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
@@ -520,7 +530,7 @@
 }
 
 #pragma mark -
-#pragma mark Player notification
+#pragma mark Player notifications
 
 - (void)playStateChanged:(NSNotification *)notification
 {

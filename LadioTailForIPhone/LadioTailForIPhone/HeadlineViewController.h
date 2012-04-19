@@ -22,16 +22,15 @@
 
 #import <UIKit/UIKit.h>
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
-#import "LadioLib.h"
 
 /// Pull refreshでヘッドラインを有効にするか
 #define PULL_REFRESH_HEADLINE 1
 
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate, 
+@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate
 #if PULL_REFRESH_HEADLINE
-                                                     EGORefreshTableHeaderDelegate, 
+                                                     , EGORefreshTableHeaderDelegate
 #endif /* #if PULL_REFRESH_HEADLINE */
-                                                     HeadlineDelegate>
+                                                     >
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 

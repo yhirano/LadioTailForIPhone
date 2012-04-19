@@ -43,8 +43,6 @@ static Headline *instance = nil;
     NSObject *isFetchingLock_;
 }
 
-@synthesize delegate;
-
 + (Headline *)sharedInstance
 {
     static dispatch_once_t onceToken = 0;
@@ -82,9 +80,7 @@ static Headline *instance = nil;
         isFetching_ = YES;
     }
 
-    if ([[self delegate] respondsToSelector:@selector(headlineDidStartLoad:)]) {
-        [[self delegate] headlineDidStartLoad:self];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidStartLoadNotification object:self];
 
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -92,9 +88,7 @@ static Headline *instance = nil;
     if (conn) {
         receivedData_ = [NSMutableData data];
     } else {
-        if ([[self delegate] respondsToSelector:@selector(headlineFailLoad:)]) {
-            [[self delegate] headlineFailLoad:self];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
     }
 }
 
@@ -530,9 +524,7 @@ static Headline *instance = nil;
         isFetching_ = NO;
     }
 
-    if ([[self delegate] respondsToSelector:@selector(headlineFailLoad:)]) {
-        [[self delegate] headlineFailLoad:self];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -559,9 +551,7 @@ static Headline *instance = nil;
         isFetching_ = NO;
     }
     
-    if ([[self delegate] respondsToSelector:@selector(headlineDidFinishLoad:)]) {
-        [[self delegate] headlineDidFinishLoad:self];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
 }
 
 #pragma mark -
