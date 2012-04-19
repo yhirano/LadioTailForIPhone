@@ -84,9 +84,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="7V0-cs-9rE"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelTitleOnlyCell" rowHeight="54" id="5YB-f2-aUa">
                                         <rect key="frame" x="0.0" y="76" width="320" height="54"/>
@@ -124,9 +121,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="91H-WD-g1E"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelDjOnlyCell" rowHeight="54" id="SZ6-Ar-Aja">
                                         <rect key="frame" x="0.0" y="130" width="320" height="54"/>
@@ -164,9 +158,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="bWj-q5-TSg"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -207,6 +198,7 @@
                         <outlet property="navigateionItem" destination="cIB-qf-6WW" id="lvm-k0-Cn1"/>
                         <outlet property="playingBarButtonItem" destination="hJU-50-Qib" id="kbU-eo-TMI"/>
                         <outlet property="updateBarButtonItem" destination="e20-Y9-DZQ" id="Orx-66-VJs"/>
+                        <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="rsj-fA-G3H"/>
                     </connections>
                 </viewController>
             </objects>
@@ -269,9 +261,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="GIs-Nn-0mJ"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelTitleOnlyCell" rowHeight="54" id="SmT-GX-TIy">
                                         <rect key="frame" x="0.0" y="76" width="320" height="54"/>
@@ -309,9 +298,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="ckZ-33-jb7"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelDjOnlyCell" rowHeight="54" id="rbG-Tq-4xk">
                                         <rect key="frame" x="0.0" y="130" width="320" height="54"/>
@@ -349,9 +335,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="Q8H-DW-udb"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -388,6 +371,7 @@
                         <outlet property="navigateionItem" destination="OH9-jU-3gF" id="RFu-uM-lG1"/>
                         <outlet property="playingBarButtonItem" destination="cBn-ZM-WFB" id="A64-0l-zka"/>
                         <outlet property="updateBarButtonItem" destination="fRz-oT-Gh5" id="ZTt-Aw-jG6"/>
+                        <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="9M4-Cw-wp5"/>
                     </connections>
                 </viewController>
             </objects>
@@ -612,9 +596,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="OvD-C0-e7J"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelTitleOnlyCell" rowHeight="54" id="7i8-Gi-H1i">
                                         <rect key="frame" x="0.0" y="76" width="320" height="54"/>
@@ -652,9 +633,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="Imb-aN-vke"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelDjOnlyCell" rowHeight="54" id="l4e-ST-xF1">
                                         <rect key="frame" x="0.0" y="130" width="320" height="54"/>
@@ -692,9 +670,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="SCg-9e-7Pw"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -731,6 +706,7 @@
                         <outlet property="navigateionItem" destination="bx5-dU-C5H" id="2yf-lB-89w"/>
                         <outlet property="playingBarButtonItem" destination="KNL-rl-UFp" id="PD1-tz-8Ow"/>
                         <outlet property="updateBarButtonItem" destination="sbi-Ef-RSV" id="Bdt-K8-kLC"/>
+                        <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="aKk-jk-PMe"/>
                     </connections>
                 </viewController>
             </objects>
@@ -793,9 +769,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="SaO-ST-Zia"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelTitleOnlyCell" rowHeight="54" id="fz1-m8-eWc">
                                         <rect key="frame" x="0.0" y="76" width="320" height="54"/>
@@ -833,9 +806,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="kQQ-3Q-H41"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelDjOnlyCell" rowHeight="54" id="SEm-uL-hFp">
                                         <rect key="frame" x="0.0" y="130" width="320" height="54"/>
@@ -873,9 +843,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="NjB-wA-LVV"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -912,6 +879,7 @@
                         <outlet property="navigateionItem" destination="HrN-aj-aC6" id="IUl-ZC-4Aa"/>
                         <outlet property="playingBarButtonItem" destination="Rxr-qs-lKJ" id="Mad-xa-sY7"/>
                         <outlet property="updateBarButtonItem" destination="gYE-Wf-YLg" id="CPg-X0-JVA"/>
+                        <segue destination="abJ-NL-ORS" kind="push" identifier="SelectChannel" id="5L8-Zs-pCm"/>
                     </connections>
                 </viewController>
             </objects>
@@ -1016,6 +984,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kQQ-3Q-H41"/>
+        <segue reference="5L8-Zs-pCm"/>
     </inferredMetricsTieBreakers>
 </document>

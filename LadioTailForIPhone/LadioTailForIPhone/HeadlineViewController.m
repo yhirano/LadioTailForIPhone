@@ -417,6 +417,11 @@
     cell.selectedBackgroundView = selectedBackgroundView;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"SelectChannel" sender:self];
+}
+
 #pragma mark -
 #pragma mark UIScrollViewDelegate Methods
 
