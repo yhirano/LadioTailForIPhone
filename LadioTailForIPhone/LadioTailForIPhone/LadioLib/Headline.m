@@ -35,6 +35,9 @@ static Headline *instance = nil;
     NSArray *channels_;
     /// channelsのロック
     NSObject *channelsLock_;
+    /// 番組データリストのキャッシュ
+    /// ソートやフィルタリングの結果をキャッシュしておく
+    NSCache *channelsCache_;
     /// 受信データバッファ
     NSMutableData *receivedData_;
     /// ヘッドラインを取得中か
@@ -56,6 +59,8 @@ static Headline *instance = nil;
 {
     if (self = [super init]) {
         channelsLock_ = [[NSObject alloc] init];
+        channelsCache_ = [[NSCache alloc] init];
+        [channelsCache_ setName:@"LadioLib channels cache"];
         isFetching_ = NO;
         isFetchingLock_ = [[NSObject alloc] init];
     }
@@ -65,6 +70,7 @@ static Headline *instance = nil;
 - (void) dealloc
 {
     isFetchingLock_ = nil;
+    channelsCache_ = nil;
     channelsLock_ = nil;
 }
 
@@ -416,43 +422,62 @@ static Headline *instance = nil;
 
 - (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
-    NSMutableArray *result = nil;
+    // キャッシュがヒットしたらそれを返す
+    NSArray *cacheResult = [self channelsFromCache:sortType searchWord:searchWord];
+    if ([cacheResult count] != 0) {
+        return cacheResult;
+    }
+    
+    NSArray *result = nil;
+    NSMutableArray *channels = nil;
+
     @synchronized (channelsLock_) {
-        result = [channels_ mutableCopy];
+        channels = [channels_ mutableCopy];
 #if DEBUG
         NSLog(@"%@'s copied channels for return channels. There are %d channels.",
-              NSStringFromClass([self class]), [result count]);
+              NSStringFromClass([self class]), [channels count]);
 #endif /* #if DEBUG */
     }
 
     // フィルタリング
     if (!([searchWord length] == 0)) {
         NSMutableArray *removeList = [[NSMutableArray alloc] init];
-        for (Channel *channel in result) {
+        for (Channel *channel in channels) {
             if ([channel isMatch:[Headline splitStringByWhiteSpace:searchWord]] == NO) {
                 [removeList addObject:channel];
             }
         }
         if ([removeList count] != 0) {
             for (Channel *removeCannel in removeList) {
-                [result removeObject:removeCannel];
+                [channels removeObject:removeCannel];
             }
         }
     }
 
+
     switch (sortType) {
         case ChannelSortTypeNewly:
-            return [result sortedArrayUsingSelector:@selector(compareNewly:)];
+            result =  [channels sortedArrayUsingSelector:@selector(compareNewly:)];
+            break;
         case ChannelSortTypeListeners:
-            return [result sortedArrayUsingSelector:@selector(compareListeners:)];
+            result = [channels sortedArrayUsingSelector:@selector(compareListeners:)];
+            break;
         case ChannelSortTypeTitle:
-            return [result sortedArrayUsingSelector:@selector(compareTitle:)];
+            result = [channels sortedArrayUsingSelector:@selector(compareTitle:)];
+            break;
         case ChannelSortTypeDj:
-            return [result sortedArrayUsingSelector:@selector(compareDj:)];
+            result = [channels sortedArrayUsingSelector:@selector(compareDj:)];
+            break;
         case ChannelSortTypeNone:
         default:
-            return result;
+            result = channels;
+            break;
     }
+
+    // 結果をキャッシュに突っ込む
+    [self setChannelsCache:result sortType:sortType searchWord:searchWord];
+
+    return result;
 }
 
 /**
@@ -500,6 +525,42 @@ static Headline *instance = nil;
     return nil;
 }
 
+- (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+{
+    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    NSArray *result = [channelsCache_ objectForKey:key];
+#if DEBUG
+    if (result != nil) {
+        NSLog(@"%@ has channels cache. key:%@", NSStringFromClass([self class]), key);
+    } else {
+        NSLog(@"%@ has NO channels cache. key:%@", NSStringFromClass([self class]), key);
+    }
+#endif /* #if DEBUG */
+    return result;
+}
+
+- (void)setChannelsCache:(NSArray *)channels sortType:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+{
+    // nilの場合はキャッシュに突っ込めない
+    if (channels == nil) {
+        return;
+    }
+
+    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    [channelsCache_ setObject:channels forKey:key];
+#if DEBUG
+    NSLog(@"%@ set channels cache. key:%@", NSStringFromClass([self class]), key);
+#endif /* #if DEBUG */
+}
+
+- (void)clearChannelsCache
+{
+    [channelsCache_ removeAllObjects];
+#if DEBUG
+    NSLog(@"%@ clear channels cache.", NSStringFromClass([self class]));
+#endif /* #if DEBUG */
+}
+
 #pragma mark NSURLConnectionDelegate methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -544,6 +605,8 @@ static Headline *instance = nil;
         NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.",
               NSStringFromClass([self class]), [channels count]);
 #endif /* #if DEBUG */
+        // 番組表データを更新したのでキャッシュを削除
+        [self clearChannelsCache];
     }
     
     // ヘッドライン取得中のフラグを下げる
