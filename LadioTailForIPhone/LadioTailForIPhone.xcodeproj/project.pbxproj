@@ -66,6 +66,8 @@
 		8EC3BBD21541057300F6DC08 /* ChannelPageHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBD11541057300F6DC08 /* ChannelPageHtml.mustache */; };
 		8EC3BBD515410A9000F6DC08 /* ChannelsHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3BBD415410A9000F6DC08 /* ChannelsHtml.m */; };
 		8EC3BBEC15412B9500F6DC08 /* ChannelLinkHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */; };
+		8EC3BBEF1541376E00F6DC08 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBED1541376D00F6DC08 /* Default.png */; };
+		8EC3BBF01541376E00F6DC08 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBEE1541376D00F6DC08 /* Default@2x.png */; };
 		8ED4CDEC153C5A6300C7C17F /* headphones_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDEB153C5A6300C7C17F /* headphones_black.png */; };
 		8ED4CDEE153C5C6200C7C17F /* star_fav_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDED153C5C6200C7C17F /* star_fav_black.png */; };
 		8ED4CDF3153C6B2E00C7C17F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED4CDF1153C6B2E00C7C17F /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -170,6 +172,8 @@
 		8EC3BBE915410B7D00F6DC08 /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		8EC3BBEA15410B7D00F6DC08 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
 		8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChannelLinkHtml.mustache; sourceTree = "<group>"; };
+		8EC3BBED1541376D00F6DC08 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
+		8EC3BBEE1541376D00F6DC08 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		8ED4CDEB153C5A6300C7C17F /* headphones_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones_black.png; sourceTree = "<group>"; };
 		8ED4CDED153C5C6200C7C17F /* star_fav_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fav_black.png; sourceTree = "<group>"; };
 		8ED4CDF0153C6B2E00C7C17F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 		8EC23B52153712BB007352FD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8EC3BBED1541376D00F6DC08 /* Default.png */,
+				8EC3BBEE1541376D00F6DC08 /* Default@2x.png */,
 				8E12B5AC153E7F28002F4437 /* Icon-72.png */,
 				8E12B5AD153E7F28002F4437 /* Icon-Small-50.png */,
 				8E12B5AE153E7F28002F4437 /* Icon-Small.png */,
@@ -496,6 +502,8 @@
 				8E12B5B8153E7F33002F4437 /* Icon@2x.png in Resources */,
 				8EC3BBD21541057300F6DC08 /* ChannelPageHtml.mustache in Resources */,
 				8EC3BBEC15412B9500F6DC08 /* ChannelLinkHtml.mustache in Resources */,
+				8EC3BBEF1541376E00F6DC08 /* Default.png in Resources */,
+				8EC3BBF01541376E00F6DC08 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
