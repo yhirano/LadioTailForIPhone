@@ -28,6 +28,26 @@
 /// ヘッドラインのインスタンス
 static Headline *instance = nil;
 
+// ヘッドライン解析用のRegularExpression
+static NSRegularExpression *surlExp = nil;
+static NSRegularExpression *timsExp = nil;
+static NSRegularExpression *srvExp = nil;
+static NSRegularExpression *prtExp = nil;
+static NSRegularExpression *mntExp = nil;
+static NSRegularExpression *typeExp = nil;
+static NSRegularExpression *namExp = nil;
+static NSRegularExpression *gnlExp = nil;
+static NSRegularExpression *descExp = nil;
+static NSRegularExpression *djExp = nil;
+static NSRegularExpression *songExp = nil;
+static NSRegularExpression *urlExp = nil;
+static NSRegularExpression *clnExp = nil;
+static NSRegularExpression *clnsExp = nil;
+static NSRegularExpression *maxExp = nil;
+static NSRegularExpression *bitExp = nil;
+static NSRegularExpression *smplExp = nil;
+static NSRegularExpression *chsExp = nil;
+
 @implementation Headline
 {
 @private
@@ -51,7 +71,116 @@ static Headline *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];
-    });
+        
+        NSError *error = nil;
+        
+        surlExp = [NSRegularExpression regularExpressionWithPattern:@"^SURL=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+
+        error = nil;
+        timsExp = [NSRegularExpression regularExpressionWithPattern:@"^TIMS=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+
+        error = nil;
+        srvExp = [NSRegularExpression regularExpressionWithPattern:@"^SRV=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        prtExp = [NSRegularExpression regularExpressionWithPattern:@"^PRT=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        mntExp = [NSRegularExpression regularExpressionWithPattern:@"^MNT=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        typeExp = [NSRegularExpression regularExpressionWithPattern:@"^TYPE=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        namExp = [NSRegularExpression regularExpressionWithPattern:@"^NAM=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        gnlExp = [NSRegularExpression regularExpressionWithPattern:@"^GNL=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        descExp = [NSRegularExpression regularExpressionWithPattern:@"^DESC=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        djExp = [NSRegularExpression regularExpressionWithPattern:@"^DJ=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        songExp = [NSRegularExpression regularExpressionWithPattern:@"^SONG=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        urlExp = [NSRegularExpression regularExpressionWithPattern:@"^URL=(.*)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        clnExp = [NSRegularExpression regularExpressionWithPattern:@"^CLN=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        clnsExp = [NSRegularExpression regularExpressionWithPattern:@"^CLNS=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        maxExp = [NSRegularExpression regularExpressionWithPattern:@"^MAX=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        bitExp = [NSRegularExpression regularExpressionWithPattern:@"^BIT=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        smplExp = [NSRegularExpression regularExpressionWithPattern:@"^SMPL=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+        
+        error = nil;
+        chsExp = [NSRegularExpression regularExpressionWithPattern:@"^CHS=(\\d+)" options:0 error:&error];
+        if (error != nil) {
+            NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+        }
+});
     return instance;
 }
 
@@ -108,51 +237,6 @@ static Headline *instance = nil;
 - (NSArray*)parseHeadline:(NSArray*)lines
 {
     NSMutableArray *result = [NSMutableArray array];
-
-    NSError *surlExpError, *timsExpError, *srvExpError, *prtExpError, *mntExpError, *typeExpError, *namExpError,
-        *gnlExpError, *descExpError, *djExpError, *songExpError, *urlExpError, *clnExpError, *clnsExpError,
-        *maxExpError, *bitExpError, *smplExpError, *chsExpError;
-    surlExpError = timsExpError = srvExpError = prtExpError = mntExpError = typeExpError = namExpError = gnlExpError =
-        descExpError = djExpError = songExpError = urlExpError = clnExpError = clnsExpError = maxExpError =
-        bitExpError = smplExpError = chsExpError = nil;
-
-    NSRegularExpression *surlExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^SURL=(.*)" options:0 error:&surlExpError];
-    NSRegularExpression *timsExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^TIMS=(.*)" options:0 error:&timsExpError];
-    NSRegularExpression *srvExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^SRV=(.*)" options:0 error:&srvExpError];
-    NSRegularExpression *prtExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^PRT=(.*)" options:0 error:&prtExpError];
-    NSRegularExpression *mntExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^MNT=(.*)" options:0 error:&mntExpError];
-    NSRegularExpression *typeExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^TYPE=(.*)" options:0 error:&typeExpError];
-    NSRegularExpression *namExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^NAM=(.*)" options:0 error:&namExpError];
-    NSRegularExpression *gnlExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^GNL=(.*)" options:0 error:&gnlExpError];
-    NSRegularExpression *descExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^DESC=(.*)" options:0 error:&descExpError];
-    NSRegularExpression *djExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^DJ=(.*)" options:0 error:&djExpError];
-    NSRegularExpression *songExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^SONG=(.*)" options:0 error:&songExpError];
-    NSRegularExpression *urlExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^URL=(.*)" options:0 error:&urlExpError];
-    NSRegularExpression *clnExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^CLN=(\\d+)" options:0 error:&clnExpError];
-    NSRegularExpression *clnsExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^CLNS=(\\d+)" options:0 error:&clnsExpError];
-    NSRegularExpression *maxExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^MAX=(\\d+)" options:0 error:&maxExpError];
-    NSRegularExpression *bitExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^BIT=(\\d+)" options:0 error:&bitExpError];
-    NSRegularExpression *smplExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^SMPL=(\\d+)" options:0 error:&smplExpError];
-    NSRegularExpression *chsExp =
-        [NSRegularExpression regularExpressionWithPattern:@"^CHS=(\\d+)" options:0 error:&chsExpError];
-
     Channel *channel = nil;
     
     for (NSString *line in lines) {
@@ -162,238 +246,168 @@ static Headline *instance = nil;
             continue;
         }
 
-        if (surlExpError != nil) {
-            NSLog(@"Expression error : %@", surlExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:surlExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                [channel setSurlFromString:matchString];
-                continue;
+        NSString *matchString;
+
+        matchString = [self parseLine:line expression:surlExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            [channel setSurlFromString:matchString];
+            continue;
         }
 
-        if (timsExpError != nil) {
-            NSLog(@"Expression error : %@", timsExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:timsExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                [channel setTimsFromString:matchString];
-                continue;
+        matchString = [self parseLine:line expression:timsExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            [channel setTimsFromString:matchString];
+            continue;
         }
 
-        if (srvExpError != nil) {
-            NSLog(@"Expression error : %@", srvExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:srvExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.srv = matchString;
-                continue;
+        matchString = [self parseLine:line expression:srvExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.srv = matchString;
+            continue;
         }
 
-        if (prtExpError != nil) {
-            NSLog(@"Expression error : %@", prtExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:prtExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.prt = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:prtExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.prt = [matchString intValue];
+            continue;
         }
 
-        if (mntExpError != nil) {
-            NSLog(@"Expression error : %@", mntExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:mntExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.mnt = matchString;
-                continue;
+        matchString = [self parseLine:line expression:mntExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.mnt = matchString;
+            continue;
         }
 
-        if (typeExpError != nil) {
-            NSLog(@"Expression error : %@", typeExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:typeExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.type = matchString;
-                continue;
+        matchString = [self parseLine:line expression:typeExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.type = matchString;
+            continue;
         }
 
-        if (namExpError != nil) {
-            NSLog(@"Expression error : %@", namExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:namExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.nam = matchString;
-                continue;
+        matchString = [self parseLine:line expression:namExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.nam = matchString;
+            continue;
         }
 
-        if (gnlExpError != nil) {
-            NSLog(@"Expression error : %@", gnlExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:gnlExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.gnl = matchString;
-                continue;
+        matchString = [self parseLine:line expression:gnlExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.gnl = matchString;
+            continue;
         }
 
-        if (descExpError != nil) {
-            NSLog(@"Expression error : %@", descExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:descExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.desc = matchString;
-                continue;
+        matchString = [self parseLine:line expression:descExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.desc = matchString;
+            continue;
         }
 
-        if (djExpError != nil) {
-            NSLog(@"Expression error : %@", djExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:djExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.dj = matchString;
-                continue;
+        matchString = [self parseLine:line expression:djExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.dj = matchString;
+            continue;
         }
 
-        if (songExpError != nil) {
-            NSLog(@"Expression error : %@", songExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:songExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.song = matchString;
-                continue;
+        matchString = [self parseLine:line expression:songExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.song = matchString;
+            continue;
         }
 
-        if (urlExpError != nil) {
-            NSLog(@"Expression error : %@", urlExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:urlExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                [channel setUrlFromString:matchString];
-                continue;
+        matchString = [self parseLine:line expression:urlExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            [channel setUrlFromString:matchString];
+            continue;
         }
 
-        if (clnExpError != nil) {
-            NSLog(@"Expression error : %@", clnExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:clnExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.cln = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:clnExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.cln = [matchString intValue];
+            continue;
         }
 
-        if (clnsExpError != nil) {
-            NSLog(@"Expression error : %@", clnsExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:clnsExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.clns = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:clnsExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.clns = [matchString intValue];
+            continue;
         }
 
-        if (maxExpError != nil) {
-            NSLog(@"Expression error : %@", maxExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:maxExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.max = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:maxExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.max = [matchString intValue];
+            continue;
         }
 
-        if (bitExpError != nil) {
-            NSLog(@"Expression error : %@", bitExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:bitExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.bit = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:bitExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.bit = [matchString intValue];
+            continue;
         }
 
-        if (smplExpError != nil) {
-            NSLog(@"Expression error : %@", smplExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:smplExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.smpl = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:smplExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.smpl = [matchString intValue];
+            continue;
         }
 
-        if (chsExpError != nil) {
-            NSLog(@"Expression error : %@", chsExpError);
-        } else {
-            NSString *matchString = [self parseLine:line expression:chsExp];
-            if ([matchString length] > 0) {
-                if (channel == nil) {
-                    channel = [[Channel alloc] init];
-                }
-                channel.chs = [matchString intValue];
-                continue;
+        matchString = [self parseLine:line expression:chsExp];
+        if ([matchString length] > 0) {
+            if (channel == nil) {
+                channel = [[Channel alloc] init];
             }
+            channel.chs = [matchString intValue];
+            continue;
         }
     }
 
