@@ -22,7 +22,6 @@
 
 #import "Player.h"
 #import "AdBannerManager.h"
-#import "FavoriteManager.h"
 #import "ChannelsHtml.h"
 #import "LadioLib/LadioLib.h"
 #import "WebPageViewController.h"
@@ -59,8 +58,7 @@
 - (void)updateFavoriteButton
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
-    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    if ([favoriteManager isFavorite:channel_]) {
+    if ([channel_ favorite]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
@@ -124,8 +122,7 @@
 
 - (IBAction)favorite:(id)sender
 {
-    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager switchFavorite:channel_];
+    [self.channel switchFavorite];
     
     // お気に入りボタンを更新
     [self updateFavoriteButton];
