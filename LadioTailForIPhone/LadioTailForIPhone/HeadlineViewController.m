@@ -633,7 +633,7 @@
 - (void)playStateChanged:(NSNotification *)notification
 {
     [self updatePlayingButton];
-    [self.headlineTableView reloadData];
+    [self updateHeadlineTable];
 }
 
 #pragma mark -
