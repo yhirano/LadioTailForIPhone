@@ -37,7 +37,7 @@
 /**
  * 番組
  */
-@interface Channel : NSObject
+@interface Channel : NSObject <NSCoding>
 
 /// 番組の詳細内容を表示するサイトのURL
 @property (strong) NSURL *surl;

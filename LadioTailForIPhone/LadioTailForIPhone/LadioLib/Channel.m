@@ -102,13 +102,13 @@
 - (BOOL)favorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    return [favoriteManager isFavorite:mnt_];
+    return [favoriteManager isFavorite:self];
 }
 
 - (void)setFavorite:(BOOL)favorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager addFavorite:mnt_];
+    [favoriteManager addFavorite:self];
 }
 
 - (BOOL)isMatch:(NSArray *)searchWords
@@ -294,5 +294,58 @@
     }
     return result;
 }
+
+#pragma mark NSCoding methods
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:surl_ forKey:@"SURL"];
+    [coder encodeObject:tims_ forKey:@"TIMS"];
+    [coder encodeObject:srv_ forKey:@"SRV"];
+    [coder encodeInteger:prt_ forKey:@"PRT"];
+    [coder encodeObject:mnt_ forKey:@"MNT"];
+    [coder encodeObject:type_ forKey:@"TYPE"];
+    [coder encodeObject:nam_ forKey:@"NAM"];
+    [coder encodeObject:gnl_ forKey:@"GNL"];
+    [coder encodeObject:desc_ forKey:@"DESC"];
+    [coder encodeObject:dj_ forKey:@"DJ"];
+    [coder encodeObject:song_ forKey:@"SONG"];
+    [coder encodeObject:url_ forKey:@"URL"];
+    [coder encodeInteger:cln_ forKey:@"CLN"];
+    [coder encodeInteger:clns_ forKey:@"CLNS"];
+    [coder encodeInteger:max_ forKey:@"MAX"];
+    [coder encodeInteger:bit_ forKey:@"BIT"];
+    [coder encodeInteger:smpl_ forKey:@"SMPL"];
+    [coder encodeInteger:chs_ forKey:@"CHS"];
+    [coder encodeBool:favorite_ forKey:@"FAVORITE"];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        surl_ = [coder decodeObjectForKey:@"SURL"];
+        tims_ = [coder decodeObjectForKey:@"TIMS"];
+        srv_ = [coder decodeObjectForKey:@"SRV"];
+        prt_ = [coder decodeIntegerForKey:@"PRT"];
+        mnt_ = [coder decodeObjectForKey:@"MNT"];
+        type_ = [coder decodeObjectForKey:@"TYPE"];
+        nam_ = [coder decodeObjectForKey:@"NAM"];
+        gnl_ = [coder decodeObjectForKey:@"GNL"];
+        desc_ = [coder decodeObjectForKey:@"DESC"];
+        dj_ = [coder decodeObjectForKey:@"DJ"];
+        song_ = [coder decodeObjectForKey:@"SONG"];
+        url_ = [coder decodeObjectForKey:@"URL"];
+        cln_ = [coder decodeIntegerForKey:@"CLN"];
+        clns_ = [coder decodeIntegerForKey:@"CLNS"];
+        max_ = [coder decodeIntegerForKey:@"MAX"];
+        bit_ = [coder decodeIntegerForKey:@"BIT"];
+        smpl_ = [coder decodeIntegerForKey:@"SMPL"];
+        chs_ = [coder decodeIntegerForKey:@"CHS"];
+        favorite_ = [coder decodeBoolForKey:@"FAVORITE"];
+    }
+    return self;
+}
+
+#pragma mark -
 
 @end

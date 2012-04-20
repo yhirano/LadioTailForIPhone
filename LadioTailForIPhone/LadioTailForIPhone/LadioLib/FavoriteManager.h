@@ -21,6 +21,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "Channel.h"
 
 /**
  * お気に入りを管理するシングルトンクラス
@@ -37,30 +38,37 @@
 /**
  * お気に入りを追加する
  *
- * @param mount お気に入りに追加する番組のマウント
+ * @param channel お気に入りに追加する番組
  */
-- (void)addFavorite:(NSString *)mount;
+- (void)addFavorite:(Channel *)channel;
+
+/**
+ * お気に入りを追加する
+ *
+ * @param channels お気に入りに追加する番組
+ */
+- (void)addFavorites:(NSArray *)channels;
 
 /**
  * お気に入りを削除する
  *
- * @param mount お気に入りかｒ削除する番組のマウント
+ * @param channel お気に入りから削除する番組
  */
-- (void)removeFavorite:(NSString *)mount;
+- (void)removeFavorite:(Channel *)channel;
 
 /**
  * お気に入りに登録済みの場合は削除し、登録されていない場合は登録する
  *
- * @param mount お気に入りかｒ削除する番組のマウント
+ * @param channel お気に入りから削除する番組
  */
-- (void)switchFavorite:(NSString *)mount;
+- (void)switchFavorite:(Channel *)channel;
 
 /**
  * お気に入りかを取得する
  *
- * @param mount お気に入りかを確認する番組のマウント
+ * @param channel お気に入りかを確認する番組
  * @return お気に入りの場合はYES、それ以外はNO
  */
-- (BOOL)isFavorite:(NSString *)mount;
+- (BOOL)isFavorite:(Channel *)channel;
 
 @end

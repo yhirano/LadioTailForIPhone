@@ -59,7 +59,7 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    if ([favoriteManager isFavorite:channel_.mnt]) {
+    if ([favoriteManager isFavorite:channel_]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
@@ -292,7 +292,7 @@
 - (IBAction)favorite:(id)sender
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager switchFavorite:channel_.mnt];
+    [favoriteManager switchFavorite:channel_];
     
     // お気に入りボタンを更新
     [self updateFavoriteButton];
