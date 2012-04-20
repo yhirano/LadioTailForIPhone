@@ -23,6 +23,12 @@
 #import "FavoriteManager.h"
 #import "Channel.h"
 
+/// setTimsFromString用のNSDateFormatter
+static NSDateFormatter *setTimsFromStringDateFormatter = nil;
+
+/// timsToString用のNSDateFormatter
+static NSDateFormatter *timsToStringDateFormatter = nil;
+
 @implementation Channel
 
 @synthesize surl = surl_;
@@ -74,18 +80,23 @@
 
 - (void)setTimsFromString:(NSString *)tims
 {
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
-    [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-    tims_ = [format dateFromString:tims];
+    if (setTimsFromStringDateFormatter == nil) {
+        setTimsFromStringDateFormatter = [[NSDateFormatter alloc] init];
+        [setTimsFromStringDateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
+        [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+
+    }
+    tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
 }
 
 - (NSString *)timsToString
 {
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateStyle:NSDateFormatterMediumStyle];
-    [format setTimeStyle:NSDateFormatterMediumStyle];
-    return [format stringFromDate:tims_];
+    if (timsToStringDateFormatter == nil) {
+        timsToStringDateFormatter = [[NSDateFormatter alloc] init];
+        [timsToStringDateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [timsToStringDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    }
+    return [timsToStringDateFormatter stringFromDate:tims_];
 }
 
 - (void)setUrlFromString:(NSString *)url
