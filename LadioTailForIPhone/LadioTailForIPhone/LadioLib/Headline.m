@@ -192,12 +192,20 @@ static NSRegularExpression *chsExp = nil;
         [channelsCache_ setName:@"LadioLib channels cache"];
         isFetching_ = NO;
         isFetchingLock_ = [[NSObject alloc] init];
+
+        // 番組のお気に入りの変化通知を受け取る。番組キャッシュのクリアをする。
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(channelFavoriteChanged:)
+                                                     name:LadioLibChannelChangedFavorioNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibChannelChangedFavorioNotification object:nil];
+
     isFetchingLock_ = nil;
     channelsCache_ = nil;
     channelsLock_ = nil;
@@ -441,7 +449,7 @@ static NSRegularExpression *chsExp = nil;
     if ([cacheResult count] != 0) {
         return cacheResult;
     }
-    
+
     NSArray *result = nil;
     NSMutableArray *channels = nil;
 
@@ -468,7 +476,7 @@ static NSRegularExpression *chsExp = nil;
         }
     }
 
-
+    // ソート
     switch (sortType) {
         case ChannelSortTypeNewly:
             result =  [channels sortedArrayUsingSelector:@selector(compareNewly:)];
@@ -593,7 +601,7 @@ static NSRegularExpression *chsExp = nil;
     NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
-    
+
     // ヘッドライン取得中のフラグを下げる
     @synchronized (isFetchingLock_) {
         isFetching_ = NO;
@@ -605,14 +613,14 @@ static NSRegularExpression *chsExp = nil;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSLog(@"NetLadio fetch headline received. %d bytes received.", [receivedData_ length]);
-    
+
     // 取得したデータをNSStringに変換し、1行ごとに分館してNSArrayに格納する
     NSString *data = [[NSString alloc] initWithData:receivedData_ encoding:NSShiftJISStringEncoding];
     NSArray *lines = [data componentsSeparatedByString:@"\n"];
     receivedData_ = nil;
-    
+
     NSArray *channels = [self parseHeadline:lines];
-    
+
     @synchronized (channelsLock_) {
         channels_ = [[NSArray alloc] initWithArray:channels];
 #if DEBUG
@@ -622,15 +630,26 @@ static NSRegularExpression *chsExp = nil;
         // 番組表データを更新したのでキャッシュを削除
         [self clearChannelsCache];
     }
-    
+
     // ヘッドライン取得中のフラグを下げる
     @synchronized (isFetchingLock_) {
         isFetching_ = NO;
     }
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
 }
 
 #pragma mark -
+#pragma mark Channel notifications
+
+- (void)channelFavoriteChanged:(NSNotification *)notification
+{
+    // お気に入りが変化したのでキャッシュをクリアする
+    // お気に入りの有無がソート順番に影響するため
+    [self clearChannelsCache];
+}
+
+#pragma  mark -
+
 
 @end

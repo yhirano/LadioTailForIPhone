@@ -22,6 +22,10 @@
 
 #import <Foundation/Foundation.h>
 
+/// お気に入りの情報が変化した際のNotification
+/// お気に入り以外はユーザーが操作することがないので、お気に入りの変化だけ通知する。
+#define LadioLibChannelChangedFavorioNotification @"LadioLibChannelChangedFavorioNotification"
+
 /// リスナ数が不明
 #define CHANNEL_UNKNOWN_LISTENER_NUM -1
 
@@ -96,10 +100,6 @@
 /// お気に入りに登録済みか
 @property BOOL favorite;
 
-- (id)init;
-
-- (NSString *)description;
-
 - (void)setSurlFromString:(NSString *)url;
 
 - (NSString *)timsToString;
@@ -109,6 +109,8 @@
 - (void)setUrlFromString:(NSString *)url;
 
 - (NSURL *)playUrl;
+
+- (void) switchFavorite;
 
 - (BOOL)isMatch:(NSArray *)searchWords;
 

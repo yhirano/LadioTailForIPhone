@@ -49,7 +49,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 @synthesize bit = bit_;
 @synthesize smpl = smpl_;
 @synthesize chs = chs_;
-@synthesize favorite = favorite_;
+@synthesize favorite;
 
 - (id)init
 {
@@ -67,10 +67,9 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 - (NSString *)description
 {
     NSString *format = @"<%@ :%p , surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@"
-                        " url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d favorite:@%>";
+                        " url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>";
     return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, surl_, tims_, srv_, prt_, mnt_,
-                                      type_, nam_, gnl_, desc_, dj_,song_, url_, cln_, clns_, max_, bit_, smpl_, chs_,
-                                      (favorite_ ? @"YES" : @"NO")];
+                                      type_, nam_, gnl_, desc_, dj_,song_, url_, cln_, clns_, max_, bit_, smpl_, chs_];
 }
 
 - (void)setSurlFromString:(NSString *)url
@@ -116,10 +115,27 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     return [favoriteManager isFavorite:self];
 }
 
-- (void)setFavorite:(BOOL)favorite
+- (void)setFavorite:(BOOL)fav
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    [favoriteManager addFavorite:self];
+    BOOL changed = NO;
+    if ([self favorite] && fav == NO) {
+        [favoriteManager removeFavorite:self];
+        changed = YES;
+    } else if ([self favorite] == NO && fav) {
+        [favoriteManager addFavorite:self];
+        changed = YES;
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification object:self];
+}
+
+- (void) switchFavorite
+{
+    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
+    [favoriteManager switchFavorite:self];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification object:self];
 }
 
 - (BOOL)isMatch:(NSArray *)searchWords
@@ -328,7 +344,6 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     [coder encodeInteger:bit_ forKey:@"BIT"];
     [coder encodeInteger:smpl_ forKey:@"SMPL"];
     [coder encodeInteger:chs_ forKey:@"CHS"];
-    [coder encodeBool:favorite_ forKey:@"FAVORITE"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -352,7 +367,6 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         bit_ = [coder decodeIntegerForKey:@"BIT"];
         smpl_ = [coder decodeIntegerForKey:@"SMPL"];
         chs_ = [coder decodeIntegerForKey:@"CHS"];
-        favorite_ = [coder decodeBoolForKey:@"FAVORITE"];
     }
     return self;
 }
