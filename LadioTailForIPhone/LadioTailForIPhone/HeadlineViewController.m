@@ -130,10 +130,10 @@
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
     }
     // 1日以上前
-    else if (diffTime >= (24 * 60 * 60)) {
+    else if (diffTime >= (6 * 60 * 60)) {
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
     } else {
-        double lighty = 1 - (diffTime / (24 * 60 * 60));
+        double lighty = 1 - (diffTime / (6 * 60 * 60));
         CGFloat lightRed, lightGreen, lightBlue, lightAlpha, darkRed, darkGreen, darkBlue, darkAlpha;
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getRed:&lightRed green:&lightGreen blue:&lightBlue alpha:&lightAlpha];
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getRed:&darkRed green:&darkGreen blue:&darkBlue alpha:&darkAlpha];
