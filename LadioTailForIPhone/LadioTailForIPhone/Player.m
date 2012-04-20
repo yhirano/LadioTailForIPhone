@@ -145,9 +145,19 @@ static Player *instance = nil;
 - (void)stop
 {
     @synchronized (self) {
-        [self stopProc];
-        NSLog(@"Play stopped by user operation.");
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
+        
+        switch (state_) {
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+                [self stopProc];
+                NSLog(@"Play stopped.");
+                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
+                                                                    object:self];
+                break;
+            case PlayerStateIdle:
+            default:
+                break;
+        }
     }
 }
 
@@ -174,7 +184,11 @@ static Player *instance = nil;
         NSLog(@"Play time out timer invalidate.");
 #endif /* #if DEBUG */
     }
-    playTimeOutTimer_ = [NSTimer scheduledTimerWithTimeInterval:PLAY_TIMEOUT_SEC target:self selector:@selector(playTimeOut:) userInfo:nil repeats:NO];
+    playTimeOutTimer_ = [NSTimer scheduledTimerWithTimeInterval:PLAY_TIMEOUT_SEC
+                                                         target:self
+                                                       selector:@selector(playTimeOut:)
+                                                       userInfo:nil
+                                                        repeats:NO];
 #if DEBUG
     NSLog(@"Play time out timer fired.");
 #endif /* #if DEBUG */
@@ -286,20 +300,8 @@ static Player *instance = nil;
             }
         } else if (player_.status == AVPlayerStatusFailed) {
             @synchronized (self) {
-                state_ = PlayerStateIdle;
                 NSLog(@"Play failed.");
-
-                // 再生タイムアウトのタイマーが走っている場合は止める
-                if (playTimeOutTimer_ != nil) {
-                    [playTimeOutTimer_ invalidate];
-                    playTimeOutTimer_ = nil;
-#if DEBUG
-                    NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
-                                                                    object:self];
+                [self stopProc];
             }
         }
     }
