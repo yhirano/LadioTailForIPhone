@@ -62,6 +62,10 @@
 		8EC23B8D1537145A007352FD /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6C15371382007352FD /* Channel.m */; };
 		8EC23B8E1537145A007352FD /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B6E15371382007352FD /* Headline.m */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+		8EC3BBCE1541045C00F6DC08 /* libGRMustache3-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC3BBCD1541045C00F6DC08 /* libGRMustache3-iOS.a */; };
+		8EC3BBD21541057300F6DC08 /* ChannelPageHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBD11541057300F6DC08 /* ChannelPageHtml.mustache */; };
+		8EC3BBD515410A9000F6DC08 /* ChannelsHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3BBD415410A9000F6DC08 /* ChannelsHtml.m */; };
+		8EC3BBEC15412B9500F6DC08 /* ChannelLinkHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */; };
 		8ED4CDEC153C5A6300C7C17F /* headphones_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDEB153C5A6300C7C17F /* headphones_black.png */; };
 		8ED4CDEE153C5C6200C7C17F /* star_fav_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED4CDED153C5C6200C7C17F /* star_fav_black.png */; };
 		8ED4CDF3153C6B2E00C7C17F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED4CDF1153C6B2E00C7C17F /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -151,6 +155,21 @@
 		8EC23B7F15371382007352FD /* TitleHeadlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TitleHeadlineViewController.m; sourceTree = "<group>"; };
 		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8EC3BBCD1541045C00F6DC08 /* libGRMustache3-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libGRMustache3-iOS.a"; path = "LadioTailForIPhone/GRMustache/lib/libGRMustache3-iOS.a"; sourceTree = "<group>"; };
+		8EC3BBD11541057300F6DC08 /* ChannelPageHtml.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChannelPageHtml.mustache; sourceTree = "<group>"; };
+		8EC3BBD315410A9000F6DC08 /* ChannelsHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsHtml.h; sourceTree = "<group>"; };
+		8EC3BBD415410A9000F6DC08 /* ChannelsHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsHtml.m; sourceTree = "<group>"; };
+		8EC3BBE115410B7D00F6DC08 /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustache.h; sourceTree = "<group>"; };
+		8EC3BBE215410B7D00F6DC08 /* GRMustacheAvailabilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheAvailabilityMacros.h; sourceTree = "<group>"; };
+		8EC3BBE315410B7D00F6DC08 /* GRMustacheError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheError.h; sourceTree = "<group>"; };
+		8EC3BBE415410B7D00F6DC08 /* GRMustacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheHelper.h; sourceTree = "<group>"; };
+		8EC3BBE515410B7D00F6DC08 /* GRMustacheInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheInvocation.h; sourceTree = "<group>"; };
+		8EC3BBE615410B7D00F6DC08 /* GRMustacheSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheSection.h; sourceTree = "<group>"; };
+		8EC3BBE715410B7D00F6DC08 /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
+		8EC3BBE815410B7D00F6DC08 /* GRMustacheTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateDelegate.h; sourceTree = "<group>"; };
+		8EC3BBE915410B7D00F6DC08 /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
+		8EC3BBEA15410B7D00F6DC08 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChannelLinkHtml.mustache; sourceTree = "<group>"; };
 		8ED4CDEB153C5A6300C7C17F /* headphones_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones_black.png; sourceTree = "<group>"; };
 		8ED4CDED153C5C6200C7C17F /* star_fav_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fav_black.png; sourceTree = "<group>"; };
 		8ED4CDF0153C6B2E00C7C17F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -165,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC3BBCE1541045C00F6DC08 /* libGRMustache3-iOS.a in Frameworks */,
 				8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */,
 				8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */,
 				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
@@ -222,6 +242,7 @@
 			children = (
 				8EC23B51153712BB007352FD /* LadioTailForIPhone */,
 				8EC23B4A153712BB007352FD /* Frameworks */,
+				8EC3BBCF1541046A00F6DC08 /* Libraries */,
 				8EC23B48153712BB007352FD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -255,6 +276,7 @@
 				8EC23B6A15371382007352FD /* LadioLib */,
 				8EC23B7A15371382007352FD /* SVProgressHUD */,
 				8ED4CDEF153C6B2E00C7C17F /* EGOTableViewPullRefresh */,
+				8EC3BBBB154103C200F6DC08 /* GRMustache */,
 				8E1BA6AF153AA33600070E71 /* FBNetworkReachability */,
 				8EC23B5A153712BB007352FD /* AppDelegate.h */,
 				8EC23B5B153712BB007352FD /* AppDelegate.m */,
@@ -282,7 +304,10 @@
 				8E275F62153D9E00007E5A7A /* AdBannerManager.m */,
 				8EC23B7815371382007352FD /* Player.h */,
 				8EC23B7915371382007352FD /* Player.m */,
+				8EC3BBD315410A9000F6DC08 /* ChannelsHtml.h */,
+				8EC3BBD415410A9000F6DC08 /* ChannelsHtml.m */,
 				8E16282E15385E55007A2DBE /* Images */,
+				8EC3BBD0154104CF00F6DC08 /* Templetes */,
 				8EC23B52153712BB007352FD /* Supporting Files */,
 			);
 			path = LadioTailForIPhone;
@@ -329,6 +354,48 @@
 				8EC23B7D15371382007352FD /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		8EC3BBBB154103C200F6DC08 /* GRMustache */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3BBE015410B7D00F6DC08 /* include */,
+			);
+			path = GRMustache;
+			sourceTree = "<group>";
+		};
+		8EC3BBCF1541046A00F6DC08 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3BBCD1541045C00F6DC08 /* libGRMustache3-iOS.a */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		8EC3BBD0154104CF00F6DC08 /* Templetes */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3BBD11541057300F6DC08 /* ChannelPageHtml.mustache */,
+				8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */,
+			);
+			path = Templetes;
+			sourceTree = "<group>";
+		};
+		8EC3BBE015410B7D00F6DC08 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3BBE115410B7D00F6DC08 /* GRMustache.h */,
+				8EC3BBE215410B7D00F6DC08 /* GRMustacheAvailabilityMacros.h */,
+				8EC3BBE315410B7D00F6DC08 /* GRMustacheError.h */,
+				8EC3BBE415410B7D00F6DC08 /* GRMustacheHelper.h */,
+				8EC3BBE515410B7D00F6DC08 /* GRMustacheInvocation.h */,
+				8EC3BBE615410B7D00F6DC08 /* GRMustacheSection.h */,
+				8EC3BBE715410B7D00F6DC08 /* GRMustacheTemplate.h */,
+				8EC3BBE815410B7D00F6DC08 /* GRMustacheTemplateDelegate.h */,
+				8EC3BBE915410B7D00F6DC08 /* GRMustacheTemplateRepository.h */,
+				8EC3BBEA15410B7D00F6DC08 /* GRMustacheVersion.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		8ED4CDEF153C6B2E00C7C17F /* EGOTableViewPullRefresh */ = {
@@ -427,6 +494,8 @@
 				8E12B5B6153E7F33002F4437 /* Icon-Small@2x.png in Resources */,
 				8E12B5B7153E7F33002F4437 /* Icon.png in Resources */,
 				8E12B5B8153E7F33002F4437 /* Icon@2x.png in Resources */,
+				8EC3BBD21541057300F6DC08 /* ChannelPageHtml.mustache in Resources */,
+				8EC3BBEC15412B9500F6DC08 /* ChannelLinkHtml.mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +526,7 @@
 				8EC23B8C1537144F007352FD /* SVProgressHUD.m in Sources */,
 				8E1BA6B2153AA33600070E71 /* FBNetworkReachability.m in Sources */,
 				8ED4CDF3153C6B2E00C7C17F /* EGORefreshTableHeaderView.m in Sources */,
+				8EC3BBD515410A9000F6DC08 /* ChannelsHtml.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +614,10 @@
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/LadioTailForIPhone/GRMustache/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -556,6 +630,10 @@
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/LadioTailForIPhone/GRMustache/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

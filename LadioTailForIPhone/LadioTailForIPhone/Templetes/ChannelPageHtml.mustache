@@ -1,0 +1,37 @@
+
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        background-color:#3C3C3C;
+        color:#FFFFFF;
+      }
+      a {
+        color:#FFBE1E;
+      }
+      div.content {
+        margin-bottom:0.5em;
+      }
+      div.tag {
+        font-size:small;
+      }
+      div.value {
+        margin-left:0.5em;
+        font-weight:bold;
+        word-break:break-all;
+      }
+    </style>
+  </head>
+  <body>
+    {{#channels}}
+    <div class="content">
+      <div class="tag">
+        {{tag}}
+      </div>
+      <div class="value">
+        {{{value}}}
+      </div>
+    </div>
+    {{/channels}}
+  </body>
+</html>

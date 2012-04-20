@@ -16,7 +16,9 @@ MIT License
 ## 外部リソース
 Ladio Tail for iPhoneには下記のリソースが含まれています。
 
-* [SVProgressHUD](https://github.com/samvermette/SVProgressHUD) - MIT License
-* [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability) - MIT License
 * [EGOTableViewPullRefresh](https://github.com/enormego/EGOTableViewPullRefresh) - MIT License
+* [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability) - MIT License
+* [GRMustache](https://github.com/groue/GRMustache) - MIT License
+* [SVProgressHUD](https://github.com/samvermette/SVProgressHUD) - MIT License
+
 * [Gentleface Toolbar Icon Set](http://www.gentleface.com/free_icon_set.html) - The Creative Commons Attribution-NonCommercial
