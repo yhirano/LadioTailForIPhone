@@ -25,6 +25,8 @@
 
 @implementation LadioTailViewController
 
+#pragma mark UIView methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,7 +40,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
     // リモコン対応
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
@@ -49,7 +51,7 @@
     // リモコン対応
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
-    
+
     [super viewWillDisappear:animated];
 }
 
