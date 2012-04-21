@@ -50,9 +50,9 @@
     backButton_.enabled = pageWebView_.canGoBack;
     forwardButton_.enabled = pageWebView_.canGoForward;
     if (isPageLoading_) {
-        [reloadButton_ setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+        [reloadButton_ setImage:[UIImage imageNamed:@"button_reload_stop.png"] forState:UIControlStateNormal];
     } else {
-        [reloadButton_ setImage:[UIImage imageNamed:@"playback_reload.png"] forState:UIControlStateNormal];
+        [reloadButton_ setImage:[UIImage imageNamed:@"button_reload.png"] forState:UIControlStateNormal];
     }
 }
 

@@ -60,9 +60,9 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([channel_ favorite]) {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_yellow.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbar_favorite_white.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite__white.png"]];
     }
 }
 
@@ -72,9 +72,9 @@
     NSURL *url = [channel_ playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
-        [playButton_ setImage:[UIImage imageNamed:@"playback_stop.png"] forState:UIControlStateNormal];
+        [playButton_ setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
     } else {
-        [playButton_ setImage:[UIImage imageNamed:@"playback_play.png"] forState:UIControlStateNormal];
+        [playButton_ setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
     }
     
     // 再生ボタンの有効無効を切り替える
