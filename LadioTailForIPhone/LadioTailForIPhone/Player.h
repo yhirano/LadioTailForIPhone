@@ -41,9 +41,10 @@ typedef NSInteger PlayerState;
 
 @interface Player : NSObject <AVAudioSessionDelegate>
 
+/**
+ * 状態
+ */
 @property (readonly) PlayerState state;
-@property (strong, readonly) NSURL *playUrl;
-
 
 + (Player *)sharedInstance;
 
@@ -68,8 +69,11 @@ typedef NSInteger PlayerState;
 
 - (BOOL)isPlaying:(NSURL *)url;
 
-- (NSURL *)playUrl;
-
-- (PlayerState)state;
+/**
+ * 再生中のURLを取得する
+ * 
+ * @return 再生中のURL。再生していない場合はnil。
+ */
+- (NSURL *)playingUrl;
 
 @end

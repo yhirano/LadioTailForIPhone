@@ -358,7 +358,7 @@
         // 番組情報を繊維先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSURL *playingUrl = [[Player sharedInstance] playUrl];
+            NSURL *playingUrl = [[Player sharedInstance] playingUrl];
             Headline *headline = [Headline sharedInstance];
             Channel *channel = [headline channel:playingUrl];
             ((ChannelViewController *) viewCon).channel = channel;

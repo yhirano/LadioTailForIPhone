@@ -31,11 +31,11 @@ static Player *instance = nil;
 {
 @private
     AVPlayer *player_;
+    NSURL *playUrl_;
     NSTimer *playTimeOutTimer_;
 }
 
 @synthesize state = state_;
-@synthesize playUrl = playUrl_;
 
 + (Player *)sharedInstance
 {
@@ -53,6 +53,8 @@ static Player *instance = nil;
             state_ = PlayerStateIdle;
         }
 
+        // オーディオセッションを生成
+        // バックグラウンド再生用
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [[AVAudioSession sharedInstance] setDelegate:self];
         NSError *setCategoryError = nil;
@@ -100,7 +102,19 @@ static Player *instance = nil;
 
 - (void)play
 {
-    [self playProc:playUrl_];
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStateIdle:
+                if (playUrl_ != nil) {
+                    [self playProc:playUrl_];
+                }
+                break;
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+            default:
+                break;
+        }
+    }
 }
 
 - (void)play:(NSURL *)url
@@ -114,13 +128,28 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProc];
+                [self stopProc:NO byError:NO];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
                 [self playProc:url];
                 break;
             case PlayerStatePrepare:
+            default:
+                break;
+        }
+    }
+}
+
+- (void)stop
+{
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+                [self stopProc:YES byError:NO];
+                break;
+            case PlayerStateIdle:
             default:
                 break;
         }
@@ -142,21 +171,37 @@ static Player *instance = nil;
     }
 }
 
-- (void)stop
+- (BOOL)isPlaying:(NSURL *)url
+{
+    NSURL *playingUrl;
+    @synchronized (self) {
+        playingUrl = [self playingUrl];
+    }
+
+    if (playingUrl != nil) {
+        return [[playingUrl absoluteString] isEqualToString:[url absoluteString]];
+    } else {
+        return NO;
+    }
+}
+
+- (PlayerState)state
 {
     @synchronized (self) {
-        
+        return state_;
+    }
+}
+
+- (NSURL*)playingUrl
+{
+    @synchronized (self) {
         switch (state_) {
-            case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProc];
-                NSLog(@"Play stopped.");
-                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
-                                                                    object:self];
-                break;
+                return playUrl_;
             case PlayerStateIdle:
+            case PlayerStatePrepare:
             default:
-                break;
+                return nil;
         }
     }
 }
@@ -168,7 +213,7 @@ static Player *instance = nil;
     if (url == nil) {
         return;
     }
-
+    
     state_ = PlayerStatePrepare;
     playUrl_ = url;
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
@@ -176,9 +221,10 @@ static Player *instance = nil;
     player_ = [AVPlayer playerWithURL:url];
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
-
+    
     // 再生タイムアウトを監視する
     if (playTimeOutTimer_ != nil) {
+        // 再生タイムアウトタイマーが走っている場合は止める
         [playTimeOutTimer_ invalidate];
 #if DEBUG
         NSLog(@"Play time out timer invalidate.");
@@ -194,24 +240,41 @@ static Player *instance = nil;
 #endif /* #if DEBUG */
 }
 
-- (void)playTimeOut:(NSTimer *)timer
+/// 再生開始後処理
+- (void)playStartedProc
 {
-    @synchronized (self) {
-        playUrl_ = nil;
-        state_ = PlayerStateIdle;
-        NSLog(@"Player time outed.");
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
+    state_ = PlayerStatePlay;
+    NSLog(@"Play started.");
+    
+    // 再生タイムアウトのタイマーが走っている場合は止める
+    if (playTimeOutTimer_ != nil) {
+        [playTimeOutTimer_ invalidate];
         playTimeOutTimer_ = nil;
+#if DEBUG
+        NSLog(@"Play time out timer invalidate.");
+#endif /* #if DEBUG */
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
+                                                        object:self];
 }
 
 /// 停止処理
-- (void)stopProc
+- (void)stopProc:(BOOL)notification byError:(BOOL)error
 {
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
+    // エラーで停止した場合は再生中のURLを残さない
+    if (error) {
+        playUrl_ = nil;
+    }
     state_ = PlayerStateIdle;
-
+    NSLog(@"Play stopped.");
+    if (notification) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
+                                                            object:self];
+    }
+    
     // 再生タイムアウトのタイマーが走っている場合は止める（走っていることはないはずだが一応）
     if (playTimeOutTimer_ != nil) {
         [playTimeOutTimer_ invalidate];
@@ -222,56 +285,34 @@ static Player *instance = nil;
     }
 }
 
-- (BOOL)isPlaying:(NSURL *)url
-{
-    @synchronized (self) {
-        NSURL *playingUrl = [self playUrl];
-        if (playingUrl == nil) {
-            return NO;
-        } else {
-            return ([[playingUrl absoluteString] isEqualToString:[url absoluteString]]);
-        }
-    }
-}
-
-- (NSURL *)playUrl
+- (void)playTimeOut:(NSTimer *)timer
 {
     @synchronized (self) {
         switch (state_) {
-            case PlayerStatePlay:
-                return playUrl_;
-            case PlayerStateIdle:
             case PlayerStatePrepare:
+                [self stopProc:YES byError:YES];
+                NSLog(@"Player time outed.");
+                break;
+            case PlayerStateIdle:
+            case PlayerStatePlay:
             default:
-                return nil;
+                break;
         }
-    }
-}
-
-- (PlayerState)state
-{
-    @synchronized (self) {
-        return state_;
     }
 }
 
 - (void)stopped:(NSNotification *)notification
 {
     @synchronized (self) {
-        playUrl_ = nil;
-        state_ = PlayerStateIdle;
-        NSLog(@"Play stopped.");
-
-        // 再生タイムアウトのタイマーが走っている場合は止める
-        if (playTimeOutTimer_ != nil) {
-            [playTimeOutTimer_ invalidate];
-            playTimeOutTimer_ = nil;
-#if DEBUG
-            NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
+        switch (state_) {
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+                [self stopProc:YES byError:YES];
+                break;
+            case PlayerStateIdle:
+            default:
+                break;
         }
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification object:self];
     }
 }
 
@@ -283,26 +324,19 @@ static Player *instance = nil;
     if (object == player_ && [keyPath isEqualToString:@"status"]) {
         if (player_.status == AVPlayerStatusReadyToPlay) {
             @synchronized (self) {
-                state_ = PlayerStatePlay;
-                NSLog(@"Play started.");
-
-                // 再生タイムアウトのタイマーが走っている場合は止める
-                if (playTimeOutTimer_ != nil) {
-                    [playTimeOutTimer_ invalidate];
-                    playTimeOutTimer_ = nil;
-#if DEBUG
-                    NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
+                switch (state_) {
+                    case PlayerStatePrepare:
+                        [self playStartedProc];
+                        break;
+                    case PlayerStateIdle:
+                    case PlayerStatePlay:
+                    default:
+                        break;
                 }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
-                                                                    object:self];
+                [self playStartedProc];
             }
         } else if (player_.status == AVPlayerStatusFailed) {
-            @synchronized (self) {
-                NSLog(@"Play failed.");
-                [self stopProc];
-            }
+            [self stopped:nil];
         }
     }
 }
