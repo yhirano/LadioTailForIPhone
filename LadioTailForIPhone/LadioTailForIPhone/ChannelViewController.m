@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import <QuartzCore/QuartzCore.h>
 #import "Player.h"
 #import "AdBannerManager.h"
 #import "ChannelsHtml.h"
@@ -246,7 +247,7 @@
 {
     // リンクを押した
     if ([[segue identifier] isEqualToString:@"OpenUrl"]) {
-        // URLを繊維先のViewに設定
+        // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
             ((WebPageViewController *) viewCon).url = channel_.url;

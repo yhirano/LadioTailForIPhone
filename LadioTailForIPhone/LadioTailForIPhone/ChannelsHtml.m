@@ -66,7 +66,6 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
 
     NSString *tag;
     NSString *value;
-    
 
     // タイトル
     value = channel.nam;
@@ -126,11 +125,11 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
             || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
             || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
             // リスナー数
-            tag = NSLocalizedString(@"Listener", @"リスナー数");
+            tag = NSLocalizedString(@"Listeners", @"リスナー数");
             value = @"";
             if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 value = [NSString stringWithFormat:@"%@ %d",
-                     NSLocalizedString(@"Listener", @"リスナー数"),
+                     NSLocalizedString(@"Listeners", @"リスナー数"),
                      channel.cln];
                 if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
                     value = [NSString stringWithFormat:@"%@%@", value, @" / "];
@@ -222,6 +221,147 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
 
     NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
 
+    if (channelPageHtmlTemplate == nil) {
+        NSError *error = nil;
+        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"
+                                                             withExtension:@"mustache"
+                                                                    bundle:[NSBundle mainBundle]
+                                                                     error:&error];
+        if (error != nil) {
+            NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
+        }
+    }
+    NSString *result = [channelPageHtmlTemplate renderObject:data];
+    return result;
+}
+
++ (NSString *)favoritelViewHtml:(Favorite *)favorite
+{
+    Channel *channel = favorite.channel;
+    if (favorite == nil || channel == nil) {
+        return nil;
+    }
+    
+    NSMutableArray *channelInfo = [[NSMutableArray alloc] init];
+    
+    NSString *tag;
+    NSString *value;
+
+    // タイトル
+    value = channel.nam;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Title", @"タイトル");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // DJ
+    value = channel.dj;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"DJ", @"DJ");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // ジャンル
+    value = channel.gnl;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Genre", @"ジャンル");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 詳細
+    value = channel.desc;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Description", @"詳細");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 曲
+    value = channel.song;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Song", @"曲");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // URL
+    value = [channel.url absoluteString];
+    if (!([value length] == 0)) {
+        if (channelLinkHtmlTemplate == nil) {
+            NSError *error = nil;
+            channelLinkHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelLinkHtml"
+                                                                 withExtension:@"mustache"
+                                                                        bundle:[NSBundle mainBundle]
+                                                                         error:&error];
+            if (error != nil) {
+                NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
+            }
+        }
+        NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:value, nil]
+                                                         forKeys:[NSArray arrayWithObjects:@"url", nil]];
+        value = [channelLinkHtmlTemplate renderObject:dict];
+        // 何も返ってこない場合（多分実装エラー）は何もしない
+        if (value != nil) {
+            tag =  NSLocalizedString(@"Site", @"サイト");
+            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        }
+    }
+    // フォーマット
+    {
+        if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM
+            || channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+            || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+            || !([channel.type length] == 0)) {
+            tag = NSLocalizedString(@"Format", @"フォーマット");
+            value = @"";
+            // ビットレート
+            if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
+                value = [NSString stringWithFormat:@"%dkbps", channel.bit];
+                if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
+                    || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
+                    || !([channel.type length] == 0)) {
+                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
+                }
+            }
+            
+            // チャンネル数
+            if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
+                NSString *chsStr;
+                switch (channel.chs) {
+                    case 1:
+                        chsStr = NSLocalizedString(@"Mono", @"モノラル");
+                        break;
+                    case 2:
+                        chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
+                        break;
+                    default:
+                        chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
+                        break;
+                }
+                value = [NSString stringWithFormat:@"%@%@", value, chsStr];
+                if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel.type length] == 0)) {
+                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
+                }
+            }
+            
+            // サンプリングレート数
+            if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
+                value = [NSString stringWithFormat:@"%@%dHz", value, channel.smpl];
+                if (!([channel.type length] == 0)) {
+                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
+                }
+            }
+            
+            // 種類
+            if (!([channel.type length] == 0)) {
+                value = [NSString stringWithFormat:@"%@%@", value, channel.type];
+            }
+            
+            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        }
+    }
+    // マウント
+    value = channel.mnt;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Mount", @"マウント");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    
+    NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
+    
     if (channelPageHtmlTemplate == nil) {
         NSError *error = nil;
         channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"

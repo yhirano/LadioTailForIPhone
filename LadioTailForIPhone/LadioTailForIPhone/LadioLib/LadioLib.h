@@ -22,3 +22,5 @@
 
 #import "Headline.h"
 #import "Channel.h"
+#import "FavoriteManager.h"
+#import "Favorite.h"

@@ -118,24 +118,17 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 - (void)setFavorite:(BOOL)fav
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    BOOL changed = NO;
     if ([self favorite] && fav == NO) {
         [favoriteManager removeFavorite:self];
-        changed = YES;
     } else if ([self favorite] == NO && fav) {
         [favoriteManager addFavorite:self];
-        changed = YES;
     }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification object:self];
 }
 
 - (void) switchFavorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     [favoriteManager switchFavorite:self];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification object:self];
 }
 
 - (BOOL)isMatch:(NSArray *)searchWords

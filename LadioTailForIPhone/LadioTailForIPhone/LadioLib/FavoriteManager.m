@@ -29,12 +29,8 @@
 static FavoriteManager *instance = nil;
 
 @implementation FavoriteManager
-{
-@private
-    /// お気に入りリスト
-    /// Channel.mntがキー、FavoriteがオブジェクトのNSDictionary
-    NSMutableDictionary *favorites_;
-}
+
+@synthesize favorites = favorites_;
 
 + (FavoriteManager *)sharedInstance
 {
@@ -87,6 +83,8 @@ static FavoriteManager *instance = nil;
         Favorite *favorite = [[Favorite alloc] init];
         favorite.channel = channel;
         [favorites_ setObject:favorite forKey:channel.mnt];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification
+                                                            object:channel];
     }
 
     // お気に入りを保存する
@@ -99,7 +97,11 @@ static FavoriteManager *instance = nil;
         return;
     }
 
-    [favorites_ removeObjectForKey:channel.mnt];
+    if ([favorites_ objectForKey:channel.mnt] != nil) {
+        [favorites_ removeObjectForKey:channel.mnt];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavorioNotification
+                                                            object:channel];
+    }
 
     // お気に入りを保存する
     [self storeFavorites];

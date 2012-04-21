@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import "SVProgressHUD/SVProgressHUD.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "LadioLib/LadioLib.h"
 #import "SearchWordManager.h"
@@ -48,6 +47,9 @@
 /// テーブルセルの明るい側の色
 #define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT \
     [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
+/// テーブルセルの選択の色
+#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR \
+    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
 /// テーブルセルのタイトルのテキストカラー
 #define HEADLINE_CELL_TITLE_TEXT_COLOR [UIColor whiteColor]
 /// テーブルセルのタイトルのテキスト選択時カラー
@@ -68,23 +70,17 @@
     [[UIColor alloc] initWithRed:(140 / 255.0) green:(140 / 255.0) blue:(140 / 255.0) alpha:1]
 /// テーブルセルの日付の背景の色（暗い方）
 #define HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK \
-[[UIColor alloc] initWithRed:(120 / 255.0) green:(120 / 255.0) blue:(120 / 255.0) alpha:1]
+    [[UIColor alloc] initWithRed:(120 / 255.0) green:(120 / 255.0) blue:(120 / 255.0) alpha:1]
 /// テーブルセルの日付のテキストカラー
 #define HEADLINE_CELL_DATE_TEXT_COLOR [UIColor blackColor]
 /// テーブルセルの日付のテキスト選択時カラー
 #define HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルの選択の色
-#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR \
-    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
 // Pull Refreshのテキスト色
 #define PULL_REFRESH_TEXT_COLOR [UIColor darkGrayColor]
 // Pull Refreshの矢印イメージ
 #define PULL_REFRESH_ARROW_IMAGE @"EGOTableViewPullRefresh.bundle/grayArrow.png"
 // Pull Refreshの背景色
 #define PULL_REFRESH_TEXT_BACKGROUND_COLOR [UIColor lightGrayColor]
-
-/// ヘッドライン取得失敗時にエラーを表示する秒数
-#define DELAY_FETCH_HEADLINE_MESSAGE 3
 
 @implementation HeadlineViewController
 {
@@ -340,7 +336,7 @@
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 
@@ -356,7 +352,7 @@
 {
     // テーブルから番組を選択した
     if ([[segue identifier] isEqualToString:@"SelectChannel"]) {
-        // 番組情報を繊維先のViewに設定
+        // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
@@ -365,7 +361,7 @@
     }
     // 再生中ボタンを選択した
     else if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
-        // 番組情報を繊維先のViewに設定
+        // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSURL *playingUrl = [[Player sharedInstance] playingUrl];
@@ -487,6 +483,28 @@
         dateLabel.text = diffTimeString;
     }
 
+    // テーブルセルのテキスト等の色を変える
+    titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
+    titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+    
+    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
+    djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+    
+    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
+    listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
+    
+    dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
+    dateLabel.clipsToBounds = YES;
+    dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+    dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
+    dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
+    
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
+    
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    favoriteImageView.hidden = !channel.favorite;
+
     return cell;
 }
 
@@ -494,40 +512,12 @@
    willDisplayCell:(UITableViewCell *)cell
  forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [showedChannels_ objectAtIndex:indexPath.row];
-
     // テーブルセルの背景の色を変える
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK;
     } else {
         cell.backgroundColor = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
     }
-
-    // テーブルセルのテキスト等の色を変える
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
-    titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
-
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
-    djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
-
-    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
-    listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
-
-    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
-    dateLabel.clipsToBounds = YES;
-    dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
-    dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
-    dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
-
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
-
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    favoriteImageView.hidden = !channel.favorite;
 
     // テーブルセルの選択色を変える
     UIView *selectedBackgroundView = [[UIView alloc] init];
@@ -579,16 +569,12 @@
 #endif /* #if PULL_REFRESH_HEADLINE */
 
 #pragma mark -
-
 #pragma mark Headline notifications
 - (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
-    // 進捗ウィンドウを表示する
-    [SVProgressHUD show];
     
     // ヘッドラインの取得開始時に更新ボタンを無効にする
     [self updateUpdateBarButton];
@@ -610,9 +596,6 @@
 
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
-
-    // 進捗ウィンドウを消す
-    [SVProgressHUD dismiss];
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -631,10 +614,6 @@
 
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
-
-    // 進捗ウィンドウにエラー表示
-    NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
-    [SVProgressHUD dismissWithError:errorStr afterDelay:DELAY_FETCH_HEADLINE_MESSAGE];
 }
 
 #pragma mark -

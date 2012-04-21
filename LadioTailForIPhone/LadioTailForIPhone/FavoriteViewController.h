@@ -20,50 +20,17 @@
  * THE SOFTWARE.
  */
 
-#import "Favorite.h"
+#import <UIKit/UIKit.h>
+#import "LadioLib.h"
 
-@implementation Favorite
+@interface FavoriteViewController : UIViewController <UIWebViewDelegate>
 
-@synthesize channel = channel_;
-@synthesize registedDate = registedDate_;
+@property (strong) Favorite *favorite;
 
-- (id)init
-{
-    if (self = [super init]) {
-        // とりあえず現在の時刻を入れておく
-        registedDate_ = [NSDate date];
-    }
-    return self;
-}
+@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
 
-- (NSComparisonResult)compareNewly:(Favorite *)favorite
-{
-    return [favorite.registedDate compare:self.registedDate];
-}
+@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
 
-#pragma mark NSCoding methods
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:registedDate_ forKey:@"REGISTED_DATE"];
-    if (channel_ != nil) {
-        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:channel_];
-        [coder encodeObject:channelData forKey:@"CHANNEL"];
-    }
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if (self = [super init]) {
-        registedDate_ = [coder decodeObjectForKey:@"REGISTED_DATE"];
-        NSData *channelData = [coder decodeObjectForKey:@"CHANNEL"];
-        if (channelData != nil) {
-            channel_ = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
-        }
-    }
-    return self;
-}
-
-#pragma mark -
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end

@@ -21,10 +21,12 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Channel.h"
+#import "LadioLib.h"
 
 @interface ChannelsHtml : NSObject
 
 + (NSString *)channelViewHtml:(Channel *)channel;
+
++ (NSString *)favoritelViewHtml:(Favorite *)favorite;
 
 @end

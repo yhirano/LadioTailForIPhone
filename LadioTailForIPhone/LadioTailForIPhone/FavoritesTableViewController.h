@@ -20,50 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "Favorite.h"
+#import <UIKit/UIKit.h>
 
-@implementation Favorite
-
-@synthesize channel = channel_;
-@synthesize registedDate = registedDate_;
-
-- (id)init
-{
-    if (self = [super init]) {
-        // とりあえず現在の時刻を入れておく
-        registedDate_ = [NSDate date];
-    }
-    return self;
-}
-
-- (NSComparisonResult)compareNewly:(Favorite *)favorite
-{
-    return [favorite.registedDate compare:self.registedDate];
-}
-
-#pragma mark NSCoding methods
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:registedDate_ forKey:@"REGISTED_DATE"];
-    if (channel_ != nil) {
-        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:channel_];
-        [coder encodeObject:channelData forKey:@"CHANNEL"];
-    }
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if (self = [super init]) {
-        registedDate_ = [coder decodeObjectForKey:@"REGISTED_DATE"];
-        NSData *channelData = [coder decodeObjectForKey:@"CHANNEL"];
-        if (channelData != nil) {
-            channel_ = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
-        }
-    }
-    return self;
-}
-
-#pragma mark -
+@interface FavoritesTableViewController : UITableViewController
 
 @end

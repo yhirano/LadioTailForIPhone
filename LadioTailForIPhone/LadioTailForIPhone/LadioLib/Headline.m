@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "FavoriteManager.h"
 #import "Headline.h"
 
 /// ねとらじのヘッドラインのURL DAT v2

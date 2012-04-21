@@ -20,50 +20,30 @@
  * THE SOFTWARE.
  */
 
-#import "Favorite.h"
+#import "AboutViewController.h"
 
-@implementation Favorite
+@implementation AboutViewController
+@synthesize versionLabel;
 
-@synthesize channel = channel_;
-@synthesize registedDate = registedDate_;
-
-- (id)init
+- (void)viewDidLoad
 {
-    if (self = [super init]) {
-        // とりあえず現在の時刻を入れておく
-        registedDate_ = [NSDate date];
-    }
-    return self;
+    [super viewDidLoad];
+
+    self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
+
+    NSString* versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    versionLabel.text = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
 }
 
-- (NSComparisonResult)compareNewly:(Favorite *)favorite
+- (void)viewDidUnload
 {
-    return [favorite.registedDate compare:self.registedDate];
+    [self setVersionLabel:nil];
+    [super viewDidUnload];
 }
 
-#pragma mark NSCoding methods
-
-- (void)encodeWithCoder:(NSCoder *)coder
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [coder encodeObject:registedDate_ forKey:@"REGISTED_DATE"];
-    if (channel_ != nil) {
-        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:channel_];
-        [coder encodeObject:channelData forKey:@"CHANNEL"];
-    }
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if (self = [super init]) {
-        registedDate_ = [coder decodeObjectForKey:@"REGISTED_DATE"];
-        NSData *channelData = [coder decodeObjectForKey:@"CHANNEL"];
-        if (channelData != nil) {
-            channel_ = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
-        }
-    }
-    return self;
-}
-
-#pragma mark -
 
 @end
