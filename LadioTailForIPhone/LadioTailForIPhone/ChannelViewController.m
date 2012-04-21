@@ -135,23 +135,6 @@
 {
     [super viewDidLoad];
 
-    // 再生状況に合わせて再生ボタンの内容を切り替える
-    [self playButtonChange];
-
-    // 再生状況の変化を受け取って再生ボタンの内容を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerPrepareNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidPlayNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidStopNotification
-                                               object:nil];
-
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
     if (!([channel_.nam length] == 0)) {
@@ -184,26 +167,43 @@
             nil];
     [bottomView_.layer insertSublayer:gradient atIndex:0];
 
-    // お気に入りボタンを更新
-    [self updateFavoriteButton];
-
     // 表示情報を生成する
     [self writeDescription];
 }
 
 - (void)viewDidUnload
 {
-    // 再生状況変化の通知を受け取らなくする
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
-
     [self setTopNavigationItem:nil];
     [self setPlayButton:nil];
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
     [self setFavoriteBarButtonItem:nil];
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // 再生状況の変化を受け取って再生ボタンの内容を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerPrepareNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
+
+    // 再生状況に合わせて再生ボタンの内容を切り替える
+    [self playButtonChange];
+    
+    // お気に入りボタンを更新
+    [self updateFavoriteButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -225,6 +225,16 @@
     descriptionWebView_.delegate = nil;
 
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // 再生状況変化の通知を受け取らなくする
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+
+    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

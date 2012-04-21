@@ -115,9 +115,6 @@
                                                 (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
                                                 nil];
     [bottomView_.layer insertSublayer:gradient atIndex:0];
-
-    // ボタン類の表示を更新する
-    [self updateViews];
 }
 
 - (void)viewDidUnload
@@ -129,6 +126,14 @@
     [self setTopNavigationItem:nil];
     [self setBottomView:nil];
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // ボタン類の表示を更新する
+    [self updateViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated

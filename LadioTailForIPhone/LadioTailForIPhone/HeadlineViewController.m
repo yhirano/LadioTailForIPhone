@@ -107,6 +107,12 @@
 @synthesize headlineSearchBar = headlineSearchBar_;
 @synthesize headlineTableView = headlineTableView_;
 
+- (void)dealloc
+{
+    showedChannels_ = nil;
+    tempPlayingBarButtonItem_ = nil;
+}
+
 - (ChannelSortType)channelSortType
 {
     return ChannelSortTypeNone;
@@ -196,23 +202,6 @@
 {
     [super viewDidLoad];
 
-    // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(headlineDidStartLoad:)
-                                                 name:LadioLibHeadlineDidStartLoadNotification 
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(headlineDidFinishLoad:)
-                                                 name:LadioLibHeadlineDidFinishLoadNotification 
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(headlineFailLoad:)
-                                                 name:LadioLibHeadlineFailLoadNotification 
-                                               object:nil];
-#ifdef DEBUG
-    NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
-#endif /* #ifdef DEBUG */
-
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem =
@@ -228,8 +217,6 @@
     playingBarButtonItem_.tintColor = PLAYING_BUTTON_COLOR;
     // 再生中ボタンを保持する
     tempPlayingBarButtonItem_ = playingBarButtonItem_;
-    // 再生状態に逢わせて再生ボタンの表示を切り替える
-    [self updatePlayingButton];
 
     // 検索バーの色を変える
     headlineSearchBar_.tintColor = SEARCH_BAR_COLOR;
@@ -242,16 +229,6 @@
             break;
         }
     }
-
-    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidPlayNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidStopNotification
-                                               object:nil];
 
     // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
     // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
@@ -284,19 +261,6 @@
 
 - (void)viewDidUnload
 {
-    showedChannels_ = nil;
-    tempPlayingBarButtonItem_ = nil;
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
-#ifdef DEBUG
-    NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
-#endif /* #ifdef DEBUG */
-
     [self setUpdateBarButtonItem:nil];
     [self setNavigateionItem:nil];
     [self setPlayingBarButtonItem:nil];
@@ -307,6 +271,34 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineDidStartLoad:)
+                                                 name:LadioLibHeadlineDidStartLoadNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineDidFinishLoad:)
+                                                 name:LadioLibHeadlineDidFinishLoadNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineFailLoad:)
+                                                 name:LadioLibHeadlineFailLoadNotification 
+                                               object:nil];
+#ifdef DEBUG
+    NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+
+    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
+    
+
     // 更新ボタンの有効無効を切り替え
     [self updateUpdateBarButton];
 
@@ -318,6 +310,9 @@
     // 別タブで入力した検索バーのテキストをこのタブでも使うため
     NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
     headlineSearchBar_.text = searchWord;
+
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    [self updatePlayingButton];
 
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
@@ -335,6 +330,21 @@
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
+#ifdef DEBUG
+    NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+
+    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
