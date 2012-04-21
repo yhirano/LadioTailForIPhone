@@ -65,7 +65,7 @@
     }
 }
 
-- (void)playButtonChange
+- (void)updatePlayButton
 {
     // 再生ボタンの画像を切り替える
     NSURL *url = [channel_ playUrl];
@@ -200,7 +200,7 @@
                                                object:nil];
 
     // 再生状況に合わせて再生ボタンの内容を切り替える
-    [self playButtonChange];
+    [self updatePlayButton];
     
     // お気に入りボタンを更新
     [self updateFavoriteButton];
@@ -286,7 +286,7 @@
 - (void)playStateChanged:(NSNotification *)notification
 {
     // 再生状況に合わせて再生ボタンの内容を切り替える
-    [self playButtonChange];
+    [self updatePlayButton];
 }
 
 #pragma mark -
