@@ -59,6 +59,9 @@
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 }
 
 #pragma mark - Private methods
@@ -78,6 +81,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
@@ -103,37 +116,19 @@
     self.navigationItem.backBarButtonItem = backButtonItem;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidPlayNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidStopNotification
-                                               object:nil];
-
-    // 再生状態に逢わせて再生ボタンの表示を切り替える
-    [self updatePlayingButton];
-
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
-
-    [super viewDidDisappear:animated];
-}
-
 - (void)viewDidUnload
 {
     [self setTableView:nil];
     [self setPlayingBarButtonItem:nil];
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    [self updatePlayingButton];
+
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

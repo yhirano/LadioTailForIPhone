@@ -30,20 +30,22 @@
 
 @implementation LadioTailViewController
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
+#ifdef DEBUG
+    NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+}
+
 #pragma mark - UIView methods
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
@@ -60,7 +62,15 @@
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
     // http://d.hatena.ne.jp/kimada/20090917/1253187128
@@ -83,18 +93,6 @@
     [self resignFirstResponder];
 
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
-#ifdef DEBUG
-    NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
-#endif /* #ifdef DEBUG */
-    
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

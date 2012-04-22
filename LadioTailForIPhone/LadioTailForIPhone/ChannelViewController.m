@@ -55,6 +55,14 @@
 @synthesize playButton = playButton_;
 @synthesize bottomView = bottomView_;
 
+- (void)dealloc
+{
+    // 再生状況変化の通知を受け取らなくする
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+}
+
 #pragma mark - Private methods
 
 - (void)updateFavoriteButton
@@ -135,6 +143,20 @@
 {
     [super viewDidLoad];
 
+    // 再生状況の変化を受け取って再生ボタンの内容を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerPrepareNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
+
     NSString *titleString;
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
@@ -190,20 +212,6 @@
 {
     [super viewWillAppear:animated];
 
-    // 再生状況の変化を受け取って再生ボタンの内容を切り替える
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerPrepareNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidPlayNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playStateChanged:)
-                                                 name:LadioTailPlayerDidStopNotification
-                                               object:nil];
-
     // 再生状況に合わせて再生ボタンの内容を切り替える
     [self updatePlayButton];
     
@@ -230,16 +238,6 @@
     descriptionWebView_.delegate = nil;
 
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    // 再生状況変化の通知を受け取らなくする
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
-
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
