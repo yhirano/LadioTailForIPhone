@@ -128,7 +128,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProc:NO byError:NO];
+                [self stopProcWithNotification:NO byError:NO];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
@@ -147,7 +147,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProc:YES byError:NO];
+                [self stopProcWithNotification:YES byError:NO];
                 break;
             case PlayerStateIdle:
             default:
@@ -262,7 +262,7 @@ static Player *instance = nil;
 }
 
 /// 停止処理
-- (void)stopProc:(BOOL)notification byError:(BOOL)error
+- (void)stopProcWithNotification:(BOOL)notification byError:(BOOL)error
 {
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
@@ -292,7 +292,7 @@ static Player *instance = nil;
     @synchronized (self) {
         switch (state_) {
             case PlayerStatePrepare:
-                [self stopProc:YES byError:YES];
+                [self stopProcWithNotification:YES byError:YES];
                 NSLog(@"Player time outed.");
                 break;
             case PlayerStateIdle:
@@ -309,7 +309,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProc:YES byError:YES];
+                [self stopProcWithNotification:YES byError:YES];
                 break;
             case PlayerStateIdle:
             default:
