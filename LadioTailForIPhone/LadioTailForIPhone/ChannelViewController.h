@@ -21,6 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "LadioLib/LadioLib.h"
 
 @interface ChannelViewController : UIViewController <UIWebViewDelegate>
 

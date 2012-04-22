@@ -946,7 +946,16 @@
                             <outlet property="delegate" destination="XgH-3F-2EB" id="YPq-DA-79g"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Ohters" id="hfL-r0-LVd"/>
+                    <navigationItem key="navigationItem" title="Ohters" id="hfL-r0-LVd">
+                        <barButtonItem key="rightBarButtonItem" title="Playing" id="0c5-Yi-KcM">
+                            <connections>
+                                <segue destination="abJ-NL-ORS" kind="push" identifier="PlayingChannel" id="zXP-15-YML"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="playingBarButtonItem" destination="0c5-Yi-KcM" id="QjH-78-6Ml"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1004" y="1868"/>
@@ -1242,91 +1251,13 @@ This software is used Gentleface Toolbar Icon Set. This icon set is under the Cr
         <image name="tablecell_play_black.png" width="14" height="14"/>
         <image name="tablecell_play_white.png" width="14" height="14"/>
     </resources>
-    <classes>
-        <class className="AboutViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="versionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ChannelViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="favorite:"/>
-                <relationship kind="action" name="play:"/>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="DjHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DjHeadlineViewController.h"/>
-        </class>
-        <class className="FavoriteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="FavoritesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
-        </class>
-        <class className="HeadlineNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineNaviViewController.h"/>
-        </class>
-        <class className="HeadlineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="update:"/>
-                <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="updateBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="LadioTailViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
-        </class>
-        <class className="ListenersHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ListenersHeadlineViewController.h"/>
-        </class>
-        <class className="NewlyHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewlyHeadlineViewController.h"/>
-        </class>
-        <class className="OthersTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OthersTableViewController.h"/>
-        </class>
-        <class className="TitleHeadlineViewController" superclassName="HeadlineViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TitleHeadlineViewController.h"/>
-        </class>
-        <class className="WebPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="forward:"/>
-                <relationship kind="action" name="goToBottom:"/>
-                <relationship kind="action" name="reload:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rsj-fA-G3H"/>
+        <segue reference="zXP-15-YML"/>
         <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>

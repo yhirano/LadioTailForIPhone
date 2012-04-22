@@ -20,8 +20,12 @@
  * THE SOFTWARE.
  */
 
+#import "Player.h"
+#import "ChannelViewController.h"
 #import "OthersTableViewController.h"
 
+/// 再生中ボタンの色
+#define PLAYING_BUTTON_COLOR [[UIColor alloc]initWithRed:(191 / 255.0) green:(126 / 255.0) blue:(0 / 255.0) alpha:1]
 /// 戻るボタンの色
 #define BACK_BUTTON_COLOR [UIColor darkGrayColor]
 /// テーブルの背景の色
@@ -45,6 +49,27 @@
 #define OTHERS_CELL_MAIN_TEXT_SELECTED_COLOR [UIColor blackColor]
 
 @implementation OthersTableViewController
+{
+    /// 再生中ボタンのインスタンスを一時的に格納しておく領域
+    UIBarButtonItem *tempPlayingBarButtonItem_;
+}
+
+@synthesize playingBarButtonItem = playingBarButtonItem_;
+
+- (void)dealloc
+{
+    tempPlayingBarButtonItem_ = nil;
+}
+
+- (void)updatePlayingButton
+{
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    if ([[Player sharedInstance] state] == PlayerStatePlay) {
+        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
 
 #pragma mark UIView methods
 
@@ -54,6 +79,12 @@
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
+
+    // 再生中ボタンの装飾を変更する
+    playingBarButtonItem_.title = NSLocalizedString(@"Playing", @"再生中ボタン");
+    playingBarButtonItem_.tintColor = PLAYING_BUTTON_COLOR;
+    // 再生中ボタンを保持する
+    tempPlayingBarButtonItem_ = playingBarButtonItem_;
 
     // テーブルの背景の色を変える
     self.tableView.backgroundColor = OTHERS_TABLE_BACKGROUND_COLOR;
@@ -70,15 +101,57 @@
     self.navigationItem.backBarButtonItem = backButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidPlayNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerDidStopNotification
+                                               object:nil];
+
+    // 再生状態に逢わせて再生ボタンの表示を切り替える
+    [self updatePlayingButton];
+
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+
+    [super viewDidDisappear:animated];
+}
+
 - (void)viewDidUnload
 {
     [self setTableView:nil];
+    [self setPlayingBarButtonItem:nil];
     [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // 再生中ボタンを選択した
+    if ([[segue identifier] isEqualToString:@"PlayingChannel"]) {
+        // 番組情報を遷移先のViewに設定
+        UIViewController *viewCon = [segue destinationViewController];
+        if ([viewCon isKindOfClass:[ChannelViewController class]]) {
+            NSURL *playingUrl = [[Player sharedInstance] playingUrl];
+            Headline *headline = [Headline sharedInstance];
+            Channel *channel = [headline channel:playingUrl];
+            ((ChannelViewController *) viewCon).channel = channel;
+        }
+    }
 }
 
 #pragma mark -
@@ -148,6 +221,13 @@
     UIView *selectedBackgroundView = [[UIView alloc] init];
     selectedBackgroundView.backgroundColor = OTHERS_CELL_SELECTED_BACKGROUND_COLOR;
     cell.selectedBackgroundView = selectedBackgroundView;
+}
+
+#pragma mark - Player notifications
+
+- (void)playStateChanged:(NSNotification *)notification
+{
+    [self updatePlayingButton];
 }
 
 @end

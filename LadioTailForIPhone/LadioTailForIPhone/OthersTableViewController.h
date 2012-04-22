@@ -24,4 +24,6 @@
 
 @interface OthersTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *playingBarButtonItem;
+
 @end
