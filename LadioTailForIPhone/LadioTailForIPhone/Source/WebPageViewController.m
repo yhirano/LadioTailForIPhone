@@ -21,7 +21,6 @@
  */
 
 #import <QuartzCore/QuartzCore.h>
-#import "Player.h"
 #import "AdBannerManager.h"
 #import "WebPageViewController.h"
 
