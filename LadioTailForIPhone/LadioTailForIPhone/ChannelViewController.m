@@ -62,7 +62,7 @@
     if ([channel_ favorite]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite__white.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white.png"]];
     }
 }
 
