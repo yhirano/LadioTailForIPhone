@@ -63,7 +63,7 @@ typedef NSInteger PlayerState;
 - (void)stop;
 
 /**
- * 再生・停止を切り替えるする
+ * 再生・停止を切り替える
  */
 - (void)switchPlayStop;
 
