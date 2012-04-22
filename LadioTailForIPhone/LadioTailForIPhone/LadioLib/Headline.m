@@ -232,7 +232,7 @@ static NSRegularExpression *chsExp = nil;
     if (conn) {
         receivedData_ = [NSMutableData data];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
     }
 }
 
@@ -610,7 +610,7 @@ static NSRegularExpression *chsExp = nil;
         isFetching_ = NO;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
