@@ -88,7 +88,7 @@ static Headline *instance = nil;
     if (conn) {
         receivedData_ = [NSMutableData data];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
     }
 }
 
@@ -524,7 +524,7 @@ static Headline *instance = nil;
         isFetching_ = NO;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
