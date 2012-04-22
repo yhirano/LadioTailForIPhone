@@ -23,6 +23,9 @@ http://findicons.com/icon/267885/font_italic
 headphones.png
 http://findicons.com/icon/267795/headphones
 
+info.png
+http://findicons.com/icon/267866/info
+
 mic.png
 http://findicons.com/icon/267891/mic
 
@@ -39,6 +42,9 @@ http://findicons.com/icon/267918/playback_stop
 
 rnd_br_last.png
 http://findicons.com/icon/267837/rnd_br_last
+
+round.png
+http://findicons.com/icon/267712/round
 
 star_fav.png
 http://findicons.com/icon/267882/star_fav
