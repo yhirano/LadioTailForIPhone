@@ -55,6 +55,8 @@
 @synthesize playButton = playButton_;
 @synthesize bottomView = bottomView_;
 
+#pragma mark - Private methods
+
 - (void)updateFavoriteButton
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
@@ -106,8 +108,7 @@
     [self.descriptionWebView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (IBAction)play:(id)sender
 {
@@ -128,8 +129,7 @@
     [self updateFavoriteButton];
 }
 
-#pragma mark -
-#pragma mark UIViewController methods
+#pragma mark - UIViewController methods
 
 - (void)viewDidLoad
 {
@@ -259,8 +259,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark UIWebViewDelegate methods
+#pragma mark - UIWebViewDelegate methods
 
 - (BOOL)            webView:(UIWebView *)webView
  shouldStartLoadWithRequest:(NSURLRequest *)request
@@ -285,15 +284,12 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Player notification
+#pragma mark - Player notification
 
 - (void)playStateChanged:(NSNotification *)notification
 {
     // 再生状況に合わせて再生ボタンの内容を切り替える
     [self updatePlayButton];
 }
-
-#pragma mark -
 
 @end

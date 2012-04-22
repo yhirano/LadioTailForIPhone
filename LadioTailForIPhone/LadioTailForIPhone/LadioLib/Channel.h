@@ -106,16 +106,8 @@
 
 - (NSURL *)playUrl;
 
-- (void) switchFavorite;
+- (void)switchFavorite;
 
 - (BOOL)isMatch:(NSArray *)searchWords;
-
-- (NSComparisonResult)compareNewly:(Channel *)channel;
-
-- (NSComparisonResult)compareListeners:(Channel *)channel;
-
-- (NSComparisonResult)compareTitle:(Channel *)channel;
-
-- (NSComparisonResult)compareDj:(Channel *)channel;
 
 @end

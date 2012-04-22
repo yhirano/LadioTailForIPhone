@@ -25,6 +25,8 @@
 @implementation AboutViewController
 @synthesize versionLabel;
 
+#pragma mark UIView methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -36,12 +36,14 @@
     return self;
 }
 
+#pragma mark - Comparison Methods
+
 - (NSComparisonResult)compareNewly:(Favorite *)favorite
 {
     return [favorite.registedDate compare:self.registedDate];
 }
 
-#pragma mark NSCoding methods
+#pragma mark - NSCoding methods
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {

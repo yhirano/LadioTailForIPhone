@@ -109,6 +109,8 @@
     tempPlayingBarButtonItem_ = nil;
 }
 
+#pragma mark - Private methods
+
 - (ChannelSortType)channelSortType
 {
     return ChannelSortTypeNone;
@@ -183,16 +185,14 @@
     }
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (IBAction)update:(id)sender
 {
     [self fetchHeadline];
 }
 
-#pragma mark -
-#pragma mark UIViewController methods
+#pragma mark - UIViewController methods
 
 - (void)viewDidLoad
 {
@@ -374,8 +374,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark UISearchBarDelegate methods
+#pragma mark - UISearchBarDelegate methods
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
@@ -390,8 +389,7 @@
     [searchBar resignFirstResponder];
 }
 
-#pragma mark -
-#pragma mark UITableViewDelegate methods
+#pragma mark - UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -510,6 +508,8 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate methods
+
 -  (void)tableView:(UITableView *)tableView
    willDisplayCell:(UITableViewCell *)cell
  forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -532,8 +532,7 @@
     [self performSegueWithIdentifier:@"SelectChannel" sender:self];
 }
 
-#pragma mark -
-#pragma mark UIScrollViewDelegate Methods
+#pragma mark - UIScrollViewDelegate Methods
 
 #if PULL_REFRESH_HEADLINE
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -549,8 +548,7 @@
 }
 #endif /* #if PULL_REFRESH_HEADLINE */
 
-#pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate Methods
+#pragma mark - EGORefreshTableHeaderDelegate Methods
 
 #if PULL_REFRESH_HEADLINE
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
@@ -570,8 +568,7 @@
 }
 #endif /* #if PULL_REFRESH_HEADLINE */
 
-#pragma mark -
-#pragma mark Headline notifications
+#pragma mark - Headline notifications
 - (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
@@ -618,15 +615,12 @@
     [self updateHeadlineTable];
 }
 
-#pragma mark -
-#pragma mark Player notifications
+#pragma mark - Player notifications
 
 - (void)playStateChanged:(NSNotification *)notification
 {
     [self updatePlayingButton];
     [self updateHeadlineTable];
 }
-
-#pragma mark -
 
 @end

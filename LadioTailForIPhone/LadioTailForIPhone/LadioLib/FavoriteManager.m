@@ -125,6 +125,8 @@ static FavoriteManager *instance = nil;
     return [favorites_ objectForKey:channel.mnt] != nil;
 }
 
+#pragma mark - Private methods
+
 /// データベースからお気に入り情報を復元する
 - (void)loadFavorites
 {
@@ -157,7 +159,7 @@ static FavoriteManager *instance = nil;
     favorites_ = nil;
 }
 
-#pragma mark Favorite Manager Data version 1 methods
+#pragma mark - Favorite Manager Data version 1 methods
 
 // 使用しないこと
 - (void)addFavoriteV1:(NSString *)mount
@@ -242,7 +244,5 @@ static FavoriteManager *instance = nil;
     // V1のデータを削除
     [defaults removeObjectForKey:FAVORITES_KEY_V1];
 }
-
-#pragma -
 
 @end

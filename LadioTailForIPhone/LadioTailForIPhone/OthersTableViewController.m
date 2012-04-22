@@ -61,6 +61,8 @@
     tempPlayingBarButtonItem_ = nil;
 }
 
+#pragma mark - Private methods
+
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
@@ -71,7 +73,7 @@
     }
 }
 
-#pragma mark UIView methods
+#pragma mark - UIView methods
 
 - (void)viewDidLoad
 {
@@ -154,8 +156,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark UITableViewDelegate methods
+#pragma mark - UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -205,6 +206,8 @@
 
     return cell;
 }
+
+#pragma mark - UITableViewDelegate methods
 
 -  (void)tableView:(UITableView *)tableView
    willDisplayCell:(UITableViewCell *)cell

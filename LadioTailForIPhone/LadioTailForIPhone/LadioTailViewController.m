@@ -30,7 +30,7 @@
 
 @implementation LadioTailViewController
 
-#pragma mark UIView methods
+#pragma mark - UIView methods
 
 - (void)viewDidLoad
 {
@@ -102,8 +102,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark -
-#pragma mark UIResponder methods
+#pragma mark - UIResponder methods
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -123,8 +122,7 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Headline notifications
+#pragma mark - Headline notifications
 - (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
@@ -155,7 +153,5 @@
     NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
     [SVProgressHUD dismissWithError:errorStr afterDelay:DELAY_FETCH_HEADLINE_MESSAGE];
 }
-
-#pragma mark -
 
 @end

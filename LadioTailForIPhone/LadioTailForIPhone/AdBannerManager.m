@@ -104,6 +104,8 @@ static AdBannerManager *instance = nil;
     }
 }
 
+#pragma mark - Private methods
+
 - (void)show
 {
     NSLog(@"Show iAD banner.");
@@ -154,7 +156,7 @@ static AdBannerManager *instance = nil;
     isBannerVisible_ = NO;
 }
 
-#pragma mark ADBannerViewDelegate methods
+#pragma mark - ADBannerViewDelegate methods
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
@@ -185,7 +187,5 @@ static AdBannerManager *instance = nil;
         [self hide];
     }
 }
-
-#pragma mark -
 
 @end

@@ -40,6 +40,8 @@
 @synthesize reloadButton = reloadButton_;
 @synthesize bottomView = bottomView_;
 
+#pragma mark - Private methods
+
 - (void)updateViews
 {
     NSString* title = [pageWebView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
@@ -56,8 +58,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (IBAction)back:(id)sender
 {
@@ -100,8 +101,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark UIViewController methods
+#pragma mark - UIViewController methods
 
 - (void)viewDidLoad
 {
@@ -174,8 +174,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma -
-#pragma mark UIWebViewDelegate methods
+#pragma mark - UIWebViewDelegate methods
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
@@ -212,7 +211,5 @@
     // ボタン類の表示を更新する
     [self updateViews];
 }
-
-#pragma mark -
 
 @end

@@ -77,17 +77,6 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     surl_ = [NSURL URLWithString:url];
 }
 
-- (void)setTimsFromString:(NSString *)tims
-{
-    if (setTimsFromStringDateFormatter == nil) {
-        setTimsFromStringDateFormatter = [[NSDateFormatter alloc] init];
-        [setTimsFromStringDateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
-        [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-
-    }
-    tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
-}
-
 - (NSString *)timsToString
 {
     if (timsToStringDateFormatter == nil) {
@@ -96,6 +85,17 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         [timsToStringDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return [timsToStringDateFormatter stringFromDate:tims_];
+}
+
+- (void)setTimsFromString:(NSString *)tims
+{
+    if (setTimsFromStringDateFormatter == nil) {
+        setTimsFromStringDateFormatter = [[NSDateFormatter alloc] init];
+        [setTimsFromStringDateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
+        [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        
+    }
+    tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
 }
 
 - (void)setUrlFromString:(NSString *)url
@@ -125,7 +125,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
 }
 
-- (void) switchFavorite
+- (void)switchFavorite
 {
     FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
     [favoriteManager switchFavorite:self];
@@ -182,6 +182,8 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
     return YES;
 }
+
+#pragma mark - Comparison Methods
 
 - (NSComparisonResult)compareNewly:(Channel *)channel
 {
@@ -315,7 +317,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     return result;
 }
 
-#pragma mark NSCoding methods
+#pragma mark  - NSCoding methods
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
@@ -363,7 +365,5 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
     return self;
 }
-
-#pragma mark -
 
 @end

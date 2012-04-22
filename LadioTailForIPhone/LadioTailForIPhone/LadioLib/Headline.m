@@ -203,7 +203,7 @@ static NSRegularExpression *chsExp = nil;
     return self;
 }
 
-- (void) dealloc
+- (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibChannelChangedFavorioNotification object:nil];
 
@@ -243,11 +243,100 @@ static NSRegularExpression *chsExp = nil;
     }
 }
 
+- (NSArray *)channels
+{
+    return [self channels:ChannelSortTypeNone searchWord:nil];
+}
+
+- (NSArray *)channels:(ChannelSortType)sortType
+{
+    return [self channels:sortType searchWord:nil];
+}
+
+- (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+{
+    // キャッシュがヒットしたらそれを返す
+    NSArray *cacheResult = [self channelsFromCache:sortType searchWord:searchWord];
+    if ([cacheResult count] != 0) {
+        return cacheResult;
+    }
+
+    NSArray *result = nil;
+    NSMutableArray *channels = nil;
+
+    @synchronized (channelsLock_) {
+        channels = [channels_ mutableCopy];
+#if DEBUG
+        NSLog(@"%@'s copied channels for return channels. There are %d channels.",
+              NSStringFromClass([self class]), [channels count]);
+#endif /* #if DEBUG */
+    }
+
+    // フィルタリング
+    if (!([searchWord length] == 0)) {
+        NSMutableArray *removeList = [[NSMutableArray alloc] init];
+        for (Channel *channel in channels) {
+            if ([channel isMatch:[Headline splitStringByWhiteSpace:searchWord]] == NO) {
+                [removeList addObject:channel];
+            }
+        }
+        if ([removeList count] != 0) {
+            for (Channel *removeCannel in removeList) {
+                [channels removeObject:removeCannel];
+            }
+        }
+    }
+
+    // ソート
+    switch (sortType) {
+        case ChannelSortTypeNewly:
+            result =  [channels sortedArrayUsingSelector:@selector(compareNewly:)];
+            break;
+        case ChannelSortTypeListeners:
+            result = [channels sortedArrayUsingSelector:@selector(compareListeners:)];
+            break;
+        case ChannelSortTypeTitle:
+            result = [channels sortedArrayUsingSelector:@selector(compareTitle:)];
+            break;
+        case ChannelSortTypeDj:
+            result = [channels sortedArrayUsingSelector:@selector(compareDj:)];
+            break;
+        case ChannelSortTypeNone:
+        default:
+            result = channels;
+            break;
+    }
+
+    // 結果をキャッシュに突っ込む
+    [self setChannelsCache:result sortType:sortType searchWord:searchWord];
+
+    return result;
+}
+
+- (Channel *)channel:(NSURL *)playUrl
+{
+    if (playUrl == nil) {
+        return nil;
+    }
+
+    @synchronized (channelsLock_) {
+        for (Channel *channel in channels_) {
+            NSURL *url = [channel playUrl];
+            if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
+                return channel;
+            }
+        }
+    }
+    return nil;
+}
+
+#pragma mark - Private methods
+
 - (NSArray*)parseHeadline:(NSArray*)lines
 {
     NSMutableArray *result = [NSMutableArray array];
     Channel *channel = nil;
-    
+
     for (NSString *line in lines) {
         if ([line length] == 0 && channel != nil) {
             [result addObject:channel];
@@ -433,76 +522,6 @@ static NSRegularExpression *chsExp = nil;
     return result;
 }
 
-- (NSArray *)channels
-{
-    return [self channels:ChannelSortTypeNone searchWord:nil];
-}
-
-- (NSArray *)channels:(ChannelSortType)sortType
-{
-    return [self channels:sortType searchWord:nil];
-}
-
-- (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
-{
-    // キャッシュがヒットしたらそれを返す
-    NSArray *cacheResult = [self channelsFromCache:sortType searchWord:searchWord];
-    if ([cacheResult count] != 0) {
-        return cacheResult;
-    }
-
-    NSArray *result = nil;
-    NSMutableArray *channels = nil;
-
-    @synchronized (channelsLock_) {
-        channels = [channels_ mutableCopy];
-#if DEBUG
-        NSLog(@"%@'s copied channels for return channels. There are %d channels.",
-              NSStringFromClass([self class]), [channels count]);
-#endif /* #if DEBUG */
-    }
-
-    // フィルタリング
-    if (!([searchWord length] == 0)) {
-        NSMutableArray *removeList = [[NSMutableArray alloc] init];
-        for (Channel *channel in channels) {
-            if ([channel isMatch:[Headline splitStringByWhiteSpace:searchWord]] == NO) {
-                [removeList addObject:channel];
-            }
-        }
-        if ([removeList count] != 0) {
-            for (Channel *removeCannel in removeList) {
-                [channels removeObject:removeCannel];
-            }
-        }
-    }
-
-    // ソート
-    switch (sortType) {
-        case ChannelSortTypeNewly:
-            result =  [channels sortedArrayUsingSelector:@selector(compareNewly:)];
-            break;
-        case ChannelSortTypeListeners:
-            result = [channels sortedArrayUsingSelector:@selector(compareListeners:)];
-            break;
-        case ChannelSortTypeTitle:
-            result = [channels sortedArrayUsingSelector:@selector(compareTitle:)];
-            break;
-        case ChannelSortTypeDj:
-            result = [channels sortedArrayUsingSelector:@selector(compareDj:)];
-            break;
-        case ChannelSortTypeNone:
-        default:
-            result = channels;
-            break;
-    }
-
-    // 結果をキャッシュに突っ込む
-    [self setChannelsCache:result sortType:sortType searchWord:searchWord];
-
-    return result;
-}
-
 /**
  * 指定した文字列を、ホワイトスペースで区切って配列にして返す
  *
@@ -514,7 +533,7 @@ static NSRegularExpression *chsExp = nil;
     // 文字列を空白文字で分割し、検索単語列を生成する
     NSCharacterSet *separator = [NSCharacterSet characterSetWithCharactersInString:@" \t　"];
     NSMutableArray *words = [[word componentsSeparatedByCharactersInSet:separator] mutableCopy];
-
+    
     // 空白文字を除外する
     NSMutableArray *removeList = [[NSMutableArray alloc] init];
     for (NSString *word in words) {
@@ -527,25 +546,8 @@ static NSRegularExpression *chsExp = nil;
             [words removeObject:removeWord];
         }
     }
-
+    
     return words;
-}
-
-- (Channel *)channel:(NSURL *)playUrl
-{
-    if (playUrl == nil) {
-        return nil;
-    }
-
-    @synchronized (channelsLock_) {
-        for (Channel *channel in channels_) {
-            NSURL *url = [channel playUrl];
-            if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
-                return channel;
-            }
-        }
-    }
-    return nil;
 }
 
 - (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
@@ -584,7 +586,7 @@ static NSRegularExpression *chsExp = nil;
 #endif /* #if DEBUG */
 }
 
-#pragma mark NSURLConnectionDelegate methods
+#pragma mark - NSURLConnectionDelegate methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -640,8 +642,7 @@ static NSRegularExpression *chsExp = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
 }
 
-#pragma mark -
-#pragma mark Channel notifications
+#pragma mark - Channel notifications
 
 - (void)channelFavoriteChanged:(NSNotification *)notification
 {

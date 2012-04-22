@@ -39,6 +39,8 @@
 @synthesize descriptionWebView = descriptionWebView_;
 @synthesize bottomView = bottomView_;
 
+#pragma mark Private methods
+
 - (void)writeDescription
 {
     if (favorite_ == nil) {

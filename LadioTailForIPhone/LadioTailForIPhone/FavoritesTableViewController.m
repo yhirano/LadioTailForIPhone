@@ -67,6 +67,8 @@
     favorites_ = nil;
 }
 
+#pragma mark - Private methods
+
 /// お気に入りとfavorites_の内容を同期する
 - (void)updateFavolitesArray
 {

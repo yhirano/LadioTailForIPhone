@@ -27,6 +27,8 @@
 
 @implementation HeadlineNaviViewController
 
+#pragma mark - UIView methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

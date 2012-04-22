@@ -206,6 +206,8 @@ static Player *instance = nil;
     }
 }
 
+#pragma mark - Private methods
+
 /// 再生処理
 - (void)playProc:(NSURL *)url
 {
@@ -316,6 +318,8 @@ static Player *instance = nil;
     }
 }
 
+#pragma mark - AVPlayer notifications
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -341,7 +345,7 @@ static Player *instance = nil;
     }
 }
 
-#pragma mark AVAudioSessionDelegate methods
+#pragma mark - AVAudioSessionDelegate methods
 
 - (void)beginInterruption
 {
@@ -365,7 +369,5 @@ static Player *instance = nil;
 	NSLog(@"audio settion inputIsAvailableChanged %d", isInputAvailable);
 #endif /* #if DEBUG */
 }
-
-#pragma mark -
 
 @end
