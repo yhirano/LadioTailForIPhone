@@ -199,9 +199,11 @@
     [super viewDidLoad];
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    UIBarButtonItem *backButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:backButtonStr style:UIBarButtonItemStyleBordered target:nil action:nil];
+    NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:nil
+                                                                      action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 

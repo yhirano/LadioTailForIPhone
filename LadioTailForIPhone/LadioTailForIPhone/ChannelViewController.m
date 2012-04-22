@@ -136,22 +136,27 @@
 {
     [super viewDidLoad];
 
+    NSString *titleString;
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
     if (!([channel_.nam length] == 0)) {
-        topNavigationItem_.title = channel_.nam;
+        titleString = channel_.nam;
     }
     // DJが存在する場合はDJを表示する
     else if (!([channel_.dj length] == 0)) {
-        topNavigationItem_.title = channel_.dj;
+        titleString = channel_.dj;
     }
+    topNavigationItem_.title = titleString;
 
     // お気に入りボタンの色を変える
     favoriteBarButtonItem_.tintColor = FAVORITE_BUTTON_COLOR;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonStr = channel_.nam;
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonStr
+    NSString *backButtonString = titleString;
+    if ([backButtonString length] == 0) {
+        backButtonString = NSLocalizedString(@"Back", @"戻る");
+    }
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
                                                                       action:nil];

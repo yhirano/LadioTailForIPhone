@@ -104,9 +104,11 @@
     self.tableView.separatorColor = FAVORITES_TABLE_SEPARATOR_COLOR;
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonStr = NSLocalizedString(@"Favorites", @"お気に入り 複数");
-    UIBarButtonItem *backButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:backButtonStr style:UIBarButtonItemStyleBordered target:nil action:nil];
+    NSString *backButtonString = NSLocalizedString(@"Favorites", @"お気に入り 複数");
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:nil
+                                                                      action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 }

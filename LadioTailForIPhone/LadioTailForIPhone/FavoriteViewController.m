@@ -26,6 +26,9 @@
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
 
+/// 戻るボタンの色
+#define BACK_BUTTON_COLOR [UIColor darkGrayColor]
+
 /// リンクをクリックするとSafariが開く
 #define OPEN_SAFARI_WHEN_CLICK_LINK 0
 
@@ -66,17 +69,31 @@
 
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
+    NSString *titleString;
     if (!([favorite_.channel.nam length] == 0)) {
-        topNavigationItem_.title = favorite_.channel.nam;
+        titleString = favorite_.channel.nam;
     }
     // DJが存在する場合はDJを表示する
     else if (!([favorite_.channel.dj length] == 0)) {
-        topNavigationItem_.title = favorite_.channel.dj;
+        titleString = favorite_.channel.dj;
     }
     // それ以外はマウントを表示
     else {
-        topNavigationItem_.title = favorite_.channel.mnt;
+        titleString = favorite_.channel.mnt;
     }
+    topNavigationItem_.title = titleString;
+
+    // Web画面からの戻るボタンのテキストと色を書き換える
+    NSString *backButtonString = titleString;
+    if ([backButtonString length] == 0) {
+        backButtonString = NSLocalizedString(@"Back", @"戻る");
+    }
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:nil
+                                                                      action:nil];
+    backButtonItem.tintColor = BACK_BUTTON_COLOR;
+    self.navigationItem.backBarButtonItem = backButtonItem;
 
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];

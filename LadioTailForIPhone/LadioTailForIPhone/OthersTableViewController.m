@@ -61,9 +61,11 @@
     self.tableView.separatorColor = OTHERS_TABLE_SEPARATOR_COLOR;
 
     // お気に入り・About画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonStr = @"Others";
-    UIBarButtonItem *backButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:backButtonStr style:UIBarButtonItemStyleBordered target:nil action:nil];
+    NSString *backButtonString = @"Others";
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:nil
+                                                                      action:nil];
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 }
