@@ -21,8 +21,9 @@
  */
 
 #import "SVProgressHUD/SVProgressHUD.h"
-#import "LadioLib.h"
+#import "LadioLib/LadioLib.h"
 #import "Player.h"
+#import "HeadlineViewController.h"
 #import "LadioTailViewController.h"
 
 /// 選択されたタブを覚えておくためのキー
@@ -112,6 +113,79 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Private Methods
+
+/**
+ * 選択しているタブのビューから、再生している番組の次または前の番組を取得する
+ *
+ * @param next YESの場合は次の番組、NOの場合は前の番組を返す
+ * @return 次または前の番組。存在しない場合はnil。
+ */
+- (Channel *) nextOrPriviousChannel:(BOOL)next
+{
+    Channel *result = nil;
+    Channel *playingChannel = [[Player sharedInstance] playingChannel];
+    HeadlineViewController *headlineViewController = nil;
+
+    // 再生中の番組が存在しない場合（ありえないはずだが）は終了
+    if (playingChannel == nil) {
+        return nil;
+    }
+
+    // 選択しているタブのビューがUINavigationControllerの場合（常にtrueのはずだが一応チェック）
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        // UINavigationControllerの中からHeadlineViewControllerを探し出す
+        UINavigationController *nvc =(UINavigationController*)self.selectedViewController;
+        for (UIViewController *viewcon in nvc.viewControllers) {
+            if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
+                headlineViewController = (HeadlineViewController *)viewcon;
+                break;
+            }
+        }
+    }
+    // ルートがHeadlineViewControllerであることはないはずだが一応チェック
+    else if ([self.selectedViewController isKindOfClass:[HeadlineViewController class]]) {
+        headlineViewController = (HeadlineViewController *)self.selectedViewController;
+    }
+
+    // HeadlineViewControllerタブを選択している場合
+    if (headlineViewController != nil) {
+        // 選択しているタブの表示されている番組を取得する
+        NSArray *channels = headlineViewController.showedChannels;
+        NSInteger playingChannelIndex;
+        BOOL found = NO;
+        // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
+        for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
+            Channel *channel = [channels objectAtIndex:playingChannelIndex];
+            if ([channel.mnt isEqualToString:playingChannel.mnt]) {
+                found = YES; // 見つかったことを示す
+                break;
+            }
+        }
+        // 番組が見つかった場合
+        if (found) {
+            // 現在再生中の次の番組を返す場合
+            if (next) {
+                // 番組が終端で無い場合
+                if (playingChannelIndex < [channels count] - 1) {
+                    // 次の番組を返す
+                    result = [channels objectAtIndex:(playingChannelIndex + 1)];
+                }
+            }
+            // 現在再生中の前の番組を返す場合
+            else {
+                // 番組が一番前で無い場合
+                if (playingChannelIndex > 0) {
+                    // 前の番組を返す
+                    result = [channels objectAtIndex:(playingChannelIndex - 1)];
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 #pragma mark - UIResponder methods
 
 - (BOOL)canBecomeFirstResponder
@@ -122,10 +196,25 @@
 
 - (void)remoteControlReceivedWithEvent:(UIEvent*)event
 {
+    Channel *channel;
+    Player *player = [Player sharedInstance];
+
 	switch (event.subtype) {
 		case UIEventSubtypeRemoteControlTogglePlayPause:
             // リモコンからのボタンクリック
-            [[Player sharedInstance] switchPlayStop];
+            [player switchPlayStop];
+            break;
+        case UIEventSubtypeRemoteControlNextTrack:
+            channel = [self nextOrPriviousChannel:YES];
+            if (channel != nil) {
+                [player playChannel:channel];
+            }
+            break;
+        case UIEventSubtypeRemoteControlPreviousTrack:
+            channel = [self nextOrPriviousChannel:NO];
+            if (channel != nil) {
+                [player playChannel:channel];
+            }
             break;
 		default:
             break;

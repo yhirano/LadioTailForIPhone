@@ -32,6 +32,10 @@
 #endif /* #if PULL_REFRESH_HEADLINE */
                                                      >
 
+/// テーブルに表示している番組
+@property (strong ,readonly) NSArray *showedChannels;
+
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateBarButtonItem;

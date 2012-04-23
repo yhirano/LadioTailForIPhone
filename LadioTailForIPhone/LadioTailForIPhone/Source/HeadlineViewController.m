@@ -85,9 +85,6 @@
 @implementation HeadlineViewController
 {
 @private
-    /// テーブルに表示している番組
-    NSArray *showedChannels_;
-
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
@@ -97,6 +94,7 @@
 #endif /* #if PULL_REFRESH_HEADLINE */
 }
 
+@synthesize showedChannels = showedChannels_;
 @synthesize navigateionItem = navigateionItem_;
 @synthesize updateBarButtonItem = updateBarButtonItem_;
 @synthesize playingBarButtonItem = playingBarButtonItem_;
@@ -105,7 +103,6 @@
 
 - (void)dealloc
 {
-    showedChannels_ = nil;
     tempPlayingBarButtonItem_ = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
