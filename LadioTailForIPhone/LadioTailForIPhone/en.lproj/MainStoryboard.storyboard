@@ -28,7 +28,7 @@
             </objects>
             <point key="canvasLocation" x="-168" y="481"/>
         </scene>
-        <!--Newly Headline View Controller-->
+        <!--Newly Headline View Controller - ON AIR-->
         <scene sceneID="5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -158,7 +158,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="cIB-qf-6WW">
+                    <navigationItem key="navigationItem" title="ON AIR" id="cIB-qf-6WW">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="e20-Y9-DZQ">
                             <connections>
                                 <action selector="update:" destination="2" id="S35-Sh-Hci"/>
@@ -182,7 +182,7 @@
             </objects>
             <point key="canvasLocation" x="1004" y="-562"/>
         </scene>
-        <!--Listeners Headline View Controller-->
+        <!--Listeners Headline View Controller - ON AIR-->
         <scene sceneID="91o-4t-m3s">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQd-25-fC0" sceneMemberID="firstResponder"/>
@@ -308,7 +308,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="OH9-jU-3gF">
+                    <navigationItem key="navigationItem" title="ON AIR" id="OH9-jU-3gF">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="fRz-oT-Gh5">
                             <connections>
                                 <action selector="update:" destination="YkM-jv-E4c" id="WuW-ud-yze"/>
@@ -494,7 +494,7 @@
             </objects>
             <point key="canvasLocation" x="2476" y="396"/>
         </scene>
-        <!--Title Headline View Controller-->
+        <!--Title Headline View Controller - ON AIR-->
         <scene sceneID="XJM-iB-pV2">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVs-ge-Vlq" sceneMemberID="firstResponder"/>
@@ -620,7 +620,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bx5-dU-C5H">
+                    <navigationItem key="navigationItem" title="ON AIR" id="bx5-dU-C5H">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="sbi-Ef-RSV">
                             <connections>
                                 <action selector="update:" destination="UOF-Nn-dLt" id="rn4-1g-Jpv"/>
@@ -644,7 +644,7 @@
             </objects>
             <point key="canvasLocation" x="1004" y="639"/>
         </scene>
-        <!--Dj Headline View Controller-->
+        <!--Dj Headline View Controller - ON AIR-->
         <scene sceneID="BSN-cy-fjv">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oy2-Nc-OI5" sceneMemberID="firstResponder"/>
@@ -770,7 +770,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="HrN-aj-aC6">
+                    <navigationItem key="navigationItem" title="ON AIR" id="HrN-aj-aC6">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="gYE-Wf-YLg">
                             <connections>
                                 <action selector="update:" destination="XZR-gb-PJs" id="NC9-gZ-H8A"/>
@@ -1238,8 +1238,8 @@ This software is used Gentleface Toolbar Icon Set. This icon set is under the Cr
         <image name="tab_newly.png" width="30" height="30"/>
         <image name="tab_others.png" width="30" height="30"/>
         <image name="tab_title.png" width="30" height="30"/>
-        <image name="tablecell_about_black.png" width="24" height="24"/>
-        <image name="tablecell_about_white.png" width="24" height="24"/>
+        <image name="tablecell_about_black.png" width="28" height="28"/>
+        <image name="tablecell_about_white.png" width="28" height="28"/>
         <image name="tablecell_favorite_black.png" width="28" height="28"/>
         <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
         <image name="tablecell_favorite_yellow.png" width="28" height="28"/>
@@ -1338,7 +1338,7 @@ This software is used Gentleface Toolbar Icon Set. This icon set is under the Cr
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zXP-15-YML"/>
+        <segue reference="Lnr-as-s0m"/>
         <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>
