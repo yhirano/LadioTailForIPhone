@@ -1181,8 +1181,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="© 2012 Y.Hirano" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="fht-em-iRX">
-                                <rect key="frame" x="107" y="128" width="107" height="18"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="© 2012 Yuichi Hirano" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="fht-em-iRX">
+                                <rect key="frame" x="93" y="128" width="134" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1196,17 +1196,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="ICp-rv-WUI">
-                                <rect key="frame" x="20" y="159" width="280" height="173"/>
+                                <rect key="frame" x="20" y="159" width="280" height="237"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">This software is used the following codes. These codes are under the MIT License.
+                                <string key="text">This software is used the following libraries.
  - EGOTableViewPullRefresh
- - FBNetworkReachability,
+ - FBNetworkReachability
  - GRMustache
  - SVProgressHUD
 
-This software is used Gentleface Toolbar Icon Set. This icon set is under the Creative Commons Attribution-NonCommercial.</string>
+This software is used the following recource.
+ - Gentleface Toolbar Icon Set</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
