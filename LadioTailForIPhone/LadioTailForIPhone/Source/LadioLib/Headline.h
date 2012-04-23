@@ -102,10 +102,18 @@ typedef NSInteger ChannelSortType;
 
 /**
  * 一致する再生URLを持つ番組を取得する
- * 
+ *
  * @param playUrl 再生URL
  * @return Channel。見つからない場合はnil。
  */
 - (Channel *)channelFromPlayUrl:(NSURL *)playUrl;
+
+/**
+ * 一致するマウントを持つ番組を取得する
+ *
+ * @param mount マウント
+ * @return Channel。見つからない場合はnil。
+ */
+- (Channel *)channelFromMount:(NSString *)mount;
 
 @end

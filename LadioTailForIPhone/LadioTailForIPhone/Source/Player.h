@@ -22,6 +22,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
+#import "LadioLib.h"
 
 /// 再生準備開始のNotification
 #define LadioTailPlayerPrepareNotification @"LadioTailPlayerPrepareNotification"
@@ -60,6 +61,13 @@ typedef NSInteger PlayerState;
  */
 - (void)play:(NSURL *)url;
 
+/**
+ * 指定の番組のコンテンツを再生する
+ *
+ * @param url 再生する番組
+ */
+- (void)playChannel:(Channel *)channel;
+
 - (void)stop;
 
 /**
@@ -67,6 +75,11 @@ typedef NSInteger PlayerState;
  */
 - (void)switchPlayStop;
 
+/**
+ * 指定したURLが再生中かを取得する
+ *
+ * @return 再生中の場合はYES、それ以外はNO。
+ */
 - (BOOL)isPlaying:(NSURL *)url;
 
 /**
@@ -75,5 +88,12 @@ typedef NSInteger PlayerState;
  * @return 再生中のURL。再生していない場合はnil。
  */
 - (NSURL *)playingUrl;
+
+/**
+ * 再生中の番組を取得する
+ * 
+ * @return 再生中の番組。再生していない場合はnil。playChannelで番組を再生した場合にのみ有効。
+ */
+- (Channel *)playingChannel;
 
 @end

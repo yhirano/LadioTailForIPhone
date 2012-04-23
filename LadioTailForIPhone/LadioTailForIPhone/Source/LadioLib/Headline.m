@@ -330,6 +330,22 @@ static NSRegularExpression *chsExp = nil;
     return nil;
 }
 
+- (Channel *)channelFromMount:(NSString *)mount;
+{
+    if ([mount length] == 0) {
+        return nil;
+    }
+
+    @synchronized (channelsLock_) {
+        for (Channel *channel in channels_) {
+            if ([mount isEqualToString:channel.mnt]) {
+                return channel;
+            }
+        }
+    }
+    return nil;
+}
+
 #pragma mark - Private methods
 
 - (NSArray*)parseHeadline:(NSArray*)lines

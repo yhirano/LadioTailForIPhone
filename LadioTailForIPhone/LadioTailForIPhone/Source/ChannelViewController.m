@@ -125,7 +125,7 @@
     if ([player isPlaying:url]) {
         [player stop];
     } else {
-        [player play:url];
+        [player playChannel:channel_];
     }
 }
 

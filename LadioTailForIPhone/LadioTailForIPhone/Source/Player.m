@@ -32,6 +32,7 @@ static Player *instance = nil;
 @private
     AVPlayer *player_;
     NSURL *playUrl_;
+    Channel *playChannel_;
     NSTimer *playTimeOutTimer_;
 }
 
@@ -106,7 +107,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStateIdle:
                 if (playUrl_ != nil) {
-                    [self playProc:playUrl_];
+                    [self playProc:playUrl_ channel:playChannel_];
                 }
                 break;
             case PlayerStatePrepare:
@@ -133,6 +134,30 @@ static Player *instance = nil;
             case PlayerStateIdle:
                 // 再生開始
                 [self playProc:url];
+                break;
+            case PlayerStatePrepare:
+            default:
+                break;
+        }
+    }
+}
+
+- (void)playChannel:(Channel *)channel
+{
+    @synchronized (self) {
+        // 既に再生中のURLとおなじ場合は何もしない
+        if ([self isPlaying:channel.playUrl]) {
+            return;
+        }
+        
+        switch (state_) {
+            case PlayerStatePlay:
+                // 再生中は停止
+                [self stopProcWithNotification:NO byError:NO];
+                // 再生を開始するためここは下にスルー
+            case PlayerStateIdle:
+                // 再生開始
+                [self playProc:channel.playUrl channel:channel];
                 break;
             case PlayerStatePrepare:
             default:
@@ -192,7 +217,7 @@ static Player *instance = nil;
     }
 }
 
-- (NSURL*)playingUrl
+- (NSURL *)playingUrl
 {
     @synchronized (self) {
         switch (state_) {
@@ -206,10 +231,29 @@ static Player *instance = nil;
     }
 }
 
+- (Channel *)playingChannel
+{
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePlay:
+                return playChannel_;
+            case PlayerStateIdle:
+            case PlayerStatePrepare:
+            default:
+                return nil;
+        }
+    }
+}
+
 #pragma mark - Private methods
 
 /// 再生処理
 - (void)playProc:(NSURL *)url
+{
+    [self playProc:url channel:nil];
+}
+
+- (void)playProc:(NSURL *)url channel:(Channel *)channel
 {
     // URLが空の場合は何もしない
     if (url == nil) {
@@ -218,6 +262,7 @@ static Player *instance = nil;
     
     state_ = PlayerStatePrepare;
     playUrl_ = url;
+    playChannel_ = channel;
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
     player_ = [AVPlayer playerWithURL:url];
@@ -266,9 +311,10 @@ static Player *instance = nil;
 {
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
-    // エラーで停止した場合は再生中のURLを残さない
+    // エラーで停止した場合は再生中のURLと番組を残さない
     if (error) {
         playUrl_ = nil;
+        playChannel_ = nil;
     }
     state_ = PlayerStateIdle;
     NSLog(@"Play stopped.");

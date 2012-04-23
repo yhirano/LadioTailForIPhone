@@ -21,6 +21,7 @@
  */
 
 #import "LadioLib.h"
+#import "Player.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
 
@@ -153,6 +154,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Favorite *favorite = (Favorite *) [favorites_ objectAtIndex:indexPath.row];
+    Headline *headline = [Headline sharedInstance];
+    Player *player = [Player sharedInstance];
     Channel *channel = favorite.channel;
     
     NSString *cellIdentifier;
@@ -182,6 +185,7 @@
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *mountTagLabel = (UILabel *) [cell viewWithTag:3];
     UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
+    UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
 
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
@@ -199,6 +203,23 @@
     } else {
         mountLabel.text = @"";
     }
+    // 再生中
+    if ([[player playingChannel].mnt isEqualToString:channel.mnt]) {
+        broadcastImageView.hidden = NO;
+        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
+        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+    }
+    // 配信中
+    else if ([headline channelFromMount:channel.mnt] != nil) {
+        broadcastImageView.hidden = NO;
+        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
+        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+    }
+    // 配信されていない
+    else {
+        broadcastImageView.hidden = YES;
+    }
+    
 
     // テーブルセルのテキスト等の色を変える
     titleLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;

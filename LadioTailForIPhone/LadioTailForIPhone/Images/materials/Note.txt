@@ -29,6 +29,9 @@ http://findicons.com/icon/267866/info
 mic.png
 http://findicons.com/icon/267891/mic
 
+music.png
+http://findicons.com/icon/267839/music
+
 movie.png
 http://findicons.com/icon/267739/movie
 
