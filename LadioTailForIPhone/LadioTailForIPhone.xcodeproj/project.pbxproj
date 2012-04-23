@@ -374,15 +374,15 @@
 		8E0B83451543DC770097984D /* LadioLib */ = {
 			isa = PBXGroup;
 			children = (
-				8E0B83461543DC770097984D /* Channel.h */,
-				8E0B83471543DC770097984D /* Channel.m */,
-				8E0B83481543DC770097984D /* Favorite.h */,
-				8E0B83491543DC770097984D /* Favorite.m */,
-				8E0B834A1543DC770097984D /* FavoriteManager.h */,
-				8E0B834B1543DC770097984D /* FavoriteManager.m */,
+				8E0B834E1543DC770097984D /* LadioLib.h */,
 				8E0B834C1543DC770097984D /* Headline.h */,
 				8E0B834D1543DC770097984D /* Headline.m */,
-				8E0B834E1543DC770097984D /* LadioLib.h */,
+				8E0B83461543DC770097984D /* Channel.h */,
+				8E0B83471543DC770097984D /* Channel.m */,
+				8E0B834A1543DC770097984D /* FavoriteManager.h */,
+				8E0B834B1543DC770097984D /* FavoriteManager.m */,
+				8E0B83481543DC770097984D /* Favorite.h */,
+				8E0B83491543DC770097984D /* Favorite.m */,
 			);
 			path = LadioLib;
 			sourceTree = "<group>";
