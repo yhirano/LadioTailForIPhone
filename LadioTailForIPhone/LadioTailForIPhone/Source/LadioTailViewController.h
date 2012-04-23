@@ -22,8 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define SWITCH_TAB_VIEW
-
 @interface LadioTailViewController : UITabBarController <UITabBarControllerDelegate>
 
 @end
