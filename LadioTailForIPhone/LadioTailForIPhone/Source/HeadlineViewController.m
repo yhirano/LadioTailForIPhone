@@ -82,6 +82,12 @@
 // Pull Refreshの背景色
 #define PULL_REFRESH_TEXT_BACKGROUND_COLOR [UIColor lightGrayColor]
 
+/// Pull refreshでヘッドラインを有効にするか
+#define PULL_REFRESH_HEADLINE 1
+/// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
+#define SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL 1
+
+
 @implementation HeadlineViewController
 {
 @private
@@ -365,6 +371,32 @@
     }
 }
 
+/// 再生している番組をテーブルの一番上になるようにスクロールする
+- (void)scrollToTopAtPlayingCell
+{
+    Channel *playingChannel = [[Player sharedInstance] playingChannel];
+    if (playingChannel == nil) {
+        return;
+    }
+
+    NSInteger playingChannelIndex;
+    BOOL found = NO;
+    // 再生している番組がの何番目かを探索する
+    for (playingChannelIndex = 0; playingChannelIndex < [showedChannels_ count]; ++playingChannelIndex) {
+        Channel *channel = [showedChannels_ objectAtIndex:playingChannelIndex];
+        if ([channel.mnt isEqualToString:playingChannel.mnt]) {
+            found = YES; // 見つかったことを示す
+            break;
+        }
+    }
+
+    // 見つかった場合はスクロール
+    if (found){
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];  
+        [headlineTableView_ scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+}
+
 #pragma mark - UISearchBarDelegate methods
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -612,6 +644,12 @@
 {
     [self updatePlayingButton];
     [self updateHeadlineTable];
+#if SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL
+    // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
+    if ([[Player sharedInstance] state] == PlayerStatePlay) {
+        [self scrollToTopAtPlayingCell];
+    }
+#endif /* #if SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL */
 }
 
 @end

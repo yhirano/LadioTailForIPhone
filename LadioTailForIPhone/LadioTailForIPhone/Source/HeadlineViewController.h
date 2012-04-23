@@ -23,14 +23,8 @@
 #import <UIKit/UIKit.h>
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 
-/// Pull refreshでヘッドラインを有効にするか
-#define PULL_REFRESH_HEADLINE 1
-
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate
-#if PULL_REFRESH_HEADLINE
-                                                     , EGORefreshTableHeaderDelegate
-#endif /* #if PULL_REFRESH_HEADLINE */
-                                                     >
+@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
+                                                      EGORefreshTableHeaderDelegate>
 
 /// テーブルに表示している番組
 @property (strong ,readonly) NSArray *showedChannels;
