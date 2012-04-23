@@ -218,6 +218,44 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
             [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
         }
     }
+#if DEBUG
+    // 番組の詳細内容を表示するサイトのURL
+    value = [channel.surl absoluteString];
+    if (!([value length] == 0)) {
+        NSString *tag = @"- SURL";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 配信サーバホスト名
+    value = channel.srv;
+    if (!([value length] == 0)) {
+        NSString *tag = @"- SRV";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 配信サーバポート番号
+    value = [[NSNumber numberWithUnsignedInt:channel.prt] stringValue];;
+    if (!([value length] == 0)) {
+        NSString *tag = @"- PRT";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // マウント
+    value = channel.mnt;
+    if (!([value length] == 0)) {
+        tag = @"- MNT";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // お気に入り
+    value = (channel.favorite ? @"YES" : @"NO");
+    if (!([value length] == 0)) {
+        NSString *tag = @"- Favorite";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 再生URL
+    value = [[channel playUrl] absoluteString];
+    if (!([value length] == 0)) {
+        NSString *tag = @"- PlayUrl";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+#endif /* #if DEBUG */
 
     NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
 
@@ -359,7 +397,84 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
         tag = NSLocalizedString(@"Mount", @"マウント");
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
-    
+#if DEBUG
+    // 番組の詳細内容を表示するサイトのURL
+    value = [channel.surl absoluteString];
+    if (!([value length] == 0)) {
+        NSString *tag = @"- SURL";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 配信サーバホスト名
+    value = channel.srv;
+    if (!([value length] == 0)) {
+        NSString *tag = @"- SRV";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 配信サーバポート番号
+    value = [[NSNumber numberWithUnsignedInt:channel.prt] stringValue];;
+    if (!([value length] == 0)) {
+        NSString *tag = @"- PRT";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // リスナー数
+    {
+        if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM
+            || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
+            || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            // リスナー数
+            tag = @"- cln/clns/mnt";
+            value = @"";
+            if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                value = [NSString stringWithFormat:@"%@ %d",
+                         NSLocalizedString(@"Listeners", @"リスナー数"),
+                         channel.cln];
+                if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
+                }
+            }
+            
+            // 述べリスナー数
+            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                value = [NSString stringWithFormat:@"%@%@ %d",
+                         value,
+                         NSLocalizedString(@"Total", @"述べ"),
+                         channel.clns];
+                if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
+                }
+            }
+            
+            // 最大リスナー数
+            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                value = [NSString stringWithFormat:@"%@%@ %d",
+                         value,
+                         NSLocalizedString(@"Max", @"最大"),
+                         channel.max];
+            }
+            
+            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        }
+    }
+    // 開始時刻
+    value = channel.timsToString;
+    if (!([value length] == 0)) {
+        NSString *tag =  NSLocalizedString(@"At", @"開始時刻");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // お気に入り
+    value = (channel.favorite ? @"YES" : @"NO");
+    if (!([value length] == 0)) {
+        NSString *tag = @"- Favorite";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 再生URL
+    value = [[channel playUrl] absoluteString];
+    if (!([value length] == 0)) {
+        NSString *tag = @"- PlayUrl";
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+#endif /* #if DEBUG */
+
     NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
     
     if (channelPageHtmlTemplate == nil) {
