@@ -362,7 +362,7 @@
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSURL *playingUrl = [[Player sharedInstance] playingUrl];
             Headline *headline = [Headline sharedInstance];
-            Channel *channel = [headline channel:playingUrl];
+            Channel *channel = [headline channelFromPlayUrl:playingUrl];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }

@@ -106,6 +106,6 @@ typedef NSInteger ChannelSortType;
  * @param playUrl 再生URL
  * @return Channel。見つからない場合はnil。
  */
-- (Channel *)channel:(NSURL *)playUrl;
+- (Channel *)channelFromPlayUrl:(NSURL *)playUrl;
 
 @end

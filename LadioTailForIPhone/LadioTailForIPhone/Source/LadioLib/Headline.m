@@ -313,7 +313,7 @@ static NSRegularExpression *chsExp = nil;
     return result;
 }
 
-- (Channel *)channel:(NSURL *)playUrl
+- (Channel *)channelFromPlayUrl:(NSURL *)playUrl
 {
     if (playUrl == nil) {
         return nil;
