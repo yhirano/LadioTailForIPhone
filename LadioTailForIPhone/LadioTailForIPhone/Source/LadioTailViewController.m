@@ -25,6 +25,9 @@
 #import "Player.h"
 #import "LadioTailViewController.h"
 
+/// 選択されたタブを覚えておくためのキー
+#define MAIN_TAB_SELECTED_INDEX @"MAIN_TAB_SELECTED_INDEX"
+
 /// ヘッドライン取得失敗時にエラーを表示する秒数
 #define DELAY_FETCH_HEADLINE_MESSAGE 3
 
@@ -38,6 +41,8 @@
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
+
+    self.delegate = nil;
 }
 
 #pragma mark - UIView methods
@@ -45,6 +50,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // 選択されたタブを復元する
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // 対応するデータが保存されていない場合でも0が返るので一番最初のタブが選択される
+    self.selectedIndex = [defaults integerForKey:MAIN_TAB_SELECTED_INDEX];
+    
+    self.delegate = self;
 
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -118,6 +130,15 @@
 		default:
             break;
 	}
+}
+
+
+#pragma mark - UITabBarControllerDelegate methods
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    // 選択されたタブを保存しておく
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:self.selectedIndex forKey:MAIN_TAB_SELECTED_INDEX];
 }
 
 #pragma mark - Headline notifications
