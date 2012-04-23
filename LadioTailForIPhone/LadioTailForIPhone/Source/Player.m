@@ -25,6 +25,20 @@
 /// 再生開始後のタイムアウト処理までの時間
 #define PLAY_TIMEOUT_SEC 15.0
 
+/// 停止する理由
+enum StopReason
+{
+    StopReasonUser,
+    StopReasonAnotherUrlPlay,
+    StopReasonPlayTimeOut,
+    StopReasonDidPlayToEndTime,
+    StopReasonFailedToPlayToEndTime,
+    StopReasonStatusFailed,
+    StopReasonInterruption,
+};
+
+typedef NSInteger StopReason;
+
 static Player *instance = nil;
 
 @implementation Player
@@ -71,11 +85,11 @@ static Player *instance = nil;
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(stopped:)
+                                                 selector:@selector(stoppedDidPlayToEndTime:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(stopped:)
+                                                 selector:@selector(stoppedFailedToPlayToEndTime:)
                                                      name:AVPlayerItemFailedToPlayToEndTimeNotification
                                                    object:nil];
     }
@@ -129,7 +143,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProcWithNotification:NO byError:NO];
+                [self stopProcWithReason:StopReasonAnotherUrlPlay];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
@@ -153,7 +167,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProcWithNotification:NO byError:NO];
+                [self stopProcWithReason:StopReasonAnotherUrlPlay];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
@@ -172,7 +186,7 @@ static Player *instance = nil;
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithNotification:YES byError:NO];
+                [self stopProcWithReason:StopReasonUser];
                 break;
             case PlayerStateIdle:
             default:
@@ -307,18 +321,44 @@ static Player *instance = nil;
 }
 
 /// 停止処理
-- (void)stopProcWithNotification:(BOOL)notification byError:(BOOL)error
+- (void)stopProcWithReason:(StopReason)reason
 {
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
-    // エラーで停止した場合は再生中のURLと番組を残さない
-    if (error) {
+    // ユーザーが停止した場合以外はURLと番組を残さない
+    if (reason != StopReasonUser) {
         playUrl_ = nil;
         playChannel_ = nil;
     }
     state_ = PlayerStateIdle;
-    NSLog(@"Play stopped.");
-    if (notification) {
+    switch (reason) {
+        case StopReasonUser:
+            NSLog(@"Play stopped by user.");
+            break;
+        case StopReasonAnotherUrlPlay:
+            NSLog(@"Play stopped because another url playing.");
+            break;
+        case StopReasonPlayTimeOut:
+            NSLog(@"Play stopped because play timeout.");
+            break;
+        case StopReasonDidPlayToEndTime:
+            NSLog(@"Play stopped because play finished.");
+            break;
+        case StopReasonFailedToPlayToEndTime:
+            NSLog(@"Play stopped because failed play.");
+            break;
+        case StopReasonStatusFailed:
+            NSLog(@"Play stopped because status faild.");
+            break;
+        case StopReasonInterruption:
+            NSLog(@"Play stopped by interruption.");
+            break;
+        default:
+            NSLog(@"Play stopped.");
+            break;
+    }
+    // 他のURLを再生する場合には再生開始側で通知を出すため、ここでは通知を出さない
+    if (reason != StopReasonAnotherUrlPlay) {
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
                                                             object:self];
     }
@@ -338,7 +378,7 @@ static Player *instance = nil;
     @synchronized (self) {
         switch (state_) {
             case PlayerStatePrepare:
-                [self stopProcWithNotification:YES byError:YES];
+                [self stopProcWithReason:StopReasonPlayTimeOut];
                 NSLog(@"Player time outed.");
                 break;
             case PlayerStateIdle:
@@ -349,13 +389,28 @@ static Player *instance = nil;
     }
 }
 
-- (void)stopped:(NSNotification *)notification
+- (void)stoppedDidPlayToEndTime:(NSNotification *)notification
 {
     @synchronized (self) {
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithNotification:YES byError:YES];
+                [self stopProcWithReason:StopReasonDidPlayToEndTime];
+                break;
+            case PlayerStateIdle:
+            default:
+                break;
+        }
+    }
+}
+
+- (void)stoppedFailedToPlayToEndTime:(NSNotification *)notification
+{
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+                [self stopProcWithReason:StopReasonFailedToPlayToEndTime];
                 break;
             case PlayerStateIdle:
             default:
@@ -383,10 +438,19 @@ static Player *instance = nil;
                     default:
                         break;
                 }
-                [self playStartedProc];
             }
         } else if (player_.status == AVPlayerStatusFailed) {
-            [self stopped:nil];
+            @synchronized (self) {
+                switch (state_) {
+                    case PlayerStatePrepare:
+                    case PlayerStatePlay:
+                        [self stopProcWithReason:StopReasonStatusFailed];
+                        break;
+                    case PlayerStateIdle:
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
@@ -396,7 +460,17 @@ static Player *instance = nil;
 - (void)beginInterruption
 {
 	NSLog(@"audio settion begin interruption.");
-    [self stop];
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePrepare:
+            case PlayerStatePlay:
+                [self stopProcWithReason:StopReasonInterruption];
+                break;
+            case PlayerStateIdle:
+            default:
+                break;
+        }
+    }
 }
 
 - (void)endInterruption
