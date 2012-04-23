@@ -23,14 +23,13 @@
 #import <Foundation/Foundation.h>
 #import "iAd/iAd.h"
 
-@interface AdBannerManager : NSObject <ADBannerViewDelegate>
+/// iADビューの表示アニメーションの秒数
+#define AD_VIEW_ANIMATION_DURATION 0.6
 
-@property (strong)  UIView *bannerSibling;
+@interface AdBannerManager : NSObject
 
-@property BOOL isBannerVisible;
+@property (strong, readonly) ADBannerView *adBannerView;
 
 + (AdBannerManager *)sharedInstance;
-
-- (void)setShowPosition:(CGPoint)position hiddenPosition:(CGPoint)hPosition;
 
 @end

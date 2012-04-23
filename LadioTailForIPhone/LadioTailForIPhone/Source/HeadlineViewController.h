@@ -21,9 +21,10 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "iAd/iAd.h"
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
+@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate, ADBannerViewDelegate,
                                                       EGORefreshTableHeaderDelegate>
 
 /// テーブルに表示している番組

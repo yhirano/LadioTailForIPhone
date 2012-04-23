@@ -47,7 +47,7 @@
     if (!([title length] == 0)) {
         topNavigationItem_.title = title;
     }
-    
+
     backButton_.enabled = pageWebView_.canGoBack;
     forwardButton_.enabled = pageWebView_.canGoForward;
     if (isPageLoading_) {
@@ -140,20 +140,32 @@
 {
     [super viewDidAppear:animated];
 
+    // 広告を表示する
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [adBannerView setFrame:CGRectMake(320, 316, 320, 50)];
+    if (adBannerView.bannerLoaded) {
+        adBannerView.hidden = NO;
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                         animations:^{
+                             adBannerView.frame = CGRectMake(0, 316, 320, 50);
+                         }];
+    }
+    adBannerView.delegate = self;
+    [self.view addSubview:adBannerView];
+
     // WebViewのデリゲートを設定する
     pageWebView_.delegate = self;
-
-    // ページ読み込み中フラグを下げる
-    isPageLoading_ = NO;
-
-    // 広告を表示する
-    AdBannerManager *adBannerManager = [AdBannerManager sharedInstance];
-    [adBannerManager setShowPosition:CGPointMake(0, 316) hiddenPosition:CGPointMake(320, 316)];
-    adBannerManager.bannerSibling = self.view;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // 広告の表示を消す
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    if (adBannerView.bannerLoaded == NO) {
+        adBannerView.hidden = YES;
+    }
+    adBannerView.delegate = nil;
+
     // WebViewのデリゲートを削除する
     pageWebView_.delegate = nil;
     
@@ -166,6 +178,15 @@
     }
     
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // 広告Viewを削除
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [adBannerView removeFromSuperview];
+    
+    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -209,6 +230,44 @@
 
     // ボタン類の表示を更新する
     [self updateViews];
+}
+
+#pragma mark - ADBannerViewDelegate methods
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    // 広告をはいつでも表示可能
+    return YES;
+}
+
+// iADバナーが読み込み終わった
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    NSLog(@"iAD banner load complated.");
+    
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    adBannerView.hidden = NO;
+    [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                     animations:^{
+                         adBannerView.frame = CGRectMake(0, 316, 320, 50);
+                     }];
+}
+
+// iADバナーの読み込みに失敗
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
+    
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                     animations:^{
+                         adBannerView.frame = CGRectMake(320, 316, 320, 50);
+                     }
+                     completion:^(BOOL finished)
+     {
+         // AdBannerViewを隠す
+         adBannerView.hidden = YES;
+     }];
 }
 
 @end

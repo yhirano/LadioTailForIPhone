@@ -24,6 +24,7 @@
 #import "LadioLib/LadioLib.h"
 #import "SearchWordManager.h"
 #import "Player.h"
+#import "AdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
@@ -86,6 +87,8 @@
 #define PULL_REFRESH_HEADLINE 1
 /// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
 #define SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL 1
+/// 広告を有効にするか
+#define AD_ENABLE 0
 
 
 @implementation HeadlineViewController
@@ -334,12 +337,54 @@
 {
     [super viewDidAppear:animated];
 
+#if AD_ENABLE
+    // テーブルの初期位置を設定
+    // 広告のアニメーション前に初期位置を設定する必要有り
+    headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+
+    // 広告を表示する
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
+    if (adBannerView.bannerLoaded) {
+        adBannerView.hidden = NO;
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                         animations:^{
+                             headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+                             adBannerView.frame = CGRectMake(0, 317, 320, 50);
+                         }];
+    }
+    adBannerView.delegate = self;
+    [self.view addSubview:adBannerView];
+#endif /* #if AD_ENABLE */
+
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+#if AD_ENABLE
+    // 広告の表示を消す
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    adBannerView.delegate = nil;
+#endif /* #if AD_ENABLE */
+
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+#if AD_ENABLE
+    // 広告Viewを削除
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [adBannerView removeFromSuperview];
+#endif /* #if AD_ENABLE */
+
+    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -591,7 +636,45 @@
 }
 #endif /* #if PULL_REFRESH_HEADLINE */
 
+#pragma mark - ADBannerViewDelegate methods
+
+#if AD_ENABLE
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    // 広告をはいつでも表示可能
+    return YES;
+}
+
+// iADバナーが読み込み終わった
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    NSLog(@"iAD banner load complated.");
+    
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    adBannerView.hidden = NO;
+    [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                     animations:^{
+                         headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+                         adBannerView.frame = CGRectMake(0, 317, 320, 50);
+                     }];
+}
+
+// iADバナーの読み込みに失敗
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
+    
+    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+    [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                     animations:^{
+                         headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+                         adBannerView.frame = CGRectMake(0, 377, 320, 50);
+                     }];
+}
+#endif /* #if AD_ENABLE */
+
 #pragma mark - Headline notifications
+
 - (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
