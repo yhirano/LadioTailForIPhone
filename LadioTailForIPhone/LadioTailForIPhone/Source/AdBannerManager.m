@@ -42,7 +42,6 @@ static AdBannerManager *instance = nil;
     if (self = [super init]) {
         adBannerView_ = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
         adBannerView_.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
-        adBannerView_.hidden = YES; // 画面外からの遷移の場合、画面外にあるとViewがちらつくので消す
     }
     return self;
 }

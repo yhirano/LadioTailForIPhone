@@ -32,6 +32,4 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
 
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
 @end
