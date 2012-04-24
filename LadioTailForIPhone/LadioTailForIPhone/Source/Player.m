@@ -297,7 +297,7 @@ static Player *instance = nil;
                                                        userInfo:nil
                                                         repeats:NO];
 #if DEBUG
-    NSLog(@"Play time out timer fired.");
+    NSLog(@"Play time out timer started.");
 #endif /* #if DEBUG */
 }
 
