@@ -37,6 +37,10 @@
 #define DESCRIPTION_TEXT_COLOR "#FFFFFF"
 /// 詳細表示画面のリンクテキスト色
 #define DESCRIPTION_LINK_TEXT_COLOR "#FFBE1E"
+/// 下部Viewの上部の色
+#define BOTTOM_BAR_TOP_COLOR [UIColor colorWithRed:0.11 green:0.11 blue:0.11 alpha:1]
+/// 下部Viewの下部の色
+#define BOTTOM_BAR_BOTTOM_COLOR [UIColor blackColor]
 
 /// リンクをクリックするとSafariが開く
 #define OPEN_SAFARI_WHEN_CLICK_LINK 0
@@ -203,8 +207,8 @@
     gradient.frame = bottomView_.bounds;
     gradient.colors =
         [NSArray arrayWithObjects:
-            (id) [UIColor colorWithRed:0.11 green:0.11 blue:0.11 alpha:1].CGColor,
-            (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
+            (id) BOTTOM_BAR_TOP_COLOR.CGColor,
+            (id) BOTTOM_BAR_BOTTOM_COLOR.CGColor,
             nil];
     [bottomView_.layer insertSublayer:gradient atIndex:0];
 

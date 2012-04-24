@@ -24,6 +24,11 @@
 #import "AdBannerManager.h"
 #import "WebPageViewController.h"
 
+/// 下部Viewの上部の色
+#define BOTTOM_BAR_TOP_COLOR [UIColor colorWithRed:0.11 green:0.11 blue:0.11 alpha:1]
+/// 下部Viewの下部の色
+#define BOTTOM_BAR_BOTTOM_COLOR [UIColor blackColor]
+
 /// 広告を有効にするか
 #define AD_ENABLE 1
 /// 広告を表示後に隠すか。デバッグ用。
@@ -129,8 +134,8 @@
     // 下部Viewの背景色をグラデーションに
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = bottomView_.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id) [UIColor colorWithRed:0.22 green:0.22 blue:0.22 alpha:1].CGColor,
-                                                (id) [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor,
+    gradient.colors = [NSArray arrayWithObjects:(id) BOTTOM_BAR_TOP_COLOR.CGColor,
+                                                (id) BOTTOM_BAR_BOTTOM_COLOR.CGColor,
                                                 nil];
     [bottomView_.layer insertSublayer:gradient atIndex:0];
 }
