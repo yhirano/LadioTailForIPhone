@@ -96,6 +96,8 @@
 @implementation HeadlineViewController
 {
 @private
+    /// サーチバー
+    UISearchBar *headlineSearchBar_;
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
@@ -114,11 +116,11 @@
 @synthesize navigateionItem = navigateionItem_;
 @synthesize updateBarButtonItem = updateBarButtonItem_;
 @synthesize playingBarButtonItem = playingBarButtonItem_;
-@synthesize headlineSearchBar = headlineSearchBar_;
 @synthesize headlineTableView = headlineTableView_;
 
 - (void)dealloc
 {
+    headlineSearchBar_ = nil;
     tempPlayingBarButtonItem_ = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
@@ -256,6 +258,12 @@
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
+    // サーチバーをテーブルのヘッダに追加
+    headlineSearchBar_ = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 48)];
+    headlineSearchBar_.placeholder = @"Search";
+    headlineSearchBar_.delegate = self;
+    headlineTableView_.tableHeaderView = headlineSearchBar_;
+
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
@@ -320,7 +328,6 @@
     [self setUpdateBarButtonItem:nil];
     [self setNavigateionItem:nil];
     [self setPlayingBarButtonItem:nil];
-    [self setHeadlineSearchBar:nil];
     [self setHeadlineTableView:nil];
     [super viewDidUnload];
 }
@@ -355,7 +362,7 @@
 #if AD_ENABLE
     // テーブルの初期位置を設定
     // 広告のアニメーション前に初期位置を設定する必要有り
-    headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+    headlineTableView_.frame = CGRectMake(0, 0, 320, 367);
 
     // 広告を表示する
     ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
@@ -370,7 +377,7 @@
                          }
                          completion:^(BOOL finished) {
                              if (finished) {
-                                 headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+                                 headlineTableView_.frame = CGRectMake(0, 0, 320, 317);
                              }
                          }];
         isVisibleAdBanner_ = YES;
@@ -399,7 +406,7 @@
 #if AD_ENABLE
     // テーブルの初期位置を設定
     // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
-    headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+    headlineTableView_.frame = CGRectMake(0, 0, 320, 367);
 
     // 広告の表示を消す
     ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
@@ -694,7 +701,7 @@
                          }
                          completion:^(BOOL finished) {
                              if (finished) {
-                                 headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+                                 headlineTableView_.frame = CGRectMake(0, 0, 320, 317);
                              }
                          }];
         isVisibleAdBanner_ = YES;
@@ -708,7 +715,7 @@
 
     if (isVisibleAdBanner_) {
         ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+        headlineTableView_.frame = CGRectMake(0, 0, 320, 367);
         [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
                               delay:0
                             options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
