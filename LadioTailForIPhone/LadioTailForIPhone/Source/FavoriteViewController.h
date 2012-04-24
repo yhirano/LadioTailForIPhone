@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import "iAd/iAd.h"
-#import "LadioLib.h"
+#import "LadioLib/LadioLib.h"
 
 @interface FavoriteViewController : UIViewController <UIWebViewDelegate, ADBannerViewDelegate>
 

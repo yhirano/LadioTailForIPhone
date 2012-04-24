@@ -21,7 +21,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "LadioLib.h"
+#import "LadioLib/LadioLib.h"
 
 @interface ChannelsHtml : NSObject
 

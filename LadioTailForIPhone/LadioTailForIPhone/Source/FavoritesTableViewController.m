@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "LadioLib.h"
+#import "LadioLib/LadioLib.h"
 #import "Player.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
