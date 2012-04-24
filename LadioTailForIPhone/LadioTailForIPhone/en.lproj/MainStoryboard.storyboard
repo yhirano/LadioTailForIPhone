@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zcg-0a-Ezu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="323"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -143,6 +143,18 @@
                                     <outlet property="delegate" destination="2" id="EnY-lw-EBd"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search" id="DeF-xv-Lav">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="2" id="Bek-dP-x40"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.14000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -159,6 +171,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="headlineSearchBar" destination="DeF-xv-Lav" id="eRI-pf-EQv"/>
                         <outlet property="headlineTableView" destination="Zcg-0a-Ezu" id="hSw-mI-1Fy"/>
                         <outlet property="navigateionItem" destination="cIB-qf-6WW" id="lvm-k0-Cn1"/>
                         <outlet property="playingBarButtonItem" destination="hJU-50-Qib" id="kbU-eo-TMI"/>
@@ -179,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="epU-Eg-lLq">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="323"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -284,6 +297,14 @@
                                     <outlet property="delegate" destination="YkM-jv-E4c" id="QEF-nG-Igp"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search" id="Kck-57-7Dz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="YkM-jv-E4c" id="gbv-IA-by6"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.14000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -300,6 +321,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="headlineSearchBar" destination="Kck-57-7Dz" id="RKW-Yz-z7C"/>
                         <outlet property="headlineTableView" destination="epU-Eg-lLq" id="uVT-4w-ck4"/>
                         <outlet property="navigateionItem" destination="OH9-jU-3gF" id="RFu-uM-lG1"/>
                         <outlet property="playingBarButtonItem" destination="cBn-ZM-WFB" id="A64-0l-zka"/>
@@ -482,7 +504,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9l4-Vr-N1h">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="323"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -587,6 +609,14 @@
                                     <outlet property="delegate" destination="UOF-Nn-dLt" id="LrT-wj-vIU"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search" id="TnO-yl-tAF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="UOF-Nn-dLt" id="aO7-9Z-Kh4"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.14000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -603,6 +633,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="headlineSearchBar" destination="TnO-yl-tAF" id="AOy-jD-zFz"/>
                         <outlet property="headlineTableView" destination="9l4-Vr-N1h" id="BKt-Ld-TXY"/>
                         <outlet property="navigateionItem" destination="bx5-dU-C5H" id="2yf-lB-89w"/>
                         <outlet property="playingBarButtonItem" destination="KNL-rl-UFp" id="PD1-tz-8Ow"/>
@@ -623,7 +654,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Vcm-VF-993">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="323"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -728,6 +759,14 @@
                                     <outlet property="delegate" destination="XZR-gb-PJs" id="xks-us-65X"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search" id="TsY-ZI-x0z">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XZR-gb-PJs" id="dPI-JR-vRS"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.14000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -744,6 +783,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="headlineSearchBar" destination="TsY-ZI-x0z" id="aGo-wG-cj8"/>
                         <outlet property="headlineTableView" destination="Vcm-VF-993" id="YVv-ee-EI2"/>
                         <outlet property="navigateionItem" destination="HrN-aj-aC6" id="IUl-ZC-4Aa"/>
                         <outlet property="playingBarButtonItem" destination="Rxr-qs-lKJ" id="Mad-xa-sY7"/>
@@ -1224,13 +1264,93 @@ This software is used the following recource.
         <image name="tablecell_play_black.png" width="14" height="14"/>
         <image name="tablecell_play_white.png" width="14" height="14"/>
     </resources>
+    <classes>
+        <class className="AboutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="versionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ChannelViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="favorite:"/>
+                <relationship kind="action" name="play:"/>
+                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
+        <class className="DjHeadlineViewController" superclassName="HeadlineViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DjHeadlineViewController.h"/>
+        </class>
+        <class className="FavoriteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
+        <class className="FavoritesTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
+        </class>
+        <class className="HeadlineNaviViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineNaviViewController.h"/>
+        </class>
+        <class className="HeadlineViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="update:"/>
+                <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="updateBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="LadioTailViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
+        </class>
+        <class className="ListenersHeadlineViewController" superclassName="HeadlineViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ListenersHeadlineViewController.h"/>
+        </class>
+        <class className="NewlyHeadlineViewController" superclassName="HeadlineViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewlyHeadlineViewController.h"/>
+        </class>
+        <class className="OthersTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OthersTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="TitleHeadlineViewController" superclassName="HeadlineViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TitleHeadlineViewController.h"/>
+        </class>
+        <class className="WebPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="forward:"/>
+                <relationship kind="action" name="goToBottom:"/>
+                <relationship kind="action" name="reload:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Lnr-as-s0m"/>
+        <segue reference="zXP-15-YML"/>
         <segue reference="uMs-fw-DSO"/>
     </inferredMetricsTieBreakers>
 </document>
