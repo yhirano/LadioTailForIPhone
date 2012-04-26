@@ -149,7 +149,7 @@
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
         for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
             Channel *channel = [channels objectAtIndex:playingChannelIndex];
-            if ([channel.mnt isEqualToString:playingChannel.mnt]) {
+            if ([channel isSameMount:playingChannel]) {
                 found = YES; // 見つかったことを示す
                 break;
             }

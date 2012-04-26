@@ -110,4 +110,6 @@
 
 - (BOOL)isMatch:(NSArray *)searchWords;
 
+- (BOOL)isSameMount:(Channel *)channel;
+
 @end

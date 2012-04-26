@@ -204,7 +204,7 @@
         mountLabel.text = @"";
     }
     // 再生中
-    if ([[player playingChannel].mnt isEqualToString:channel.mnt]) {
+    if ([[player playingChannel] isSameMount:channel]) {
         broadcastImageView.hidden = NO;
         [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
         [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];

@@ -183,6 +183,14 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     return YES;
 }
 
+- (BOOL)isSameMount:(Channel *)channel
+{
+    if (channel == nil) {
+        return NO;
+    }
+    return [mnt_ isEqualToString:channel.mnt];
+}
+
 #pragma mark - Comparison Methods
 
 - (NSComparisonResult)compareNewly:(Channel *)channel

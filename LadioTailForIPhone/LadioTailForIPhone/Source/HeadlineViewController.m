@@ -462,7 +462,7 @@
     // 再生している番組がの何番目かを探索する
     for (playingChannelIndex = 0; playingChannelIndex < [showedChannels_ count]; ++playingChannelIndex) {
         Channel *channel = [showedChannels_ objectAtIndex:playingChannelIndex];
-        if ([channel.mnt isEqualToString:playingChannel.mnt]) {
+        if ([channel isSameMount:playingChannel]) {
             found = YES; // 見つかったことを示す
             break;
         }
