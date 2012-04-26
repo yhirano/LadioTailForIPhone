@@ -197,7 +197,7 @@ static NSRegularExpression *chsExp = nil;
         // 番組のお気に入りの変化通知を受け取る。番組キャッシュのクリアをする。
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(channelFavoriteChanged:)
-                                                     name:LadioLibChannelChangedFavorioNotification
+                                                     name:LadioLibChannelChangedFavoriteNotification
                                                    object:nil];
     }
     return self;
@@ -205,7 +205,7 @@ static NSRegularExpression *chsExp = nil;
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibChannelChangedFavorioNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibChannelChangedFavoriteNotification object:nil];
 
     isFetchingLock_ = nil;
     channelsCache_ = nil;

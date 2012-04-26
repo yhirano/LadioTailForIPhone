@@ -25,7 +25,7 @@
 
 /// お気に入りの情報が変化した際のNotification
 /// お気に入り以外はユーザーが操作することがないので、お気に入りの変化だけ通知する。
-#define LadioLibChannelChangedFavorioNotification @"LadioLibChannelChangedFavorioNotification"
+#define LadioLibChannelChangedFavoriteNotification @"LadioLibChannelChangedFavoriteNotification"
 
 /**
  * お気に入りを管理するシングルトンクラス
