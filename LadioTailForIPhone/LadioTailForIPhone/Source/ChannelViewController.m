@@ -71,6 +71,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+
+    // お気に入りの変化通知を受け取らなくする
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LadioLibChannelChangedFavoritesNotification
+                                                  object:nil];
 }
 
 #pragma mark - Private methods
@@ -173,6 +178,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playStateChanged:)
                                                  name:LadioTailPlayerDidStopNotification
+                                               object:nil];
+
+    // 番組のお気に入りの変化通知を受け取る
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(channelFavoritesChanged:)
+                                                 name:LadioLibChannelChangedFavoritesNotification
                                                object:nil];
 
     NSString *titleString;
@@ -347,6 +358,14 @@
         }
     }
     return YES;
+}
+
+#pragma mark - Favorites notification
+
+- (void)channelFavoritesChanged:(NSNotification *)notification
+{
+    // お気に入りの変化にあわせてボタンを切り替える
+    [self updateFavoriteButton];
 }
 
 #pragma mark - Player notification

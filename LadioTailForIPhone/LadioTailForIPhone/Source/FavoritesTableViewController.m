@@ -22,6 +22,7 @@
 
 #import "LadioLib/LadioLib.h"
 #import "Player.h"
+#import "ICloudStrorage.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
 
@@ -66,6 +67,10 @@
 - (void)dealloc
 {
     favorites_ = nil;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:LadioTailICloudStorageChangedFavoritesNotification
+                                                  object:nil];
 }
 
 #pragma mark - Private methods
@@ -87,6 +92,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // 番組のお気に入りの変化通知を受け取る
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(channelFavoritesChanged:)
+                                                 name:LadioTailICloudStorageChangedFavoritesNotification
+                                               object:nil];
 
     [self updateFavolitesArray];
 
@@ -280,6 +291,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"SelectFavorite" sender:self];
+}
+
+#pragma mark - iCloud notification
+
+- (void)channelFavoritesChanged:(NSNotification *)notification
+{
+    // iCloudとお気に入りが同期した際はいったん編集モードを解除する
+    // 編集モード中にお気に入りが増減するのはマズいため
+    [self setEditing:NO];
+
+    [self updateFavolitesArray];
+    [self.tableView reloadData];
 }
 
 @end

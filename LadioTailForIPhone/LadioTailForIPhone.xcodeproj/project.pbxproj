@@ -55,6 +55,8 @@
 		8E62BA1F1544F3B400E77F3B /* tablecell_broadcast_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1B1544F3B400E77F3B /* tablecell_broadcast_black@2x.png */; };
 		8E62BA201544F3B400E77F3B /* tablecell_broadcast_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1C1544F3B400E77F3B /* tablecell_broadcast_white.png */; };
 		8E62BA211544F3B400E77F3B /* tablecell_broadcast_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1D1544F3B400E77F3B /* tablecell_broadcast_white@2x.png */; };
+		8E9928CE154906680015CA5D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E9928CD154906680015CA5D /* Settings.bundle */; };
+		8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
 		8E9BE9ED1543B36D0029DB70 /* tablecell_favorite_black_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */; };
 		8E9BE9EE1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EC1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png */; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
@@ -190,6 +192,7 @@
 		8E12B5B2153E7F28002F4437 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = Images/iTunesArtwork; sourceTree = "<group>"; };
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
 		8E30D1601539A62D00647D21 /* tab_dj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_dj.png; sourceTree = "<group>"; };
 		8E30D1611539A62D00647D21 /* tab_dj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_dj@2x.png"; sourceTree = "<group>"; };
 		8E30D1621539A62D00647D21 /* tab_listeners.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_listeners.png; sourceTree = "<group>"; };
@@ -202,6 +205,9 @@
 		8E62BA1B1544F3B400E77F3B /* tablecell_broadcast_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_broadcast_black@2x.png"; sourceTree = "<group>"; };
 		8E62BA1C1544F3B400E77F3B /* tablecell_broadcast_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_broadcast_white.png; sourceTree = "<group>"; };
 		8E62BA1D1544F3B400E77F3B /* tablecell_broadcast_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_broadcast_white@2x.png"; sourceTree = "<group>"; };
+		8E9928CD154906680015CA5D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8E9928D115490D230015CA5D /* ICloudStrorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStrorage.h; sourceTree = "<group>"; };
+		8E9928D215490D230015CA5D /* ICloudStrorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStrorage.m; sourceTree = "<group>"; };
 		8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_favorite_black_mini.png; sourceTree = "<group>"; };
 		8E9BE9EC1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_favorite_black_mini@2x.png"; sourceTree = "<group>"; };
 		8EAFBF611537C2EA00DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -323,6 +329,8 @@
 				8E0B832F1543DC770097984D /* FavoriteViewController.m */,
 				8E0B831E1543DC770097984D /* AboutViewController.h */,
 				8E0B831F1543DC770097984D /* AboutViewController.m */,
+				8E9928D115490D230015CA5D /* ICloudStrorage.h */,
+				8E9928D215490D230015CA5D /* ICloudStrorage.m */,
 				8E0B83571543DC770097984D /* Player.h */,
 				8E0B83581543DC770097984D /* Player.m */,
 				8E0B83591543DC770097984D /* SearchWordManager.h */,
@@ -529,6 +537,8 @@
 				8EAFBF621537C8E000DDBB6A /* Localizable.strings */,
 				8EC23B53153712BB007352FD /* LadioTailForIPhone-Info.plist */,
 				8EC23B54153712BB007352FD /* InfoPlist.strings */,
+				8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */,
+				8E9928CD154906680015CA5D /* Settings.bundle */,
 				8EC23B57153712BB007352FD /* main.m */,
 				8EC23B59153712BB007352FD /* LadioTailForIPhone-Prefix.pch */,
 			);
@@ -677,6 +687,7 @@
 				8E62BA1F1544F3B400E77F3B /* tablecell_broadcast_black@2x.png in Resources */,
 				8E62BA201544F3B400E77F3B /* tablecell_broadcast_white.png in Resources */,
 				8E62BA211544F3B400E77F3B /* tablecell_broadcast_white@2x.png in Resources */,
+				8E9928CE154906680015CA5D /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +724,7 @@
 				8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */,
 				8E0B837C1543DC770097984D /* TitleHeadlineViewController.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
+				8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,6 +808,8 @@
 		8EC23B60153712BB007352FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
@@ -812,6 +826,8 @@
 		8EC23B61153712BB007352FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";

@@ -124,6 +124,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineChannelChangedNotification object:nil];
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -179,7 +180,7 @@
     Headline *headline = [Headline sharedInstance];
     showedChannels_ = [headline channels:[self channelSortType]
                               searchWord:[SearchWordManager sharedInstance].searchWord];
-    
+
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
     if ([showedChannels_ count] == 0) {
@@ -188,7 +189,7 @@
         navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
     navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
-    
+
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
 }
@@ -241,6 +242,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineFailLoad:)
                                                  name:LadioLibHeadlineFailLoadNotification 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(headlineChannelChanged:)
+                                                 name:LadioLibHeadlineChannelChangedNotification
                                                object:nil];
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
@@ -746,9 +751,6 @@
     // Pull refreshを終了する
     [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
 #endif /* #if PULL_REFRESH_HEADLINE */
-
-    // ヘッドラインテーブルを更新する
-    [self updateHeadlineTable];
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -764,10 +766,14 @@
     // Pull refreshを終了する
     [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
 #endif /* #if PULL_REFRESH_HEADLINE */
+}
 
+- (void)headlineChannelChanged:(NSNotification *)notification
+{
     // ヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 }
+
 
 #pragma mark - Player notifications
 

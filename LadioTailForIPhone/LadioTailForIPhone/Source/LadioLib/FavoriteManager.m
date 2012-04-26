@@ -64,31 +64,35 @@ static FavoriteManager *instance = nil;
         return;
     }
 
-    for (Channel *channel in channels) {
-        if (channel == nil || [channel isKindOfClass:[Channel class]] == NO) {
-            continue;
+    @synchronized(self) {
+        BOOL added = NO;
+
+        for (Channel *channel in channels) {
+            if ([self isValidChannel:channel] == NO) {
+                continue;
+            }
+
+            // 登録済みの場合は何もしない
+            if ([self isFavorite:channel]) {
+                continue;
+            }
+
+            added = YES;
+            Favorite *favorite = [[Favorite alloc] init];
+            favorite.channel = channel;
+            [favorites_ setObject:favorite forKey:channel.mnt];
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+                                                                object:channel];
         }
 
-        // 登録済みの場合は何もしない
-        if ([self isFavorite:channel]) {
-            continue;
+        if (added) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+                                                                object:nil];
         }
 
-        // マウント名が入っていない場合はお気に入りに登録しない
-        // マウント名でお気に入りの一致を見ているため
-        if ([channel.mnt length] == 0) {
-            continue;
-        }
-
-        Favorite *favorite = [[Favorite alloc] init];
-        favorite.channel = channel;
-        [favorites_ setObject:favorite forKey:channel.mnt];
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
-                                                            object:channel];
+        // お気に入りを保存する
+        [self storeFavorites];
     }
-
-    // お気に入りを保存する
-    [self storeFavorites];
 }
 
 - (void)removeFavorite:(Channel *)channel
@@ -97,22 +101,88 @@ static FavoriteManager *instance = nil;
         return;
     }
 
-    if ([favorites_ objectForKey:channel.mnt] != nil) {
-        [favorites_ removeObjectForKey:channel.mnt];
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
-                                                            object:channel];
-    }
+    @synchronized(self) {
+        if ([favorites_ objectForKey:channel.mnt] != nil) {
+            [favorites_ removeObjectForKey:channel.mnt];
 
-    // お気に入りを保存する
-    [self storeFavorites];
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+                                                                object:channel];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+                                                                object:nil];
+        }
+
+        // お気に入りを保存する
+        [self storeFavorites];
+    }
 }
 
 - (void)switchFavorite:(Channel *)channel
 {
-    if ([self isFavorite:channel]) {
-        [self removeFavorite:channel];
-    } else {
-        [self addFavorite:channel];
+    @synchronized(self) {
+        if ([self isFavorite:channel]) {
+            [self removeFavorite:channel];
+        } else {
+            [self addFavorite:channel];
+        }
+    }
+}
+
+- (void)replace:(NSArray *)favorites
+{
+    @synchronized(self) {
+        // 今までのお気に入りをクリア
+        [favorites_ removeAllObjects];
+
+        for (Favorite *favorite in favorites) {
+            if ([self isValidFavorite:favorite] == NO) {
+                continue;
+            }
+
+            [favorites_ setObject:favorite forKey:favorite.channel.mnt];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+                                                                object:favorite.channel];
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+                                                            object:nil];
+
+        // お気に入りを保存する
+        [self storeFavorites];
+    }
+}
+
+- (void)merge:(NSArray *)favorites
+{
+    @synchronized(self) {
+        BOOL added = NO;
+
+        for (Favorite *favorite in favorites) {
+            if ([self isValidFavorite:favorite] == NO) {
+                continue;
+            }
+
+            // おなじお気に入りが登録されている場合は新しい方を登録する
+            Favorite *alreadyFavorite = [favorites_ objectForKey:favorite.channel.mnt];
+            if (alreadyFavorite != nil
+                && [alreadyFavorite.registedDate timeIntervalSinceDate:favorite.registedDate] > 0) {
+                continue;
+            }
+
+            added = YES;
+            [favorites_ setObject:favorite forKey:favorite.channel.mnt];
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+                                                                object:favorite.channel];
+        }
+
+        if (added) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+                                                                object:nil];
+        }
+
+        // お気に入りを保存する
+        [self storeFavorites];
     }
 }
 
@@ -122,7 +192,9 @@ static FavoriteManager *instance = nil;
         return NO;
     }
 
-    return [favorites_ objectForKey:channel.mnt] != nil;
+    @synchronized(self) {
+        return [favorites_ objectForKey:channel.mnt] != nil;
+    }
 }
 
 #pragma mark - Private methods
@@ -157,6 +229,34 @@ static FavoriteManager *instance = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:FAVORITES_KEY_V2];
     favorites_ = nil;
+}
+
+- (BOOL)isValidChannel:(Channel *)channel
+{
+    if (channel == nil || [channel isKindOfClass:[Channel class]] == NO) {
+        return NO;
+    }
+
+    // マウント名が入っていない場合はお気に入りに登録しない
+    // マウント名でお気に入りの一致を見ているため
+    if ([channel.mnt length] == 0) {
+        return NO;
+    }
+
+    return YES;
+}
+
+- (BOOL)isValidFavorite:(Favorite *)favorite
+{
+    if (favorite == nil || [favorite isKindOfClass:[Favorite class]] == NO) {
+        return NO;
+    }
+
+    if ([self isValidChannel:favorite.channel] == NO) {
+        return NO;
+    }
+
+    return YES;
 }
 
 #pragma mark - Favorite Manager Data version 1 methods

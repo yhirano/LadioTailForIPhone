@@ -29,6 +29,8 @@
 #define LadioLibHeadlineDidFinishLoadNotification @"LadioLibHeadlineDidFinishLoadNotification"
 /// ヘッドラインの取得に失敗した際のNotification
 #define LadioLibHeadlineFailLoadNotification @"LadioLibHeadlineFailLoadNotification"
+/// ヘッドラインの内容が変更した際のNotification
+#define LadioLibHeadlineChannelChangedNotification @"LadioLibHeadlineChannelChangedNotification"
 
 enum ChannelSortType
 {

@@ -24,7 +24,11 @@
 #import "Channel.h"
 
 /// お気に入りの情報が変化した際のNotification
-/// お気に入り以外はユーザーが操作することがないので、お気に入りの変化だけ通知する。
+/// 複数のお気に入りが1度に変化した場合、1回発行する
+#define LadioLibChannelChangedFavoritesNotification @"LadioLibChannelChangedFavoritesNotification"
+
+/// お気に入りの情報が変化した際のNotification
+/// お気に入り1つの変更に対し1回発行する
 #define LadioLibChannelChangedFavoriteNotification @"LadioLibChannelChangedFavoriteNotification"
 
 /**
@@ -72,6 +76,20 @@
  * @param channel お気に入りから削除する番組
  */
 - (void)switchFavorite:(Channel *)channel;
+
+/**
+ * お気に入りを置き換える
+ *
+ * @param favorites 置き換えるお気に入り
+ */
+- (void)replace:(NSArray *)favorites;
+
+/**
+ * お気に入りをマージする
+ *
+ * @param favorites 加えるお気に入り
+ */
+- (void)merge:(NSArray *)favorites;
 
 /**
  * お気に入りかを取得する
