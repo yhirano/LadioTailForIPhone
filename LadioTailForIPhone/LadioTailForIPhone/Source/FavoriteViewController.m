@@ -39,6 +39,9 @@
 @implementation FavoriteViewController
 {
 @private
+#if !OPEN_SAFARI_WHEN_CLICK_LINK
+    NSURL *openUrl_;
+#endif /* #if !OPEN_SAFARI_WHEN_CLICK_LINK */
 #if AD_ENABLE
     /// 広告が表示されているか
     BOOL isVisibleAdBanner_;
@@ -48,6 +51,13 @@
 @synthesize favorite = favorite_;
 @synthesize topNavigationItem = topNavigationItem_;
 @synthesize descriptionWebView = descriptionWebView_;
+
+- (void)dealloc
+{
+#if !OPEN_SAFARI_WHEN_CLICK_LINK
+    openUrl_ = nil;
+#endif /* #if !OPEN_SAFARI_WHEN_CLICK_LINK */
+}
 
 #pragma mark Private methods
 
@@ -208,7 +218,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = favorite_.channel.url;
+            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
         }
     }
 }
@@ -227,9 +237,10 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
 #if OPEN_SAFARI_WHEN_CLICK_LINK
             // リンクをクリック時、Safariを起動する
-            [[UIApplication sharedApplication] openURL:[request URL]];
+            [[UIApplication sharedApplication] openURL:[ChannelsHtml urlForSmartphone:[request URL]]];
             return NO;
 #else
+            openUrl_ = [request URL];
             [self performSegueWithIdentifier:@"OpenUrl" sender:self];
             return NO;
 #endif /* OPEN_SAFARI_WHEN_CLICK_LINK */
