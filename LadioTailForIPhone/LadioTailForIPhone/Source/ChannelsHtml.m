@@ -56,6 +56,11 @@
 static GRMustacheTemplate *channelPageHtmlTemplate = nil;
 static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
 
+static NSRegularExpression *urlLivedoorJbbsThreadExp = nil;
+static NSString *urlLivedoorJbbsThreadPattern = @"^http://jbbs\\.livedoor\\.jp/bbs/read\\.cgi/(\\w+)/(\\d+)/(\\d+)/(.*)";
+static NSRegularExpression *urlLivedoorJbbsBbsExp = nil;
+static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w+)/(\\d+)/(.*)";
+
 + (NSString *)channelViewHtml:(Channel *)channel
 {
     if (channel == nil) {
@@ -488,6 +493,70 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
         }
     }
     NSString *result = [channelPageHtmlTemplate renderObject:data];
+    return result;
+}
+
++ (NSURL *)urlForSmartphone:(NSURL *)url
+{
+    NSURL *result = url;
+    NSString *urlString = [url absoluteString];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // したらば スマートフォン用サイトを閲覧するか
+    BOOL browseSmartphoneSiteLivedoorJbbs = [defaults boolForKey:@"browse_smartphone_site_livedoor_jbbs"];
+
+    if (browseSmartphoneSiteLivedoorJbbs) {
+        // 正規表現を生成
+        if (urlLivedoorJbbsThreadExp == nil) {
+            NSError *error = nil;
+            urlLivedoorJbbsThreadExp = [NSRegularExpression regularExpressionWithPattern:urlLivedoorJbbsThreadPattern
+                                                                                 options:0
+                                                                                   error:&error];
+            if (error != nil) {
+                NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+            }
+        }
+        if (urlLivedoorJbbsBbsExp == nil) {
+            NSError *error = nil;
+            urlLivedoorJbbsBbsExp = [NSRegularExpression regularExpressionWithPattern:urlLivedoorJbbsBbsPattern
+                                                                              options:0
+                                                                                error:&error];
+            if (error != nil) {
+                NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+            }
+        }
+
+        // 解析
+        NSString *directory = nil;
+        NSString *bbs = nil;
+        NSString *thread = nil;
+        NSTextCheckingResult *match;
+        match = [urlLivedoorJbbsThreadExp firstMatchInString:urlString options:0 range:NSMakeRange(0, urlString.length)];
+        if (match.numberOfRanges >= 3) {
+            directory = [urlString substringWithRange:[match rangeAtIndex:1]];
+            bbs = [urlString substringWithRange:[match rangeAtIndex:2]];
+            if (match.numberOfRanges >= 4) {
+                thread = [urlString substringWithRange:[match rangeAtIndex:3]];
+            }
+        } else {
+            match = [urlLivedoorJbbsBbsExp firstMatchInString:urlString options:0 range:NSMakeRange(0, urlString.length)];
+            if (match.numberOfRanges >= 3) {
+                directory = [urlString substringWithRange:[match rangeAtIndex:1]];
+                bbs = [urlString substringWithRange:[match rangeAtIndex:2]];
+            }
+        }
+
+        // 書き換え
+        if ([directory length] != 0 && [bbs length] != 0 && [thread length] != 0) {
+            urlString = [[NSString alloc] initWithFormat:@"http://jbbs.livedoor.jp/bbs/lite/read.cgi/%@/%@/%@/",
+                         directory, bbs, thread];
+            result = [[NSURL alloc] initWithString:urlString];
+        } else if ([directory length] != 0 && [bbs length] != 0) {
+            urlString = [[NSString alloc] initWithFormat:@"http://jbbs.livedoor.jp/bbs/lite/subject.cgi/%@/%@/",
+                         directory, bbs];
+            result = [[NSURL alloc] initWithString:urlString];
+        }
+    }
+
     return result;
 }
 

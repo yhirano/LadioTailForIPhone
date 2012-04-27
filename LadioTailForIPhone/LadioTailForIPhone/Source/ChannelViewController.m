@@ -52,6 +52,9 @@
 @implementation ChannelViewController
 {
 @private
+#if !OPEN_SAFARI_WHEN_CLICK_LINK
+    NSURL *openUrl_;
+#endif /* #if !OPEN_SAFARI_WHEN_CLICK_LINK */
 #if AD_ENABLE
     /// 広告が表示されているか
     BOOL isVisibleAdBanner_;
@@ -67,6 +70,10 @@
 
 - (void)dealloc
 {
+#if !OPEN_SAFARI_WHEN_CLICK_LINK
+    openUrl_ = nil;
+#endif /* #if !OPEN_SAFARI_WHEN_CLICK_LINK */
+
     // 再生状況変化の通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
@@ -319,7 +326,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = channel_.url;
+            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
         }
     }
 }
@@ -338,9 +345,10 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
 #if OPEN_SAFARI_WHEN_CLICK_LINK
             // リンクをクリック時、Safariを起動する
-            [[UIApplication sharedApplication] openURL:[request URL]];
+            [[UIApplication sharedApplication] [ChannelsHtml urlForSmartphone:openURL:[request URL]]];
             return NO;
 #else
+            openUrl_ = [request URL];
             [self performSegueWithIdentifier:@"OpenUrl" sender:self];
             return NO;
 #endif /* OPEN_SAFARI_WHEN_CLICK_LINK */

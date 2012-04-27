@@ -29,4 +29,12 @@
 
 + (NSString *)favoritelViewHtml:(Favorite *)favorite;
 
+/*
+ * スマートフォン用サイトのURLを取得する
+ * （スマートフォン向けサイトの閲覧がONの場合のみ）
+ *
+ * @param url URL
+ * @return スマートフォン向けサイトの閲覧がONでかつスマートフォン用サイトがあればそのURL、それ以外はurlをそのまま返す
+ */
++ (NSURL *)urlForSmartphone:(NSURL *)url;
 @end
