@@ -20,10 +20,11 @@
  * THE SOFTWARE.
  */
 
+#import "GRMustache/include/GRMustache.h"
 #import "AboutViewController.h"
 
 @implementation AboutViewController
-@synthesize versionLabel;
+@synthesize webView;
 
 #pragma mark UIView methods
 
@@ -34,12 +35,32 @@
     self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
 
     NSString* versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-    versionLabel.text = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
+    NSString* versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
+
+    NSError *error = nil;
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, nil] 
+                                                     forKeys:[NSArray arrayWithObjects:@"version_info",  nil]];
+    NSString *html = [GRMustacheTemplate renderObject:dict
+                                        fromResource:@"AboutHtml"
+                                       withExtension:@"mustache"
+                                              bundle:[NSBundle mainBundle]
+                                               error:&error];
+    if (error != nil) {
+        NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
+    }
+
+    [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    // WebViewをバウンスさせない
+    for (id subview in webView.subviews) {
+        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+            ((UIScrollView *)subview).bounces = NO;
+        }
+    }
 }
 
 - (void)viewDidUnload
 {
-    [self setVersionLabel:nil];
+    [self setWebView:nil];
     [super viewDidUnload];
 }
 

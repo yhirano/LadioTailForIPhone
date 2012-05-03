@@ -24,6 +24,6 @@
 
 @interface AboutViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
