@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "GRMustache/include/GRMustache.h"
+#import "GRMustache/GRMustache.h"
 #import "ChannelsHtml.h"
 
 @class ChannelInfo;
