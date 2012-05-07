@@ -24,7 +24,7 @@
 #import "Headline.h"
 
 /// ねとらじのヘッドラインのURL DAT v2
-#define NETLADIO_HEADLINE_DAT_V2_URL @"http://yp.ladio.net/stats/list.v2.dat"
+#define NETLADIO_HEADLINE_DAT_V2_URL @"http://yp.ladio.net/stats/list.v2.zdat"
 
 /// ヘッドラインのインスタンス
 static Headline *instance = nil;
