@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "GRMustache/include/GRMustache.h"
+#import "GRMustache/GRMustache.h"
 #import "AboutViewController.h"
 
 @implementation AboutViewController
