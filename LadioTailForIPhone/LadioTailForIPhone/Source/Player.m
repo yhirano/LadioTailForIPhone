@@ -20,10 +20,8 @@
  * THE SOFTWARE.
  */
 
+#import "LadioTailConfig.h"
 #import "Player.h"
-
-/// 再生開始後のタイムアウト処理までの時間
-#define PLAY_TIMEOUT_SEC 15.0
 
 /// 停止する理由
 enum StopReason

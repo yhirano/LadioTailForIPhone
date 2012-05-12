@@ -20,10 +20,8 @@
  * THE SOFTWARE.
  */
 
+#import "LadioTailConfig.h"
 #import "HeadlineNaviViewController.h"
-
-/// ナビゲーションバーの色
-#define NAVIGATION_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
 
 @implementation HeadlineNaviViewController
 

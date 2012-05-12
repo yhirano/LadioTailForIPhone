@@ -21,41 +21,10 @@
  */
 
 #import "LadioLib/LadioLib.h"
+#import "LadioTailConfig.h"
 #import "Player.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
-
-/// 戻るボタンの色
-#define BACK_BUTTON_COLOR [UIColor darkGrayColor]
-/// テーブルの背景の色
-#define FAVORITES_TABLE_BACKGROUND_COLOR \
-    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
-/// テーブルの境界線の色
-#define FAVORITES_TABLE_SEPARATOR_COLOR \
-    [[UIColor alloc]initWithRed:(75 / 255.0) green:(75 / 255.0) blue:(75 / 255.0) alpha:1]
-/// テーブルセルの暗い側の色
-#define FAVORITES_TABLE_CELL_BACKGROUND_COLOR_DARK \
-    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
-/// テーブルセルの明るい側の色
-#define FAVORITES_TABLE_CELL_BACKGROUND_COLOR_LIGHT \
-    [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
-/// テーブルセルの選択の色
-#define FAVORITES_CELL_SELECTED_BACKGROUND_COLOR \
-    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
-/// テーブルセルのメインのテキストカラー
-#define FAVORITES_CELL_MAIN_TEXT_COLOR [UIColor whiteColor]
-/// テーブルセルのメインのテキスト選択時カラー
-#define FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのサブのテキストカラー
-#define FAVORITES_CELL_SUB_TEXT_COLOR \
-    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
-/// テーブルセルのサブのテキスト選択時カラー
-#define FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのタグのテキストカラー
-#define FAVORITES_CELL_TAG_TEXT_COLOR \
-    [[UIColor alloc]initWithRed:(180 / 255.0) green:(180 / 255.0) blue:(180 / 255.0) alpha:1]
-/// テーブルセルのタグのテキスト選択時カラー
-#define FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR [UIColor blackColor]
 
 @implementation FavoritesTableViewController
 {

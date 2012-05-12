@@ -21,6 +21,7 @@
  */
 
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "LadioTailConfig.h"
 #import "LadioLib/LadioLib.h"
 #import "Player.h"
 #import "HeadlineViewController.h"
@@ -28,9 +29,6 @@
 
 /// 選択されたタブを覚えておくためのキー
 #define MAIN_TAB_SELECTED_INDEX @"MAIN_TAB_SELECTED_INDEX"
-
-/// ヘッドライン取得失敗時にエラーを表示する秒数
-#define DELAY_FETCH_HEADLINE_MESSAGE 3
 
 @implementation LadioTailViewController
 
