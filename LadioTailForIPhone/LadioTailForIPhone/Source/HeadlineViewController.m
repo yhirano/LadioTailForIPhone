@@ -684,9 +684,6 @@
         // Pull refreshを終了する
         [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
     }
-
-    // ヘッドラインテーブルを更新する
-    [self updateHeadlineTable];
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -702,9 +699,6 @@
         // Pull refreshを終了する
         [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
     }
-
-    // ヘッドラインテーブルを更新する
-    [self updateHeadlineTable];
 }
 
 - (void)headlineChannelChanged:(NSNotification *)notification
