@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Y.Hirano
+ * Copyright (c) 2012 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,6 @@
 
 #import <Foundation/Foundation.h>
 #import "iAd/iAd.h"
-
-/// iADビューの表示アニメーションの秒数
-#define AD_VIEW_ANIMATION_DURATION 0.6
 
 @interface AdBannerManager : NSObject
 

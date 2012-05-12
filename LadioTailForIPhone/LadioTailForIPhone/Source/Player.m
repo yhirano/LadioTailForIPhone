@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Y.Hirano
+ * Copyright (c) 2012 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,8 @@
  * THE SOFTWARE.
  */
 
+#import "LadioTailConfig.h"
 #import "Player.h"
-
-/// 再生開始後のタイムアウト処理までの時間
-#define PLAY_TIMEOUT_SEC 15.0
 
 /// 停止する理由
 enum StopReason

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Y.Hirano
+ * Copyright (c) 2012 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,8 @@
  * THE SOFTWARE.
  */
 
+#import "LadioTailConfig.h"
 #import "HeadlineNaviViewController.h"
-
-/// ナビゲーションバーの色
-#define NAVIGATION_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
 
 @implementation HeadlineNaviViewController
 

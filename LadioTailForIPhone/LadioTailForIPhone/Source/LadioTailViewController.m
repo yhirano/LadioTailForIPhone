@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Y.Hirano
+ * Copyright (c) 2012 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
  */
 
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "LadioTailConfig.h"
 #import "LadioLib/LadioLib.h"
 #import "Player.h"
 #import "HeadlineViewController.h"
@@ -28,9 +29,6 @@
 
 /// 選択されたタブを覚えておくためのキー
 #define MAIN_TAB_SELECTED_INDEX @"MAIN_TAB_SELECTED_INDEX"
-
-/// ヘッドライン取得失敗時にエラーを表示する秒数
-#define DELAY_FETCH_HEADLINE_MESSAGE 3
 
 @implementation LadioTailViewController
 

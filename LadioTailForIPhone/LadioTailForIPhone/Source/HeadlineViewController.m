@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Y.Hirano
+ * Copyright (c) 2012 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,76 +22,15 @@
 
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "LadioLib/LadioLib.h"
+#import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
 #import "AdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
-/// 更新ボタンの色
-#define UPDATE_BUTTON_COLOR [UIColor darkGrayColor]
-/// 戻るボタンの色
-#define BACK_BUTTON_COLOR [UIColor darkGrayColor]
-/// 再生中ボタンの色
-#define PLAYING_BUTTON_COLOR [[UIColor alloc]initWithRed:(191 / 255.0) green:(126 / 255.0) blue:(0 / 255.0) alpha:1]
-/// 検索バーの色
-#define SEARCH_BAR_COLOR [UIColor colorWithRed:(10 / 255.0) green:(10 / 255.0) blue:(10 / 255.0) alpha:1]
-/// テーブルの背景の色
-#define HEADLINE_TABLE_BACKGROUND_COLOR \
-    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
-/// テーブルの境界線の色
-#define HEADLINE_TABLE_SEPARATOR_COLOR \
-    [[UIColor alloc]initWithRed:(75 / 255.0) green:(75 / 255.0) blue:(75 / 255.0) alpha:1]
-/// テーブルセルの暗い側の色
-#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK \
-    [[UIColor alloc]initWithRed:(40 / 255.0) green:(40 / 255.0) blue:(40 / 255.0) alpha:1]
-/// テーブルセルの明るい側の色
-#define HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT \
-    [[UIColor alloc]initWithRed:(60 / 255.0) green:(60 / 255.0) blue:(60 / 255.0) alpha:1]
-/// テーブルセルの選択の色
-#define HEADLINE_CELL_SELECTED_BACKGROUND_COLOR \
-    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
-/// テーブルセルのタイトルのテキストカラー
-#define HEADLINE_CELL_TITLE_TEXT_COLOR [UIColor whiteColor]
-/// テーブルセルのタイトルのテキスト選択時カラー
-#define HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのDJのテキストカラー
-#define HEADLINE_CELL_DJ_TEXT_COLOR \
-    [[UIColor alloc]initWithRed:(255 / 255.0) green:(190 / 255.0) blue:(30 / 255.0) alpha:1]
-/// テーブルセルのDJのテキスト選択時カラー
-#define HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルのリスナー数のテキストカラー
-#define HEADLINE_CELL_LISTENERS_TEXT_COLOR [UIColor whiteColor]
-/// テーブルセルのリスナー数のテキスト選択時カラー
-#define HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR [UIColor blackColor]
-/// テーブルセルの日付の背景丸さ
-#define HEADLINE_CELL_DATE_CORNER_RADIUS 7
-/// テーブルセルの日付の背景の色（明るい方）
-#define HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT \
-    [[UIColor alloc] initWithRed:(140 / 255.0) green:(140 / 255.0) blue:(140 / 255.0) alpha:1]
-/// テーブルセルの日付の背景の色（暗い方）
-#define HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK \
-    [[UIColor alloc] initWithRed:(120 / 255.0) green:(120 / 255.0) blue:(120 / 255.0) alpha:1]
-/// テーブルセルの日付のテキストカラー
-#define HEADLINE_CELL_DATE_TEXT_COLOR [UIColor blackColor]
-/// テーブルセルの日付のテキスト選択時カラー
-#define HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR [UIColor blackColor]
-// Pull Refreshのテキスト色
-#define PULL_REFRESH_TEXT_COLOR [UIColor darkGrayColor]
-// Pull Refreshの矢印イメージ
-#define PULL_REFRESH_ARROW_IMAGE @"EGOTableViewPullRefresh.bundle/grayArrow.png"
-// Pull Refreshの背景色
-#define PULL_REFRESH_TEXT_BACKGROUND_COLOR [UIColor lightGrayColor]
-
-/// Pull refreshでヘッドラインを有効にするか
-#define PULL_REFRESH_HEADLINE 1
-/// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
-#define SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL 1
-/// 広告を有効にするか
-#define AD_ENABLE 0
 /// 広告を表示後に隠すか。デバッグ用。
 #define AD_HIDE_DEBUG 0
-
 
 @implementation HeadlineViewController
 {
@@ -99,15 +38,11 @@
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
-#if PULL_REFRESH_HEADLINE
     /// PullRefreshView
     EGORefreshTableHeaderView *refreshHeaderView_;
-#endif /* #if PULL_REFRESH_HEADLINE */
 
-#if AD_ENABLE
     /// 広告が表示されているか
     BOOL isVisibleAdBanner_;
-#endif /* #if AD_ENABLE */
 }
 
 @synthesize showedChannels = showedChannels_;
@@ -209,13 +144,13 @@
     }
 }
 
-#if AD_ENABLE && AD_HIDE_DEBUG
+#if AD_HIDE_DEBUG
 // 広告を隠す。デバッグ用。
 - (void)hideAdBanner:(NSTimer *)timer
 {
     [self bannerView:nil didFailToReceiveAdWithError:nil];
 }
-#endif /* #if AD_ENABLE && AD_HIDE_DEBUG */
+#endif /* #if AD_HIDE_DEBUG */
 
 #pragma mark - Actions
 
@@ -299,25 +234,25 @@
     // テーブルの境界線の色を変える
     headlineTableView_.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
-#if PULL_REFRESH_HEADLINE
-    // PullRefreshViewの生成
-    if (refreshHeaderView_ == nil) {
-        CGRect pullRefreshViewRect = CGRectMake(
-                0.0f,
-                0.0f - headlineTableView_.bounds.size.height,
-                self.view.frame.size.width,
-                headlineTableView_.bounds.size.height);
-        EGORefreshTableHeaderView *view =
+    if (PULL_REFRESH_HEADLINE) {
+        // PullRefreshViewの生成
+        if (refreshHeaderView_ == nil) {
+            CGRect pullRefreshViewRect = CGRectMake(
+                                                    0.0f,
+                                                    0.0f - headlineTableView_.bounds.size.height,
+                                                    self.view.frame.size.width,
+                                                    headlineTableView_.bounds.size.height);
+            EGORefreshTableHeaderView *view =
             [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
                                               arrowImageName:PULL_REFRESH_ARROW_IMAGE
                                                    textColor:PULL_REFRESH_TEXT_COLOR];
-        view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
-
-        view.delegate = self;
-        [headlineTableView_ addSubview:view];
-        refreshHeaderView_ = view;
+            view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
+            
+            view.delegate = self;
+            [headlineTableView_ addSubview:view];
+            refreshHeaderView_ = view;
+        }
     }
-#endif // #if PULL_REFRESH_HEADLINE
 }
 
 - (void)viewDidUnload
@@ -357,39 +292,39 @@
 {
     [super viewDidAppear:animated];
 
-#if AD_ENABLE
-    // テーブルの初期位置を設定
-    // 広告のアニメーション前に初期位置を設定する必要有り
-    headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-
-    // 広告を表示する
-    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
-    isVisibleAdBanner_ = NO;
-    [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
-    if (adBannerView.bannerLoaded) {
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 317, 320, 50);
-                         }
-                         completion:^(BOOL finished) {
-                             if (finished) {
-                                 headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+    if (HEADLINE_VIEW_AD_ENABLE) {
+        // テーブルの初期位置を設定
+        // 広告のアニメーション前に初期位置を設定する必要有り
+        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+        
+        // 広告を表示する
+        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        isVisibleAdBanner_ = NO;
+        [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
+        if (adBannerView.bannerLoaded) {
+            [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
+                                  delay:0
+                                options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 adBannerView.frame = CGRectMake(0, 317, 320, 50);
                              }
-                         }];
-        isVisibleAdBanner_ = YES;
+                             completion:^(BOOL finished) {
+                                 if (finished) {
+                                     headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
+                                 }
+                             }];
+            isVisibleAdBanner_ = YES;
 #if AD_HIDE_DEBUG
-        [NSTimer scheduledTimerWithTimeInterval:4.0
-                                         target:self
-                                       selector:@selector(hideAdBanner:)
-                                       userInfo:nil
-                                        repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:4.0
+                                             target:self
+                                           selector:@selector(hideAdBanner:)
+                                           userInfo:nil
+                                            repeats:NO];
 #endif /* #if AD_HIDE_DEBUG */
+        }
+        adBannerView.delegate = self;
+        [self.view insertSubview:adBannerView aboveSubview:headlineTableView_];
     }
-    adBannerView.delegate = self;
-    [self.view insertSubview:adBannerView aboveSubview:headlineTableView_];
-#endif /* #if AD_ENABLE */
 
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
@@ -401,26 +336,26 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-#if AD_ENABLE
-    // テーブルの初期位置を設定
-    // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
-    headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-
-    // 広告の表示を消す
-    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
-    adBannerView.delegate = nil;
-#endif /* #if AD_ENABLE */
+    if (HEADLINE_VIEW_AD_ENABLE) {
+        // テーブルの初期位置を設定
+        // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
+        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
+        
+        // 広告の表示を消す
+        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        adBannerView.delegate = nil;
+    }
 
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-#if AD_ENABLE
-    // 広告Viewを削除
-    ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
-    [adBannerView removeFromSuperview];
-#endif /* #if AD_ENABLE */
+    if (HEADLINE_VIEW_AD_ENABLE) {
+        // 広告Viewを削除
+        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        [adBannerView removeFromSuperview];
+    }
 
     [super viewDidDisappear:animated];
 }
@@ -640,7 +575,6 @@
 
 #pragma mark - UIScrollViewDelegate Methods
 
-#if PULL_REFRESH_HEADLINE
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // EGOTableViewPullRefreshに必要
@@ -652,11 +586,9 @@
     // EGOTableViewPullRefreshに必要
     [refreshHeaderView_ egoRefreshScrollViewDidEndDragging:scrollView];
 }
-#endif /* #if PULL_REFRESH_HEADLINE */
 
 #pragma mark - EGORefreshTableHeaderDelegate Methods
 
-#if PULL_REFRESH_HEADLINE
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     [self fetchHeadline];
@@ -672,15 +604,17 @@
 {
     return [NSDate date]; // should return date data source was last changed
 }
-#endif /* #if PULL_REFRESH_HEADLINE */
 
 #pragma mark - ADBannerViewDelegate methods
 
-#if AD_ENABLE
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    // 広告をはいつでも表示可能
-    return YES;
+    if (HEADLINE_VIEW_AD_ENABLE) {
+        // 広告をはいつでも表示可能
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 // iADバナーが読み込み終わった
@@ -724,7 +658,6 @@
         isVisibleAdBanner_ = NO;
     }
 }
-#endif /* #if AD_ENABLE */
 
 #pragma mark - Headline notifications
 
@@ -747,10 +680,13 @@
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     [self updateUpdateBarButton];
 
-#if PULL_REFRESH_HEADLINE
-    // Pull refreshを終了する
-    [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
-#endif /* #if PULL_REFRESH_HEADLINE */
+    if (PULL_REFRESH_HEADLINE) {
+        // Pull refreshを終了する
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+    }
+
+    // ヘッドラインテーブルを更新する
+    [self updateHeadlineTable];
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -762,10 +698,13 @@
     // ヘッドラインの取得終了時に更新ボタンを有効にする
     [self updateUpdateBarButton];
 
-#if PULL_REFRESH_HEADLINE
-    // Pull refreshを終了する
-    [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
-#endif /* #if PULL_REFRESH_HEADLINE */
+    if (PULL_REFRESH_HEADLINE) {
+        // Pull refreshを終了する
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+    }
+
+    // ヘッドラインテーブルを更新する
+    [self updateHeadlineTable];
 }
 
 - (void)headlineChannelChanged:(NSNotification *)notification
@@ -781,12 +720,13 @@
 {
     [self updatePlayingButton];
     [self updateHeadlineTable];
-#if SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL
-    // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
-    if ([[Player sharedInstance] state] == PlayerStatePlay) {
-        [self scrollToTopAtPlayingCell];
+
+    if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
+        // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
+        if ([[Player sharedInstance] state] == PlayerStatePlay) {
+            [self scrollToTopAtPlayingCell];
+        }
     }
-#endif /* #if SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL */
 }
 
 @end
