@@ -87,15 +87,19 @@
 
     NSTimeInterval diffTime = [[NSDate date] timeIntervalSinceDate:date];
 
-    // 渡された日付が現在よりも新しい場合（基本的にはこないはず）
+    // 渡された日付が現在よりも新しい場合（ないはずだが一応）
     if (diffTime <= 0) {
+        // 最も明るい色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
     }
-    // 1日以上前
+    // 6時間以上前
     else if (diffTime >= (6 * 60 * 60)) {
+        // 最も暗い色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
     } else {
-        double lighty = 1 - (diffTime / (6 * 60 * 60));
+        // 時間が経過するごとに暗い色にする
+        // 0分：最も明るい 6時間：最も暗い
+        double lighty = 1 - (diffTime / (6 * 60 * 60)); // 明るさ
         CGFloat lightRed, lightGreen, lightBlue, lightAlpha, darkRed, darkGreen, darkBlue, darkAlpha;
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getRed:&lightRed green:&lightGreen blue:&lightBlue alpha:&lightAlpha];
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getRed:&darkRed green:&darkGreen blue:&darkBlue alpha:&darkAlpha];
