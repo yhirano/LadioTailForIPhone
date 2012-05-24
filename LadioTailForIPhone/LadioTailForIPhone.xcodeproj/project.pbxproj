@@ -62,6 +62,8 @@
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
 		8EB3A5FD153C01D900965D87 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3A5FC153C01D900965D87 /* iAd.framework */; };
+		8EC225FB156F00C700DB1633 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC225F9156F00C700DB1633 /* Icon-72@2x.png */; };
+		8EC225FC156F00C700DB1633 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC225FA156F00C700DB1633 /* Icon-Small-50@2x.png */; };
 		8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
 		8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
 		8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
@@ -205,6 +207,8 @@
 		8EAFBF631537C8E000DDBB6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8EAFBF651537C90700DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8EB3A5FC153C01D900965D87 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		8EC225F9156F00C700DB1633 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Images/Icon-72@2x.png"; sourceTree = "<group>"; };
+		8EC225FA156F00C700DB1633 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "Images/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		8EC23B47153712BB007352FD /* Ladio Tail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ladio Tail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC23B4B153712BB007352FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8EC23B4D153712BB007352FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -521,7 +525,9 @@
 				8EC3BBED1541376D00F6DC08 /* Default.png */,
 				8EC3BBEE1541376D00F6DC08 /* Default@2x.png */,
 				8E12B5AC153E7F28002F4437 /* Icon-72.png */,
+				8EC225F9156F00C700DB1633 /* Icon-72@2x.png */,
 				8E12B5AD153E7F28002F4437 /* Icon-Small-50.png */,
+				8EC225FA156F00C700DB1633 /* Icon-Small-50@2x.png */,
 				8E12B5AE153E7F28002F4437 /* Icon-Small.png */,
 				8E12B5AF153E7F28002F4437 /* Icon-Small@2x.png */,
 				8E12B5B0153E7F28002F4437 /* Icon.png */,
@@ -682,6 +688,8 @@
 				8E62BA211544F3B400E77F3B /* tablecell_broadcast_white@2x.png in Resources */,
 				8E9928CE154906680015CA5D /* Settings.bundle in Resources */,
 				8E0B21FB1552136400A0347A /* AboutHtml.mustache in Resources */,
+				8EC225FB156F00C700DB1633 /* Icon-72@2x.png in Resources */,
+				8EC225FC156F00C700DB1633 /* Icon-Small-50@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
