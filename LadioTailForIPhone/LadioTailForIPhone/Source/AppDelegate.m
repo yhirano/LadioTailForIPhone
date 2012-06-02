@@ -21,6 +21,7 @@
  */
 
 #import "AppDelegate.h"
+#import "AdlantisAdManager.h"
 
 @implementation AppDelegate
 
@@ -28,6 +29,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//    AdlantisAdManager.sharedManager.publisherID = <>;
+
     return YES;
 }
 

@@ -149,7 +149,10 @@ const NSTimeInterval DELAY_FETCH_HEADLINE_MESSAGE = 3.0;
 UIColor * const FAVORITE_BUTTON_COLOR = [UIColor darkGrayColor];
 
 /// 下部Viewの上部の色
-UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:0.11f green:0.11f blue:0.11f alpha:1.0f];
+UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)
+                                                       green:(28.0f / 255)
+                                                        blue:(28.0f / 255)
+                                                       alpha:1.0f];
 
 /// 下部Viewの下部の色
 UIColor * const BOTTOM_BAR_BOTTOM_COLOR = [UIColor blackColor];
