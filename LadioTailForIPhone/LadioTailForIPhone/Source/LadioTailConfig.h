@@ -104,8 +104,8 @@ extern const BOOL PULL_REFRESH_HEADLINE;
 /// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
 extern const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL;
 
-/// 広告を有効にするか
-extern const BOOL HEADLINE_VIEW_AD_ENABLE;
+/// iAd広告を有効にするか
+extern const BOOL HEADLINE_VIEW_IAD_ENABLE;
 
 /// ヘッドライン取得失敗時にエラーを表示する秒数
 extern const NSTimeInterval DELAY_FETCH_HEADLINE_MESSAGE;
@@ -124,11 +124,11 @@ extern UIColor * const BOTTOM_BAR_BOTTOM_COLOR;
 /// リンクをクリックするとSafariが開く
 extern const BOOL OPEN_SAFARI_WHEN_CLICK_LINK;
 
-/// 広告を有効にするか
-extern const BOOL CHANNEL_VIEW_AD_ENABLE;
+/// iAd広告を有効にするか
+extern const BOOL CHANNEL_VIEW_IAD_ENABLE;
 
-/// 広告を有効にするか
-extern const BOOL WEB_PAGE_VIEW_AD_ENABLE;
+/// iAd広告を有効にするか
+extern const BOOL WEB_PAGE_VIEW_IAD_ENABLE;
 
 #pragma mark - Other table view config
 
@@ -190,8 +190,8 @@ extern UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
 
 #pragma mark - Favorite view config
 
-/// 広告を有効にするか
-extern const BOOL FAVORITE_VIEW_AD_ENABLE;
+/// iAd広告を有効にするか
+extern const BOOL FAVORITE_VIEW_IAD_ENABLE;
 
 #pragma mark - Player config
 

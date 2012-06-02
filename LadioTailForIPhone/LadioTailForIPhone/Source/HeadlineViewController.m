@@ -25,7 +25,7 @@
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
-#import "AdBannerManager.h"
+#import "IAdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
@@ -291,13 +291,13 @@
 {
     [super viewDidAppear:animated];
 
-    if (HEADLINE_VIEW_AD_ENABLE) {
+    if (HEADLINE_VIEW_IAD_ENABLE) {
         // テーブルの初期位置を設定
         // 広告のアニメーション前に初期位置を設定する必要有り
         headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
         
         // 広告を表示する
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         isVisibleAdBanner_ = NO;
         [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
         if (adBannerView.bannerLoaded) {
@@ -335,13 +335,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (HEADLINE_VIEW_AD_ENABLE) {
+    if (HEADLINE_VIEW_IAD_ENABLE) {
         // テーブルの初期位置を設定
         // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
         headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
         
         // 広告の表示を消す
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         adBannerView.delegate = nil;
     }
 
@@ -350,9 +350,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    if (HEADLINE_VIEW_AD_ENABLE) {
+    if (HEADLINE_VIEW_IAD_ENABLE) {
         // 広告Viewを削除
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         [adBannerView removeFromSuperview];
     }
 
@@ -608,7 +608,7 @@
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    if (HEADLINE_VIEW_AD_ENABLE) {
+    if (HEADLINE_VIEW_IAD_ENABLE) {
         // 広告をはいつでも表示可能
         return YES;
     } else {
@@ -622,7 +622,7 @@
     NSLog(@"iAD banner load complated.");
 
     if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         adBannerView.hidden = NO;
         [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
                               delay:0
@@ -645,7 +645,7 @@
     NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
 
     if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
         [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
                               delay:0
