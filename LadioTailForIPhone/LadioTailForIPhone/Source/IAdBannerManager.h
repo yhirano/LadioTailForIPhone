@@ -23,10 +23,10 @@
 #import <Foundation/Foundation.h>
 #import "iAd/iAd.h"
 
-@interface AdBannerManager : NSObject
+@interface IAdBannerManager : NSObject
 
 @property (strong, readonly) ADBannerView *adBannerView;
 
-+ (AdBannerManager *)sharedInstance;
++ (IAdBannerManager *)sharedInstance;
 
 @end

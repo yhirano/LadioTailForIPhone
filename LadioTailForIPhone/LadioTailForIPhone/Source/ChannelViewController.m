@@ -23,7 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LadioTailConfig.h"
 #import "Player.h"
-#import "AdBannerManager.h"
+#import "IAdBannerManager.h"
 #import "ChannelsHtml.h"
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
@@ -237,13 +237,13 @@
 {
     [super viewDidAppear:animated];
 
-    if (CHANNEL_VIEW_AD_ENABLE) {
+    if (CHANNEL_VIEW_IAD_ENABLE) {
         // WebViewの初期位置を設定
         // 広告のアニメーション前に初期位置を設定する必要有り
         descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
         
         // 広告を表示する
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         [adBannerView setFrame:CGRectMake(0, 366, 320, 50)];
         if (adBannerView.bannerLoaded) {
             [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
@@ -276,13 +276,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (CHANNEL_VIEW_AD_ENABLE) {
+    if (CHANNEL_VIEW_IAD_ENABLE) {
         // WebViewの初期位置を設定
         // Viewを消す前に大きさを元に戻しておくことで、ちらつくのを防ぐ
         descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
         
         // 広告の表示を消す
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         adBannerView.delegate = nil;
     }
 
@@ -294,9 +294,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    if (CHANNEL_VIEW_AD_ENABLE) {
+    if (CHANNEL_VIEW_IAD_ENABLE) {
     // 広告Viewを削除
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         [adBannerView removeFromSuperview];
     }
 
@@ -366,7 +366,7 @@
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    if (CHANNEL_VIEW_AD_ENABLE) {
+    if (CHANNEL_VIEW_IAD_ENABLE) {
         // 広告をはいつでも表示可能
         return YES;
     } else {
@@ -380,7 +380,7 @@
     NSLog(@"iAD banner load complated.");
 
     if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         adBannerView.hidden = NO;
         [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
                               delay:0
@@ -403,7 +403,7 @@
     NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
 
     if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [AdBannerManager sharedInstance].adBannerView;
+        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
         descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
         [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
                               delay:0

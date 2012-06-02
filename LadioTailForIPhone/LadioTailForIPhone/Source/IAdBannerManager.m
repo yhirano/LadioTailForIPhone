@@ -20,19 +20,19 @@
  * THE SOFTWARE.
  */
 
-#import "AdBannerManager.h"
+#import "IAdBannerManager.h"
 
-static AdBannerManager *instance = nil;
+static IAdBannerManager *instance = nil;
 
-@implementation AdBannerManager
+@implementation IAdBannerManager
 
 @synthesize adBannerView = adBannerView_;
 
-+ (AdBannerManager *)sharedInstance
++ (IAdBannerManager *)sharedInstance
 {
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
-        instance = [[AdBannerManager alloc] init];
+        instance = [[IAdBannerManager alloc] init];
     });
     return instance;
 }

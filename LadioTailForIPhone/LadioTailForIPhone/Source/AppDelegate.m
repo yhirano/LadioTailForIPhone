@@ -22,6 +22,7 @@
 
 #import "ICloudStrorage.h"
 #import "AppDelegate.h"
+#import "AdlantisAdManager.h"
 
 @implementation AppDelegate
 
@@ -31,6 +32,8 @@
 {
     // iCloudから通知を受ける
     [[ICloudStrorage sharedInstance] registICloudNotification];
+
+//    AdlantisAdManager.sharedManager.publisherID = <>;
 
     return YES;
 }

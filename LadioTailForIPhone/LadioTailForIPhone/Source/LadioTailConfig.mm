@@ -137,8 +137,8 @@ const BOOL PULL_REFRESH_HEADLINE = YES;
 /// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
 const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;
 
-/// 広告を有効にするか
-const BOOL HEADLINE_VIEW_AD_ENABLE = NO;
+/// iAd広告を有効にするか
+const BOOL HEADLINE_VIEW_IAD_ENABLE = NO;
 
 /// ヘッドライン取得失敗時にエラーを表示する秒数
 const NSTimeInterval DELAY_FETCH_HEADLINE_MESSAGE = 3.0;
@@ -149,7 +149,10 @@ const NSTimeInterval DELAY_FETCH_HEADLINE_MESSAGE = 3.0;
 UIColor * const FAVORITE_BUTTON_COLOR = [UIColor darkGrayColor];
 
 /// 下部Viewの上部の色
-UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:0.11f green:0.11f blue:0.11f alpha:1.0f];
+UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)
+                                                       green:(28.0f / 255)
+                                                        blue:(28.0f / 255)
+                                                       alpha:1.0f];
 
 /// 下部Viewの下部の色
 UIColor * const BOTTOM_BAR_BOTTOM_COLOR = [UIColor blackColor];
@@ -157,11 +160,11 @@ UIColor * const BOTTOM_BAR_BOTTOM_COLOR = [UIColor blackColor];
 /// リンクをクリックするとSafariが開く
 const BOOL OPEN_SAFARI_WHEN_CLICK_LINK = NO;
 
-/// 広告を有効にするか
-const BOOL CHANNEL_VIEW_AD_ENABLE = YES;
+/// iAd広告を有効にするか
+const BOOL CHANNEL_VIEW_IAD_ENABLE = NO;
 
-/// 広告を有効にするか
-const BOOL WEB_PAGE_VIEW_AD_ENABLE = YES;
+/// iAd広告を有効にするか
+const BOOL WEB_PAGE_VIEW_IAD_ENABLE = NO;
 
 #pragma mark - Other table view config
 
@@ -224,8 +227,8 @@ UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
 #pragma mark - Favorite view config
 
-/// 広告を有効にするか
-const BOOL FAVORITE_VIEW_AD_ENABLE = YES;
+/// iAd広告を有効にするか
+const BOOL FAVORITE_VIEW_IAD_ENABLE = NO;
 
 #pragma mark - Player config
 
