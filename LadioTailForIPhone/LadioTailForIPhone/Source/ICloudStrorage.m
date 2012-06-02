@@ -167,7 +167,10 @@ static ICloudStrorage *instance = nil;
         NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:favorites];
         NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
         [icStore setObject:archive forKey:FAVORITES_V1];
-        [icStore synchronize];
+        BOOL result = [icStore synchronize];
+        if (result == NO) {
+            NSLog(@"Sending favorite to iCloud error occurred.");
+        }
     }
 }
 
