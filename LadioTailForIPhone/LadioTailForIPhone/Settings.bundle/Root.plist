@@ -36,6 +36,34 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Shake</string>
+			<key>Key</key>
+			<string>operation_shake</string>
+			<key>DefaultValue</key>
+			<string>shake_do_nothing</string>
+			<key>Titles</key>
+			<array>
+				<string>Do nothing</string>
+				<string>Update channels</string>
+				<string>Play random</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>shake_do_nothing</string>
+				<string>shake_update_headline</string>
+				<string>shake_play_random</string>
+			</array>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>
