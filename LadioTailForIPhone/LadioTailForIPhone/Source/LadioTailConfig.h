@@ -89,6 +89,21 @@ extern UIColor * const HEADLINE_CELL_DATE_TEXT_COLOR;
 /// テーブルセルの日付のテキスト選択時カラー
 extern UIColor * const HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
 
+/// テーブルセルのビットレートの背景丸さ
+extern const CGFloat HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+
+/// テーブルセルのビットレートの背景の色（明るい方）
+extern UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
+
+/// テーブルセルのビットレートの背景の色（暗い方）
+extern UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
+
+/// テーブルセルのビットレートのテキストカラー
+extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR;
+
+/// テーブルセルのビットレートのテキスト選択時カラー
+extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+
 // Pull Refreshのテキスト色
 extern UIColor * const PULL_REFRESH_TEXT_COLOR;
 

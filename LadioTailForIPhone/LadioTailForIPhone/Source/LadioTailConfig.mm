@@ -122,6 +122,27 @@ UIColor * const HEADLINE_CELL_DATE_TEXT_COLOR = [UIColor blackColor];
 /// テーブルセルの日付のテキスト選択時カラー
 UIColor * const HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
+/// テーブルセルのビットレートの背景丸さ
+const CGFloat HEADLINE_CELL_BITRATE_CORNER_RADIUS = HEADLINE_CELL_DATE_CORNER_RADIUS;
+
+/// テーブルセルのビットレートの背景の色（明るい方）
+UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                          saturation:(89.0f / 100.0f)
+                                                                          brightness:(70.0f / 100.0f)
+                                                                               alpha:1.0f];
+
+/// テーブルセルのビットレートの背景の色（暗い方）
+UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                         saturation:(89.0f / 100.0f)
+                                                                         brightness:(57.0f / 100.0f)
+                                                                              alpha:1.0f];
+
+/// テーブルセルのビットレートのテキストカラー
+UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR = [UIColor blackColor];
+
+/// テーブルセルのビットレートのテキスト選択時カラー
+UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR = [UIColor blackColor];
+
 // Pull Refreshのテキスト色
 UIColor * const PULL_REFRESH_TEXT_COLOR = [UIColor darkGrayColor];
 

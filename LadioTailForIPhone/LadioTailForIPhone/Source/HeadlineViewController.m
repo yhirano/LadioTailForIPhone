@@ -32,9 +32,19 @@
 /// 広告を表示後に隠すか。デバッグ用。
 #define AD_HIDE_DEBUG 0
 
+enum HeadlineViewDisplayType {
+    HeadlineViewDisplayTypeOnlyTitleAndDj,
+    HeadlineViewDisplayTypeElapsedTime,
+    HeadlineViewDisplayTypeBitrate,
+    HeadlineViewDisplayTypeElapsedTimeAndBitrate
+};
+
 @implementation HeadlineViewController
 {
 @private
+    /// ヘッドラインの表示方式
+    NSInteger headlineViewDisplayType_;
+
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
@@ -55,6 +65,8 @@
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
@@ -81,6 +93,74 @@
     [headline fetchHeadline];
 }
 
+- (NSInteger)headlineViewDisplayType
+{
+    NSInteger result = HeadlineViewDisplayTypeElapsedTime;
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *view_headline = [defaults objectForKey:@"view_headline"];
+    if ([view_headline isEqualToString:@"view_headline_only_title_and_dj"]) {
+        result = HeadlineViewDisplayTypeOnlyTitleAndDj;
+    } else if ([view_headline isEqualToString:@"view_headline_elapsed_time"]) {
+        result = HeadlineViewDisplayTypeElapsedTime;
+    } else if ([view_headline isEqualToString:@"view_headline_bitrate"]) {
+        result = HeadlineViewDisplayTypeBitrate;
+    } else if ([view_headline isEqualToString:@"view_headline_elapsed_time_and_bitrate"]) {
+        result = HeadlineViewDisplayTypeElapsedTimeAndBitrate;
+    }
+
+    return result;
+}
+
+- (NSString *)dateText:(NSDate *)date
+{
+    NSString *result;
+    
+    NSInteger diffTime = (NSInteger)[[NSDate date] timeIntervalSinceDate:date];
+    NSInteger diffDay = diffTime / (24 * 60 * 60);
+    NSInteger diffHour = (diffTime % (24 * 60 * 60)) / (60 * 60);
+    NSInteger diffMin = (diffTime % (60 * 60)) / 60;
+    // 1分未満
+    if (diffDay < 1 && diffHour < 1 && diffMin < 1) {
+        result = [[NSString alloc] initWithFormat:NSLocalizedString(@"%dmin", @"分"), 1];
+    }
+    // 1日以上前
+    else if (diffDay >= 1) {
+        NSString *daySuffix;
+        if (diffDay == 1) {
+            daySuffix = NSLocalizedString(@"%dday", @"日");
+        } else {
+            daySuffix = NSLocalizedString(@"%ddays", @"日");
+        }
+        result = [[NSString alloc] initWithFormat:daySuffix, diffDay];
+    } else {
+        NSString *diffTimeString = @"";
+        if (diffHour >= 1) {
+            NSString *hourSuffix;
+            if (diffHour == 1) {
+                hourSuffix = NSLocalizedString(@"%dhr ", @"時間");
+            } else {
+                hourSuffix = NSLocalizedString(@"%dhrs ", @"時間");
+            }
+            diffTimeString = [[NSString alloc] initWithFormat:hourSuffix, diffHour];
+        }
+        
+        if (diffMin >= 1) {
+            NSString *minSuffix;
+            if (diffMin == 1) {
+                minSuffix = NSLocalizedString(@"%dmin", @"分");
+            } else {
+                minSuffix = NSLocalizedString(@"%dmins", @"分");
+            }
+            NSString *diffMinStr = [[NSString alloc] initWithFormat:minSuffix, diffMin];
+            diffTimeString = [[NSString alloc] initWithFormat:@"%@%@", diffTimeString, diffMinStr];
+        }
+        result = diffTimeString;
+    }
+    
+    return result;
+}
+
 /// 渡された日付と現在の日付から、日付ラベルの背景色を算出する
 - (UIColor *)dateLabelBackgroundColor:(NSDate *)date
 {
@@ -101,16 +181,73 @@
         // 時間が経過するごとに暗い色にする
         // 0分：最も明るい 6時間：最も暗い
         double lighty = 1 - (diffTime / (6 * 60 * 60)); // 明るさ
-        CGFloat lightRed, lightGreen, lightBlue, lightAlpha, darkRed, darkGreen, darkBlue, darkAlpha;
-        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getRed:&lightRed green:&lightGreen blue:&lightBlue alpha:&lightAlpha];
-        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getRed:&darkRed green:&darkGreen blue:&darkBlue alpha:&darkAlpha];
-        CGFloat red = ((lightRed - darkRed) * lighty) + darkRed;
-        CGFloat green = ((lightGreen - darkGreen) * lighty) + darkGreen;
-        CGFloat blue = ((lightBlue - darkBlue) * lighty) + darkBlue;
+        CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
+        darkHue, darkSaturation, darkBrightness, darkAlpha;
+        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
+                                                  saturation:&ligntSaturation
+                                                  brightness:&ligntBrightness
+                                                       alpha:&lightAlpha];
+        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getHue:&darkHue
+                                                 saturation:&darkSaturation
+                                                 brightness:&darkBrightness
+                                                      alpha:&darkAlpha];
+        CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
+        CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
+        CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
         CGFloat alpha = ((lightAlpha - darkAlpha) * lighty) + darkAlpha;
-        result = [[UIColor alloc] initWithRed:red green:green blue:blue alpha:alpha];
+        result = [[UIColor alloc] initWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
     }
 
+    return result;
+}
+
+- (NSString *)bitrateText:(NSInteger)bitrate
+{
+    NSString *result;
+
+    if (bitrate < 1000) {
+        result = [[NSString alloc] initWithFormat:@"%dkbps", bitrate];
+    } else if (bitrate <= 1024) {
+        result = @"1Mbps";
+    } else {
+        result = [[NSString alloc] initWithFormat:@"%f.1Mbps", bitrate / (float)1024];
+    }
+    
+    return result;
+}
+
+/// 渡されたビットレートから、ビットレートラベルの背景色を算出する
+- (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
+{
+    UIColor *result;
+    
+    if(bitrate <= 24) {
+        // 最も暗い色にする
+        result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
+    } else if (bitrate >= 128) {
+        // 最も明るい色にする
+        result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
+    } else {
+        // ビットレートが低くなるごとに暗い色にする
+        // 128kbps：最も明るい 24kbps：最も暗い
+        double lighty = (double)(bitrate - 24) / (double)(128 - 24); // 明るさ
+        CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
+                darkHue, darkSaturation, darkBrightness, darkAlpha;
+        [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
+                                                 saturation:&ligntSaturation
+                                                 brightness:&ligntBrightness
+                                                      alpha:&lightAlpha];
+        [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK getHue:&darkHue
+                                                  saturation:&darkSaturation
+                                                  brightness:&darkBrightness
+                                                       alpha:&darkAlpha];
+        CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
+        CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
+        CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
+        CGFloat alpha = ((lightAlpha - darkAlpha) * lighty) + darkAlpha;
+        result = [[UIColor alloc] initWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+    }
+    
     return result;
 }
 
@@ -169,6 +306,12 @@
 {
     [super viewDidLoad];
 
+    // 設定の変更を補足する
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(defaultsChanged:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:nil];
+
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
@@ -186,9 +329,6 @@
                                              selector:@selector(headlineChannelChanged:)
                                                  name:LadioLibHeadlineChannelChangedNotification
                                                object:nil];
-#ifdef DEBUG
-    NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
-#endif /* #ifdef DEBUG */
 
     // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -238,6 +378,9 @@
     // テーブルの境界線の色を変える
     headlineTableView_.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
+    // ヘッドライン表示方式を設定
+    headlineViewDisplayType_ = [self headlineViewDisplayType];
+    
     if (PULL_REFRESH_HEADLINE) {
         // PullRefreshViewの生成
         if (refreshHeaderView_ == nil) {
@@ -469,7 +612,52 @@
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
     UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
+    
+    switch (headlineViewDisplayType_) {
+        case HeadlineViewDisplayTypeElapsedTime:
+            dateLabel.hidden = NO;
+            bitrateLabel.hidden = YES;
 
+            CGRect djLabelRect = [djLabel frame];
+            djLabelRect.size = CGSizeMake(166, djLabelRect.size.height);
+            [djLabel setFrame:djLabelRect];
+            break;
+        case HeadlineViewDisplayTypeBitrate:
+            dateLabel.hidden = YES;
+            bitrateLabel.hidden = NO;
+
+            CGRect bitrateLabelRect = [bitrateLabel frame];
+            bitrateLabelRect.origin = CGPointMake(260, bitrateLabelRect.origin.y);
+            [bitrateLabel setFrame:bitrateLabelRect];
+
+            djLabelRect = [djLabel frame];
+            djLabelRect.size = CGSizeMake(188, djLabelRect.size.height);
+            [djLabel setFrame:djLabelRect];
+            break;
+        case HeadlineViewDisplayTypeOnlyTitleAndDj:
+            dateLabel.hidden = YES;
+            bitrateLabel.hidden = YES;
+
+            djLabelRect = [djLabel frame];
+            djLabelRect.size = CGSizeMake(250, djLabelRect.size.height);
+            [djLabel setFrame:djLabelRect];
+            break;
+        case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+        default:
+            dateLabel.hidden = NO;
+            bitrateLabel.hidden = NO;
+
+            bitrateLabelRect = [bitrateLabel frame];
+            bitrateLabelRect.origin = CGPointMake(175, bitrateLabelRect.origin.y);
+            [bitrateLabel setFrame:bitrateLabelRect];
+            
+            djLabelRect = [djLabel frame];
+            djLabelRect.size = CGSizeMake(104, djLabelRect.size.height);
+            [djLabel setFrame:djLabelRect];
+            break;
+    }
+    
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
@@ -485,47 +673,11 @@
     } else {
         listenersLabel.text = @"";
     }
-
-    NSInteger diffTime = (NSInteger)[[NSDate date] timeIntervalSinceDate:channel.tims];
-    NSInteger diffDay = diffTime / (24 * 60 * 60);
-    NSInteger diffHour = (diffTime % (24 * 60 * 60)) / (60 * 60);
-    NSInteger diffMin = (diffTime % (60 * 60)) / 60;
-    // 1分未満
-    if (diffDay < 1 && diffHour < 1 && diffMin < 1) {
-        dateLabel.text = [[NSString alloc] initWithFormat:NSLocalizedString(@"%dmin", @"分"), 1];
+    if (!dateLabel.hidden) {
+        dateLabel.text = [self dateText:channel.tims];
     }
-    // 1日以上前
-    else if (diffDay >= 1) {
-        NSString *daySuffix;
-        if (diffDay == 1) {
-            daySuffix = NSLocalizedString(@"%dday", @"日");
-        } else {
-            daySuffix = NSLocalizedString(@"%ddays", @"日");
-        }
-        dateLabel.text = [[NSString alloc] initWithFormat:daySuffix, diffDay];
-    } else {
-        NSString *diffTimeString = @"";
-        if (diffHour >= 1) {
-            NSString *hourSuffix;
-            if (diffHour == 1) {
-                hourSuffix = NSLocalizedString(@"%dhr ", @"時間");
-            } else {
-                hourSuffix = NSLocalizedString(@"%dhrs ", @"時間");
-            }
-            diffTimeString = [[NSString alloc] initWithFormat:hourSuffix, diffHour];
-        }
-
-        if (diffMin >= 1) {
-            NSString *minSuffix;
-            if (diffMin == 1) {
-                minSuffix = NSLocalizedString(@"%dmin", @"分");
-            } else {
-                minSuffix = NSLocalizedString(@"%dmins", @"分");
-            }
-            NSString *diffMinStr = [[NSString alloc] initWithFormat:minSuffix, diffMin];
-            diffTimeString = [[NSString alloc] initWithFormat:@"%@%@", diffTimeString, diffMinStr];
-        }
-        dateLabel.text = diffTimeString;
+    if (!bitrateLabel.hidden) {
+        bitrateLabel.text = [self bitrateText:channel.bit];
     }
 
     // テーブルセルのテキスト等の色を変える
@@ -538,12 +690,22 @@
     listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
     listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
     
-    dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
-    dateLabel.clipsToBounds = YES;
-    dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
-    dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
-    dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
-    
+    if (!dateLabel.hidden) {
+        dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
+        dateLabel.clipsToBounds = YES;
+        dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+        dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
+        dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
+    }
+
+    if (!bitrateLabel.hidden) {
+        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+        bitrateLabel.clipsToBounds = YES;
+        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
+        bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+    }
+
     UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
     playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
     
@@ -660,6 +822,18 @@
                          }
                          completion:nil];
         isVisibleAdBanner_ = NO;
+    }
+}
+
+#pragma mark - NSUserDefaults notifications
+
+- (void)defaultsChanged:(NSNotification *)notification
+{
+    NSInteger currentHeadlineViewDisplayType = [self headlineViewDisplayType];
+
+    if (headlineViewDisplayType_ != currentHeadlineViewDisplayType) {
+        headlineViewDisplayType_ = currentHeadlineViewDisplayType;
+        [self updateHeadlineTable];
     }
 }
 
