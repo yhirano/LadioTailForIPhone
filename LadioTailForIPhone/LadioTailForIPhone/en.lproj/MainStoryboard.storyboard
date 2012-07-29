@@ -365,6 +365,21 @@
                                             <action selector="play:" destination="abJ-NL-ORS" eventType="touchUpInside" id="LMk-KH-cp2"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YLY-Se-U8W">
+                                        <rect key="frame" x="263" y="6" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" image="button_twitter.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tweet:" destination="abJ-NL-ORS" eventType="touchUpInside" id="ULc-TA-bzb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -1200,6 +1215,7 @@
         <image name="button_goto_bottom.png" width="37" height="37"/>
         <image name="button_playback_play.png" width="37" height="37"/>
         <image name="button_reload.png" width="37" height="37"/>
+        <image name="button_twitter.png" width="37" height="37"/>
         <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
         <image name="tab_dj.png" width="30" height="30"/>
         <image name="tab_listeners.png" width="30" height="30"/>
@@ -1233,6 +1249,7 @@
             <relationships>
                 <relationship kind="action" name="favorite:"/>
                 <relationship kind="action" name="play:"/>
+                <relationship kind="action" name="tweet:"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
@@ -1308,6 +1325,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="zXP-15-YML"/>
-        <segue reference="uMs-fw-DSO"/>
+        <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>

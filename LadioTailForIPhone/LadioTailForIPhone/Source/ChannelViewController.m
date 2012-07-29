@@ -21,6 +21,7 @@
  */
 
 #import <QuartzCore/QuartzCore.h>
+#import <Twitter/Twitter.h>
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "IAdBannerManager.h"
@@ -143,6 +144,15 @@
     
     // お気に入りボタンを更新
     [self updateFavoriteButton];
+}
+
+- (IBAction)tweet:(id)sender {
+    TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
+    NSString *tweetText = [[NSString alloc]
+                           initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
+                           channel_.nam, [channel_.surl absoluteString]];
+    [tweetView setInitialText:tweetText];
+    [self presentModalViewController:tweetView animated:YES];
 }
 
 #pragma mark - UIViewController methods

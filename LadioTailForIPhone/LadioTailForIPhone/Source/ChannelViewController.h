@@ -42,4 +42,6 @@
 
 - (IBAction)favorite:(id)sender;
 
+- (IBAction)tweet:(id)sender;
+
 @end
