@@ -20,10 +20,31 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import "LadioTailConfig.h"
+#import "FavoriteNaviViewController.h"
 
-@interface OthersTableViewController : UITableViewController
+@interface FavoriteNaviViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *playingBarButtonItem;
+@end
+
+@implementation FavoriteNaviViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // ナビゲーションバーの色を変える
+    self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
 @end

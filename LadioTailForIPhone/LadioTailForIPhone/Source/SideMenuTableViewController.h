@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface NewlyHeadlineViewController : HeadlineViewController
+@interface SideMenuTableViewController : UITableViewController
 
 @end

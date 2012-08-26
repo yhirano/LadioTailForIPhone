@@ -22,6 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LadioTailViewController : UITabBarController <UITabBarControllerDelegate>
+@interface LadioTailViewController : UIViewController <UINavigationControllerDelegate>
 
 @end

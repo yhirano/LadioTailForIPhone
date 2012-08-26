@@ -21,10 +21,21 @@
  */
 
 #import "GRMustache/GRMustache.h"
+#import "LadioTailConfig.h"
 #import "AboutViewController.h"
 
 @implementation AboutViewController
-@synthesize webView;
+
+@synthesize navigationBar = navigationBar_;
+@synthesize titleNavigationItem = titleNavigationItem_;
+@synthesize backBarButton = backBarButton_;
+@synthesize webView = webView_;
+
+#pragma mark - Actions
+
+- (IBAction)back:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 #pragma mark UIView methods
 
@@ -32,7 +43,12 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
+    navigationBar_.tintColor = NAVIGATION_BAR_COLOR;
+    titleNavigationItem_.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
+
+    // 戻るボタンのテキストと色を変更する
+    backBarButton_.title = NSLocalizedString(@"Back", @"戻る");
+    backBarButton_.tintColor = BACK_BUTTON_COLOR;
 
     NSString* versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
     NSString* versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
@@ -49,9 +65,9 @@
         NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
     }
 
-    [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [webView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
     // WebViewをバウンスさせない
-    for (id subview in webView.subviews) {
+    for (id subview in webView_.subviews) {
         if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
             ((UIScrollView *)subview).bounces = NO;
         }
@@ -61,6 +77,9 @@
 - (void)viewDidUnload
 {
     [self setWebView:nil];
+    [self setBackBarButton:nil];
+    [self setTitleNavigationItem:nil];
+    [self setNavigationBar:nil];
     [super viewDidUnload];
 }
 

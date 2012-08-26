@@ -33,6 +33,8 @@
     NSMutableArray *favorites_;
 }
 
+@synthesize backBarButton = backBarButton_;
+
 - (void)dealloc
 {
     favorites_ = nil;
@@ -72,6 +74,10 @@
 
     self.navigationItem.title = NSLocalizedString(@"Favorites", @"お気に入り 複数");
 
+    // 戻るボタンのテキストと色を変更する
+    backBarButton_.title = NSLocalizedString(@"Back", @"戻る");
+    backBarButton_.tintColor = BACK_BUTTON_COLOR;
+
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
  
@@ -98,6 +104,7 @@
 
 - (void)viewDidUnload
 {
+    [self setBackBarButton:nil];
     [super viewDidUnload];
 }
 
@@ -117,6 +124,12 @@
             ((FavoriteViewController *) viewCon).favorite = favorite;
         }
     }
+}
+
+#pragma mark - Actions
+
+- (IBAction)back:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - TableViewControllerDelegate methods
