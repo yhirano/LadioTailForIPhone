@@ -68,6 +68,9 @@ typedef NSInteger PlayerState;
  */
 - (void)playChannel:(Channel *)channel;
 
+/**
+ * 再生を停止する
+ */
 - (void)stop;
 
 /**

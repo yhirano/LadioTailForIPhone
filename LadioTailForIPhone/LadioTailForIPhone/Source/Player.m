@@ -75,11 +75,6 @@ static Player *instance = nil;
         if (setCategoryError) {
             NSLog(@"Audio session setCategory error.");
         }
-        NSError *setActiveError = nil;
-        [audioSession setActive:YES error:&setActiveError];
-        if (setActiveError) {
-            NSLog(@"Audio session setActive error.");
-        }
 
         // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -104,13 +99,6 @@ static Player *instance = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVPlayerItemFailedToPlayToEndTimeNotification
                                                   object:nil];
-
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    NSError *setActiveError = nil;
-    [audioSession setActive:NO error:&setActiveError];
-    if (setActiveError) {
-        NSLog(@"Audio session setActive error.");
-    }
 }
 
 - (void)play
@@ -259,6 +247,30 @@ static Player *instance = nil;
 
 #pragma mark - Private methods
 
+/// AudioSessionを有効化する
+- (void)acviveAudioSession
+{
+    NSLog(@"Active audio session.");
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setActiveError = nil;
+    [audioSession setActive:YES error:&setActiveError];
+    if (setActiveError) {
+        NSLog(@"Audio session setActive error.");
+    }
+}
+
+/// AudioSessionを無効化する
+- (void)deacviveAudioSession
+{
+    NSLog(@"Deactive audio session.");
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setActiveError = nil;
+    [audioSession setActive:NO error:&setActiveError];
+    if (setActiveError) {
+        NSLog(@"Audio session setActive error.");
+    }
+}
+
 /// 再生処理
 - (void)playProc:(NSURL *)url
 {
@@ -271,12 +283,13 @@ static Player *instance = nil;
     if (url == nil) {
         return;
     }
-    
+
     state_ = PlayerStatePrepare;
     playUrl_ = url;
     playChannel_ = channel;
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
+    [self acviveAudioSession];
     player_ = [AVPlayer playerWithURL:url];
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
@@ -328,6 +341,7 @@ static Player *instance = nil;
         playUrl_ = nil;
         playChannel_ = nil;
     }
+
     state_ = PlayerStateIdle;
     switch (reason) {
         case StopReasonUser:
@@ -355,12 +369,18 @@ static Player *instance = nil;
             NSLog(@"Play stopped.");
             break;
     }
+
     // 他のURLを再生する場合には再生開始側で通知を出すため、ここでは通知を出さない
     if (reason != StopReasonAnotherUrlPlay) {
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
                                                             object:self];
     }
-    
+
+    // 他のURLを再生する場合には、オーディオのセッションを無効化しない
+    if (reason != StopReasonAnotherUrlPlay) {
+        [self deacviveAudioSession];
+    }
+
     // 再生タイムアウトのタイマーが走っている場合は止める（走っていることはないはずだが一応）
     if (playTimeOutTimer_ != nil) {
         [playTimeOutTimer_ invalidate];
