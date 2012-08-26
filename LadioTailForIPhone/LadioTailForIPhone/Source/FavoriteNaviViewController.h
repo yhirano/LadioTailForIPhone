@@ -20,14 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "LadioLib/LadioLib.h"
-#import "NewlyHeadlineViewController.h"
+#import <UIKit/UIKit.h>
 
-@implementation NewlyHeadlineViewController
-
-- (ChannelSortType)channelSortType
-{
-    return ChannelSortTypeNewly;
-}
+@interface FavoriteNaviViewController : UINavigationController
 
 @end

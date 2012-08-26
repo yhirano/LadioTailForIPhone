@@ -24,4 +24,8 @@
 
 @interface FavoritesTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButton;
+
+- (IBAction)back:(id)sender;
+
 @end

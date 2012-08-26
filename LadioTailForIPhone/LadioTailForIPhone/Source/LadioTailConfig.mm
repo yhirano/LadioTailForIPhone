@@ -30,8 +30,8 @@ UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
                                                         blue:(10.0f / 255)
                                                        alpha:1.0f];
 
-/// 更新ボタンの色
-UIColor * const UPDATE_BUTTON_COLOR = [UIColor darkGrayColor];
+/// サイドメニューボタンの色
+UIColor * const SIDEMENU_BUTTON_COLOR = [UIColor darkGrayColor];
 
 /// 戻るボタンの色
 UIColor * const BACK_BUTTON_COLOR = [UIColor darkGrayColor];
@@ -41,6 +41,56 @@ UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
                                                        green:(126.0f / 255)
                                                         blue:(0.0f / 255)
                                                        alpha:1.0f];
+
+#pragma mark - Side menu table view config
+
+/// テーブルの背景の色
+UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
+                                                                  green:(40.0f / 255)
+                                                                   blue:(40.0f / 255.0)
+                                                                  alpha:1.0f];
+
+/// テーブルの境界線の色
+UIColor * const SIDEMENU_TABLE_SEPARATOR_COLOR = [UIColor colorWithRed:(75.0f / 255)
+                                                                 green:(75.0f / 255)
+                                                                  blue:(75.0f / 255)
+                                                                 alpha:1.0f];
+
+/// テーブルセルの暗い側の色
+UIColor * const SIDEMENU_TABLE_CELL_BACKGROUND_COLOR_DARK = [UIColor colorWithRed:(40.0f / 255)
+                                                                            green:(40.0f / 255)
+                                                                             blue:(40.0f / 255)
+                                                                            alpha:1.0f];
+
+/// テーブルセルの明るい側の色
+UIColor * const SIDEMENU_TABLE_CELL_BACKGROUND_COLOR_LIGHT = [UIColor colorWithRed:(60.0f / 255)
+                                                                             green:(60.0f / 255)
+                                                                              blue:(60.0f / 255)
+                                                                             alpha:1.0f];
+
+/// テーブルセルの選択の色
+UIColor * const SIDEMENU_CELL_SELECTED_BACKGROUND_COLOR = [UIColor colorWithRed:(255.0f / 255)
+                                                                          green:(190.0f / 255)
+                                                                           blue:(30.0f / 255)
+                                                                          alpha:1.0f];
+
+/// テーブルセクションの背景の色
+UIColor * const SIDEMENU_TABLE_SECTION_BACKGROUND_COLOR = [UIColor colorWithRed:(20.0f / 255)
+                                                                          green:(20.0f / 255)
+                                                                           blue:(20.0f / 255)
+                                                                          alpha:1.0f];
+
+/// テーブルセクションのテキストの色
+UIColor * const SIDEMENU_TABLE_SECTION_TEXT_COLOR = [UIColor whiteColor];
+
+/// テーブルセクションのテキストの影の色
+UIColor * const SIDEMENU_TABLE_SECTION_TEXT_SHADOW_COLOR = [UIColor grayColor];
+
+/// テーブルセルのメインのテキストカラー
+UIColor * const SIDEMENU_CELL_MAIN_TEXT_COLOR = [UIColor whiteColor];
+
+/// テーブルセルのメインのテキスト選択時カラー
+UIColor * const SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
 #pragma mark - Headline table view config
 
@@ -187,29 +237,6 @@ const BOOL CHANNEL_VIEW_IAD_ENABLE = NO;
 /// iAd広告を有効にするか
 const BOOL WEB_PAGE_VIEW_IAD_ENABLE = NO;
 
-#pragma mark - Other table view config
-
-/// テーブルの背景の色
-UIColor * const OTHERS_TABLE_BACKGROUND_COLOR = HEADLINE_TABLE_BACKGROUND_COLOR;
-
-/// テーブルの境界線の色
-UIColor * const OTHERS_TABLE_SEPARATOR_COLOR = HEADLINE_TABLE_SEPARATOR_COLOR;
-
-/// テーブルセルの暗い側の色
-UIColor * const OTHERS_TABLE_CELL_BACKGROUND_COLOR_DARK = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK;
-
-/// テーブルセルの明るい側の色
-UIColor * const OTHERS_TABLE_CELL_BACKGROUND_COLOR_LIGHT = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
-
-/// テーブルセルの選択の色
-UIColor * const OTHERS_CELL_SELECTED_BACKGROUND_COLOR = HEADLINE_CELL_SELECTED_BACKGROUND_COLOR;
-
-/// テーブルセルのメインのテキストカラー
-UIColor * const OTHERS_CELL_MAIN_TEXT_COLOR = HEADLINE_CELL_TITLE_TEXT_COLOR;
-
-/// テーブルセルのメインのテキスト選択時カラー
-UIColor * const OTHERS_CELL_MAIN_TEXT_SELECTED_COLOR = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
-
 #pragma mark - Favorites table view config
 
 /// テーブルの背景の色
@@ -229,8 +256,10 @@ UIColor * const FAVORITES_CELL_SELECTED_BACKGROUND_COLOR = HEADLINE_CELL_SELECTE
 
 /// テーブルセルのメインのテキストカラー
 UIColor * const FAVORITES_CELL_MAIN_TEXT_COLOR = HEADLINE_CELL_TITLE_TEXT_COLOR;
+
 /// テーブルセルのメインのテキスト選択時カラー
 UIColor * const FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+
 /// テーブルセルのサブのテキストカラー
 UIColor * const FAVORITES_CELL_SUB_TEXT_COLOR = HEADLINE_CELL_DJ_TEXT_COLOR;
 

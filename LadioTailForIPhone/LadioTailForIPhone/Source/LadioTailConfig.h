@@ -27,14 +27,46 @@
 /// ナビゲーションバーの色
 extern UIColor * const NAVIGATION_BAR_COLOR;
 
-/// 更新ボタンの色
-extern UIColor * const UPDATE_BUTTON_COLOR;
+/// サイドメニューボタンの色
+extern UIColor * const SIDEMENU_BUTTON_COLOR;
 
 /// 戻るボタンの色
 extern UIColor * const BACK_BUTTON_COLOR;
 
 /// 再生中ボタンの色
 extern UIColor * const PLAYING_BUTTON_COLOR;
+
+#pragma mark - Side menu table view config
+
+/// テーブルの背景の色
+extern UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;
+
+/// テーブルの境界線の色
+extern UIColor * const SIDEMENU_TABLE_SEPARATOR_COLOR;
+
+/// テーブルセルの暗い側の色
+extern UIColor * const SIDEMENU_TABLE_CELL_BACKGROUND_COLOR_DARK;
+
+/// テーブルセルの明るい側の色
+extern UIColor * const SIDEMENU_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
+
+/// テーブルセルの選択の色
+extern UIColor * const SIDEMENU_CELL_SELECTED_BACKGROUND_COLOR;
+
+/// テーブルセクションの背景の色
+extern UIColor * const SIDEMENU_TABLE_SECTION_BACKGROUND_COLOR;
+
+/// テーブルセクションのテキストの色
+extern UIColor * const SIDEMENU_TABLE_SECTION_TEXT_COLOR;
+
+/// テーブルセクションのテキストの影の色
+extern UIColor * const SIDEMENU_TABLE_SECTION_TEXT_SHADOW_COLOR;
+
+/// テーブルセルのメインのテキストカラー
+extern UIColor * const SIDEMENU_CELL_MAIN_TEXT_COLOR;
+
+/// テーブルセルのメインのテキスト選択時カラー
+extern UIColor * const SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
 
 #pragma mark - Headline table view config
 
@@ -144,29 +176,6 @@ extern const BOOL CHANNEL_VIEW_IAD_ENABLE;
 
 /// iAd広告を有効にするか
 extern const BOOL WEB_PAGE_VIEW_IAD_ENABLE;
-
-#pragma mark - Other table view config
-
-/// テーブルの背景の色
-extern UIColor * const OTHERS_TABLE_BACKGROUND_COLOR;
-
-/// テーブルの境界線の色
-extern UIColor * const OTHERS_TABLE_SEPARATOR_COLOR;
-
-/// テーブルセルの暗い側の色
-extern UIColor * const OTHERS_TABLE_CELL_BACKGROUND_COLOR_DARK;
-
-/// テーブルセルの明るい側の色
-extern UIColor * const OTHERS_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
-
-/// テーブルセルの選択の色
-extern UIColor * const OTHERS_CELL_SELECTED_BACKGROUND_COLOR;
-
-/// テーブルセルのメインのテキストカラー
-extern UIColor * const OTHERS_CELL_MAIN_TEXT_COLOR;
-
-/// テーブルセルのメインのテキスト選択時カラー
-extern UIColor * const OTHERS_CELL_MAIN_TEXT_SELECTED_COLOR;
 
 #pragma mark - Favorites table view config
 

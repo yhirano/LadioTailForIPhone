@@ -23,17 +23,19 @@
 #import <UIKit/UIKit.h>
 #import "iAd/iAd.h"
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
+#import "LadioLib/LadioLib.h"
 
 @interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate, ADBannerViewDelegate,
                                                       EGORefreshTableHeaderDelegate>
 
+@property (nonatomic) ChannelSortType channelSortType;
+
 /// テーブルに表示している番組
 @property (strong ,readonly) NSArray *showedChannels;
 
-
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideMenuBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *playingBarButtonItem;
 
@@ -41,6 +43,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *headlineTableView;
 
-- (IBAction)update:(id)sender;
+- (void)fetchHeadline;
+
+- (IBAction)openSideMenu:(id)sender;
 
 @end

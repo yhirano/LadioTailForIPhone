@@ -21,13 +21,16 @@
  */
 
 #import "FBNetworkReachability/FBNetworkReachability.h"
-#import "LadioLib/LadioLib.h"
+#import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
 #import "IAdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
+
+/// 選択されたソート種類を覚えておくためのキー
+#define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
 
 /// 広告を表示後に隠すか。デバッグ用。
 #define AD_HIDE_DEBUG 0
@@ -55,9 +58,10 @@ enum HeadlineViewDisplayType {
     BOOL isVisibleAdBanner_;
 }
 
+@synthesize channelSortType = channelSortType_;
 @synthesize showedChannels = showedChannels_;
 @synthesize navigateionItem = navigateionItem_;
-@synthesize updateBarButtonItem = updateBarButtonItem_;
+@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
 @synthesize playingBarButtonItem = playingBarButtonItem_;
 @synthesize headlineSearchBar = headlineSearchBar_;
 @synthesize headlineTableView = headlineTableView_;
@@ -80,11 +84,20 @@ enum HeadlineViewDisplayType {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 }
 
-#pragma mark - Private methods
-
-- (ChannelSortType)channelSortType
+- (void)setChannelSortType:(ChannelSortType)channelSortType
 {
-    return ChannelSortTypeNone;
+    channelSortType_ = channelSortType;
+
+    // 選択されたソートタイプを保存しておく
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:channelSortType_ forKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+
+    [self updateHeadlineTable];
+}
+
+- (ChannelSortType)setChannelSortType
+{
+    return channelSortType_;
 }
 
 - (void)fetchHeadline
@@ -92,6 +105,8 @@ enum HeadlineViewDisplayType {
     Headline *headline = [Headline sharedInstance];
     [headline fetchHeadline];
 }
+
+#pragma mark - Private methods
 
 - (NSInteger)headlineViewDisplayType
 {
@@ -254,7 +269,7 @@ enum HeadlineViewDisplayType {
 - (void)updateHeadlineTable
 {
     Headline *headline = [Headline sharedInstance];
-    showedChannels_ = [headline channels:[self channelSortType]
+    showedChannels_ = [headline channels:channelSortType_
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
     // ナビゲーションタイトルを更新
@@ -268,11 +283,6 @@ enum HeadlineViewDisplayType {
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
-}
-
-- (void)updateUpdateBarButton
-{
-    updateBarButtonItem_.enabled = ![[Headline sharedInstance] isFetchingHeadline];
 }
 
 - (void)updatePlayingButton
@@ -295,9 +305,9 @@ enum HeadlineViewDisplayType {
 
 #pragma mark - Actions
 
-- (IBAction)update:(id)sender
+- (IBAction)openSideMenu:(id)sender
 {
-    [self fetchHeadline];
+    [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
 #pragma mark - UIViewController methods
@@ -305,6 +315,22 @@ enum HeadlineViewDisplayType {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // ソートタイプを復元する
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    ChannelSortType s = [defaults integerForKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+    switch (s) {
+        case ChannelSortTypeNewly:
+        case ChannelSortTypeListeners:
+        case ChannelSortTypeTitle:
+        case ChannelSortTypeDj:
+            channelSortType_ = s;
+            break;
+        case ChannelSortTypeNone:
+        default:
+            channelSortType_ = ChannelSortTypeNewly;
+            break;
+    }
 
     // 設定の変更を補足する
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -349,8 +375,8 @@ enum HeadlineViewDisplayType {
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
-    // 更新ボタンの色を変更する
-    updateBarButtonItem_.tintColor = UPDATE_BUTTON_COLOR;
+    // メニューボタンの色を変更する
+    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // 再生中ボタンの装飾を変更する
     playingBarButtonItem_.title = NSLocalizedString(@"Playing", @"再生中ボタン");
@@ -404,7 +430,7 @@ enum HeadlineViewDisplayType {
 
 - (void)viewDidUnload
 {
-    [self setUpdateBarButtonItem:nil];
+    [self setSideMenuBarButtonItem:nil];
     [self setNavigateionItem:nil];
     [self setPlayingBarButtonItem:nil];
     [self setHeadlineSearchBar:nil];
@@ -414,9 +440,6 @@ enum HeadlineViewDisplayType {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // 更新ボタンの有効無効を切り替え
-    [self updateUpdateBarButton];
-
     // タブの切り替えごとにヘッドラインテーブルを更新する
     // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
     [self updateHeadlineTable];
@@ -844,9 +867,6 @@ enum HeadlineViewDisplayType {
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
-    // ヘッドラインの取得開始時に更新ボタンを無効にする
-    [self updateUpdateBarButton];
 }
 
 - (void)headlineDidFinishLoad:(NSNotification *)notification
@@ -854,9 +874,6 @@ enum HeadlineViewDisplayType {
 #ifdef DEBUG
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-
-    // ヘッドラインの取得終了時に更新ボタンを有効にする
-    [self updateUpdateBarButton];
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
@@ -869,9 +886,6 @@ enum HeadlineViewDisplayType {
 #ifdef DEBUG
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-
-    // ヘッドラインの取得終了時に更新ボタンを有効にする
-    [self updateUpdateBarButton];
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する

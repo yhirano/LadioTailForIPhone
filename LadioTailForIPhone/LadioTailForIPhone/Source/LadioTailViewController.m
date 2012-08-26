@@ -21,16 +21,20 @@
  */
 
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
 #import "LadioLib/LadioLib.h"
 #import "Player.h"
+#import "HeadlineNaviViewController.h"
+#import "SideMenuTableViewController.h"
 #import "HeadlineViewController.h"
 #import "LadioTailViewController.h"
 
-/// 選択されたタブを覚えておくためのキー
-#define MAIN_TAB_SELECTED_INDEX @"MAIN_TAB_SELECTED_INDEX"
-
 @implementation LadioTailViewController
+{
+    IIViewDeckController *viewDeckController;
+    HeadlineNaviViewController *headlineNaviViewController;
+}
 
 -(void)dealloc
 {
@@ -40,8 +44,6 @@
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-
-    self.delegate = nil;
 }
 
 #pragma mark - UIView methods
@@ -49,14 +51,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // 選択されたタブを復元する
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    // 対応するデータが保存されていない場合でも0が返るので一番最初のタブが選択される
-    self.selectedIndex = [defaults integerForKey:MAIN_TAB_SELECTED_INDEX];
     
-    self.delegate = self;
-
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
@@ -73,11 +68,36 @@
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
+
+    // サイドメニューを設定する
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    headlineNaviViewController =
+        (HeadlineNaviViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
+    SideMenuTableViewController *sideMenuTableViewController =
+        (SideMenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"SideMenuTableViewController"];
+    viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
+                                                                 leftViewController:sideMenuTableViewController];
+    viewDeckController.view.frame = self.view.bounds;
+    viewDeckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    [viewDeckController setLeftLedge:70.0f];
+
+    headlineNaviViewController.delegate = self;
+
+    [self.view addSubview:viewDeckController.view];
 }
 
 - (void)viewDidUnload
 {
+    headlineNaviViewController.delegate = nil;
+
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [viewDeckController viewWillAppear:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -123,25 +143,16 @@
         return nil;
     }
 
-    // 選択しているタブのビューがUINavigationControllerの場合（常にtrueのはずだが一応チェック）
-    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
-        // UINavigationControllerの中からHeadlineViewControllerを探し出す
-        UINavigationController *nvc =(UINavigationController*)self.selectedViewController;
-        for (UIViewController *viewcon in nvc.viewControllers) {
-            if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
-                headlineViewController = (HeadlineViewController *)viewcon;
-                break;
-            }
+    // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
+    for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
+        if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
+            headlineViewController = (HeadlineViewController *)viewcon;
+            break;
         }
     }
-    // ルートがHeadlineViewControllerであることはないはずだが一応チェック
-    else if ([self.selectedViewController isKindOfClass:[HeadlineViewController class]]) {
-        headlineViewController = (HeadlineViewController *)self.selectedViewController;
-    }
 
-    // HeadlineViewControllerタブを選択している場合
     if (headlineViewController != nil) {
-        // 選択しているタブの表示されている番組を取得する
+        // 番組を取得する
         NSArray *channels = headlineViewController.showedChannels;
         NSInteger playingChannelIndex;
         BOOL found = NO;
@@ -182,25 +193,17 @@
     Channel *result = nil;
     HeadlineViewController *headlineViewController = nil;
 
-    // 選択しているタブのビューがUINavigationControllerの場合（常にtrueのはずだが一応チェック）
-    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
-        // UINavigationControllerの中からHeadlineViewControllerを探し出す
-        UINavigationController *nvc =(UINavigationController*)self.selectedViewController;
-        for (UIViewController *viewcon in nvc.viewControllers) {
-            if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
-                headlineViewController = (HeadlineViewController *)viewcon;
-                break;
-            }
+    // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
+    for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
+        if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
+            headlineViewController = (HeadlineViewController *)viewcon;
+            break;
         }
-    }
-    // ルートがHeadlineViewControllerであることはないはずだが一応チェック
-    else if ([self.selectedViewController isKindOfClass:[HeadlineViewController class]]) {
-        headlineViewController = (HeadlineViewController *)self.selectedViewController;
     }
     
     // HeadlineViewControllerタブを選択している場合
     if (headlineViewController != nil) {
-        // 選択しているタブの表示されている番組を取得する
+        // 番組を取得する
         NSArray *channels = headlineViewController.showedChannels;
         
         if ([channels count] > 0) {
@@ -265,15 +268,22 @@
     }
 }
 
-#pragma mark - UITabBarControllerDelegate methods
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+#pragma mark - UINavigationControllerDelegate methods
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
 {
-    // 選択されたタブを保存しておく
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:self.selectedIndex forKey:MAIN_TAB_SELECTED_INDEX];
+    // HeadlineViewController表示中のみナビゲーションバーのジェスチャーでサイドメニューを開くことができる
+    if ([viewController isKindOfClass:[HeadlineViewController class]]) {
+        viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
+    } else {
+        viewDeckController.panningMode = IIViewDeckNoPanning;
+    }
 }
 
 #pragma mark - Headline notifications
+
 - (void)headlineDidStartLoad:(NSNotification *)notification
 {
 #ifdef DEBUG
