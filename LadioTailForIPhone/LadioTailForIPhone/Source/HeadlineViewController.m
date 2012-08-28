@@ -86,6 +86,10 @@ enum HeadlineViewDisplayType {
 
 - (void)setChannelSortType:(ChannelSortType)channelSortType
 {
+    if (channelSortType_ == channelSortType) {
+        return;
+    }
+
     channelSortType_ = channelSortType;
 
     // 選択されたソートタイプを保存しておく

@@ -22,6 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LadioTailViewController : UIViewController
+@interface AboutNaviViewController : UINavigationController
 
 @end

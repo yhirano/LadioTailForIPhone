@@ -20,7 +20,9 @@
  * THE SOFTWARE.
  */
 
+#import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
+#import "HeadlineViewController.h"
 #import "HeadlineNaviViewController.h"
 
 @implementation HeadlineNaviViewController
@@ -33,11 +35,24 @@
 
     // ナビゲーションバーの色を変える
     self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
+
+    // ナビゲーションバーのスライドでサイドメニューを開くことができる
+    self.viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

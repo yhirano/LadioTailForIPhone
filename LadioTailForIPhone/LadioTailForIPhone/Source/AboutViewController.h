@@ -24,14 +24,10 @@
 
 @interface AboutViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-
-@property (weak, nonatomic) IBOutlet UINavigationItem *titleNavigationItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideMenuBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
-- (IBAction)back:(id)sender;
+- (IBAction)openSideMenu:(id)sender;
 
 @end

@@ -81,16 +81,7 @@
     viewDeckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
     [viewDeckController setLeftLedge:70.0f];
 
-    headlineNaviViewController.delegate = self;
-
     [self.view addSubview:viewDeckController.view];
-}
-
-- (void)viewDidUnload
-{
-    headlineNaviViewController.delegate = nil;
-
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -265,20 +256,6 @@
                 [player playChannel:channel];
             }
         }
-    }
-}
-
-#pragma mark - UINavigationControllerDelegate methods
-
-- (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated
-{
-    // HeadlineViewController表示中のみナビゲーションバーのジェスチャーでサイドメニューを開くことができる
-    if ([viewController isKindOfClass:[HeadlineViewController class]]) {
-        viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
-    } else {
-        viewDeckController.panningMode = IIViewDeckNoPanning;
     }
 }
 

@@ -732,15 +732,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorites" id="eJi-q8-NHa">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="c2Z-Y2-0dN">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="c2Z-Y2-0dN">
                             <connections>
-                                <action selector="back:" destination="u6o-bg-cRx" id="rso-aw-dsX"/>
+                                <action selector="openSideMenu:" destination="u6o-bg-cRx" id="epp-kE-qCa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="backBarButton" destination="c2Z-Y2-0dN" id="XA0-Mc-O0m"/>
+                        <outlet property="sideMenuBarButtonItem" destination="c2Z-Y2-0dN" id="dp3-ag-cuG"/>
                         <segue destination="Tcw-LS-hzV" kind="push" identifier="SelectFavorite" id="ceF-FM-U4M"/>
                     </connections>
                 </tableViewController>
@@ -776,48 +776,55 @@
             </objects>
             <point key="canvasLocation" x="1997" y="1117"/>
         </scene>
-        <!--About View Controller-->
+        <!--About Navi View Controller-->
+        <scene sceneID="QHp-gb-KYh">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4VT-ze-teK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="AboutNaviViewController" definesPresentationContext="YES" id="sRT-5h-7gi" customClass="AboutNaviViewController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ad-wH-LjS">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="VS3-hi-fPM" kind="relationship" relationship="rootViewController" id="zhi-3o-43L"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1034" y="1757"/>
+        </scene>
+        <!--About View Controller - About-->
         <scene sceneID="8Ut-1T-RNz">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2j9-dk-XYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="AboutViewController" hidesBottomBarWhenPushed="YES" id="VS3-hi-fPM" customClass="AboutViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="" hidesBottomBarWhenPushed="YES" id="VS3-hi-fPM" customClass="AboutViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cm7-BX-zap">
-                        <rect key="frame" x="0.0" y="20" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView opaque="NO" contentMode="scaleToFill" id="GcN-zE-zoz">
-                                <rect key="frame" x="0.0" y="44" width="320" height="372"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
-                            <navigationBar contentMode="scaleToFill" id="Z04-CG-3hW">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="0Bu-KN-Ofl">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="N0D-6E-C2m">
-                                            <connections>
-                                                <action selector="back:" destination="VS3-hi-fPM" id="sNl-Uv-BL8"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" title="About" id="0Bn-ZM-zxH">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="N0D-6E-C2m">
+                            <connections>
+                                <action selector="openSideMenu:" destination="VS3-hi-fPM" id="AmV-SK-La9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="backBarButton" destination="N0D-6E-C2m" id="bs6-hU-wGb"/>
-                        <outlet property="navigationBar" destination="Z04-CG-3hW" id="fdG-2A-2N3"/>
-                        <outlet property="titleNavigationItem" destination="0Bu-KN-Ofl" id="yD7-x7-YO7"/>
+                        <outlet property="sideMenuBarButtonItem" destination="N0D-6E-C2m" id="yXh-RL-XnY"/>
                         <outlet property="webView" destination="GcN-zE-zoz" id="wD6-Tf-3VW"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1034" y="1755"/>
+            <point key="canvasLocation" x="1514" y="1757"/>
         </scene>
         <!--Favorite Navi View Controller - Others-->
         <scene sceneID="g9d-96-7ZR">
@@ -877,13 +884,14 @@
         <image name="tablecell_update_white.png" width="28" height="28"/>
     </resources>
     <classes>
+        <class className="AboutNaviViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutNaviViewController.h"/>
+        </class>
         <class className="AboutViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
             <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="outlet" name="backBarButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="titleNavigationItem" candidateClass="UINavigationItem"/>
+                <relationship kind="action" name="openSideMenu:"/>
+                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
             </relationships>
         </class>
@@ -913,8 +921,8 @@
         <class className="FavoritesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
             <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="outlet" name="backBarButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="openSideMenu:"/>
+                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="HeadlineNaviViewController" superclassName="UINavigationController">

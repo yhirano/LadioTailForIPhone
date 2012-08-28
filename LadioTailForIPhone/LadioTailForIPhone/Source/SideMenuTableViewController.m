@@ -24,6 +24,10 @@
 #import "LadioTailConfig.h"
 #import "HeadlineNaviViewController.h"
 #import "HeadlineViewController.h"
+#import "FavoriteNaviViewController.h"
+#import "FavoritesTableViewController.h"
+#import "AboutNaviViewController.h"
+#import "AboutViewController.h"
 #import "SideMenuTableViewController.h"
 
 @implementation SideMenuTableViewController
@@ -43,16 +47,36 @@
 }
 
 /// IIViewDeckControllerのセンタービューのHeadlineViewControllerを取得する
-+ (HeadlineViewController *)headlineViewControllerFromViewDeckCenter:(IIViewDeckController *)controller
+- (HeadlineViewController *)headlineViewControllerFromViewDeckCenterControllerTop
 {
-    if ([controller.centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+    // ViewDeckControllerのCenterControllerを取得する
+    UIViewController* centerController = self.viewDeckController.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
         HeadlineNaviViewController *headlineNaviViewController =
-        (HeadlineNaviViewController*)controller.centerController;
+            (HeadlineNaviViewController*)self.viewDeckController.centerController;
         if ([headlineNaviViewController.topViewController isKindOfClass:[HeadlineViewController class]]){
             return (HeadlineViewController *)headlineNaviViewController.topViewController;
         }
     }
     return nil;
+}
+
+/// ViewDeckControllerのCenterControllerのクラスが指定のクラスで、かつそのTopViewControllerが指定のクラスかを取得する
+- (BOOL)isCenterControllerClass:(Class)centerControllerClass andTopViewController:(Class)topViewControllerClass
+{
+    // ViewDeckControllerのCenterControllerを取得する
+    UIViewController* centerController = self.viewDeckController.centerController;
+    // CenterControllerが指定のクラスの場合
+    if ([centerController isKindOfClass:centerControllerClass]) {
+        // CenterControllerがUINavigationControllerクラスの場合でかつCenterControllerのtopViewControllerが指定のクラスの場合
+        if ([centerController isKindOfClass:[UINavigationController class]]) {
+            UIViewController* topViewController = ((UINavigationController *)centerController).topViewController;
+            if ([topViewController isKindOfClass:topViewControllerClass]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 
 #pragma mark - UIView methods
@@ -134,8 +158,7 @@
     UITableViewCell *cell = nil;
 
     ChannelSortType channelSortType = ChannelSortTypeNone;
-    HeadlineViewController* headlineViewController =
-        [SideMenuTableViewController headlineViewControllerFromViewDeckCenter:self.viewDeckController];
+    HeadlineViewController* headlineViewController = [self headlineViewControllerFromViewDeckCenterControllerTop];
     if (headlineViewController) {
         channelSortType = headlineViewController.channelSortType;
     }
@@ -321,13 +344,33 @@
         {
             switch (indexPath.row) {
                 case 0: // Update
-                    [self.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
-                        HeadlineViewController *headlineViewController =
-                            [SideMenuTableViewController headlineViewControllerFromViewDeckCenter:controller];
-                        if (headlineViewController) {
-                            [headlineViewController fetchHeadline];
+                    // CenterControllerがHeadlineNaviViewControllerでｍかつHeadlineViewControllerが表示中の場合は
+                    // サイドメニューを閉じ、閉じ終わった後に更新
+                    if ([self isCenterControllerClass:[HeadlineNaviViewController class]
+                                 andTopViewController:[HeadlineViewController class]]) {
+                        [self.viewDeckController closeLeftViewAnimated:YES
+                                                            completion:^(IIViewDeckController *controller) {
+                            [[self headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
+                        }];
+                    }
+                    // CenterControllerがHeadlineNaviViewControllerでない、またはHeadlineViewControllerが表示中でない場合は
+                    // サイドメニューをバウンドしセンターを変更しつつ、閉じ終わった後に更新
+                    else {
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
+                        {
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                            HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
+                                [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
+                            self.viewDeckController.centerController = headlineNaviViewController;
+
+                            // チェックマーク位置変更のためテーブルを更新
+                            [tableView reloadData];
                         }
-                    }];
+                                                            completion:^(IIViewDeckController *controller)
+                        {
+                            [[self headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
+                        }];
+                    }
                     break;
                 default:
                     break;
@@ -336,10 +379,45 @@
         }
         case 1: // Sort Section
         {
-            [self.viewDeckController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller) {
-                HeadlineViewController *headlineViewController =
-                    [SideMenuTableViewController headlineViewControllerFromViewDeckCenter:controller];
-                if (headlineViewController) {
+            // CenterControllerがHeadlineNaviViewControllerで、かつHeadlineViewControllerが表示中の場合
+            // サイドメニューを閉じつつ、番組の並び順を変更
+            if ([self isCenterControllerClass:[HeadlineNaviViewController class]
+                         andTopViewController:[HeadlineViewController class]]) {
+                ChannelSortType channelSortType = ChannelSortTypeNone;
+                switch (indexPath.row) {
+                    case 0: // Newly
+                        channelSortType = ChannelSortTypeNewly;
+                        break;
+                    case 1: // Listeners
+                        channelSortType = ChannelSortTypeListeners;
+                        break;
+                    case 2: // Title
+                        channelSortType = ChannelSortTypeTitle;
+                        break;
+                    case 3: // DJ
+                        channelSortType = ChannelSortTypeDj;
+                        break;
+                    default:
+                        break;
+                }
+
+                [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
+
+                // チェックマーク位置変更のためテーブルを更新
+                [tableView reloadData];
+
+                [self.viewDeckController closeLeftViewAnimated:YES];
+            }
+            // CenterControllerがHeadlineNaviViewControllerでない、またはHeadlineViewControllerが表示中でない場合は
+            // サイドメニューをバウンドしセンターを変更しつつ、番組の並び順を変更
+            else {
+                [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
+                {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                    HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
+                        [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
+                    self.viewDeckController.centerController = headlineNaviViewController;
+
                     ChannelSortType channelSortType = ChannelSortTypeNone;
                     switch (indexPath.row) {
                         case 0: // Newly
@@ -357,34 +435,65 @@
                         default:
                             break;
                     }
-
-                    [headlineViewController setChannelSortType:channelSortType];
+                    
+                    [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
 
                     // チェックマーク位置変更のためテーブルを更新
                     [tableView reloadData];
-                }
-            }];
+                }];
+            }
             break;
         }
         case 2: // Others Section
             switch (indexPath.row) {
                 case 0: // Favorite
                 {
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                    UIViewController *controller = (UIViewController *)
-                        [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];
-                    [self presentModalViewController:controller animated:YES];
+                    // CenterControllerがFavoriteNaviViewControllerで、かつFavoritesTableViewControllerが表示中の場合
+                    // サイドメニューを閉じる
+                    if ([self isCenterControllerClass:[FavoriteNaviViewController class]
+                                 andTopViewController:[FavoritesTableViewController class]]) {
+                        [self.viewDeckController closeLeftViewAnimated:YES];
+                    }
+                    // CenterControllerがFavoriteNaviViewControllerでない、またはFavoritesTableViewControllerが表示中でない
+                    // 場合、サイドメニューをバウンドしセンターを変更
+                    else {
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
+                        {
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                            FavoriteNaviViewController *favoriteNaviViewController = (FavoriteNaviViewController *)
+                                [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];
+                            self.viewDeckController.centerController = favoriteNaviViewController;
+
+                            // チェックマーク位置変更のためテーブルを更新
+                            [tableView reloadData];
+                        }];
+                    }
                     break;
                 }
                 case 1: // About
                 {
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                    UIViewController *controller = (UIViewController *)
-                    [storyboard instantiateViewControllerWithIdentifier:@"AboutViewController"];
-                    [self presentModalViewController:controller animated:YES];
+                    // CenterControllerがAboutNaviViewControllerで、かつAboutViewControllerが表示中の場合
+                    // サイドメニューを閉じる
+                    if ([self isCenterControllerClass:[AboutNaviViewController class]
+                                 andTopViewController:[AboutViewController class]]) {
+                        [self.viewDeckController closeLeftViewAnimated:YES];
+                    }
+                    // CenterControllerがAboutNaviViewControllerでない、またはAboutViewControllerが表示中でない場合
+                    // サイドメニューをバウンドしセンターを変更
+                    else {
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
+                        {
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                            AboutNaviViewController *aboutNaviViewController = (AboutNaviViewController *)
+                                [storyboard instantiateViewControllerWithIdentifier:@"AboutNaviViewController"];
+                            self.viewDeckController.centerController = aboutNaviViewController;
+
+                            // チェックマーク位置変更のためテーブルを更新
+                            [tableView reloadData];
+                        }];
+                    }
                     break;
                 }
-                    break;
                 default:
                     break;
             }
