@@ -20,12 +20,10 @@
  * THE SOFTWARE.
  */
 
+#import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
+#import "FavoritesTableViewController.h"
 #import "FavoriteNaviViewController.h"
-
-@interface FavoriteNaviViewController ()
-
-@end
 
 @implementation FavoriteNaviViewController
 
@@ -35,6 +33,9 @@
 
     // ナビゲーションバーの色を変える
     self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
+
+    // ナビゲーションバーのスライドでサイドメニューを開くことができる
+    self.viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
 }
 
 - (void)viewDidUnload

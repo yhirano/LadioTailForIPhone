@@ -24,8 +24,8 @@
 
 @interface FavoritesTableViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideMenuBarButtonItem;
 
-- (IBAction)back:(id)sender;
+- (IBAction)openSideMenu:(id)sender;
 
 @end

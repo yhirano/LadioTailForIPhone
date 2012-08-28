@@ -20,21 +20,21 @@
  * THE SOFTWARE.
  */
 
+#import "ViewDeck/IIViewDeckController.h"
 #import "GRMustache/GRMustache.h"
 #import "LadioTailConfig.h"
 #import "AboutViewController.h"
 
 @implementation AboutViewController
 
-@synthesize navigationBar = navigationBar_;
-@synthesize titleNavigationItem = titleNavigationItem_;
-@synthesize backBarButton = backBarButton_;
+@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
 @synthesize webView = webView_;
 
 #pragma mark - Actions
 
-- (IBAction)back:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+- (IBAction)openSideMenu:(id)sender;
+{
+    [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
 #pragma mark UIView methods
@@ -43,12 +43,10 @@
 {
     [super viewDidLoad];
 
-    navigationBar_.tintColor = NAVIGATION_BAR_COLOR;
-    titleNavigationItem_.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
+    self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
 
-    // 戻るボタンのテキストと色を変更する
-    backBarButton_.title = NSLocalizedString(@"Back", @"戻る");
-    backBarButton_.tintColor = BACK_BUTTON_COLOR;
+    // メニューボタンの色を変更する
+    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
 
     NSString* versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
     NSString* versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
@@ -77,9 +75,6 @@
 - (void)viewDidUnload
 {
     [self setWebView:nil];
-    [self setBackBarButton:nil];
-    [self setTitleNavigationItem:nil];
-    [self setNavigationBar:nil];
     [super viewDidUnload];
 }
 

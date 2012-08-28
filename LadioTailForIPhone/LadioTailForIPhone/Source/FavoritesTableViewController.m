@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "ViewDeck/IIViewDeckController.h"
 #import "LadioLib/LadioLib.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
@@ -33,7 +34,7 @@
     NSMutableArray *favorites_;
 }
 
-@synthesize backBarButton = backBarButton_;
+@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
 
 - (void)dealloc
 {
@@ -74,9 +75,8 @@
 
     self.navigationItem.title = NSLocalizedString(@"Favorites", @"お気に入り 複数");
 
-    // 戻るボタンのテキストと色を変更する
-    backBarButton_.title = NSLocalizedString(@"Back", @"戻る");
-    backBarButton_.tintColor = BACK_BUTTON_COLOR;
+    // メニューボタンの色を変更する
+    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
@@ -104,7 +104,7 @@
 
 - (void)viewDidUnload
 {
-    [self setBackBarButton:nil];
+    [self setSideMenuBarButtonItem:nil];
     [super viewDidUnload];
 }
 
@@ -128,8 +128,8 @@
 
 #pragma mark - Actions
 
-- (IBAction)back:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+- (IBAction)openSideMenu:(id)sender {
+    [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
 #pragma mark - TableViewControllerDelegate methods
