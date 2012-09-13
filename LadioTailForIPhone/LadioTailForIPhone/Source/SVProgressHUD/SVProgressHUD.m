@@ -13,45 +13,35 @@
 @interface SVProgressHUD ()
 
 @property (nonatomic, readwrite) SVProgressHUDMaskType maskType;
-@property (nonatomic, readwrite) BOOL showNetworkIndicator;
-@property (nonatomic, retain) NSTimer *fadeOutTimer;
+@property (nonatomic, strong, readonly) NSTimer *fadeOutTimer;
 
-@property (nonatomic, readonly) UIWindow *overlayWindow;
-@property (nonatomic, readonly) UIView *hudView;
-@property (nonatomic, readonly) UILabel *stringLabel;
-@property (nonatomic, readonly) UIImageView *imageView;
-@property (nonatomic, readonly) UIActivityIndicatorView *spinnerView;
+@property (nonatomic, strong, readonly) UIWindow *overlayWindow;
+@property (nonatomic, strong, readonly) UIView *hudView;
+@property (nonatomic, strong, readonly) UILabel *stringLabel;
+@property (nonatomic, strong, readonly) UIImageView *imageView;
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *spinnerView;
 
 @property (nonatomic, readonly) CGFloat visibleKeyboardHeight;
 
 - (void)showWithStatus:(NSString*)string maskType:(SVProgressHUDMaskType)hudMaskType networkIndicator:(BOOL)show;
+- (void)showImage:(UIImage*)image status:(NSString*)status duration:(NSTimeInterval)duration;
+- (void)dismiss;
+
 - (void)setStatus:(NSString*)string;
 - (void)registerNotifications;
 - (void)moveToPoint:(CGPoint)newCenter rotateAngle:(CGFloat)angle;
 - (void)positionHUD:(NSNotification*)notification;
-
-- (void)dismiss;
-- (void)dismissWithStatus:(NSString*)string error:(BOOL)error;
-- (void)dismissWithStatus:(NSString*)string error:(BOOL)error afterDelay:(NSTimeInterval)seconds;
 
 @end
 
 
 @implementation SVProgressHUD
 
-@synthesize overlayWindow, hudView, maskType, showNetworkIndicator, fadeOutTimer, stringLabel, imageView, spinnerView, visibleKeyboardHeight;
+@synthesize overlayWindow, hudView, maskType, fadeOutTimer, stringLabel, imageView, spinnerView, visibleKeyboardHeight;
 
 - (void)dealloc {
-	
 	self.fadeOutTimer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [hudView release];
-    [stringLabel release];
-    [imageView release];
-    [spinnerView release];
-    
-    [super dealloc];
 }
 
 
@@ -85,34 +75,28 @@
     [[SVProgressHUD sharedView] showWithStatus:status maskType:maskType networkIndicator:NO];
 }
 
-+ (void)showWithStatus:(NSString *)status networkIndicator:(BOOL)show {
-    [[SVProgressHUD sharedView] showWithStatus:status maskType:SVProgressHUDMaskTypeNone networkIndicator:show];
-}
-
-+ (void)showWithMaskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show {
-    [[SVProgressHUD sharedView] showWithStatus:nil maskType:maskType networkIndicator:show];
-}
-
-+ (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show {
-    [[SVProgressHUD sharedView] showWithStatus:status maskType:maskType networkIndicator:show];
-}
+#pragma mark - Show then dismiss methods
 
 + (void)showSuccessWithStatus:(NSString *)string {
-    [SVProgressHUD showSuccessWithStatus:string duration:1];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/success.png"] status:string];
 }
 
 + (void)showSuccessWithStatus:(NSString *)string duration:(NSTimeInterval)duration {
     [SVProgressHUD show];
-    [SVProgressHUD dismissWithSuccess:string afterDelay:duration];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/success.png"] status:string];
 }
 
 + (void)showErrorWithStatus:(NSString *)string {
-    [SVProgressHUD showErrorWithStatus:string duration:1];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/error.png"] status:string];
 }
 
 + (void)showErrorWithStatus:(NSString *)string duration:(NSTimeInterval)duration {
     [SVProgressHUD show];
-    [SVProgressHUD dismissWithError:string afterDelay:duration];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/error.png"] status:string];
+}
+
++ (void)showImage:(UIImage *)image status:(NSString *)string {
+    [[SVProgressHUD sharedView] showImage:image status:string duration:1.0];
 }
 
 
@@ -122,20 +106,20 @@
 	[[SVProgressHUD sharedView] dismiss];
 }
 
-+ (void)dismissWithSuccess:(NSString*)successString {
-	[[SVProgressHUD sharedView] dismissWithStatus:successString error:NO];
++ (void)dismissWithSuccess:(NSString*)string {
+	[SVProgressHUD showSuccessWithStatus:string];
 }
 
-+ (void)dismissWithSuccess:(NSString *)successString afterDelay:(NSTimeInterval)seconds {
-    [[SVProgressHUD sharedView] dismissWithStatus:successString error:NO afterDelay:seconds];
++ (void)dismissWithSuccess:(NSString *)string afterDelay:(NSTimeInterval)seconds {
+    [[SVProgressHUD sharedView] showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/success.png"] status:string duration:seconds];
 }
 
-+ (void)dismissWithError:(NSString*)errorString {
-	[[SVProgressHUD sharedView] dismissWithStatus:errorString error:YES];
++ (void)dismissWithError:(NSString*)string {
+	[SVProgressHUD showErrorWithStatus:string];
 }
 
-+ (void)dismissWithError:(NSString *)errorString afterDelay:(NSTimeInterval)seconds {
-    [[SVProgressHUD sharedView] dismissWithStatus:errorString error:YES afterDelay:seconds];
++ (void)dismissWithError:(NSString *)string afterDelay:(NSTimeInterval)seconds {
+    [[SVProgressHUD sharedView] showImage:[UIImage imageNamed:@"SVProgressHUD.bundle/error.png"] status:string duration:seconds];
 }
 
 
@@ -230,10 +214,10 @@
 - (void)setFadeOutTimer:(NSTimer *)newTimer {
     
     if(fadeOutTimer)
-        [fadeOutTimer invalidate], [fadeOutTimer release], fadeOutTimer = nil;
+        [fadeOutTimer invalidate], fadeOutTimer = nil;
     
     if(newTimer)
-        fadeOutTimer = [newTimer retain];
+        fadeOutTimer = newTimer;
 }
 
 
@@ -355,117 +339,79 @@
 #pragma mark - Master show/dismiss methods
 
 - (void)showWithStatus:(NSString*)string maskType:(SVProgressHUDMaskType)hudMaskType networkIndicator:(BOOL)show {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(!self.superview)
-            [self.overlayWindow addSubview:self];
-        
-        self.fadeOutTimer = nil;
-        
-        if(self.showNetworkIndicator)
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-        self.showNetworkIndicator = show;
-        
-        if(self.showNetworkIndicator)
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-        self.imageView.hidden = YES;
-        self.maskType = hudMaskType;
-        
-        [self setStatus:string];
-        [self.spinnerView startAnimating];
-        
-        if(self.maskType != SVProgressHUDMaskTypeNone) {
-            self.overlayWindow.userInteractionEnabled = YES;
-        } else {
-            self.overlayWindow.userInteractionEnabled = NO;
-        }
-        
-        [self.overlayWindow makeKeyAndVisible];
-        [self positionHUD:nil];
-        
-        if(self.alpha != 1) {
-            [self registerNotifications];
-            self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1.3, 1.3);
-            
-            [UIView animateWithDuration:0.15
-                                  delay:0
-                                options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{	
-                                 self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1/1.3, 1/1.3);
-                                 self.alpha = 1;
-                             }
-                             completion:NULL];
-        }
-        
-        [self setNeedsDisplay];
-    });
-}
-
-
-- (void)dismissWithStatus:(NSString*)string error:(BOOL)error {
-	[self dismissWithStatus:string error:error afterDelay:0.9];
-}
-
-
-- (void)dismissWithStatus:(NSString *)string error:(BOOL)error afterDelay:(NSTimeInterval)seconds {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.alpha != 1)
-            return;
-        
-        if(self.showNetworkIndicator) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            self.showNetworkIndicator = NO;
-        }
-        
-        if(error)
-            self.imageView.image = [UIImage imageNamed:@"SVProgressHUD.bundle/error.png"];
-        else
-            self.imageView.image = [UIImage imageNamed:@"SVProgressHUD.bundle/success.png"];
-        
-        self.imageView.hidden = NO;
-        [self setStatus:string];
-        [self.spinnerView stopAnimating];
-        
-        self.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
-    });
-}
-
-- (void)dismiss {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if(self.showNetworkIndicator) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            self.showNetworkIndicator = NO;
-        }
+    if(!self.superview)
+        [self.overlayWindow addSubview:self];
+    
+    self.fadeOutTimer = nil;
+    self.imageView.hidden = YES;
+    self.maskType = hudMaskType;
+    
+    [self setStatus:string];
+    [self.spinnerView startAnimating];
+    
+    if(self.maskType != SVProgressHUDMaskTypeNone) {
+        self.overlayWindow.userInteractionEnabled = YES;
+    } else {
+        self.overlayWindow.userInteractionEnabled = NO;
+    }
+    
+    [self.overlayWindow setHidden:NO];
+    [self positionHUD:nil];
+    
+    if(self.alpha != 1) {
+        [self registerNotifications];
+        self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1.3, 1.3);
         
         [UIView animateWithDuration:0.15
                               delay:0
-                            options:UIViewAnimationCurveEaseIn | UIViewAnimationOptionAllowUserInteraction
-                         animations:^{	
-                             self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 0.8, 0.8);
-                             self.alpha = 0;
+                            options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1/1.3, 1/1.3);
+                             self.alpha = 1;
                          }
-                         completion:^(BOOL finished){ 
-                             if(self.alpha == 0) {
-                                 self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1.3/0.8, 1.3/0.8);
-                                 [[NSNotificationCenter defaultCenter] removeObserver:self];
-                                 [overlayWindow release], overlayWindow = nil;
-                                 
-                                 // find the frontmost window that is an actual UIWindow and make it keyVisible
-                                 [[UIApplication sharedApplication].windows enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(UIWindow *window, NSUInteger idx, BOOL *stop) {
-                                     if([window isKindOfClass:[UIWindow class]] && window.windowLevel == UIWindowLevelNormal) {
-                                         [window makeKeyWindow];
-                                         *stop = YES;
-                                     }
-                                 }];
-                                 
-                                 // uncomment to make sure UIWindow is gone from app.windows
-                                 //NSLog(@"%@", [UIApplication sharedApplication].windows);
-                                 //NSLog(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
-                             }
-                         }];
-    });
+                         completion:NULL];
+    }
+    
+    [self setNeedsDisplay];
+}
+
+
+- (void)showImage:(UIImage *)image status:(NSString *)string duration:(NSTimeInterval)duration {
+    if(![SVProgressHUD isVisible])
+        [SVProgressHUD show];
+    
+    self.imageView.image = image;
+    self.imageView.hidden = NO;
+    [self setStatus:string];
+    [self.spinnerView stopAnimating];
+    
+    self.fadeOutTimer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:self.fadeOutTimer forMode:NSRunLoopCommonModes];
+}
+
+
+- (void)dismiss {
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationCurveEaseIn | UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 0.8, 0.8);
+                         self.alpha = 0;
+                     }
+                     completion:^(BOOL finished){
+                         if(self.alpha == 0) {
+                             [[NSNotificationCenter defaultCenter] removeObserver:self];
+                             [hudView removeFromSuperview];
+                             hudView = nil;
+                             
+                             [overlayWindow removeFromSuperview];
+                             overlayWindow = nil;
+                             
+                             // uncomment to make sure UIWindow is gone from app.windows
+                             //NSLog(@"%@", [UIApplication sharedApplication].windows);
+                             //NSLog(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
+                         }
+                     }];
 }
 
 #pragma mark - Utilities
@@ -512,16 +458,21 @@
 		stringLabel.shadowColor = [UIColor blackColor];
 		stringLabel.shadowOffset = CGSizeMake(0, -1);
         stringLabel.numberOfLines = 0;
-		[self.hudView addSubview:stringLabel];
     }
+    
+    if(!stringLabel.superview)
+        [self.hudView addSubview:stringLabel];
+    
     return stringLabel;
 }
 
 - (UIImageView *)imageView {
-    if (imageView == nil) {
+    if (imageView == nil)
         imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-		[self.hudView addSubview:imageView];
-    }
+    
+    if(!imageView.superview)
+        [self.hudView addSubview:imageView];
+    
     return imageView;
 }
 
@@ -530,15 +481,16 @@
         spinnerView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		spinnerView.hidesWhenStopped = YES;
 		spinnerView.bounds = CGRectMake(0, 0, 37, 37);
-		[self.hudView addSubview:spinnerView];
     }
+    
+    if(!spinnerView.superview)
+        [self.hudView addSubview:spinnerView];
+    
     return spinnerView;
 }
 
 - (CGFloat)visibleKeyboardHeight {
-    
-    NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-    
+        
     UIWindow *keyboardWindow = nil;
     for (UIWindow *testWindow in [[UIApplication sharedApplication] windows]) {
         if(![[testWindow class] isEqual:[UIWindow class]]) {
@@ -549,7 +501,7 @@
 
     // Locate UIKeyboard.  
     UIView *foundKeyboard = nil;
-    for (UIView *possibleKeyboard in [keyboardWindow subviews]) {
+    for (__strong UIView *possibleKeyboard in [keyboardWindow subviews]) {
         
         // iOS 4 sticks the UIKeyboard inside a UIPeripheralHostView.
         if ([[possibleKeyboard description] hasPrefix:@"<UIPeripheralHostView"]) {
@@ -561,8 +513,6 @@
             break;
         }
     }
-    
-    [autoreleasePool release];
         
     if(foundKeyboard && foundKeyboard.bounds.size.height > 100)
         return foundKeyboard.bounds.size.height;

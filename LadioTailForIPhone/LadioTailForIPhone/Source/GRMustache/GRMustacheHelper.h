@@ -29,19 +29,69 @@
 // =============================================================================
 #pragma mark - <GRMustacheHelper>
 
+/**
+ * The protocol for implementing Mustache "lambda" sections.
+ *
+ * The responsability of a GRMustacheHelper is to render a Mustache section such
+ * as `{{#bold}}...{{/bold}}`.
+ *
+ * When the data given to a Mustache section is a GRMustacheHelper, GRMustache
+ * invokes the `renderSection:` method of the helper, and inserts the raw return
+ * value in the template rendering.
+ *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/helpers.md
+ *
+ * @since v1.9
+ */
 @protocol GRMustacheHelper<NSObject>
 @required
-- (NSString *)renderSection:(GRMustacheSection *)section AVAILABLE_GRMUSTACHE_VERSION_3_0_AND_LATER;
+
+////////////////////////////////////////////////////////////////////////////////
+/// @name Rendering Sections
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the rendering of a Mustache section.
+ *
+ * @param section   The section to render
+ *
+ * @return The rendering of the section
+ *
+ * @since v2.0
+ */
+- (NSString *)renderSection:(GRMustacheSection *)section AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
 @end
 
 
 // =============================================================================
 #pragma mark - GRMustacheHelper
 
-#if NS_BLOCKS_AVAILABLE
-
+/**
+ * The GRMustacheHelper class helps building mustache helpers without writing a
+ * custom class that conforms to the GRMustacheHelper protocol.
+ *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/helpers.md
+ *
+ * @see GRMustacheHelper protocol
+ *
+ * @since v2.0
+ */ 
 @interface GRMustacheHelper: NSObject<GRMustacheHelper>
-+ (id)helperWithBlock:(NSString *(^)(GRMustacheSection* section))block AVAILABLE_GRMUSTACHE_VERSION_3_0_AND_LATER;
-@end
 
-#endif /* if NS_BLOCKS_AVAILABLE */
+////////////////////////////////////////////////////////////////////////////////
+/// @name Creating Helpers
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns a GRMustacheHelper object that executes the provided block when
+ * rendering a section.
+ *
+ * @param block   The block that renders a section.
+ *
+ * @return a GRMustacheHelper object.
+ *
+ * @since v2.0
+ */
++ (id)helperWithBlock:(NSString *(^)(GRMustacheSection* section))block AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+
+@end
