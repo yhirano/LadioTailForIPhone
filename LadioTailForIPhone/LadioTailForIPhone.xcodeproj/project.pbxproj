@@ -28,7 +28,7 @@
 		8E0B83781543DC770097984D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
 		8E0B83791543DC770097984D /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835A1543DC770097984D /* SearchWordManager.m */; };
 		8E0B837A1543DC770097984D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B835C1543DC770097984D /* SVProgressHUD.bundle */; };
-		8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
 		8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
 		8E0B83821543DFD20097984D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83811543DEC80097984D /* AppDelegate.m */; };
 		8E12B5B3153E7F33002F4437 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B5AC153E7F28002F4437 /* Icon-72.png */; };
