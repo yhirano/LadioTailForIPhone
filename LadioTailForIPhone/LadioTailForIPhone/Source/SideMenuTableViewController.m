@@ -403,6 +403,9 @@
 
                 [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
 
+                // ヘッドラインテーブルをトップに移動
+                [[self headlineViewControllerFromViewDeckCenterControllerTop] scrollToTopAnimated:YES];
+
                 // チェックマーク位置変更のためテーブルを更新
                 [tableView reloadData];
 

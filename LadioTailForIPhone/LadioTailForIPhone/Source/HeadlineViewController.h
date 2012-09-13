@@ -45,6 +45,8 @@
 
 - (void)fetchHeadline;
 
+- (void)scrollToTopAnimated:(BOOL)animated;
+
 - (IBAction)openSideMenu:(id)sender;
 
 @end

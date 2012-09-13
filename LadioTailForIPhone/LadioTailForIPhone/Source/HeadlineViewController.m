@@ -110,6 +110,14 @@ enum HeadlineViewDisplayType {
     [headline fetchHeadline];
 }
 
+- (void)scrollToTopAnimated:(BOOL)animated
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [headlineTableView_ scrollToRowAtIndexPath:indexPath
+                              atScrollPosition:UITableViewScrollPositionTop
+                                      animated:animated];
+}
+
 #pragma mark - Private methods
 
 - (NSInteger)headlineViewDisplayType
