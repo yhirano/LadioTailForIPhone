@@ -20,36 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustache_private.h"
+#import "GRMustacheRuntime_private.h"
+#import "GRMustacheVersion.h"
 
+@implementation GRMustache
 
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
++ (void)preventNSUndefinedKeyExceptionAttack
+{
+    [GRMustacheRuntime preventNSUndefinedKeyExceptionAttack];
+}
 
-/**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
++ (GRMustacheVersion)version
+{
+    return (GRMustacheVersion){
+        .major = GRMUSTACHE_MAJOR_VERSION,
+        .minor = GRMUSTACHE_MINOR_VERSION,
+        .patch = GRMUSTACHE_PATCH_VERSION };
+}
 
-
+@end

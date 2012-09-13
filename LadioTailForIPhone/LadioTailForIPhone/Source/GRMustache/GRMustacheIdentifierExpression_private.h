@@ -20,36 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
-
+#import "GRMustacheExpression_private.h"
 
 /**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * The GRMustacheIdentifierExpression is able to perform the deep lookup of an
+ * identifier in a context stack.
+ *
+ * @see GRMustacheExpression
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheIdentifierExpression : GRMustacheExpression {
+@private
+    NSString *_identifier;
+}
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * Returns an identifier expression, given an identifier.
+ *
+ * For instance, the Mustache tag `{{ name }}` contains an identifier
+ * expression, whose identifier is `name`.
+ *
+ * @param identifier  An identifier
+ *
+ * @return A GRMustacheIdentifierExpression.
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
-
-
++ (id)expressionWithIdentifier:(NSString *)identifier;
+@end

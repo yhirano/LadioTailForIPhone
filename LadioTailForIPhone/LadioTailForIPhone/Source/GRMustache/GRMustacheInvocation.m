@@ -20,36 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheInvocation_private.h"
+#import "GRMustacheToken_private.h"
 
+@implementation GRMustacheInvocation
+@synthesize returnValue=_returnValue;
+@synthesize token=_token;
 
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+- (void)dealloc
+{
+    [_returnValue release];
+    [_token release];
+    [super dealloc];
+}
 
-/**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+- (NSString *)description
+{
+    NSAssert(_token, @"token not set");
+    if (_token.templateID) {
+        return [NSString stringWithFormat:@"`%@` at line %lu of template %@", _token.templateSubstring, (unsigned long)_token.line, _token.templateID];
+    } else {
+        return [NSString stringWithFormat:@"`%@` at line %lu", _token.templateSubstring, (unsigned long)_token.line];
+    }
+}
 
-
+@end

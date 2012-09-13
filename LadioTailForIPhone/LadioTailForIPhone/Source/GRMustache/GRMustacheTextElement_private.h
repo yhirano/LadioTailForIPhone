@@ -20,36 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
-
-
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+#import "GRMustacheAvailabilityMacros_private.h"
+#import "GRMustacheRenderingElement_private.h"
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * A GRMustacheTextElement is a rendering element that renders raw template
+ * text.
+ *
+ * For instance, the template string "hello {{name}}!" would give two
+ * GRMustacheTextElement instances:
+ *
+ * - a GRMustacheTextElement that renders "hello ".
+ * - a GRMustacheTextElement that renders "!".
+ *
+ * @see GRMustacheRenderingElement
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheTextElement: NSObject<GRMustacheRenderingElement> {
+@private
+    NSString *_text;
+}
+
+/**
+ * Builds and returns a GRMustacheTextElement.
+ *
+ * @param string  The string that should be rendered.
+ * @return a GRMustacheTextElement
+ */
++ (id)textElementWithString:(NSString *)string GRMUSTACHE_API_INTERNAL;
+
+@end
 
 

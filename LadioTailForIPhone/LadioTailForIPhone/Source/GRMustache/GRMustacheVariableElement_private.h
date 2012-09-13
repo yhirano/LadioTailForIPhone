@@ -20,36 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheAvailabilityMacros_private.h"
+#import "GRMustacheRenderingElement_private.h"
 
-
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@class GRMustacheExpression;
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * A GRMustacheVariableElement is a rendering element that renders variable
+ * substitution tags such as `{{name}}` and `{{{name}}}`.
+ *
+ * For instance, the template string "{{name}} is {{age}} years old." would give
+ * two GRMustacheVariableElement instances:
+ *
+ * - a GRMustacheVariableElement that renders the `name` key in a context.
+ * - a GRMustacheVariableElement that renders the `age` key in a context.
+ *
+ * @see GRMustacheRenderingElement
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheVariableElement: NSObject<GRMustacheRenderingElement> {
+@private
+    GRMustacheExpression *_expression;
+    BOOL _raw;
+}
 
+/**
+ * Builds and returns a GRMustacheVariableElement.
+ *
+ * @param expression  The expression that would evaluate against a context
+ *                    stack.
+ * @param raw         NO if the value should be rendered HTML-escaped.
+ *
+ * @return a GRMustacheVariableElement
+ *
+ * @see GRMustacheExpression
+ */
++ (id)variableElementWithExpression:(GRMustacheExpression *)expression raw:(BOOL)raw GRMUSTACHE_API_INTERNAL;
 
+@end

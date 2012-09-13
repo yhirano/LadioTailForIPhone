@@ -21,35 +21,30 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheAvailabilityMacros_private.h"
 
+@class GRMustacheToken;
+
+// Documented in GRMustacheInvocation.h
+@interface GRMustacheInvocation : NSObject {
+@private
+    id _returnValue;
+    GRMustacheToken *_token;
+}
 
 /**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * The getter of this property is documented in GRMustacheInvocation.h.
+ *
+ * The setter allow GRMustacheExpression objects to prepare invocations.
+ *
+ * @see GRMustacheExpression
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@property (nonatomic, retain) id returnValue GRMUSTACHE_API_PUBLIC;
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * The debugging token of an invocation allows an invocation to build a
+ * meaningful description like "`{{ foo }}` at line 12 of /path/to/template".
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@property (nonatomic, retain) GRMustacheToken *token GRMUSTACHE_API_INTERNAL;
 
-
+@end

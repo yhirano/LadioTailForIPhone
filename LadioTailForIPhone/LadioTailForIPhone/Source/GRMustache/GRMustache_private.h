@@ -21,35 +21,21 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheAvailabilityMacros_private.h"
 
+// Documented in GRMustache.h
+typedef struct {
+    int major;
+    int minor;
+    int patch;
+} GRMustacheVersion;
 
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustache: NSObject
 
-/**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+// Documented in GRMustache.h
++ (GRMustacheVersion)version GRMUSTACHE_API_PUBLIC;
 
+// Documented in GRMustache.h
++ (void)preventNSUndefinedKeyExceptionAttack GRMUSTACHE_API_PUBLIC;
 
+@end

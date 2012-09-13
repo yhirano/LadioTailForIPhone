@@ -21,35 +21,33 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
-
-
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+#import "GRMustacheAvailabilityMacros_private.h"
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * This class avoids most NSUndefinedException to be raised by the invocation of
+ * `valueForKey:` method on user's objects.
+ *
+ * It is used by GRMustacheRuntime after the library user has called
+ * `[GRMustache preventNSUndefinedKeyExceptionAttack]`.
+ *
+ * @see GRMustache.
+ * @see GRMustacheRuntime
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheNSUndefinedKeyExceptionGuard : NSObject
 
-
+/**
+ * Wrapper around the `valueForKey:` method, that avoids NSUndefinedException to
+ * be raised, as long as the object's implementation of `valueForUndefinedKey:`
+ * is the one of NSObject or NSManagedObject.
+ *
+ * For objects that have a custom implementation of `valueForUndefinedKey:`,
+ * this method does not guarantee that NSUndefinedException will be avoided.
+ * 
+ * @param key     The key
+ * @param object  The object
+ *
+ * @return `[object valueForKey:key]`, or nil if the object would have raised
+ *         an NSUndefinedException.
+ */
++ (id)valueForKey:(NSString *)key inObject:(id)object GRMUSTACHE_API_INTERNAL;
+@end

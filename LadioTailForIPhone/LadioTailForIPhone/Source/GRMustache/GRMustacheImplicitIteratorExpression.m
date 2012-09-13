@@ -20,36 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheImplicitIteratorExpression_private.h"
+#import "GRMustacheRuntime_private.h"
+
+@implementation GRMustacheImplicitIteratorExpression
+
++ (id)expression
+{
+    return [[[self alloc] init] autorelease];
+}
+
+- (BOOL)isEqual:(id)expression
+{
+    return [expression isKindOfClass:[GRMustacheImplicitIteratorExpression class]];
+}
 
 
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+#pragma mark - GRMustacheExpression
 
-/**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+- (id)evaluateInRuntime:(GRMustacheRuntime *)runtime asFilterValue:(BOOL)filterValue
+{
+    NSAssert(!filterValue, @"GRMustacheImplicitIteratorExpression invoked for a filter");
+    return [runtime currentContextValue];
+}
 
-
+@end

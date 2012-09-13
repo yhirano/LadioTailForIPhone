@@ -21,35 +21,41 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheAvailabilityMacros_private.h"
 
-
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@class GRMustacheRuntime;
+@class GRMustacheToken;
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * TODO
+ *
+ * The GRMustacheExpression is the protocol for objects that can provide values
+ * out of the data provided by the library user.
+ *
+ * GRMustacheExpression instances are built by GRMustacheParser. For instance,
+ * the `{{ name }}` tag would yield a GRMustacheIdentifierExpression.
+ *
+ * @see GRMustacheFilteredExpression
+ * @see GRMustacheIdentifierExpression
+ * @see GRMustacheImplicitIteratorExpression
+ * @see GRMustacheScopedExpression
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheExpression : NSObject {
+@private
+    GRMustacheToken *_token;
+}
 
+/**
+ * TODO
+ * This property stores a token whose sole purpose is to help the library user
+ * debugging his templates, using the tokens' ability to output their location
+ * (`{{ foo }} at line 23 of /path/to/template`).
+ */
+@property (nonatomic, retain) GRMustacheToken *token;
 
+/**
+ * TODO
+ */
+- (id)evaluateInRuntime:(GRMustacheRuntime *)runtime asFilterValue:(BOOL)filterValue;
+
+@end

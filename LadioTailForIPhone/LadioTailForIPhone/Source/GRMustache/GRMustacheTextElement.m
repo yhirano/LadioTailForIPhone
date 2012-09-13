@@ -20,36 +20,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheTextElement_private.h"
 
 
-/**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
-
-/**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
- */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheTextElement()
+@property (nonatomic, retain) NSString *text;
+- (id)initWithString:(NSString *)text;
+@end
 
 
+@implementation GRMustacheTextElement
+@synthesize text=_text;
+
++ (id)textElementWithString:(NSString *)text
+{
+    return [[[self alloc] initWithString:text] autorelease];
+}
+
+- (void)dealloc
+{
+    [_text release];
+    [super dealloc];
+}
+
+#pragma mark <GRMustacheRenderingElement>
+
+- (void)renderInBuffer:(NSMutableString *)buffer withRuntime:(GRMustacheRuntime *)runtime
+{
+    [buffer appendString:_text];
+}
+
+#pragma mark Private
+
+- (id)initWithString:(NSString *)text
+{
+    NSAssert(text, @"WTF");
+    self = [self init];
+    if (self) {
+        self.text = text;
+    }
+    return self;
+}
+
+@end

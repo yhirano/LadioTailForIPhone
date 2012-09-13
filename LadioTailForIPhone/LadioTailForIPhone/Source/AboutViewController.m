@@ -64,12 +64,6 @@
     }
 
     [webView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
-    // WebViewをバウンスさせない
-    for (id subview in webView_.subviews) {
-        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
-            ((UIScrollView *)subview).bounces = NO;
-        }
-    }
 }
 
 - (void)viewDidUnload

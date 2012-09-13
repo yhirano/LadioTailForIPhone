@@ -20,36 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
-
+#import "GRMustacheExpression_private.h"
 
 /**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * The GRMustacheImplicitIteratorExpression is able to return the value of the
+ * top object of a context stack.
+ *
+ * @see GRMustacheExpression
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheImplicitIteratorExpression : GRMustacheExpression
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * Returns an "implicit iterator" expression.
+ *
+ * For instance, the Mustache tag `{{ . }}` contains an implicit iterator
+ * expression.
+ *
+ * @return A GRMustacheImplicitIteratorExpression.
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
-
-
++ (id)expression;
+@end

@@ -20,36 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
 
-
-/**
- * The domain of a GRMustache-generated NSError
+/*
+ * GRMUSTACHE_API_PUBLIC
  * 
- * @since v1.0
+ * Used on public declarations
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+#define GRMUSTACHE_API_PUBLIC
 
-/**
- * The codes of a GRMustache-generated NSError
+/*
+ * GRMUSTACHE_API_PUBLIC_BUT_DEPRECATED
  * 
- * @since v1.0
+ * Used on public but deprecated declarations
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+#define GRMUSTACHE_API_PUBLIC_BUT_DEPRECATED    UNAVAILABLE_ATTRIBUTE
 
+/*
+ * GRMUSTACHE_API_INTERNAL
+ * 
+ * Used on internal declaration
+ */
+#define GRMUSTACHE_API_INTERNAL
 
+/*
+ * GRMUSTACHE_API_INTERNAL_PUBLIC_BUT_DEPRECATED
+ * 
+ * Used on internal declaration that are publicly deprecated
+ */
+#define GRMUSTACHE_API_INTERNAL_PUBLIC_BUT_DEPRECATED

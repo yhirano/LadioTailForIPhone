@@ -20,36 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
-
+#import "GRMustacheExpression_private.h"
 
 /**
- * The domain of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * The GRMustacheScopedExpression extracts a key out of a value.
+ *
+ * @see GRMustacheExpression
  */
-extern NSString* const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+@interface GRMustacheScopedExpression : GRMustacheExpression {
+@private
+    GRMustacheExpression *_baseExpression;
+    NSString *_scopeIdentifier;
+}
 
 /**
- * The codes of a GRMustache-generated NSError
- * 
- * @since v1.0
+ * Returns a scoped expression, given an expression that returns a value, and
+ * an identifier.
+ *
+ * For instance, the Mustache tag `{{ person.name }}` contains a scoped
+ * expression, whose baseExpression is a GRMustacheIdentifierExpression (for the
+ * identifier `person`), and whose identifier is `name`.
+ *
+ * @param baseExpression   An expression.
+ * @param scopeIdentifier  An identifier.
+ *
+ * @return A GRMustacheScopedExpression.
  */
-typedef enum {
-    /**
-     * The error code for parse errors.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeParseError,
-    
-    /**
-     * The error code for not found templates and partials.
-     * 
-     * @since v1.0
-     */
-    GRMustacheErrorCodeTemplateNotFound,
-} GRMustacheErrorCode AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
-
-
++ (id)expressionWithBaseExpression:(GRMustacheExpression *)baseExpression scopeIdentifier:(NSString *)scopeIdentifier;
+@end
