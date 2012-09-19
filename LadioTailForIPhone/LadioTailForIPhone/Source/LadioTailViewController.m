@@ -332,7 +332,7 @@
     
     // 進捗ウィンドウにエラー表示
     NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
-    [SVProgressHUD dismissWithError:errorStr afterDelay:DELAY_FETCH_HEADLINE_MESSAGE];
+    [SVProgressHUD showErrorWithStatus:errorStr];
 }
 
 @end

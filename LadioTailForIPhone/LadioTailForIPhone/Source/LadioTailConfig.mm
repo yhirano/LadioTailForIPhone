@@ -211,9 +211,6 @@ const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;
 /// iAd広告を有効にするか
 const BOOL HEADLINE_VIEW_IAD_ENABLE = NO;
 
-/// ヘッドライン取得失敗時にエラーを表示する秒数
-const NSTimeInterval DELAY_FETCH_HEADLINE_MESSAGE = 3.0;
-
 #pragma mark - Channel view config
 
 /// お気に入りボタンの色
