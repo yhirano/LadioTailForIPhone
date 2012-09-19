@@ -110,7 +110,19 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        switch (interfaceOrientation) {
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
+                return YES;
+            case UIInterfaceOrientationPortraitUpsideDown:
+            default:
+                return NO;
+        }
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

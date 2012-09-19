@@ -79,7 +79,7 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController.view.frame = self.view.bounds;
     viewDeckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    [viewDeckController setLeftLedge:70.0f];
+    viewDeckController.leftLedge = 74.0f;
 
     [self.view addSubview:viewDeckController.view];
 }
@@ -99,6 +99,8 @@
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     // リモコン対応/シェイク対応
     [self becomeFirstResponder];
+
+    [viewDeckController viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -107,12 +109,53 @@
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
 
+    [viewDeckController viewWillDisappear:animated];
+
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [viewDeckController viewDidDisappear:animated];
+    
+    [super viewDidDisappear:animated];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [viewDeckController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    [viewDeckController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+    [viewDeckController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [viewDeckController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        switch (interfaceOrientation) {
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
+                return YES;
+            case UIInterfaceOrientationPortraitUpsideDown:
+            default:
+                return NO;
+        }
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
 }
 
 #pragma mark - Private Methods
