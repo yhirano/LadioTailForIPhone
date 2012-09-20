@@ -544,7 +544,37 @@ enum HeadlineViewDisplayType {
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        switch (interfaceOrientation) {
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
+                return YES;
+            case UIInterfaceOrientationPortraitUpsideDown:
+            default:
+                return NO;
+        }
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+}
+
+- (BOOL)shouldAutorotate
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -727,6 +757,8 @@ enum HeadlineViewDisplayType {
     
     if (!dateLabel.hidden) {
         dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
+        dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         dateLabel.clipsToBounds = YES;
         dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
         dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
@@ -735,6 +767,8 @@ enum HeadlineViewDisplayType {
 
     if (!bitrateLabel.hidden) {
         bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
         bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;

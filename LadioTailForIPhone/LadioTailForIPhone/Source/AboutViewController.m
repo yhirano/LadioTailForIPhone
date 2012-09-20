@@ -48,12 +48,18 @@
     // メニューボタンの色を変更する
     sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
 
-    NSString* versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-    NSString* versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
+    NSString *versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    NSString *versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
 
     NSError *error = nil;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, nil] 
-                                                     forKeys:[NSArray arrayWithObjects:@"version_info",  nil]];
+#if DEBUG
+    NSString *buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, buildDate, nil]
+                                                     forKeys:[NSArray arrayWithObjects:@"version_info", @"build_date", nil]];
+#else
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, nil]
+                                                     forKeys:[NSArray arrayWithObjects:@"version_info", nil]];
+#endif /* #if DEBUG */
     NSString *html = [GRMustacheTemplate renderObject:dict
                                         fromResource:@"AboutHtml"
                                        withExtension:@"mustache"
@@ -74,7 +80,37 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        switch (interfaceOrientation) {
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
+                return YES;
+            case UIInterfaceOrientationPortraitUpsideDown:
+            default:
+                return NO;
+        }
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+}
+
+- (BOOL)shouldAutorotate
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
 }
 
 @end
