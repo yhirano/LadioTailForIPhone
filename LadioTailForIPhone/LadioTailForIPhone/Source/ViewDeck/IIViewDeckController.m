@@ -621,6 +621,18 @@ __typeof__(h) __h = (h);                                    \
 
 #pragma mark - rotation
 
+- (BOOL)shouldAutorotate {
+    _preRotationWidth = self.referenceBounds.size.width;
+    _preRotationCenterWidth = self.centerView.bounds.size.width;
+    
+    if (self.rotationBehavior == IIViewDeckRotationKeepsViewSizes) {
+        _leftWidth = self.leftController.view.frame.size.width;
+        _rightWidth = self.rightController.view.frame.size.width;
+    }
+    
+    return !self.centerController || [self.centerController shouldAutorotate];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     _preRotationWidth = self.referenceBounds.size.width;
