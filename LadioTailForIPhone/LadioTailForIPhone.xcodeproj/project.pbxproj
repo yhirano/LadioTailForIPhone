@@ -780,6 +780,7 @@
 				8EC23B43153712BB007352FD /* Sources */,
 				8EC23B44153712BB007352FD /* Frameworks */,
 				8EC23B45153712BB007352FD /* Resources */,
+				8EDDA15D160A97D3006B6DCF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -926,6 +927,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8EDDA15D160A97D3006B6DCF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildPlist=\"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\"\nCFBuildDate=$(date '+%Y/%m/%d %H:%M %Z')\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $CFBuildDate\" $buildPlist";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8EC23B43153712BB007352FD /* Sources */ = {

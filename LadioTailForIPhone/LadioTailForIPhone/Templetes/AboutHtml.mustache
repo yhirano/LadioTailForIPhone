@@ -30,6 +30,11 @@
         color:#FFBE1E;
         margin-top:16px;
       }
+      #build_date {
+        text-align:center;
+        font-size:14px;
+        margin-top:16px;
+      }
       #copyright {
         text-align:center;
         font-size:14px;
@@ -53,6 +58,11 @@
   	<div id="version_info">
   		{{version_info}}
   	</div>
+    {{#build_date}}
+    <div id="build_date">
+      Build {{build_date}}
+    </div>
+    {{/build_date}}
     <div id="copyright">
       © 2012 Yuichi Hirano
     </div>
