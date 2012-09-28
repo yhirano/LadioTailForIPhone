@@ -112,10 +112,14 @@ enum HeadlineViewDisplayType {
 
 - (void)scrollToTopAnimated:(BOOL)animated
 {
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [headlineTableView_ scrollToRowAtIndexPath:indexPath
-                              atScrollPosition:UITableViewScrollPositionTop
-                                      animated:animated];
+    NSInteger sectionNum = [headlineTableView_ numberOfSections];
+    NSInteger rowNum = [headlineTableView_ numberOfRowsInSection:0];
+    if (sectionNum > 0 && rowNum > 0) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [headlineTableView_ scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionTop
+                                          animated:animated];
+    }
 }
 
 #pragma mark - Private methods
