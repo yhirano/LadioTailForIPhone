@@ -458,7 +458,7 @@
                                 <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
-                            <view contentMode="scaleToFill" id="dCA-ip-Jy9">
+                            <view contentMode="scaleToFill" id="dCA-ip-Jy9" customClass="GradientView">
                                 <rect key="frame" x="0.0" y="366" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -533,7 +533,7 @@
                                 <color key="backgroundColor" white="0.16" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
-                            <view contentMode="scaleToFill" id="XNu-Tt-9CH">
+                            <view contentMode="scaleToFill" id="XNu-Tt-9CH" customClass="GradientView">
                                 <rect key="frame" x="0.0" y="366" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -1154,91 +1154,13 @@
         <image name="tablecell_update_black.png" width="28" height="28"/>
         <image name="tablecell_update_white.png" width="28" height="28"/>
     </resources>
-    <classes>
-        <class className="AboutNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutNaviViewController.h"/>
-        </class>
-        <class className="AboutViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="openSideMenu:"/>
-                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="ChannelViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="favorite:"/>
-                <relationship kind="action" name="play:"/>
-                <relationship kind="action" name="tweet:"/>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="FavoriteNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteNaviViewController.h"/>
-        </class>
-        <class className="FavoriteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="FavoritesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="openSideMenu:"/>
-                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="HeadlineNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineNaviViewController.h"/>
-        </class>
-        <class className="HeadlineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="openSideMenu:"/>
-                <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="LadioTailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
-        </class>
-        <class className="SideMenuTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SideMenuTableViewController.h"/>
-        </class>
-        <class className="WebPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="forward:"/>
-                <relationship kind="action" name="goToBottom:"/>
-                <relationship kind="action" name="reload:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uMs-fw-DSO"/>
         <segue reference="CF2-OT-Flv"/>
+        <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>
