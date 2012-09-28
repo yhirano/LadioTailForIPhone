@@ -122,14 +122,6 @@
     [super viewDidLoad];
 
     [pageWebView_ loadRequest:[NSURLRequest requestWithURL:url_]];
-
-    // 下部Viewの背景色をグラデーションに
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = bottomView_.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id) BOTTOM_BAR_TOP_COLOR.CGColor,
-                                                (id) BOTTOM_BAR_BOTTOM_COLOR.CGColor,
-                                                nil];
-    [bottomView_.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)viewDidUnload

@@ -141,25 +141,25 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
                 }
             }
             
-            // 述べリスナー数
-            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            // 最大リスナー数
+            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 value = [NSString stringWithFormat:@"%@%@ %d",
-                     value,
-                     NSLocalizedString(@"Total", @"述べ"),
-                     channel.clns];
-                if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+                         value,
+                         NSLocalizedString(@"Max", @"最大"),
+                         channel.max];
+                if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
                     value = [NSString stringWithFormat:@"%@%@", value, @" / "];
                 }
             }
             
-            // 最大リスナー数
-            if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
+            // 述べリスナー数
+            if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 value = [NSString stringWithFormat:@"%@%@ %d",
-                     value,
-                     NSLocalizedString(@"Max", @"最大"),
-                     channel.max];
+                         value,
+                         NSLocalizedString(@"Total", @"述べ"),
+                         channel.clns];
             }
-            
+
             [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
         }
     }
@@ -223,6 +223,12 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
             [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
         }
     }
+    // マウント
+    value = channel.mnt;
+    if (!([value length] == 0)) {
+        tag = NSLocalizedString(@"Mount", @"マウント");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
 #if DEBUG
     // 番組の詳細内容を表示するサイトのURL
     value = [channel.surl absoluteString];
@@ -240,12 +246,6 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
     value = [[NSNumber numberWithUnsignedInt:channel.prt] stringValue];;
     if (!([value length] == 0)) {
         NSString *tag = @"- PRT";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-    }
-    // マウント
-    value = channel.mnt;
-    if (!([value length] == 0)) {
-        tag = @"- MNT";
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
     // お気に入り

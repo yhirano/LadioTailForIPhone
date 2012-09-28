@@ -112,10 +112,14 @@ enum HeadlineViewDisplayType {
 
 - (void)scrollToTopAnimated:(BOOL)animated
 {
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [headlineTableView_ scrollToRowAtIndexPath:indexPath
-                              atScrollPosition:UITableViewScrollPositionTop
-                                      animated:animated];
+    NSInteger sectionNum = [headlineTableView_ numberOfSections];
+    NSInteger rowNum = [headlineTableView_ numberOfRowsInSection:0];
+    if (sectionNum > 0 && rowNum > 0) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [headlineTableView_ scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionTop
+                                          animated:animated];
+    }
 }
 
 #pragma mark - Private methods
@@ -662,9 +666,37 @@ enum HeadlineViewDisplayType {
 
     // DJのみが存在する場合
     if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
-        cellIdentifier = @"ChannelDjOnlyCell";
+        switch (headlineViewDisplayType_) {
+            case HeadlineViewDisplayTypeElapsedTime:
+                cellIdentifier = @"ChannelCell_Dj_Time";
+                break;
+            case HeadlineViewDisplayTypeBitrate:
+                cellIdentifier = @"ChannelCell_Dj_Bitrate";
+                break;
+            case HeadlineViewDisplayTypeOnlyTitleAndDj:
+                cellIdentifier = @"ChannelCell_Dj";
+                break;
+            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+            default:
+                cellIdentifier = @"ChannelCell_Dj_BitrateAndTime";
+                break;
+        }
     } else {
-        cellIdentifier = @"ChannelCell";
+        switch (headlineViewDisplayType_) {
+            case HeadlineViewDisplayTypeElapsedTime:
+                cellIdentifier = @"ChannelCell_TitleAndDj_Time";
+                break;
+            case HeadlineViewDisplayTypeBitrate:
+                cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
+                break;
+            case HeadlineViewDisplayTypeOnlyTitleAndDj:
+                cellIdentifier = @"ChannelCell_TitleAndDj";
+                break;
+            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+            default:
+                cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
+                break;
+        }
     }
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -678,51 +710,7 @@ enum HeadlineViewDisplayType {
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
     UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
     UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
-    
-    switch (headlineViewDisplayType_) {
-        case HeadlineViewDisplayTypeElapsedTime:
-            dateLabel.hidden = NO;
-            bitrateLabel.hidden = YES;
 
-            CGRect djLabelRect = [djLabel frame];
-            djLabelRect.size = CGSizeMake(166, djLabelRect.size.height);
-            [djLabel setFrame:djLabelRect];
-            break;
-        case HeadlineViewDisplayTypeBitrate:
-            dateLabel.hidden = YES;
-            bitrateLabel.hidden = NO;
-
-            CGRect bitrateLabelRect = [bitrateLabel frame];
-            bitrateLabelRect.origin = CGPointMake(260, bitrateLabelRect.origin.y);
-            [bitrateLabel setFrame:bitrateLabelRect];
-
-            djLabelRect = [djLabel frame];
-            djLabelRect.size = CGSizeMake(188, djLabelRect.size.height);
-            [djLabel setFrame:djLabelRect];
-            break;
-        case HeadlineViewDisplayTypeOnlyTitleAndDj:
-            dateLabel.hidden = YES;
-            bitrateLabel.hidden = YES;
-
-            djLabelRect = [djLabel frame];
-            djLabelRect.size = CGSizeMake(250, djLabelRect.size.height);
-            [djLabel setFrame:djLabelRect];
-            break;
-        case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-        default:
-            dateLabel.hidden = NO;
-            bitrateLabel.hidden = NO;
-
-            bitrateLabelRect = [bitrateLabel frame];
-            bitrateLabelRect.origin = CGPointMake(175, bitrateLabelRect.origin.y);
-            [bitrateLabel setFrame:bitrateLabelRect];
-            
-            djLabelRect = [djLabel frame];
-            djLabelRect.size = CGSizeMake(104, djLabelRect.size.height);
-            [djLabel setFrame:djLabelRect];
-            break;
-    }
-    
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
@@ -738,10 +726,10 @@ enum HeadlineViewDisplayType {
     } else {
         listenersLabel.text = @"";
     }
-    if (!dateLabel.hidden) {
+    if (dateLabel != nil && !dateLabel.hidden) {
         dateLabel.text = [self dateText:channel.tims];
     }
-    if (!bitrateLabel.hidden) {
+    if (bitrateLabel != nil && !bitrateLabel.hidden) {
         bitrateLabel.text = [self bitrateText:channel.bit];
     }
 
@@ -755,7 +743,7 @@ enum HeadlineViewDisplayType {
     listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
     listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
     
-    if (!dateLabel.hidden) {
+    if (dateLabel != nil && !dateLabel.hidden) {
         dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
         dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
@@ -765,7 +753,7 @@ enum HeadlineViewDisplayType {
         dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
     }
 
-    if (!bitrateLabel.hidden) {
+    if (bitrateLabel != nil && !bitrateLabel.hidden) {
         bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため

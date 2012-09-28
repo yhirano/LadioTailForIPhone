@@ -202,16 +202,6 @@
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
-    // 下部Viewの背景色をグラデーションに
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = bottomView_.bounds;
-    gradient.colors =
-        [NSArray arrayWithObjects:
-            (id) BOTTOM_BAR_TOP_COLOR.CGColor,
-            (id) BOTTOM_BAR_BOTTOM_COLOR.CGColor,
-            nil];
-    [bottomView_.layer insertSublayer:gradient atIndex:0];
-
     // 表示情報を生成する
     [self writeDescription];
 }
