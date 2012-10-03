@@ -21,10 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "iAd/iAd.h"
 #import "LadioLib/LadioLib.h"
 
-@interface FavoriteViewController : UIViewController <UIWebViewDelegate, ADBannerViewDelegate>
+@interface FavoriteViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong) Favorite *favorite;
 

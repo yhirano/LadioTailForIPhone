@@ -22,21 +22,14 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "LadioTailConfig.h"
-#import "IAdBannerManager.h"
 #import "ChannelsHtml.h"
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
-
-/// 広告を表示後に隠すか。デバッグ用。
-#define AD_HIDE_DEBUG 0
 
 @implementation FavoriteViewController
 {
 @private
     NSURL *openUrl_;
-
-    /// 広告が表示されているか
-    BOOL isVisibleAdBanner_;
 }
 
 @synthesize favorite = favorite_;
@@ -123,70 +116,16 @@
 {
     [super viewDidAppear:animated];
 
-    if (FAVORITE_VIEW_IAD_ENABLE) {
-        // WebViewの初期位置を設定
-        // 広告のアニメーション前に初期位置を設定する必要有り
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 416);
-        
-        // 広告を表示する
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView setFrame:CGRectMake(0, 416, 320, 50)];
-        if (adBannerView.bannerLoaded) {
-            [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
-                                  delay:0
-                                options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 adBannerView.frame = CGRectMake(0, 366, 320, 50);
-                             }
-                             completion:^(BOOL finished) {
-                                 if (finished) {
-                                     descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
-                                 }
-                             }];
-            isVisibleAdBanner_ = YES;
-#if AD_HIDE_DEBUG
-            [NSTimer scheduledTimerWithTimeInterval:4.0
-                                             target:self
-                                           selector:@selector(hideAdBanner:)
-                                           userInfo:nil
-                                            repeats:NO];
-#endif /* #if AD_HIDE_DEBUG */
-        }
-        adBannerView.delegate = self;
-        [self.view insertSubview:adBannerView aboveSubview:descriptionWebView_];
-    }
-
     // WebViewのデリゲートを設定する
     descriptionWebView_.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (FAVORITE_VIEW_IAD_ENABLE) {
-        // WebViewの初期位置を設定
-        // Viewを消す前に大きさを元に戻しておくことで、ちらつくのを防ぐ
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 416);
-        
-        // 広告の表示を消す
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.delegate = nil;
-    }
-    
     // WebViewのデリゲートを削除する
     descriptionWebView_.delegate = nil;
     
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    if (FAVORITE_VIEW_IAD_ENABLE) {
-        // 広告Viewを削除
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView removeFromSuperview];
-    }
-    
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -260,60 +199,6 @@
         }
     }
     return YES;
-}
-
-#pragma mark - ADBannerViewDelegate methods
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    if (FAVORITE_VIEW_IAD_ENABLE) {
-        // 広告をはいつでも表示可能
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-// iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    NSLog(@"iAD banner load complated.");
-    
-    if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.hidden = NO;
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 366, 320, 50);
-                         }
-                         completion:^(BOOL finished) {
-                             if (finished) {
-                                 descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
-                             }
-                         }];
-        isVisibleAdBanner_ = YES;
-    }
-}
-
-// iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
-    
-    if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 416);
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 416, 320, 50);
-                         }
-                         completion:nil];
-        isVisibleAdBanner_ = NO;
-    }
 }
 
 @end

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8E0B21FB1552136400A0347A /* AboutHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B21FA1552136400A0347A /* AboutHtml.mustache */; };
 		8E0B83631543DC770097984D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B831F1543DC770097984D /* AboutViewController.m */; };
-		8E0B83641543DC770097984D /* IAdBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83211543DC770097984D /* IAdBannerManager.m */; };
 		8E0B83651543DC770097984D /* ChannelsHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83231543DC770097984D /* ChannelsHtml.m */; };
 		8E0B83661543DC770097984D /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83251543DC770097984D /* ChannelViewController.m */; };
 		8E0B83681543DC770097984D /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832A1543DC770097984D /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -87,7 +86,6 @@
 		8EA3066615ED1A1800107AE7 /* AboutNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3066415ED182500107AE7 /* AboutNaviViewController.m */; };
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
-		8EB3A5FD153C01D900965D87 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3A5FC153C01D900965D87 /* iAd.framework */; };
 		8EB905C415E9B7AF00C27CA1 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */; };
 		8EB905C515E9B7AF00C27CA1 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C315E9B7AF00C27CA1 /* WrapController.m */; };
 		8EC225FB156F00C700DB1633 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC225F9156F00C700DB1633 /* Icon-72@2x.png */; };
@@ -177,8 +175,6 @@
 		8E0B21FA1552136400A0347A /* AboutHtml.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AboutHtml.mustache; sourceTree = "<group>"; };
 		8E0B831E1543DC770097984D /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		8E0B831F1543DC770097984D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
-		8E0B83201543DC770097984D /* IAdBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAdBannerManager.h; sourceTree = "<group>"; };
-		8E0B83211543DC770097984D /* IAdBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAdBannerManager.m; sourceTree = "<group>"; };
 		8E0B83221543DC770097984D /* ChannelsHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsHtml.h; sourceTree = "<group>"; };
 		8E0B83231543DC770097984D /* ChannelsHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsHtml.m; sourceTree = "<group>"; };
 		8E0B83241543DC770097984D /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
@@ -424,7 +420,6 @@
 				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
 				8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */,
 				8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */,
-				8EB3A5FD153C01D900965D87 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,8 +468,6 @@
 				8E0B83581543DC770097984D /* Player.m */,
 				8E0B83591543DC770097984D /* SearchWordManager.h */,
 				8E0B835A1543DC770097984D /* SearchWordManager.m */,
-				8E0B83201543DC770097984D /* IAdBannerManager.h */,
-				8E0B83211543DC770097984D /* IAdBannerManager.m */,
 				8E0B83221543DC770097984D /* ChannelsHtml.h */,
 				8E0B83231543DC770097984D /* ChannelsHtml.m */,
 				8E5764E5161662FA0088C75E /* GradientView.h */,
@@ -962,7 +955,6 @@
 				8EC23B58153712BB007352FD /* main.m in Sources */,
 				8E0B83821543DFD20097984D /* AppDelegate.m in Sources */,
 				8E0B83631543DC770097984D /* AboutViewController.m in Sources */,
-				8E0B83641543DC770097984D /* IAdBannerManager.m in Sources */,
 				8E0B83651543DC770097984D /* ChannelsHtml.m in Sources */,
 				8E0B83661543DC770097984D /* ChannelViewController.m in Sources */,
 				8E0B83681543DC770097984D /* EGORefreshTableHeaderView.m in Sources */,

@@ -21,11 +21,10 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "iAd/iAd.h"
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 #import "LadioLib/LadioLib.h"
 
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate, ADBannerViewDelegate,
+@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
                                                       EGORefreshTableHeaderDelegate>
 
 @property (nonatomic) ChannelSortType channelSortType;

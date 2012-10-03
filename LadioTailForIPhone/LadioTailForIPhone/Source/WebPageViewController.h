@@ -21,9 +21,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "iAd/iAd.h"
 
-@interface WebPageViewController : UIViewController <UIWebViewDelegate, ADBannerViewDelegate>
+@interface WebPageViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong) NSURL *url;
 

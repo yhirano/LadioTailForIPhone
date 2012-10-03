@@ -25,15 +25,11 @@
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
-#import "IAdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
 #define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
-
-/// 広告を表示後に隠すか。デバッグ用。
-#define AD_HIDE_DEBUG 0
 
 enum HeadlineViewDisplayType {
     HeadlineViewDisplayTypeOnlyTitleAndDj,
@@ -53,9 +49,6 @@ enum HeadlineViewDisplayType {
 
     /// PullRefreshView
     EGORefreshTableHeaderView *refreshHeaderView_;
-
-    /// 広告が表示されているか
-    BOOL isVisibleAdBanner_;
 }
 
 @synthesize channelSortType = channelSortType_;
@@ -478,72 +471,12 @@ enum HeadlineViewDisplayType {
 {
     [super viewDidAppear:animated];
 
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // テーブルの初期位置を設定
-        // 広告のアニメーション前に初期位置を設定する必要有り
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        
-        // 広告を表示する
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        isVisibleAdBanner_ = NO;
-        [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
-        if (adBannerView.bannerLoaded) {
-            [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
-                                  delay:0
-                                options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 adBannerView.frame = CGRectMake(0, 317, 320, 50);
-                             }
-                             completion:^(BOOL finished) {
-                                 if (finished) {
-                                     headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
-                                 }
-                             }];
-            isVisibleAdBanner_ = YES;
-#if AD_HIDE_DEBUG
-            [NSTimer scheduledTimerWithTimeInterval:4.0
-                                             target:self
-                                           selector:@selector(hideAdBanner:)
-                                           userInfo:nil
-                                            repeats:NO];
-#endif /* #if AD_HIDE_DEBUG */
-        }
-        adBannerView.delegate = self;
-        [self.view insertSubview:adBannerView aboveSubview:headlineTableView_];
-    }
-
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // テーブルの初期位置を設定
-        // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        
-        // 広告の表示を消す
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.delegate = nil;
-    }
-
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // 広告Viewを削除
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView removeFromSuperview];
-    }
-
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -826,60 +759,6 @@ enum HeadlineViewDisplayType {
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
 {
     return [NSDate date]; // should return date data source was last changed
-}
-
-#pragma mark - ADBannerViewDelegate methods
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // 広告をはいつでも表示可能
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-// iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    NSLog(@"iAD banner load complated.");
-
-    if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.hidden = NO;
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 317, 320, 50);
-                         }
-                         completion:^(BOOL finished) {
-                             if (finished) {
-                                 headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
-                             }
-                         }];
-        isVisibleAdBanner_ = YES;
-    }
-}
-
-// iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
-
-    if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 377, 320, 50);
-                         }
-                         completion:nil];
-        isVisibleAdBanner_ = NO;
-    }
 }
 
 #pragma mark - NSUserDefaults notifications

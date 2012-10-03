@@ -151,9 +151,6 @@ extern const BOOL PULL_REFRESH_HEADLINE;
 /// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
 extern const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL;
 
-/// iAd広告を有効にするか
-extern const BOOL HEADLINE_VIEW_IAD_ENABLE;
-
 #pragma mark - Channel view config
 
 /// お気に入りボタンの色
@@ -167,12 +164,6 @@ extern UIColor * const BOTTOM_BAR_BOTTOM_COLOR;
 
 /// リンクをクリックするとSafariが開く
 extern const BOOL OPEN_SAFARI_WHEN_CLICK_LINK;
-
-/// iAd広告を有効にするか
-extern const BOOL CHANNEL_VIEW_IAD_ENABLE;
-
-/// iAd広告を有効にするか
-extern const BOOL WEB_PAGE_VIEW_IAD_ENABLE;
 
 #pragma mark - Favorites table view config
 
@@ -209,17 +200,8 @@ extern UIColor * const FAVORITES_CELL_TAG_TEXT_COLOR;
 /// テーブルセルのタグのテキスト選択時カラー
 extern UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
 
-#pragma mark - Favorite view config
-
-/// iAd広告を有効にするか
-extern const BOOL FAVORITE_VIEW_IAD_ENABLE;
 
 #pragma mark - Player config
 
 /// 再生開始後のタイムアウト処理までの時間
 extern const NSTimeInterval PLAY_TIMEOUT_SEC;
-
-#pragma mark - Ad animation config
-
-/// iADビューの表示アニメーションの秒数
-extern const NSTimeInterval AD_VIEW_ANIMATION_DURATION;
