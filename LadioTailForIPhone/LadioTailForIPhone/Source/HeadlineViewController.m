@@ -84,11 +84,6 @@ enum HeadlineViewDisplayType {
     [self updateHeadlineTable];
 }
 
-- (ChannelSortType)setChannelSortType
-{
-    return _channelSortType;
-}
-
 - (void)fetchHeadline
 {
     Headline *headline = [Headline sharedInstance];
