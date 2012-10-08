@@ -31,35 +31,15 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
 @implementation Channel
 
-@synthesize surl = surl_;
-@synthesize tims = tims_;
-@synthesize srv = srv_;
-@synthesize prt = prt_;
-@synthesize mnt = mnt_;
-@synthesize type = type_;
-@synthesize nam = nam_;
-@synthesize gnl = gnl_;
-@synthesize desc = desc_;
-@synthesize dj = dj_;
-@synthesize song = song_;
-@synthesize url = url_;
-@synthesize cln = cln_;
-@synthesize clns = clns_;
-@synthesize max = max_;
-@synthesize bit = bit_;
-@synthesize smpl = smpl_;
-@synthesize chs = chs_;
-@synthesize favorite;
-
 - (id)init
 {
     if (self = [super init]) {
-        cln_ = CHANNEL_UNKNOWN_LISTENER_NUM;
-        clns_ = CHANNEL_UNKNOWN_LISTENER_NUM;
-        max_ = CHANNEL_UNKNOWN_LISTENER_NUM;
-        bit_ = CHANNEL_UNKNOWN_BITRATE_NUM;
-        smpl_ = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
-        chs_ = CHANNEL_UNKNOWN_CHANNEL_NUM;
+        _cln = CHANNEL_UNKNOWN_LISTENER_NUM;
+        _clns = CHANNEL_UNKNOWN_LISTENER_NUM;
+        _max = CHANNEL_UNKNOWN_LISTENER_NUM;
+        _bit = CHANNEL_UNKNOWN_BITRATE_NUM;
+        _smpl = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
+        _chs = CHANNEL_UNKNOWN_CHANNEL_NUM;
     }
     return self;
 }
@@ -68,13 +48,13 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 {
     NSString *format = @"<%@ :%p , surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@"
                         " url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>";
-    return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, surl_, tims_, srv_, prt_, mnt_,
-                                      type_, nam_, gnl_, desc_, dj_,song_, url_, cln_, clns_, max_, bit_, smpl_, chs_];
+    return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, _surl, _tims, _srv, _prt, _mnt,
+                                      _type, _nam, _gnl, _desc, _dj, _song, _url, _cln, _clns, _max, _bit, _smpl, _chs];
 }
 
 - (void)setSurlFromString:(NSString *)url
 {
-    surl_ = [NSURL URLWithString:url];
+    _surl = [NSURL URLWithString:url];
 }
 
 - (NSString *)timsToString
@@ -84,7 +64,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         [timsToStringDateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [timsToStringDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
-    return [timsToStringDateFormatter stringFromDate:tims_];
+    return [timsToStringDateFormatter stringFromDate:_tims];
 }
 
 - (void)setTimsFromString:(NSString *)tims
@@ -95,17 +75,17 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
         
     }
-    tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
+    _tims = [setTimsFromStringDateFormatter dateFromString:tims];
 }
 
 - (void)setUrlFromString:(NSString *)url
 {
-    url_ = [NSURL URLWithString:url];
+    _url = [NSURL URLWithString:url];
 }
 
 - (NSURL *)playUrl
 {
-    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
+    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", _srv, _prt, _mnt];
     return [NSURL URLWithString:url];
 }
 
@@ -149,17 +129,17 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
     // 検索対象文字列を配列にする
     NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:4];
-    if (!([nam_ length] == 0)) {
-        [searchedWords addObject:nam_];
+    if (!([_nam length] == 0)) {
+        [searchedWords addObject:_nam];
     }
-    if (!([gnl_ length] == 0)) {
-        [searchedWords addObject:gnl_];
+    if (!([_gnl length] == 0)) {
+        [searchedWords addObject:_gnl];
     }
-    if (!([desc_ length] == 0)) {
-        [searchedWords addObject:desc_];
+    if (!([_desc length] == 0)) {
+        [searchedWords addObject:_desc];
     }
-    if (!([dj_ length] == 0)) {
-        [searchedWords addObject:dj_];
+    if (!([_dj length] == 0)) {
+        [searchedWords addObject:_dj];
     }
 
     // 検索文字と検索対象文字を比較する
@@ -188,7 +168,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     if (channel == nil) {
         return NO;
     }
-    return [mnt_ isEqualToString:channel.mnt];
+    return [_mnt isEqualToString:channel.mnt];
 }
 
 #pragma mark - Comparison Methods
@@ -329,47 +309,47 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:surl_ forKey:@"SURL"];
-    [coder encodeObject:tims_ forKey:@"TIMS"];
-    [coder encodeObject:srv_ forKey:@"SRV"];
-    [coder encodeInteger:prt_ forKey:@"PRT"];
-    [coder encodeObject:mnt_ forKey:@"MNT"];
-    [coder encodeObject:type_ forKey:@"TYPE"];
-    [coder encodeObject:nam_ forKey:@"NAM"];
-    [coder encodeObject:gnl_ forKey:@"GNL"];
-    [coder encodeObject:desc_ forKey:@"DESC"];
-    [coder encodeObject:dj_ forKey:@"DJ"];
-    [coder encodeObject:song_ forKey:@"SONG"];
-    [coder encodeObject:url_ forKey:@"URL"];
-    [coder encodeInteger:cln_ forKey:@"CLN"];
-    [coder encodeInteger:clns_ forKey:@"CLNS"];
-    [coder encodeInteger:max_ forKey:@"MAX"];
-    [coder encodeInteger:bit_ forKey:@"BIT"];
-    [coder encodeInteger:smpl_ forKey:@"SMPL"];
-    [coder encodeInteger:chs_ forKey:@"CHS"];
+    [coder encodeObject:_surl forKey:@"SURL"];
+    [coder encodeObject:_tims forKey:@"TIMS"];
+    [coder encodeObject:_srv forKey:@"SRV"];
+    [coder encodeInteger:_prt forKey:@"PRT"];
+    [coder encodeObject:_mnt forKey:@"MNT"];
+    [coder encodeObject:_type forKey:@"TYPE"];
+    [coder encodeObject:_nam forKey:@"NAM"];
+    [coder encodeObject:_gnl forKey:@"GNL"];
+    [coder encodeObject:_desc forKey:@"DESC"];
+    [coder encodeObject:_dj forKey:@"DJ"];
+    [coder encodeObject:_song forKey:@"SONG"];
+    [coder encodeObject:_url forKey:@"URL"];
+    [coder encodeInteger:_cln forKey:@"CLN"];
+    [coder encodeInteger:_clns forKey:@"CLNS"];
+    [coder encodeInteger:_max forKey:@"MAX"];
+    [coder encodeInteger:_bit forKey:@"BIT"];
+    [coder encodeInteger:_smpl forKey:@"SMPL"];
+    [coder encodeInteger:_chs forKey:@"CHS"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
-        surl_ = [coder decodeObjectForKey:@"SURL"];
-        tims_ = [coder decodeObjectForKey:@"TIMS"];
-        srv_ = [coder decodeObjectForKey:@"SRV"];
-        prt_ = [coder decodeIntegerForKey:@"PRT"];
-        mnt_ = [coder decodeObjectForKey:@"MNT"];
-        type_ = [coder decodeObjectForKey:@"TYPE"];
-        nam_ = [coder decodeObjectForKey:@"NAM"];
-        gnl_ = [coder decodeObjectForKey:@"GNL"];
-        desc_ = [coder decodeObjectForKey:@"DESC"];
-        dj_ = [coder decodeObjectForKey:@"DJ"];
-        song_ = [coder decodeObjectForKey:@"SONG"];
-        url_ = [coder decodeObjectForKey:@"URL"];
-        cln_ = [coder decodeIntegerForKey:@"CLN"];
-        clns_ = [coder decodeIntegerForKey:@"CLNS"];
-        max_ = [coder decodeIntegerForKey:@"MAX"];
-        bit_ = [coder decodeIntegerForKey:@"BIT"];
-        smpl_ = [coder decodeIntegerForKey:@"SMPL"];
-        chs_ = [coder decodeIntegerForKey:@"CHS"];
+        _surl = [coder decodeObjectForKey:@"SURL"];
+        _tims = [coder decodeObjectForKey:@"TIMS"];
+        _srv = [coder decodeObjectForKey:@"SRV"];
+        _prt = [coder decodeIntegerForKey:@"PRT"];
+        _mnt = [coder decodeObjectForKey:@"MNT"];
+        _type = [coder decodeObjectForKey:@"TYPE"];
+        _nam = [coder decodeObjectForKey:@"NAM"];
+        _gnl = [coder decodeObjectForKey:@"GNL"];
+        _desc = [coder decodeObjectForKey:@"DESC"];
+        _dj = [coder decodeObjectForKey:@"DJ"];
+        _song = [coder decodeObjectForKey:@"SONG"];
+        _url = [coder decodeObjectForKey:@"URL"];
+        _cln = [coder decodeIntegerForKey:@"CLN"];
+        _clns = [coder decodeIntegerForKey:@"CLNS"];
+        _max = [coder decodeIntegerForKey:@"MAX"];
+        _bit = [coder decodeIntegerForKey:@"BIT"];
+        _smpl = [coder decodeIntegerForKey:@"SMPL"];
+        _chs = [coder decodeIntegerForKey:@"CHS"];
     }
     return self;
 }

@@ -51,14 +51,6 @@ enum HeadlineViewDisplayType {
     EGORefreshTableHeaderView *refreshHeaderView_;
 }
 
-@synthesize channelSortType = channelSortType_;
-@synthesize showedChannels = showedChannels_;
-@synthesize navigateionItem = navigateionItem_;
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-@synthesize playingBarButtonItem = playingBarButtonItem_;
-@synthesize headlineSearchBar = headlineSearchBar_;
-@synthesize headlineTableView = headlineTableView_;
-
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
@@ -79,22 +71,22 @@ enum HeadlineViewDisplayType {
 
 - (void)setChannelSortType:(ChannelSortType)channelSortType
 {
-    if (channelSortType_ == channelSortType) {
+    if (_channelSortType == channelSortType) {
         return;
     }
 
-    channelSortType_ = channelSortType;
+    _channelSortType = channelSortType;
 
     // 選択されたソートタイプを保存しておく
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:channelSortType_ forKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+    [defaults setInteger:_channelSortType forKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
 
     [self updateHeadlineTable];
 }
 
 - (ChannelSortType)setChannelSortType
 {
-    return channelSortType_;
+    return _channelSortType;
 }
 
 - (void)fetchHeadline
@@ -105,11 +97,11 @@ enum HeadlineViewDisplayType {
 
 - (void)scrollToTopAnimated:(BOOL)animated
 {
-    NSInteger sectionNum = [headlineTableView_ numberOfSections];
-    NSInteger rowNum = [headlineTableView_ numberOfRowsInSection:0];
+    NSInteger sectionNum = [_headlineTableView numberOfSections];
+    NSInteger rowNum = [_headlineTableView numberOfRowsInSection:0];
     if (sectionNum > 0 && rowNum > 0) {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [headlineTableView_ scrollToRowAtIndexPath:indexPath
+        [_headlineTableView scrollToRowAtIndexPath:indexPath
                                   atScrollPosition:UITableViewScrollPositionTop
                                           animated:animated];
     }
@@ -278,17 +270,17 @@ enum HeadlineViewDisplayType {
 - (void)updateHeadlineTable
 {
     Headline *headline = [Headline sharedInstance];
-    showedChannels_ = [headline channels:channelSortType_
+    _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
-    if ([showedChannels_ count] == 0) {
+    if ([_showedChannels count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     } else {
         navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
-    navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
+    _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
@@ -333,11 +325,11 @@ enum HeadlineViewDisplayType {
         case ChannelSortTypeListeners:
         case ChannelSortTypeTitle:
         case ChannelSortTypeDj:
-            channelSortType_ = s;
+            _channelSortType = s;
             break;
         case ChannelSortTypeNone:
         default:
-            channelSortType_ = ChannelSortTypeNewly;
+            _channelSortType = ChannelSortTypeNewly;
             break;
     }
 
@@ -385,20 +377,20 @@ enum HeadlineViewDisplayType {
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // 再生中ボタンの装飾を変更する
-    playingBarButtonItem_.title = NSLocalizedString(@"Playing", @"再生中ボタン");
-    playingBarButtonItem_.tintColor = PLAYING_BUTTON_COLOR;
+    _playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
+    _playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
     // 再生中ボタンを保持する
-    tempPlayingBarButtonItem_ = playingBarButtonItem_;
+    tempPlayingBarButtonItem_ = _playingBarButtonItem;
 
     // 検索バーの色を変える
-    headlineSearchBar_.tintColor = SEARCH_BAR_COLOR;
+    _headlineSearchBar.tintColor = SEARCH_BAR_COLOR;
 
     // 検索バーが空でもサーチキーを押せるようにする
     // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
-    for (UIView *subview in headlineSearchBar_.subviews) {
+    for (UIView *subview in _headlineSearchBar.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
             ((UITextField *) subview).enablesReturnKeyAutomatically = NO;
             break;
@@ -407,11 +399,11 @@ enum HeadlineViewDisplayType {
 
     // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
     // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
-    headlineTableView_.rowHeight = 54;
+    _headlineTableView.rowHeight = 54;
     // テーブルの背景の色を変える
-    headlineTableView_.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
+    _headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
-    headlineTableView_.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
+    _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
     // ヘッドライン表示方式を設定
     headlineViewDisplayType_ = [self headlineViewDisplayType];
@@ -421,9 +413,9 @@ enum HeadlineViewDisplayType {
         if (refreshHeaderView_ == nil) {
             CGRect pullRefreshViewRect = CGRectMake(
                                                     0.0f,
-                                                    0.0f - headlineTableView_.bounds.size.height,
+                                                    0.0f - _headlineTableView.bounds.size.height,
                                                     self.view.frame.size.width,
-                                                    headlineTableView_.bounds.size.height);
+                                                    _headlineTableView.bounds.size.height);
             EGORefreshTableHeaderView *view =
             [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
                                               arrowImageName:PULL_REFRESH_ARROW_IMAGE
@@ -431,7 +423,7 @@ enum HeadlineViewDisplayType {
             view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
             
             view.delegate = self;
-            [headlineTableView_ addSubview:view];
+            [_headlineTableView addSubview:view];
             refreshHeaderView_ = view;
         }
     }
@@ -456,7 +448,7 @@ enum HeadlineViewDisplayType {
     // タブの切り替えごとに検索バーを更新する
     // 別タブで入力した検索バーのテキストをこのタブでも使うため
     NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
-    headlineSearchBar_.text = searchWord;
+    _headlineSearchBar.text = searchWord;
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
@@ -521,7 +513,7 @@ enum HeadlineViewDisplayType {
         // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
+            Channel *channel = [_showedChannels objectAtIndex:[_headlineTableView indexPathForSelectedRow].row];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -549,8 +541,8 @@ enum HeadlineViewDisplayType {
     NSInteger playingChannelIndex;
     BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    for (playingChannelIndex = 0; playingChannelIndex < [showedChannels_ count]; ++playingChannelIndex) {
-        Channel *channel = [showedChannels_ objectAtIndex:playingChannelIndex];
+    for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
+        Channel *channel = [_showedChannels objectAtIndex:playingChannelIndex];
         if ([channel isSameMount:playingChannel]) {
             found = YES; // 見つかったことを示す
             break;
@@ -560,7 +552,7 @@ enum HeadlineViewDisplayType {
     // 見つかった場合はスクロール
     if (found){
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];  
-        [headlineTableView_ scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [_headlineTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
@@ -588,12 +580,12 @@ enum HeadlineViewDisplayType {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [showedChannels_ count];
+    return [_showedChannels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [showedChannels_ objectAtIndex:indexPath.row];
+    Channel *channel = (Channel *) [_showedChannels objectAtIndex:indexPath.row];
 
     NSString *cellIdentifier;
 
@@ -790,7 +782,7 @@ enum HeadlineViewDisplayType {
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
     }
 }
 
@@ -802,7 +794,7 @@ enum HeadlineViewDisplayType {
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
     }
 }
 

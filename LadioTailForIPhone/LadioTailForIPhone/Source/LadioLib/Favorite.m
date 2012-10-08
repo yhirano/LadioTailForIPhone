@@ -24,14 +24,11 @@
 
 @implementation Favorite
 
-@synthesize channel = channel_;
-@synthesize registedDate = registedDate_;
-
 - (id)init
 {
     if (self = [super init]) {
         // とりあえず現在の時刻を入れておく
-        registedDate_ = [NSDate date];
+        _registedDate = [NSDate date];
     }
     return self;
 }
@@ -47,9 +44,9 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:registedDate_ forKey:@"REGISTED_DATE"];
-    if (channel_ != nil) {
-        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:channel_];
+    [coder encodeObject:_registedDate forKey:@"REGISTED_DATE"];
+    if (_channel != nil) {
+        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:_channel];
         [coder encodeObject:channelData forKey:@"CHANNEL"];
     }
 }
@@ -57,15 +54,13 @@
 - (id)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
-        registedDate_ = [coder decodeObjectForKey:@"REGISTED_DATE"];
+        _registedDate = [coder decodeObjectForKey:@"REGISTED_DATE"];
         NSData *channelData = [coder decodeObjectForKey:@"CHANNEL"];
         if (channelData != nil) {
-            channel_ = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
+            _channel = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
         }
     }
     return self;
 }
-
-#pragma mark -
 
 @end

@@ -35,13 +35,6 @@
     NSURL *openUrl_;
 }
 
-@synthesize channel = channel_;
-@synthesize topNavigationItem = topNavigationItem_;
-@synthesize favoriteBarButtonItem = favoriteBarButtonItem_;
-@synthesize descriptionWebView = descriptionWebView_;
-@synthesize playButton = playButton_;
-@synthesize bottomView = bottomView_;
-
 - (void)dealloc
 {
     openUrl_ = nil;
@@ -62,7 +55,7 @@
 - (void)updateFavoriteButton
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
-    if ([channel_ favorite]) {
+    if ([_channel favorite]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white.png"]];
@@ -72,36 +65,36 @@
 - (void)updatePlayButton
 {
     // 再生ボタンの画像を切り替える
-    NSURL *url = [channel_ playUrl];
+    NSURL *url = [_channel playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
-        [playButton_ setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
     } else {
-        [playButton_ setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
     }
     
     // 再生ボタンの有効無効を切り替える
     if ([player state] == PlayerStatePrepare) {
-        playButton_.enabled = NO;
+        _playButton.enabled = NO;
     } else {
-        playButton_.enabled = YES;
+        _playButton.enabled = YES;
     }
 }
 
 - (void)writeDescription
 {
-    if (channel_ == nil) {
+    if (_channel == nil) {
         return;
     }
 
-    NSString *html = [ChannelsHtml channelViewHtml:channel_];
+    NSString *html = [ChannelsHtml channelViewHtml:_channel];
 
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
         return;
     }
 
-    [descriptionWebView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
 #if AD_HIDE_DEBUG
@@ -116,12 +109,12 @@
 
 - (IBAction)play:(id)sender
 {
-    NSURL *url = [channel_ playUrl];
+    NSURL *url = [_channel playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
     } else {
-        [player playChannel:channel_];
+        [player playChannel:_channel];
     }
 }
 
@@ -137,7 +130,7 @@
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
     NSString *tweetText = [[NSString alloc]
                            initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
-                           channel_.nam, [channel_.surl absoluteString]];
+                           _channel.nam, [_channel.surl absoluteString]];
     [tweetView setInitialText:tweetText];
     [self presentModalViewController:tweetView animated:YES];
 }
@@ -171,17 +164,17 @@
     NSString *titleString;
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
-    if (!([channel_.nam length] == 0)) {
-        titleString = channel_.nam;
+    if (!([_channel.nam length] == 0)) {
+        titleString = _channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if (!([channel_.dj length] == 0)) {
-        titleString = channel_.dj;
+    else if (!([_channel.dj length] == 0)) {
+        titleString = _channel.dj;
     }
-    topNavigationItem_.title = titleString;
+    _topNavigationItem.title = titleString;
 
     // お気に入りボタンの色を変える
-    favoriteBarButtonItem_.tintColor = FAVORITE_BUTTON_COLOR;
+    _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = titleString;
@@ -225,13 +218,13 @@
     [super viewDidAppear:animated];
 
     // WebViewのデリゲートを設定する
-    descriptionWebView_.delegate = self;
+    _descriptionWebView.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // WebViewのデリゲートを削除する
-    descriptionWebView_.delegate = nil;
+    _descriptionWebView.delegate = nil;
 
     [super viewWillDisappear:animated];
 }

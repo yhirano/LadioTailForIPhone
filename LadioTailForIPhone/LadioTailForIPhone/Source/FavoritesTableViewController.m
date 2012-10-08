@@ -34,8 +34,6 @@
     NSMutableArray *favorites_;
 }
 
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-
 - (void)dealloc
 {
     favorites_ = nil;
@@ -76,7 +74,7 @@
     self.navigationItem.title = NSLocalizedString(@"Favorites", @"お気に入り 複数");
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;

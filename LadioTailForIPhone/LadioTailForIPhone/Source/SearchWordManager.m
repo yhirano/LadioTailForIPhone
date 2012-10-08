@@ -26,8 +26,6 @@ static SearchWordManager *instance = nil;
 
 @implementation SearchWordManager
 
-@synthesize searchWord;
-
 + (SearchWordManager *)sharedInstance
 {
     static dispatch_once_t onceToken = 0;

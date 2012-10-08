@@ -31,29 +31,21 @@
     BOOL isPageLoading_;
 }
 
-@synthesize url = url_;
-@synthesize topNavigationItem = topNavigationItem_;
-@synthesize pageWebView = pageWebView_;
-@synthesize backButton = backButton_;
-@synthesize forwardButton = forwardButton_;
-@synthesize reloadButton = reloadButton_;
-@synthesize bottomView = bottomView_;
-
 #pragma mark - Private methods
 
 - (void)updateViews
 {
-    NSString* title = [pageWebView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString* title = [_pageWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if (!([title length] == 0)) {
-        topNavigationItem_.title = title;
+        _topNavigationItem.title = title;
     }
 
-    backButton_.enabled = pageWebView_.canGoBack;
-    forwardButton_.enabled = pageWebView_.canGoForward;
+    _backButton.enabled = _pageWebView.canGoBack;
+    _forwardButton.enabled = _pageWebView.canGoForward;
     if (isPageLoading_) {
-        [reloadButton_ setImage:[UIImage imageNamed:@"button_reload_stop.png"] forState:UIControlStateNormal];
+        [_reloadButton setImage:[UIImage imageNamed:@"button_reload_stop.png"] forState:UIControlStateNormal];
     } else {
-        [reloadButton_ setImage:[UIImage imageNamed:@"button_reload.png"] forState:UIControlStateNormal];
+        [_reloadButton setImage:[UIImage imageNamed:@"button_reload.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -69,42 +61,42 @@
 
 - (IBAction)back:(id)sender
 {
-    if (pageWebView_.canGoBack) {
-        [pageWebView_ goBack];
+    if (_pageWebView.canGoBack) {
+        [_pageWebView goBack];
     }
 }
 
 - (IBAction)forward:(id)sender
 {
-    if (pageWebView_.canGoForward) {
-        [pageWebView_ goForward];
+    if (_pageWebView.canGoForward) {
+        [_pageWebView goForward];
     }
 }
 
 - (IBAction)goToBottom:(id)sender
 {
-    int pageHeight = pageWebView_.scrollView.contentSize.height;
+    int pageHeight = _pageWebView.scrollView.contentSize.height;
     if (pageHeight == 0) {
         return;
     }
     
     CGPoint movePoint = CGPointMake(
-                                    pageWebView_.scrollView.contentOffset.x,
-                                    pageHeight - pageWebView_.frame.size.height);
+                                    _pageWebView.scrollView.contentOffset.x,
+                                    pageHeight - _pageWebView.frame.size.height);
 #ifdef DEBUG
     NSLog(@"Page scroll form %@ to %@.",
-          NSStringFromCGPoint(pageWebView_.scrollView.contentOffset),
+          NSStringFromCGPoint(_pageWebView.scrollView.contentOffset),
           NSStringFromCGPoint(movePoint));
 #endif /* #ifdef DEBUG */
-    [pageWebView_.scrollView setContentOffset:movePoint animated:YES];
+    [_pageWebView.scrollView setContentOffset:movePoint animated:YES];
 }
 
 - (IBAction)reload:(id)sender
 {
     if (isPageLoading_) {
-        [pageWebView_ stopLoading];
+        [_pageWebView stopLoading];
     } else {
-        [pageWebView_ reload];
+        [_pageWebView reload];
     }
 }
 
@@ -114,7 +106,7 @@
 {
     [super viewDidLoad];
 
-    [pageWebView_ loadRequest:[NSURLRequest requestWithURL:url_]];
+    [_pageWebView loadRequest:[NSURLRequest requestWithURL:_url]];
 }
 
 - (void)viewDidUnload
@@ -141,16 +133,16 @@
     [super viewDidAppear:animated];
 
     // WebViewのデリゲートを設定する
-    pageWebView_.delegate = self;
+    _pageWebView.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // WebViewのデリゲートを削除する
-    pageWebView_.delegate = nil;
+    _pageWebView.delegate = nil;
     
     // WebViewの読み込みを中止する
-    [pageWebView_ stopLoading];
+    [_pageWebView stopLoading];
     
     if (isPageLoading_) {
         // ネットワークインジケーターを消す

@@ -37,14 +37,11 @@
 
 @implementation ChannelInfo
 
-@synthesize tag = tag_;
-@synthesize value = value_;
-
 - (id)initWithTag:(NSString *)tag value:(NSString *)value
 {
     if (self = [self init]) {
-        tag_ = tag;
-        value_ = value;
+        _tag = tag;
+        _value = value;
     }
     return self;
 }

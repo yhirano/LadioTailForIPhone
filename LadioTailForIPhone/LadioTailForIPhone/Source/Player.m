@@ -42,13 +42,17 @@ static Player *instance = nil;
 @implementation Player
 {
 @private
+    // Player
     AVPlayer *player_;
+    // 再生状態
+    PlayerState state_;
+    // 再生中のURL
     NSURL *playUrl_;
+    // 再生中の番組
     Channel *playChannel_;
+    // 再生開始タイムアウト監視タイマー
     NSTimer *playTimeOutTimer_;
 }
-
-@synthesize state = state_;
 
 + (Player *)sharedInstance
 {

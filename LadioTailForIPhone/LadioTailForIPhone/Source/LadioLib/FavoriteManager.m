@@ -30,8 +30,6 @@ static FavoriteManager *instance = nil;
 
 @implementation FavoriteManager
 
-@synthesize favorites = favorites_;
-
 + (FavoriteManager *)sharedInstance
 {
     static dispatch_once_t onceToken = 0;
@@ -80,7 +78,7 @@ static FavoriteManager *instance = nil;
             added = YES;
             Favorite *favorite = [[Favorite alloc] init];
             favorite.channel = channel;
-            [favorites_ setObject:favorite forKey:channel.mnt];
+            [_favorites setObject:favorite forKey:channel.mnt];
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
         }
@@ -102,8 +100,8 @@ static FavoriteManager *instance = nil;
     }
 
     @synchronized(self) {
-        if ([favorites_ objectForKey:channel.mnt] != nil) {
-            [favorites_ removeObjectForKey:channel.mnt];
+        if ([_favorites objectForKey:channel.mnt] != nil) {
+            [_favorites removeObjectForKey:channel.mnt];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
@@ -132,14 +130,14 @@ static FavoriteManager *instance = nil;
 {
     @synchronized(self) {
         // 今までのお気に入りをクリア
-        [favorites_ removeAllObjects];
+        [_favorites removeAllObjects];
 
         for (Favorite *favorite in favorites) {
             if ([self isValidFavorite:favorite] == NO) {
                 continue;
             }
 
-            [favorites_ setObject:favorite forKey:favorite.channel.mnt];
+            [_favorites setObject:favorite forKey:favorite.channel.mnt];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
@@ -164,14 +162,14 @@ static FavoriteManager *instance = nil;
             }
 
             // おなじお気に入りが登録されている場合は新しい方を登録する
-            Favorite *alreadyFavorite = [favorites_ objectForKey:favorite.channel.mnt];
+            Favorite *alreadyFavorite = [_favorites objectForKey:favorite.channel.mnt];
             if (alreadyFavorite != nil
                 && [alreadyFavorite.registedDate timeIntervalSinceDate:favorite.registedDate] > 0) {
                 continue;
             }
 
             added = YES;
-            [favorites_ setObject:favorite forKey:favorite.channel.mnt];
+            [_favorites setObject:favorite forKey:favorite.channel.mnt];
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
         }
@@ -193,7 +191,7 @@ static FavoriteManager *instance = nil;
     }
 
     @synchronized(self) {
-        return [favorites_ objectForKey:channel.mnt] != nil;
+        return [_favorites objectForKey:channel.mnt] != nil;
     }
 }
 
@@ -207,12 +205,12 @@ static FavoriteManager *instance = nil;
     if (favoritesData != nil) {
         NSDictionary *favoritesArray = [NSKeyedUnarchiver unarchiveObjectWithData:favoritesData];
         if (favoritesArray != nil) {
-            favorites_ = [[NSMutableDictionary alloc] initWithDictionary:favoritesArray];
+            _favorites = [[NSMutableDictionary alloc] initWithDictionary:favoritesArray];
         } else {
-            favorites_ = [[NSMutableDictionary alloc] init];
+            _favorites = [[NSMutableDictionary alloc] init];
         }
     } else {
-        favorites_ = [[NSMutableDictionary alloc] init];
+        _favorites = [[NSMutableDictionary alloc] init];
     }
 }
 
@@ -220,7 +218,7 @@ static FavoriteManager *instance = nil;
 - (void)storeFavorites
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:favorites_] forKey:FAVORITES_KEY_V2];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:_favorites] forKey:FAVORITES_KEY_V2];
 }
 
 /// データベースを空にする
@@ -228,7 +226,7 @@ static FavoriteManager *instance = nil;
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:FAVORITES_KEY_V2];
-    favorites_ = nil;
+    _favorites = nil;
 }
 
 - (BOOL)isValidChannel:(Channel *)channel

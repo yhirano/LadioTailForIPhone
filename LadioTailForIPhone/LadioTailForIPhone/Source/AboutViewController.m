@@ -27,9 +27,6 @@
 
 @implementation AboutViewController
 
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-@synthesize webView = webView_;
-
 #pragma mark - Actions
 
 - (IBAction)openSideMenu:(id)sender;
@@ -46,7 +43,7 @@
     self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
     NSString *versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
     NSString *versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
@@ -69,7 +66,7 @@
         NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
     }
 
-    [webView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [_webView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
 - (void)viewDidUnload

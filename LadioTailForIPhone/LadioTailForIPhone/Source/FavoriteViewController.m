@@ -32,10 +32,6 @@
     NSURL *openUrl_;
 }
 
-@synthesize favorite = favorite_;
-@synthesize topNavigationItem = topNavigationItem_;
-@synthesize descriptionWebView = descriptionWebView_;
-
 - (void)dealloc
 {
     openUrl_ = nil;
@@ -45,18 +41,18 @@
 
 - (void)writeDescription
 {
-    if (favorite_ == nil) {
+    if (_favorite == nil) {
         return;
     }
     
-    NSString *html = [ChannelsHtml favoritelViewHtml:favorite_];
+    NSString *html = [ChannelsHtml favoritelViewHtml:_favorite];
     
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
         return;
     }
     
-    [descriptionWebView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
 #if AD_HIDE_DEBUG
@@ -76,18 +72,18 @@
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
     NSString *titleString;
-    if (!([favorite_.channel.nam length] == 0)) {
-        titleString = favorite_.channel.nam;
+    if (!([_favorite.channel.nam length] == 0)) {
+        titleString = _favorite.channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if (!([favorite_.channel.dj length] == 0)) {
-        titleString = favorite_.channel.dj;
+    else if (!([_favorite.channel.dj length] == 0)) {
+        titleString = _favorite.channel.dj;
     }
     // それ以外はマウントを表示
     else {
-        titleString = favorite_.channel.mnt;
+        titleString = _favorite.channel.mnt;
     }
-    topNavigationItem_.title = titleString;
+    _topNavigationItem.title = titleString;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = titleString;
@@ -117,13 +113,13 @@
     [super viewDidAppear:animated];
 
     // WebViewのデリゲートを設定する
-    descriptionWebView_.delegate = self;
+    _descriptionWebView.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // WebViewのデリゲートを削除する
-    descriptionWebView_.delegate = nil;
+    _descriptionWebView.delegate = nil;
     
     [super viewWillDisappear:animated];
 }
