@@ -123,7 +123,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
     for (NSString *word in searchWords) {
         if (!([word length] == 0)) {
-            [searchDictionary setObject:[NSNumber numberWithBool:NO] forKey:word];
+            searchDictionary[word] = @NO;
         }
     }
 
@@ -149,7 +149,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
             if ([searchedWord rangeOfString:searchWord
                                     options:(NSCaseInsensitiveSearch | NSLiteralSearch | NSWidthInsensitiveSearch)]
                     .location != NSNotFound) {
-                [searchDictionary setObject:[NSNumber numberWithBool:YES] forKey:searchWord];
+                searchDictionary[searchWord] = @YES;
             }
         }
     }

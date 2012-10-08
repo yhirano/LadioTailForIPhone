@@ -45,17 +45,15 @@
     // メニューボタンの色を変更する
     _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
-    NSString *versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    NSString *versionNumberString = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleVersionKey];
     NSString *versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
 
     NSError *error = nil;
 #if DEBUG
-    NSString *buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, buildDate, nil]
-                                                     forKeys:[NSArray arrayWithObjects:@"version_info", @"build_date", nil]];
+    NSString *buildDate = [[NSBundle mainBundle] infoDictionary][@"CFBuildDate"];
+    NSDictionary *dict = @{@"version_info":versionInfo, @"build_date":buildDate};
 #else
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, nil]
-                                                     forKeys:[NSArray arrayWithObjects:@"version_info", nil]];
+    NSDictionary *dict = @{@"version_info":versionInfo};
 #endif /* #if DEBUG */
     NSString *html = [GRMustacheTemplate renderObject:dict
                                         fromResource:@"AboutHtml"

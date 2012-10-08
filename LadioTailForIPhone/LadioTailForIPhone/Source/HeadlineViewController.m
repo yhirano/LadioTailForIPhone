@@ -508,7 +508,8 @@ enum HeadlineViewDisplayType {
         // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [_showedChannels objectAtIndex:[_headlineTableView indexPathForSelectedRow].row];
+            NSInteger channelIndex = [_headlineTableView indexPathForSelectedRow].row;
+            Channel *channel = _showedChannels[channelIndex];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -537,7 +538,7 @@ enum HeadlineViewDisplayType {
     BOOL found = NO;
     // 再生している番組がの何番目かを探索する
     for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
-        Channel *channel = [_showedChannels objectAtIndex:playingChannelIndex];
+        Channel *channel = _showedChannels[playingChannelIndex];
         if ([channel isSameMount:playingChannel]) {
             found = YES; // 見つかったことを示す
             break;
@@ -580,7 +581,7 @@ enum HeadlineViewDisplayType {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [_showedChannels objectAtIndex:indexPath.row];
+    Channel *channel = (Channel *) _showedChannels[indexPath.row];
 
     NSString *cellIdentifier;
 

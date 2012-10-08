@@ -52,8 +52,7 @@ static FavoriteManager *instance = nil;
 
 - (void)addFavorite:(Channel *)channel
 {
-    NSArray *channels = [[NSArray alloc] initWithObjects:channel, nil];
-    [self addFavorites:channels];
+    [self addFavorites:@[channel]];
 }
 
 - (void)addFavorites:(NSArray *)channels
@@ -78,7 +77,7 @@ static FavoriteManager *instance = nil;
             added = YES;
             Favorite *favorite = [[Favorite alloc] init];
             favorite.channel = channel;
-            [_favorites setObject:favorite forKey:channel.mnt];
+            _favorites[channel.mnt] = favorite;
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
         }
@@ -100,7 +99,7 @@ static FavoriteManager *instance = nil;
     }
 
     @synchronized(self) {
-        if ([_favorites objectForKey:channel.mnt] != nil) {
+        if (_favorites[channel.mnt] != nil) {
             [_favorites removeObjectForKey:channel.mnt];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
@@ -137,7 +136,7 @@ static FavoriteManager *instance = nil;
                 continue;
             }
 
-            [_favorites setObject:favorite forKey:favorite.channel.mnt];
+            _favorites[favorite.channel.mnt] = favorite;
 
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
@@ -162,14 +161,14 @@ static FavoriteManager *instance = nil;
             }
 
             // おなじお気に入りが登録されている場合は新しい方を登録する
-            Favorite *alreadyFavorite = [_favorites objectForKey:favorite.channel.mnt];
+            Favorite *alreadyFavorite = _favorites[favorite.channel.mnt];
             if (alreadyFavorite != nil
                 && [alreadyFavorite.registedDate timeIntervalSinceDate:favorite.registedDate] > 0) {
                 continue;
             }
 
             added = YES;
-            [_favorites setObject:favorite forKey:favorite.channel.mnt];
+            _favorites[favorite.channel.mnt] = favorite;
             [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
         }
@@ -191,7 +190,7 @@ static FavoriteManager *instance = nil;
     }
 
     @synchronized(self) {
-        return [_favorites objectForKey:channel.mnt] != nil;
+        return _favorites[channel.mnt] != nil;
     }
 }
 

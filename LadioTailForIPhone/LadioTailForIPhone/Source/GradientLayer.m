@@ -28,9 +28,7 @@
 - (id)init{
     self = [super init];
 	if (self) {
-		NSArray *colors =
-            [NSArray arrayWithObjects:(id)BOTTOM_BAR_TOP_COLOR.CGColor, BOTTOM_BAR_BOTTOM_COLOR.CGColor, nil];
-		self.colors = colors;
+		self.colors = @[(id)BOTTOM_BAR_TOP_COLOR.CGColor, (id)(BOTTOM_BAR_BOTTOM_COLOR.CGColor)];
 		self.startPoint = CGPointMake(0.5, 0.0);
 		self.endPoint = CGPointMake(0.5, 1.0);
 	}

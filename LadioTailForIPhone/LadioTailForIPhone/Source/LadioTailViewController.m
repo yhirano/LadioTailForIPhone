@@ -212,7 +212,7 @@
         BOOL found = NO;
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
         for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
-            Channel *channel = [channels objectAtIndex:playingChannelIndex];
+            Channel *channel = channels[playingChannelIndex];
             if ([channel isSameMount:playingChannel]) {
                 found = YES; // 見つかったことを示す
                 break;
@@ -225,7 +225,7 @@
                 // 番組が終端で無い場合
                 if (playingChannelIndex < [channels count] - 1) {
                     // 次の番組を返す
-                    result = [channels objectAtIndex:(playingChannelIndex + 1)];
+                    result = channels[(playingChannelIndex + 1)];
                 }
             }
             // 現在再生中の前の番組を返す場合
@@ -233,7 +233,7 @@
                 // 番組が一番前で無い場合
                 if (playingChannelIndex > 0) {
                     // 前の番組を返す
-                    result = [channels objectAtIndex:(playingChannelIndex - 1)];
+                    result = channels[(playingChannelIndex - 1)];
                 }
             }
         }
@@ -261,7 +261,7 @@
         NSArray *channels = headlineViewController.showedChannels;
         
         if ([channels count] > 0) {
-            result = [channels objectAtIndex:(arc4random() % [channels count])];
+            result = channels[(arc4random() % [channels count])];
         }
     }
 
