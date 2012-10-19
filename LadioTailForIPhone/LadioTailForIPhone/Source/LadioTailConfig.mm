@@ -22,7 +22,7 @@
 
 #import "LadioTailConfig.h"
 
-#pragma mark - Common config
+#pragma mark - Common view config
 
 /// ナビゲーションバーの色
 UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
@@ -267,3 +267,10 @@ UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
 /// 再生開始後のタイムアウト処理までの時間
 const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
+
+#pragma mark - APNS config
+
+/// お気に入り送信先のプロバイダ
+///
+/// お気に入りをプロバイダに送信しない場合はnil
+NSString * const PROVIDER_URL = nil;

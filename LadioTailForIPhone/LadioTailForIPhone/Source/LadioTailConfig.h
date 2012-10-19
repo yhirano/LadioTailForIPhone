@@ -205,3 +205,8 @@ extern UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
 
 /// 再生開始後のタイムアウト処理までの時間
 extern const NSTimeInterval PLAY_TIMEOUT_SEC;
+
+#pragma mark - APNS config
+
+/// お気に入り送信先のプロバイダ
+extern NSString * const PROVIDER_URL;
