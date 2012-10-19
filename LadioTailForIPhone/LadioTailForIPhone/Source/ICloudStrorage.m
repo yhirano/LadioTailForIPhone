@@ -71,7 +71,7 @@ static ICloudStrorage *instance = nil;
                                                      name:LadioLibChannelChangedFavoritesNotification
                                                    object:nil];
 
-        // 設定の変更を補足する
+        // 設定の変更を捕捉する
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(defaultsChanged:)
                                                      name:NSUserDefaultsDidChangeNotification
@@ -85,8 +85,10 @@ static ICloudStrorage *instance = nil;
 {
     // is iCloud enabled
     if([NSUbiquitousKeyValueStore defaultStore]) {
+        // 設定の変更を捕捉しなくする
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
+        // 番組のお気に入りの変化通知を受け取らなくする
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:LadioLibChannelChangedFavoritesNotification
                                                       object:nil];
