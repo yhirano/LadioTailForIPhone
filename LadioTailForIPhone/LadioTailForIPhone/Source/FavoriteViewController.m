@@ -55,14 +55,6 @@
     [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
-#if AD_HIDE_DEBUG
-// 広告を隠す。デバッグ用。
-- (void)hideAdBanner:(NSTimer *)timer
-{
-    [self bannerView:nil didFailToReceiveAdWithError:nil];
-}
-#endif /* #if AD_HIDE_DEBUG */
-
 #pragma mark - UIView methods
 
 - (void)viewDidLoad

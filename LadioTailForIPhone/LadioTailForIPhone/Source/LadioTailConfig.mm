@@ -267,3 +267,10 @@ UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
 /// 再生開始後のタイムアウト処理までの時間
 const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
+
+#pragma mark - AdMob config
+
+/// AdMob Publisher ID
+///
+/// 広告を表示しない場合はnil
+NSString * const ADMOB_PUBLISHER_ID = nil;
