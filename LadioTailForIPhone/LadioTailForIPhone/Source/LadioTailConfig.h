@@ -200,8 +200,12 @@ extern UIColor * const FAVORITES_CELL_TAG_TEXT_COLOR;
 /// テーブルセルのタグのテキスト選択時カラー
 extern UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
 
-
 #pragma mark - Player config
 
 /// 再生開始後のタイムアウト処理までの時間
 extern const NSTimeInterval PLAY_TIMEOUT_SEC;
+
+#pragma mark - AdMob config
+
+/// AdMob Publisher ID
+extern NSString * const ADMOB_PUBLISHER_ID;
