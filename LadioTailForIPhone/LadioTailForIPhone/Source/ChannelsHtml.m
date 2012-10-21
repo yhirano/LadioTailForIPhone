@@ -37,14 +37,11 @@
 
 @implementation ChannelInfo
 
-@synthesize tag = tag_;
-@synthesize value = value_;
-
 - (id)initWithTag:(NSString *)tag value:(NSString *)value
 {
     if (self = [self init]) {
-        tag_ = tag;
-        value_ = value;
+        _tag = tag;
+        _value = value;
     }
     return self;
 }
@@ -115,9 +112,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
                 NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
             }
         }
-        NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:value, nil]
-                                                         forKeys:[NSArray arrayWithObjects:@"url", nil]];
-        value = [channelLinkHtmlTemplate renderObject:dict];
+        value = [channelLinkHtmlTemplate renderObject:@{@"url":value}];
         // 何も返ってこない場合（多分実装エラー）は何もしない
         if (value != nil) {
             tag =  NSLocalizedString(@"Site", @"サイト");
@@ -243,7 +238,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
     // 配信サーバポート番号
-    value = [[NSNumber numberWithUnsignedInt:channel.prt] stringValue];;
+    value = [[NSNumber numberWithInt:channel.prt] stringValue];;
     if (!([value length] == 0)) {
         NSString *tag = @"- PRT";
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
@@ -262,7 +257,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
     }
 #endif /* #if DEBUG */
 
-    NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
+    NSDictionary *data = @{@"channels": channelInfo};
 
     if (channelPageHtmlTemplate == nil) {
         NSError *error = nil;
@@ -333,9 +328,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
                 NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
             }
         }
-        NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:value, nil]
-                                                         forKeys:[NSArray arrayWithObjects:@"url", nil]];
-        value = [channelLinkHtmlTemplate renderObject:dict];
+        value = [channelLinkHtmlTemplate renderObject:@{@"url":value}];
         // 何も返ってこない場合（多分実装エラー）は何もしない
         if (value != nil) {
             tag =  NSLocalizedString(@"Site", @"サイト");
@@ -416,7 +409,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
     // 配信サーバポート番号
-    value = [[NSNumber numberWithUnsignedInt:channel.prt] stringValue];;
+    value = [[NSNumber numberWithInt:channel.prt] stringValue];;
     if (!([value length] == 0)) {
         NSString *tag = @"- PRT";
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
@@ -480,7 +473,7 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
     }
 #endif /* #if DEBUG */
 
-    NSDictionary *data = [NSDictionary dictionaryWithObject:channelInfo forKey:@"channels"];
+    NSDictionary *data = @{@"channels": channelInfo};
     
     if (channelPageHtmlTemplate == nil) {
         NSError *error = nil;

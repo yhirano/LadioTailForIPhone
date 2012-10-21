@@ -34,8 +34,6 @@
     NSMutableArray *favorites_;
 }
 
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-
 - (void)dealloc
 {
     favorites_ = nil;
@@ -55,7 +53,7 @@
     favorites_ = [[NSMutableArray alloc] initWithCapacity:[favoritesGlobal count]];
     NSArray *sortedKeyList = [favoritesGlobal keysSortedByValueUsingSelector:@selector(compareNewly:)];
     for (NSString *key in sortedKeyList) {
-        [favorites_ addObject:[favoritesGlobal objectForKey:key]];
+        [favorites_ addObject:favoritesGlobal[key]];
     }
 }
 
@@ -76,7 +74,7 @@
     self.navigationItem.title = NSLocalizedString(@"Favorites", @"お気に入り 複数");
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
@@ -150,7 +148,8 @@
         // お気に入り情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[FavoriteViewController class]]) {
-            Favorite *favorite = [favorites_    objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+            NSInteger favoriteIndex = [self.tableView indexPathForSelectedRow].row;
+            Favorite *favorite = favorites_[favoriteIndex];
             ((FavoriteViewController *) viewCon).favorite = favorite;
         }
     }
@@ -176,7 +175,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Favorite *favorite = (Favorite *) [favorites_ objectAtIndex:indexPath.row];
+    Favorite *favorite = (Favorite *)favorites_[indexPath.row];
     Headline *headline = [Headline sharedInstance];
     Player *player = [Player sharedInstance];
     Channel *channel = favorite.channel;
@@ -289,14 +288,13 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        Favorite *removeFavorite = (Favorite *)[favorites_ objectAtIndex:indexPath.row];
+        Favorite *removeFavorite = (Favorite *)favorites_[indexPath.row];
         Channel *removeChannel = removeFavorite.channel;
         [[FavoriteManager sharedInstance] removeFavorite:removeChannel];
         
         [self updateFavolitesArray];
 
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                         withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
 }
 

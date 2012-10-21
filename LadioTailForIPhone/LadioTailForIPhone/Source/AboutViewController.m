@@ -27,9 +27,6 @@
 
 @implementation AboutViewController
 
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-@synthesize webView = webView_;
-
 #pragma mark - Actions
 
 - (IBAction)openSideMenu:(id)sender;
@@ -46,19 +43,17 @@
     self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
-    NSString *versionNumberString = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    NSString *versionNumberString = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleVersionKey];
     NSString *versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
 
     NSError *error = nil;
 #if DEBUG
-    NSString *buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, buildDate, nil]
-                                                     forKeys:[NSArray arrayWithObjects:@"version_info", @"build_date", nil]];
+    NSString *buildDate = [[NSBundle mainBundle] infoDictionary][@"CFBuildDate"];
+    NSDictionary *dict = @{@"version_info":versionInfo, @"build_date":buildDate};
 #else
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:versionInfo, nil]
-                                                     forKeys:[NSArray arrayWithObjects:@"version_info", nil]];
+    NSDictionary *dict = @{@"version_info":versionInfo};
 #endif /* #if DEBUG */
     NSString *html = [GRMustacheTemplate renderObject:dict
                                         fromResource:@"AboutHtml"
@@ -69,7 +64,7 @@
         NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
     }
 
-    [webView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [_webView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
 - (void)viewDidUnload

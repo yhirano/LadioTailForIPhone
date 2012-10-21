@@ -24,30 +24,16 @@
 #import <Twitter/Twitter.h>
 #import "LadioTailConfig.h"
 #import "Player.h"
-#import "IAdBannerManager.h"
 #import "ChannelsHtml.h"
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
-
-/// 広告を表示後に隠すか。デバッグ用。
-#define AD_HIDE_DEBUG 0
 
 @implementation ChannelViewController
 {
 @private
     /// 開くURL
     NSURL *openUrl_;
-
-    /// 広告が表示されているか
-    BOOL isVisibleAdBanner_;
 }
-
-@synthesize channel = channel_;
-@synthesize topNavigationItem = topNavigationItem_;
-@synthesize favoriteBarButtonItem = favoriteBarButtonItem_;
-@synthesize descriptionWebView = descriptionWebView_;
-@synthesize playButton = playButton_;
-@synthesize bottomView = bottomView_;
 
 - (void)dealloc
 {
@@ -69,7 +55,7 @@
 - (void)updateFavoriteButton
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
-    if ([channel_ favorite]) {
+    if ([_channel favorite]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white.png"]];
@@ -79,56 +65,48 @@
 - (void)updatePlayButton
 {
     // 再生ボタンの画像を切り替える
-    NSURL *url = [channel_ playUrl];
+    NSURL *url = [_channel playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
-        [playButton_ setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
     } else {
-        [playButton_ setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
     }
     
     // 再生ボタンの有効無効を切り替える
     if ([player state] == PlayerStatePrepare) {
-        playButton_.enabled = NO;
+        _playButton.enabled = NO;
     } else {
-        playButton_.enabled = YES;
+        _playButton.enabled = YES;
     }
 }
 
 - (void)writeDescription
 {
-    if (channel_ == nil) {
+    if (_channel == nil) {
         return;
     }
 
-    NSString *html = [ChannelsHtml channelViewHtml:channel_];
+    NSString *html = [ChannelsHtml channelViewHtml:_channel];
 
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
         return;
     }
 
-    [descriptionWebView_ loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
-
-#if AD_HIDE_DEBUG
-// 広告を隠す。デバッグ用。
-- (void)hideAdBanner:(NSTimer *)timer
-{
-    [self bannerView:nil didFailToReceiveAdWithError:nil];
-}
-#endif /* #if AD_HIDE_DEBUG */
 
 #pragma mark - Actions
 
 - (IBAction)play:(id)sender
 {
-    NSURL *url = [channel_ playUrl];
+    NSURL *url = [_channel playUrl];
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
     } else {
-        [player playChannel:channel_];
+        [player playChannel:_channel];
     }
 }
 
@@ -144,7 +122,7 @@
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
     NSString *tweetText = [[NSString alloc]
                            initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
-                           channel_.nam, [channel_.surl absoluteString]];
+                           _channel.nam, [_channel.surl absoluteString]];
     [tweetView setInitialText:tweetText];
     [self presentModalViewController:tweetView animated:YES];
 }
@@ -178,17 +156,17 @@
     NSString *titleString;
     // ナビゲーションタイトルを表示する
     // タイトルが存在する場合はタイトルを表示する
-    if (!([channel_.nam length] == 0)) {
-        titleString = channel_.nam;
+    if (!([_channel.nam length] == 0)) {
+        titleString = _channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if (!([channel_.dj length] == 0)) {
-        titleString = channel_.dj;
+    else if (!([_channel.dj length] == 0)) {
+        titleString = _channel.dj;
     }
-    topNavigationItem_.title = titleString;
+    _topNavigationItem.title = titleString;
 
     // お気に入りボタンの色を変える
-    favoriteBarButtonItem_.tintColor = FAVORITE_BUTTON_COLOR;
+    _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = titleString;
@@ -231,70 +209,16 @@
 {
     [super viewDidAppear:animated];
 
-    if (CHANNEL_VIEW_IAD_ENABLE) {
-        // WebViewの初期位置を設定
-        // 広告のアニメーション前に初期位置を設定する必要有り
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
-        
-        // 広告を表示する
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView setFrame:CGRectMake(0, 366, 320, 50)];
-        if (adBannerView.bannerLoaded) {
-            [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
-                                  delay:0
-                                options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 adBannerView.frame = CGRectMake(0, 316, 320, 50);
-                             }
-                             completion:^(BOOL finished) {
-                                 if (finished) {
-                                     descriptionWebView_.frame = CGRectMake(0, 0, 320, 316);
-                                 }
-                             }];
-            isVisibleAdBanner_ = YES;
-#if AD_HIDE_DEBUG
-            [NSTimer scheduledTimerWithTimeInterval:4.0
-                                             target:self
-                                           selector:@selector(hideAdBanner:)
-                                           userInfo:nil
-                                            repeats:NO];
-#endif /* #if AD_HIDE_DEBUG */
-        }
-        adBannerView.delegate = self;
-        [self.view insertSubview:adBannerView belowSubview:bottomView_];
-    }
-
     // WebViewのデリゲートを設定する
-    descriptionWebView_.delegate = self;
+    _descriptionWebView.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (CHANNEL_VIEW_IAD_ENABLE) {
-        // WebViewの初期位置を設定
-        // Viewを消す前に大きさを元に戻しておくことで、ちらつくのを防ぐ
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
-        
-        // 広告の表示を消す
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.delegate = nil;
-    }
-
     // WebViewのデリゲートを削除する
-    descriptionWebView_.delegate = nil;
+    _descriptionWebView.delegate = nil;
 
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    if (CHANNEL_VIEW_IAD_ENABLE) {
-    // 広告Viewを削除
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView removeFromSuperview];
-    }
-
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -384,60 +308,6 @@
 {
     // 再生状況に合わせて再生ボタンの内容を切り替える
     [self updatePlayButton];
-}
-
-#pragma mark - ADBannerViewDelegate methods
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    if (CHANNEL_VIEW_IAD_ENABLE) {
-        // 広告をはいつでも表示可能
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-// iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    NSLog(@"iAD banner load complated.");
-
-    if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.hidden = NO;
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 316, 320, 50);
-                         }
-                         completion:^(BOOL finished) {
-                             if (finished) {
-                                 descriptionWebView_.frame = CGRectMake(0, 0, 320, 316);
-                             }
-                         }];
-        isVisibleAdBanner_ = YES;
-    }
-}
-
-// iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
-
-    if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        descriptionWebView_.frame = CGRectMake(0, 0, 320, 366);
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 366, 320, 50);
-                         }
-                         completion:nil];
-        isVisibleAdBanner_ = NO;
-    }
 }
 
 @end

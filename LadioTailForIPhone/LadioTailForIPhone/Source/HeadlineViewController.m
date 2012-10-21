@@ -22,18 +22,15 @@
 
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
+#import "GoogleAdMobAds/GADBannerView.h"
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
-#import "IAdBannerManager.h"
 #import "ChannelViewController.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
 #define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
-
-/// 広告を表示後に隠すか。デバッグ用。
-#define AD_HIDE_DEBUG 0
 
 enum HeadlineViewDisplayType {
     HeadlineViewDisplayTypeOnlyTitleAndDj,
@@ -54,17 +51,9 @@ enum HeadlineViewDisplayType {
     /// PullRefreshView
     EGORefreshTableHeaderView *refreshHeaderView_;
 
-    /// 広告が表示されているか
-    BOOL isVisibleAdBanner_;
+    /// 広告View
+    GADBannerView *adBannerView_;
 }
-
-@synthesize channelSortType = channelSortType_;
-@synthesize showedChannels = showedChannels_;
-@synthesize navigateionItem = navigateionItem_;
-@synthesize sideMenuBarButtonItem = sideMenuBarButtonItem_;
-@synthesize playingBarButtonItem = playingBarButtonItem_;
-@synthesize headlineSearchBar = headlineSearchBar_;
-@synthesize headlineTableView = headlineTableView_;
 
 - (void)dealloc
 {
@@ -86,22 +75,17 @@ enum HeadlineViewDisplayType {
 
 - (void)setChannelSortType:(ChannelSortType)channelSortType
 {
-    if (channelSortType_ == channelSortType) {
+    if (_channelSortType == channelSortType) {
         return;
     }
 
-    channelSortType_ = channelSortType;
+    _channelSortType = channelSortType;
 
     // 選択されたソートタイプを保存しておく
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:channelSortType_ forKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+    [defaults setInteger:_channelSortType forKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
 
     [self updateHeadlineTable];
-}
-
-- (ChannelSortType)setChannelSortType
-{
-    return channelSortType_;
 }
 
 - (void)fetchHeadline
@@ -112,17 +96,131 @@ enum HeadlineViewDisplayType {
 
 - (void)scrollToTopAnimated:(BOOL)animated
 {
-    NSInteger sectionNum = [headlineTableView_ numberOfSections];
-    NSInteger rowNum = [headlineTableView_ numberOfRowsInSection:0];
+    NSInteger sectionNum = [_headlineTableView numberOfSections];
+    NSInteger rowNum = [_headlineTableView numberOfRowsInSection:0];
     if (sectionNum > 0 && rowNum > 0) {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [headlineTableView_ scrollToRowAtIndexPath:indexPath
+        [_headlineTableView scrollToRowAtIndexPath:indexPath
                                   atScrollPosition:UITableViewScrollPositionTop
                                           animated:animated];
     }
 }
 
 #pragma mark - Private methods
+
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+{
+    Channel *channel = (Channel *) _showedChannels[num];
+    
+    NSString *cellIdentifier;
+    
+    // DJのみが存在する場合
+    if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
+        switch (headlineViewDisplayType_) {
+            case HeadlineViewDisplayTypeElapsedTime:
+                cellIdentifier = @"ChannelCell_Dj_Time";
+                break;
+            case HeadlineViewDisplayTypeBitrate:
+                cellIdentifier = @"ChannelCell_Dj_Bitrate";
+                break;
+            case HeadlineViewDisplayTypeOnlyTitleAndDj:
+                cellIdentifier = @"ChannelCell_Dj";
+                break;
+            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+            default:
+                cellIdentifier = @"ChannelCell_Dj_BitrateAndTime";
+                break;
+        }
+    } else {
+        switch (headlineViewDisplayType_) {
+            case HeadlineViewDisplayTypeElapsedTime:
+                cellIdentifier = @"ChannelCell_TitleAndDj_Time";
+                break;
+            case HeadlineViewDisplayTypeBitrate:
+                cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
+                break;
+            case HeadlineViewDisplayTypeOnlyTitleAndDj:
+                cellIdentifier = @"ChannelCell_TitleAndDj";
+                break;
+            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+            default:
+                cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
+                break;
+        }
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
+    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
+    
+    if (!([channel.nam length] == 0)) {
+        titleLabel.text = channel.nam;
+    } else {
+        titleLabel.text = @"";
+    }
+    if (!([channel.dj length] == 0)) {
+        djLabel.text = channel.dj;
+    } else {
+        djLabel.text = @"";
+    }
+    if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
+        listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
+    } else {
+        listenersLabel.text = @"";
+    }
+    if (dateLabel != nil && !dateLabel.hidden) {
+        dateLabel.text = [self dateText:channel.tims];
+    }
+    if (bitrateLabel != nil && !bitrateLabel.hidden) {
+        bitrateLabel.text = [self bitrateText:channel.bit];
+    }
+    
+    // テーブルセルのテキスト等の色を変える
+    titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
+    titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+    
+    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
+    djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+    
+    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
+    listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
+    
+    if (dateLabel != nil && !dateLabel.hidden) {
+        dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
+        dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
+        dateLabel.clipsToBounds = YES;
+        dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+        dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
+        dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
+    }
+    
+    if (bitrateLabel != nil && !bitrateLabel.hidden) {
+        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
+        bitrateLabel.clipsToBounds = YES;
+        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
+        bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+    }
+    
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
+    
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    favoriteImageView.hidden = !channel.favorite;
+    
+    return cell;
+}
 
 - (NSInteger)headlineViewDisplayType
 {
@@ -285,17 +383,17 @@ enum HeadlineViewDisplayType {
 - (void)updateHeadlineTable
 {
     Headline *headline = [Headline sharedInstance];
-    showedChannels_ = [headline channels:channelSortType_
+    _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
     // ナビゲーションタイトルを更新
     NSString *navigationTitleStr = @"";
-    if ([showedChannels_ count] == 0) {
+    if ([_showedChannels count] == 0) {
         navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     } else {
         navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
     }
-    navigateionItem_.title = [[NSString alloc] initWithFormat:navigationTitleStr, [showedChannels_ count]];
+    _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
 
     // ヘッドラインテーブルを更新
     [self.headlineTableView reloadData];
@@ -310,14 +408,6 @@ enum HeadlineViewDisplayType {
         self.navigationItem.rightBarButtonItem = nil;
     }
 }
-
-#if AD_HIDE_DEBUG
-// 広告を隠す。デバッグ用。
-- (void)hideAdBanner:(NSTimer *)timer
-{
-    [self bannerView:nil didFailToReceiveAdWithError:nil];
-}
-#endif /* #if AD_HIDE_DEBUG */
 
 #pragma mark - Actions
 
@@ -340,11 +430,11 @@ enum HeadlineViewDisplayType {
         case ChannelSortTypeListeners:
         case ChannelSortTypeTitle:
         case ChannelSortTypeDj:
-            channelSortType_ = s;
+            _channelSortType = s;
             break;
         case ChannelSortTypeNone:
         default:
-            channelSortType_ = ChannelSortTypeNewly;
+            _channelSortType = ChannelSortTypeNewly;
             break;
     }
 
@@ -392,20 +482,20 @@ enum HeadlineViewDisplayType {
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // メニューボタンの色を変更する
-    sideMenuBarButtonItem_.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
     // 再生中ボタンの装飾を変更する
-    playingBarButtonItem_.title = NSLocalizedString(@"Playing", @"再生中ボタン");
-    playingBarButtonItem_.tintColor = PLAYING_BUTTON_COLOR;
+    _playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
+    _playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
     // 再生中ボタンを保持する
-    tempPlayingBarButtonItem_ = playingBarButtonItem_;
+    tempPlayingBarButtonItem_ = _playingBarButtonItem;
 
     // 検索バーの色を変える
-    headlineSearchBar_.tintColor = SEARCH_BAR_COLOR;
+    _headlineSearchBar.tintColor = SEARCH_BAR_COLOR;
 
     // 検索バーが空でもサーチキーを押せるようにする
     // http://stackoverflow.com/questions/3846917/iphone-uisearchbar-how-to-search-for-string
-    for (UIView *subview in headlineSearchBar_.subviews) {
+    for (UIView *subview in _headlineSearchBar.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
             ((UITextField *) subview).enablesReturnKeyAutomatically = NO;
             break;
@@ -414,11 +504,11 @@ enum HeadlineViewDisplayType {
 
     // StoryBoard上でセルの高さを設定しても有効にならないので、ここで高さを設定する
     // http://stackoverflow.com/questions/7214739/uitableview-cells-height-is-not-working-in-a-empty-table
-    headlineTableView_.rowHeight = 54;
+    _headlineTableView.rowHeight = 54;
     // テーブルの背景の色を変える
-    headlineTableView_.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
+    _headlineTableView.backgroundColor = HEADLINE_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
-    headlineTableView_.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
+    _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
     // ヘッドライン表示方式を設定
     headlineViewDisplayType_ = [self headlineViewDisplayType];
@@ -428,9 +518,9 @@ enum HeadlineViewDisplayType {
         if (refreshHeaderView_ == nil) {
             CGRect pullRefreshViewRect = CGRectMake(
                                                     0.0f,
-                                                    0.0f - headlineTableView_.bounds.size.height,
+                                                    0.0f - _headlineTableView.bounds.size.height,
                                                     self.view.frame.size.width,
-                                                    headlineTableView_.bounds.size.height);
+                                                    _headlineTableView.bounds.size.height);
             EGORefreshTableHeaderView *view =
             [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
                                               arrowImageName:PULL_REFRESH_ARROW_IMAGE
@@ -438,9 +528,20 @@ enum HeadlineViewDisplayType {
             view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
             
             view.delegate = self;
-            [headlineTableView_ addSubview:view];
+            [_headlineTableView addSubview:view];
             refreshHeaderView_ = view;
         }
+    }
+
+    if (ADMOB_PUBLISHER_ID != nil) {
+        // 広告Viewを生成
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeLeaderboard];
+        } else {
+            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+        }
+        adBannerView_.adUnitID = ADMOB_PUBLISHER_ID;
+        adBannerView_.rootViewController = self;
     }
 }
 
@@ -463,7 +564,7 @@ enum HeadlineViewDisplayType {
     // タブの切り替えごとに検索バーを更新する
     // 別タブで入力した検索バーのテキストをこのタブでも使うため
     NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
-    headlineSearchBar_.text = searchWord;
+    _headlineSearchBar.text = searchWord;
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
@@ -478,72 +579,12 @@ enum HeadlineViewDisplayType {
 {
     [super viewDidAppear:animated];
 
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // テーブルの初期位置を設定
-        // 広告のアニメーション前に初期位置を設定する必要有り
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        
-        // 広告を表示する
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        isVisibleAdBanner_ = NO;
-        [adBannerView setFrame:CGRectMake(0, 377, 320, 50)];
-        if (adBannerView.bannerLoaded) {
-            [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION 
-                                  delay:0
-                                options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 adBannerView.frame = CGRectMake(0, 317, 320, 50);
-                             }
-                             completion:^(BOOL finished) {
-                                 if (finished) {
-                                     headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
-                                 }
-                             }];
-            isVisibleAdBanner_ = YES;
-#if AD_HIDE_DEBUG
-            [NSTimer scheduledTimerWithTimeInterval:4.0
-                                             target:self
-                                           selector:@selector(hideAdBanner:)
-                                           userInfo:nil
-                                            repeats:NO];
-#endif /* #if AD_HIDE_DEBUG */
-        }
-        adBannerView.delegate = self;
-        [self.view insertSubview:adBannerView aboveSubview:headlineTableView_];
-    }
-
     // ネットワークが接続済みの場合で、かつ番組表を取得していない場合
     if ([FBNetworkReachability sharedInstance].reachable && [[Headline sharedInstance] channels] == 0) {
         // 番組表を取得する
         // 進捗ウィンドウを正しく表示させるため、viewDidAppear:animated で番組表を取得する
         [self fetchHeadline];
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // テーブルの初期位置を設定
-        // Viewを消す前に大きさを元に戻しておくことで、タブの切り替え時にちらつくのを防ぐ
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        
-        // 広告の表示を消す
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.delegate = nil;
-    }
-
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // 広告Viewを削除
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        [adBannerView removeFromSuperview];
-    }
-
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -588,7 +629,13 @@ enum HeadlineViewDisplayType {
         // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            Channel *channel = [showedChannels_ objectAtIndex:[headlineTableView_ indexPathForSelectedRow].row];
+            NSInteger channelIndex = 0;
+            if (ADMOB_PUBLISHER_ID == nil) {
+                channelIndex = [_headlineTableView indexPathForSelectedRow].row;
+            } else {
+                channelIndex = [_headlineTableView indexPathForSelectedRow].row - 1;
+            }
+            Channel *channel = _showedChannels[channelIndex];
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -616,8 +663,8 @@ enum HeadlineViewDisplayType {
     NSInteger playingChannelIndex;
     BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    for (playingChannelIndex = 0; playingChannelIndex < [showedChannels_ count]; ++playingChannelIndex) {
-        Channel *channel = [showedChannels_ objectAtIndex:playingChannelIndex];
+    for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
+        Channel *channel = _showedChannels[playingChannelIndex];
         if ([channel isSameMount:playingChannel]) {
             found = YES; // 見つかったことを示す
             break;
@@ -626,8 +673,13 @@ enum HeadlineViewDisplayType {
 
     // 見つかった場合はスクロール
     if (found){
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];  
-        [headlineTableView_ scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        NSIndexPath *indexPath = nil;
+        if (ADMOB_PUBLISHER_ID == nil) {
+            indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];
+        } else {
+            indexPath = [NSIndexPath indexPathForRow:(playingChannelIndex + 1) inSection:0];
+        }
+        [_headlineTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
@@ -655,121 +707,45 @@ enum HeadlineViewDisplayType {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [showedChannels_ count];
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return [_showedChannels count];
+    } else {
+        // 広告表示分を足す
+        return [_showedChannels count] + 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) [showedChannels_ objectAtIndex:indexPath.row];
-
-    NSString *cellIdentifier;
-
-    // DJのみが存在する場合
-    if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_Dj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_Dj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_Dj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_Dj_BitrateAndTime";
-                break;
-        }
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return [self tableView:tableView createChannelCell:indexPath.row];
     } else {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_TitleAndDj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
-                break;
+        if (indexPath.row == 0) {
+            NSString *cellIdentifier;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                cellIdentifier = @"ChannelCell_Ad_iPad";
+            } else {
+                cellIdentifier = @"ChannelCell_Ad_iPhone";
+            }
+
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            }
+
+            CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+            CGRect screenRect = [[UIScreen mainScreen] bounds];
+            CGFloat screenWidth = screenRect.size.width;
+            adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
+            [cell addSubview:adBannerView_];
+            [adBannerView_ loadRequest:[GADRequest request]];
+
+            return cell;
+        } else {
+            return [self tableView:tableView createChannelCell:(indexPath.row - 1)];
         }
     }
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
-
-    if (!([channel.nam length] == 0)) {
-        titleLabel.text = channel.nam;
-    } else {
-        titleLabel.text = @"";
-    }
-    if (!([channel.dj length] == 0)) {
-        djLabel.text = channel.dj;
-    } else {
-        djLabel.text = @"";
-    }
-    if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-        listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
-    } else {
-        listenersLabel.text = @"";
-    }
-    if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.text = [self dateText:channel.tims];
-    }
-    if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.text = [self bitrateText:channel.bit];
-    }
-
-    // テーブルセルのテキスト等の色を変える
-    titleLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
-    titleLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
-    
-    djLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
-    djLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
-    
-    listenersLabel.textColor = HEADLINE_CELL_LISTENERS_TEXT_COLOR;
-    listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
-    
-    if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
-        dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
-        dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
-        dateLabel.clipsToBounds = YES;
-        dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
-        dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
-        dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
-    }
-
-    if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
-        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
-        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
-        bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
-        bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
-        bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
-    }
-
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
-    
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    favoriteImageView.hidden = !channel.favorite;
-
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -791,9 +767,34 @@ enum HeadlineViewDisplayType {
     cell.selectedBackgroundView = selectedBackgroundView;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return 54;
+    } else {
+        if (indexPath.row == 0) {
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                return kGADAdSizeLeaderboard.size.height + 2;
+            } else {
+                return kGADAdSizeBanner.size.height;
+            }
+        } else {
+            return 54;
+        }
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"SelectChannel" sender:self];
+    if (ADMOB_PUBLISHER_ID == nil) {
+        [self performSegueWithIdentifier:@"SelectChannel" sender:self];
+    } else {
+        if (indexPath.row == 0) {
+            ;
+        } else {
+            [self performSegueWithIdentifier:@"SelectChannel" sender:self];
+        }
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -828,60 +829,6 @@ enum HeadlineViewDisplayType {
     return [NSDate date]; // should return date data source was last changed
 }
 
-#pragma mark - ADBannerViewDelegate methods
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    if (HEADLINE_VIEW_IAD_ENABLE) {
-        // 広告をはいつでも表示可能
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-// iADバナーが読み込み終わった
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    NSLog(@"iAD banner load complated.");
-
-    if (isVisibleAdBanner_ == NO) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        adBannerView.hidden = NO;
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 317, 320, 50);
-                         }
-                         completion:^(BOOL finished) {
-                             if (finished) {
-                                 headlineTableView_.frame = CGRectMake(0, 44, 320, 273);
-                             }
-                         }];
-        isVisibleAdBanner_ = YES;
-    }
-}
-
-// iADバナーの読み込みに失敗
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"Received iAD banner error. Error : %@", [error localizedDescription]);
-
-    if (isVisibleAdBanner_) {
-        ADBannerView *adBannerView = [IAdBannerManager sharedInstance].adBannerView;
-        headlineTableView_.frame = CGRectMake(0, 44, 320, 323);
-        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut 
-                         animations:^{
-                             adBannerView.frame = CGRectMake(0, 377, 320, 50);
-                         }
-                         completion:nil];
-        isVisibleAdBanner_ = NO;
-    }
-}
-
 #pragma mark - NSUserDefaults notifications
 
 - (void)defaultsChanged:(NSNotification *)notification
@@ -911,7 +858,7 @@ enum HeadlineViewDisplayType {
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
     }
 }
 
@@ -923,7 +870,7 @@ enum HeadlineViewDisplayType {
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:headlineTableView_];
+        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
     }
 }
 

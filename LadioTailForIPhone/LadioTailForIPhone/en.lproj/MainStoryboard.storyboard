@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Headline View Controller - ON AIR-->
@@ -18,8 +18,26 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChannelCell_Ad_iPhone" rowHeight="50" id="2oN-w5-eZf">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChannelCell_Ad_iPad" rowHeight="90" id="8fD-mg-Hiv">
+                                        <rect key="frame" x="0.0" y="72" width="320" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_TitleAndDj_BitrateAndTime" rowHeight="54" id="ucw-N8-UK3">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="162" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -77,7 +95,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_TitleAndDj" rowHeight="54" id="hjA-IY-9kz">
-                                        <rect key="frame" x="0.0" y="76" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="216" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -121,7 +139,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_TitleAndDj_Time" rowHeight="54" id="suD-RG-cDb">
-                                        <rect key="frame" x="0.0" y="130" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="270" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -172,7 +190,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_TitleAndDj_Bitrate" rowHeight="54" id="wiG-Wf-IIj">
-                                        <rect key="frame" x="0.0" y="184" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="324" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -223,7 +241,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_Dj_BitrateAndTime" rowHeight="54" id="SZ6-Ar-Aja">
-                                        <rect key="frame" x="0.0" y="238" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="378" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -274,7 +292,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_Dj" rowHeight="54" id="BGc-D4-OZo">
-                                        <rect key="frame" x="0.0" y="292" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="432" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -311,7 +329,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_Dj_Time" rowHeight="54" id="bkT-cn-Kqh">
-                                        <rect key="frame" x="0.0" y="346" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="486" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -355,7 +373,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ChannelCell_Dj_Bitrate" rowHeight="54" id="Tbx-pb-HvK">
-                                        <rect key="frame" x="0.0" y="400" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="540" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -635,11 +653,10 @@
             </objects>
             <point key="canvasLocation" x="555" y="717"/>
         </scene>
-        <!--Headline Navi View Controller - Newly-->
+        <!--Headline Navi View Controller-->
         <scene sceneID="Xhh-GT-YtA">
             <objects>
                 <navigationController storyboardIdentifier="HeadlineNaviViewController" id="Gd9-dq-TPN" customClass="HeadlineNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Newly" image="tab_newly.png" id="Gkk-Vb-567"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="tnZ-7d-F12">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1126,7 +1143,6 @@
         <image name="button_twitter.png" width="37" height="37"/>
         <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
         <image name="navbarbtn_menu.png" width="20" height="20"/>
-        <image name="tab_newly.png" width="16" height="16"/>
         <image name="tab_others.png" width="16" height="16"/>
         <image name="tabelcell_checkmark_black.png" width="14" height="14"/>
         <image name="tabelcell_checkmark_white.png" width="14" height="14"/>

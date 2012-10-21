@@ -621,7 +621,7 @@ static NSRegularExpression *chsExp = nil;
     receivedData_ = nil;
     NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
           [error localizedDescription],
-          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+          [error userInfo][NSURLErrorFailingURLStringErrorKey]);
 
     // ヘッドライン取得中のフラグを下げる
     @synchronized (isFetchingLock_) {

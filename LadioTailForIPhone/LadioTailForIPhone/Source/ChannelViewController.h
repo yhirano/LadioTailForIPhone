@@ -21,10 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "iAd/iAd.h"
 #import "LadioLib/LadioLib.h"
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate, ADBannerViewDelegate>
+@interface ChannelViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong) Channel *channel;
 

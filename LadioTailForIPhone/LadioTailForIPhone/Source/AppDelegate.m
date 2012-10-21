@@ -20,17 +20,29 @@
  * THE SOFTWARE.
  */
 
+#import <AudioToolbox/AudioServices.h>
+#import "LadioTailConfig.h"
+#import "LadioLib/LadioLib.h"
 #import "ICloudStrorage.h"
+#import "ApnsStorage.h"
 #import "AppDelegate.h"
 
 @implementation AppDelegate
-
-@synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // iCloudから通知を受ける
     [[ICloudStrorage sharedInstance] registICloudNotification];
+
+    if (PROVIDER_URL != nil) {
+        // お気に入りの変化を監視し、変化時にはプロバイダにお気に入り情報を送信する
+        [[ApnsStorage sharedInstance] registApnsService];
+    }
+
+    // Remote Notification を受信するためにデバイスを登録する
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
+                                                                           | UIRemoteNotificationTypeSound
+                                                                           | UIRemoteNotificationTypeAlert)];
 
     return YES;
 }
@@ -49,12 +61,76 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // アイコンバッジを消す
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    // お気に入りをプロバイダに送信しないようにする
+    [[ApnsStorage sharedInstance] registApnsService];
+
     // iCloudからの通知を受けなくする
     [[ICloudStrorage sharedInstance] unregistICloudNotification];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
+{
+    
+#if DEBUG
+    NSLog(@"DeviceToken: %@", devToken);
+#endif // #if DEBUG
+
+    // デバイストークンを記憶する
+    [[ApnsStorage sharedInstance] setDeviceToken:devToken];
+
+    // お気に入りをプロバイダに送信
+    [[ApnsStorage sharedInstance] sendFavoriteToProvider];
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    NSLog(@"Error : Fail Regist to APNS. (%@)", err);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+#if DEBUG
+    NSLog(@"Received Push Info: %@", [apsInfo description]);
+#endif // #if DEBUG
+
+    NSString *alert = [apsInfo objectForKey:@"alert"];
+    UIApplicationState state = [application applicationState];
+
+    switch (state) {
+        case UIApplicationStateActive: // アクティブ状態でRemote Notificationを受け取った場合
+            // 端末をバイブレーション
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+            // アラートを表示
+            if (alert != nil) {
+                UIAlertView *alertView = [[UIAlertView alloc] init];
+                alertView.message = alert;
+                NSString *buttonTitle = NSLocalizedString(@"OK", @"OK");
+                [alertView addButtonWithTitle:buttonTitle];
+                [alertView show];
+            }
+            // アイコンバッジを消す
+            application.applicationIconBadgeNumber = 0;
+            break;
+        default:
+            break;
+    }
+
+    switch (state) {
+        case UIApplicationStateActive: // アクティブ状態でRemote Notificationを受け取った場合
+        case UIApplicationStateInactive: // バックグラウンド状態でRemote Notificationを受け取り、ユーザーがボタンをタップした場合
+            // ヘッドラインを更新する
+            [[Headline sharedInstance] fetchHeadline];
+            break;
+        default:
+            break;
+    }
 }
 
 @end
