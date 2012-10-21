@@ -82,26 +82,27 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody: requestData];
+
+    // このクラスがNSOperationを継承したクラスなので、サーバにお気に入りの情報を同期で送信する。
+    // また、iOS5環境だと、非同期通信だと正常に送信できていなかったため、同期で送信している。
+    NSURLResponse* response = nil;
+    NSError* error = nil;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
-    
-    if (conn == nil) {
-        NSLog(@"Failed sending favorite(s) to the provider.");
+    if (error != nil) {
+        NSLog(@"Failed sending favorite(s) to the provider. Error: %@", [error localizedDescription]);
     }
-}
-
-#pragma mark - NSURLConnectionDelegate methods
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"Failed sending favorite(s) to the provider. Error: %@ / %@",
-          [error localizedDescription],
-          [error userInfo][NSURLErrorFailingURLStringErrorKey]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"Succeed sending favorite(s) to the provider.");
+    if (response == nil) {
+        NSLog(@"Failed sending favorite(s) to the provider. Empty responce.");
+    } else {
+        NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        // 通信に成功した場合はサーバはステータスコード200を返す
+        if (statusCode == 200) {
+            NSLog(@"Succeed sending favorite(s) to the provider.");
+        } else {
+            NSLog(@"Failed sending favorite(s) to the provider. HTTP Status code: %d", statusCode);
+        }
+    }
 }
 
 @end
