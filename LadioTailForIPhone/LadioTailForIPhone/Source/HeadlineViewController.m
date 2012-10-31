@@ -710,8 +710,16 @@ enum HeadlineViewDisplayType {
     if (ADMOB_PUBLISHER_ID == nil) {
         return [_showedChannels count];
     } else {
-        // 広告表示分を足す
-        return [_showedChannels count] + 1;
+        NSInteger result = [_showedChannels count];
+        // 番組を取得していない場合
+        if (result <= 0) {
+            return 0;
+        }
+        // 番組を取得している場合
+        else {
+            // 広告表示分を足す
+            return [_showedChannels count] + 1;
+        }
     }
 }
 
