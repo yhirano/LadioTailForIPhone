@@ -59,8 +59,6 @@ static NSRegularExpression *chsExp = nil;
     /// 番組データリストのキャッシュ
     /// ソートやフィルタリングの結果をキャッシュしておく
     NSCache *channelsCache_;
-    /// 受信データバッファ
-    NSMutableData *receivedData_;
     /// ヘッドラインを取得中か
     BOOL isFetching_;
     /// isFetchingのロック
@@ -230,12 +228,62 @@ static NSRegularExpression *chsExp = nil;
 
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
-    if (conn) {
-        receivedData_ = [NSMutableData data];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
-    }
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ([data length] >0 && error == nil) {
+                                   NSLog(@"NetLadio fetch headline received. %d bytes received.", [data length]);
+
+                                   // 取得したデータをNSStringに変換し、1行ごとに分館してNSArrayに格納する
+                                   NSString *str = [[NSString alloc] initWithData:data
+                                                                         encoding:NSShiftJISStringEncoding];
+                                   NSArray *lines = [str componentsSeparatedByString:@"\n"];
+
+                                   NSArray *channels = [self parseHeadline:lines];
+
+                                   @synchronized (channelsLock_) {
+                                       channels_ = [[NSArray alloc] initWithArray:channels];
+#if DEBUG
+                                       NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.",
+                                             NSStringFromClass([self class]), [channels count]);
+#endif /* #if DEBUG */
+                                       // 番組表データを更新したのでキャッシュを削除
+                                       [self clearChannelsCache];
+                                   }
+
+                                   // ヘッドライン取得中のフラグを下げる
+                                   @synchronized (isFetchingLock_) {
+                                       isFetching_ = NO;
+                                   }
+
+                                   [[NSNotificationCenter defaultCenter]
+                                           postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+                                   [[NSNotificationCenter defaultCenter]
+                                           postNotificationName:LadioLibHeadlineChannelChangedNotification object:self];
+                               } else if ([data length] == 0 && error == nil) {
+                                   NSLog(@"Nothing was downloaded.");
+
+                                   // ヘッドライン取得中のフラグを下げる
+                                   @synchronized (isFetchingLock_) {
+                                       isFetching_ = NO;
+                                   }
+                                   
+                                   [[NSNotificationCenter defaultCenter]
+                                           postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
+                               } else if (error != nil) {
+                                   NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
+                                         [error localizedDescription],
+                                         [error userInfo][NSURLErrorFailingURLStringErrorKey]);
+
+                                   // ヘッドライン取得中のフラグを下げる
+                                   @synchronized (isFetchingLock_) {
+                                        isFetching_ = NO;
+                                   }
+
+                                   [[NSNotificationCenter defaultCenter]
+                                          postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
+                               }
+                           }];
 }
 
 - (BOOL)isFetchingHeadline;
@@ -602,63 +650,6 @@ static NSRegularExpression *chsExp = nil;
 #if DEBUG
     NSLog(@"%@ clear channels cache.", NSStringFromClass([self class]));
 #endif /* #if DEBUG */
-}
-
-#pragma mark - NSURLConnectionDelegate methods
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [receivedData_ setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [receivedData_ appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    receivedData_ = nil;
-    NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
-          [error localizedDescription],
-          [error userInfo][NSURLErrorFailingURLStringErrorKey]);
-
-    // ヘッドライン取得中のフラグを下げる
-    @synchronized (isFetchingLock_) {
-        isFetching_ = NO;
-    }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"NetLadio fetch headline received. %d bytes received.", [receivedData_ length]);
-
-    // 取得したデータをNSStringに変換し、1行ごとに分館してNSArrayに格納する
-    NSString *data = [[NSString alloc] initWithData:receivedData_ encoding:NSShiftJISStringEncoding];
-    NSArray *lines = [data componentsSeparatedByString:@"\n"];
-    receivedData_ = nil;
-
-    NSArray *channels = [self parseHeadline:lines];
-
-    @synchronized (channelsLock_) {
-        channels_ = [[NSArray alloc] initWithArray:channels];
-#if DEBUG
-        NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.",
-              NSStringFromClass([self class]), [channels count]);
-#endif /* #if DEBUG */
-        // 番組表データを更新したのでキャッシュを削除
-        [self clearChannelsCache];
-    }
-
-    // ヘッドライン取得中のフラグを下げる
-    @synchronized (isFetchingLock_) {
-        isFetching_ = NO;
-    }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineChannelChangedNotification object:self];
 }
 
 #pragma mark - Favorite notification
