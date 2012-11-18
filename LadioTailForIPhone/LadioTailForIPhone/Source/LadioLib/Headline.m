@@ -231,7 +231,7 @@ static NSRegularExpression *chsExp = nil;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ([data length] >0 && error == nil) {
+                               if ([data length] > 0 && error == nil) {
                                    NSLog(@"NetLadio fetch headline received. %d bytes received.", [data length]);
 
                                    // 取得したデータをNSStringに変換し、1行ごとに分館してNSArrayに格納する
@@ -662,8 +662,5 @@ static NSRegularExpression *chsExp = nil;
 
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineChannelChangedNotification object:self];
 }
-
-#pragma  mark -
-
 
 @end
