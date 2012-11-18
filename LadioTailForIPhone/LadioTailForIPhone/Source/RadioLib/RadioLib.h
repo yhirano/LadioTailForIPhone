@@ -20,8 +20,19 @@
  * THE SOFTWARE.
  */
 
-#import "../Notifications.h"
-#import "Headline.h"
-#import "Channel.h"
-#import "FavoriteManager.h"
-#import "Favorite.h"
+#import "Notifications.h"
+#import "ReplaceUrlUtil.h"
+
+#if defined(LADIO_TAIL)
+    #import "LadioLib/Headline.h"
+    #import "LadioLib/Channel.h"
+    #import "LadioLib/FavoriteManager.h"
+    #import "LadioLib/Favorite.h"
+#elif defined(RADIO_EDGE)
+    #import "IcecasetLib/Headline.h"
+    #import "IcecasetLib/Channel.h"
+    #import "IcecasetLib/FavoriteManager.h"
+    #import "IcecasetLib/Favorite.h"
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif

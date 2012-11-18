@@ -150,10 +150,18 @@ static Player *instance = nil;
 {
     @synchronized (self) {
         // 既に再生中のURLとおなじ場合は何もしない
-        if ([self isPlaying:channel.playUrl]) {
+        NSURL *url;
+#if defined(LADIO_TAIL)
+        url = channel.playUrl;
+#elif defined(RADIO_EDGE)
+        url = channel.listenUrl;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+        if ([self isPlaying:url]) {
             return;
         }
-        
+
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
@@ -161,7 +169,7 @@ static Player *instance = nil;
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
-                [self playProc:channel.playUrl channel:channel];
+                [self playProc:url channel:channel];
                 break;
             case PlayerStatePrepare:
             default:

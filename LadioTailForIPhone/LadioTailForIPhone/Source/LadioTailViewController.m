@@ -23,7 +23,7 @@
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
-#import "RadioLib/LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 #import "Player.h"
 #import "HeadlineNaviViewController.h"
 #import "SideMenuTableViewController.h"
@@ -213,10 +213,19 @@
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
         for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
             Channel *channel = channels[playingChannelIndex];
+#if defined(LADIO_TAIL)
             if ([channel isSameMount:playingChannel]) {
                 found = YES; // 見つかったことを示す
                 break;
             }
+#elif defined(RADIO_EDGE)
+            if ([channel isSameListenUrl:playingChannel]) {
+                found = YES; // 見つかったことを示す
+                break;
+            }
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
         }
         // 番組が見つかった場合
         if (found) {

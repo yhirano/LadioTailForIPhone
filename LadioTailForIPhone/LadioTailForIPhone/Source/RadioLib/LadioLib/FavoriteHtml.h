@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#ifdef LADIO_TAIL
+
 #import "Favorite.h"
 
 @interface FavoriteHtml : NSObject
@@ -27,3 +29,5 @@
 + (NSString *)descriptionHtml:(Favorite *)favorite;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

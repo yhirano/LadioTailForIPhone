@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
-#import "RadioLib/LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 
 @interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
                                                       EGORefreshTableHeaderDelegate>

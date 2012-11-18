@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#ifdef LADIO_TAIL
+
 #import "Channel.h"
 
 @interface Favorite : NSObject<NSCoding>
@@ -35,3 +36,5 @@
 - (NSString *)descriptionHtml;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

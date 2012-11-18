@@ -79,6 +79,7 @@ static FavoriteManager *instance = nil;
             Favorite *favorite = [[Favorite alloc] init];
             favorite.channel = channel;
             _favorites[channel.mnt] = favorite;
+            [channel setFavoriteCache:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
         }
@@ -102,6 +103,7 @@ static FavoriteManager *instance = nil;
     @synchronized(self) {
         if (_favorites[channel.mnt] != nil) {
             [_favorites removeObjectForKey:channel.mnt];
+            [channel setFavoriteCache:NO];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];

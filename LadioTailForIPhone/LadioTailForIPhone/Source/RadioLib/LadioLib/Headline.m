@@ -71,9 +71,9 @@ static NSRegularExpression *chsExp = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];
-        
+
         NSError *error = nil;
-        
+
         surlExp = [NSRegularExpression regularExpressionWithPattern:@"^SURL=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
@@ -90,97 +90,97 @@ static NSRegularExpression *chsExp = nil;
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         prtExp = [NSRegularExpression regularExpressionWithPattern:@"^PRT=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         mntExp = [NSRegularExpression regularExpressionWithPattern:@"^MNT=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         typeExp = [NSRegularExpression regularExpressionWithPattern:@"^TYPE=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         namExp = [NSRegularExpression regularExpressionWithPattern:@"^NAM=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         gnlExp = [NSRegularExpression regularExpressionWithPattern:@"^GNL=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         descExp = [NSRegularExpression regularExpressionWithPattern:@"^DESC=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         djExp = [NSRegularExpression regularExpressionWithPattern:@"^DJ=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         songExp = [NSRegularExpression regularExpressionWithPattern:@"^SONG=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         urlExp = [NSRegularExpression regularExpressionWithPattern:@"^URL=(.*)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         clnExp = [NSRegularExpression regularExpressionWithPattern:@"^CLN=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         clnsExp = [NSRegularExpression regularExpressionWithPattern:@"^CLNS=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         maxExp = [NSRegularExpression regularExpressionWithPattern:@"^MAX=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         bitExp = [NSRegularExpression regularExpressionWithPattern:@"^BIT=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         smplExp = [NSRegularExpression regularExpressionWithPattern:@"^SMPL=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-        
+
         error = nil;
         chsExp = [NSRegularExpression regularExpressionWithPattern:@"^CHS=(\\d+)" options:0 error:&error];
         if (error != nil) {
             NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
         }
-});
+    });
     return instance;
 }
 
@@ -325,17 +325,16 @@ static NSRegularExpression *chsExp = nil;
 
     // フィルタリング
     if (!([searchWord length] == 0)) {
-        NSMutableArray *removeList = [[NSMutableArray alloc] init];
+        NSArray *words = [Headline splitStringByWhiteSpace:searchWord];
+        NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
+        NSUInteger index = 0;
         for (Channel *channel in channels) {
-            if ([channel isMatch:[Headline splitStringByWhiteSpace:searchWord]] == NO) {
-                [removeList addObject:channel];
+            if ([channel isMatch:words] == NO) {
+                [removeItemIndexes addIndex:index];
             }
+            ++index;
         }
-        if ([removeList count] != 0) {
-            for (Channel *removeCannel in removeList) {
-                [channels removeObject:removeCannel];
-            }
-        }
+        [channels removeObjectsAtIndexes:removeItemIndexes];
     }
 
     // ソート
@@ -602,17 +601,15 @@ static NSRegularExpression *chsExp = nil;
     NSMutableArray *words = [[word componentsSeparatedByCharactersInSet:separator] mutableCopy];
     
     // 空白文字を除外する
-    NSMutableArray *removeList = [[NSMutableArray alloc] init];
+    NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
+    NSUInteger index = 0;
     for (NSString *word in words) {
         if ([word length] == 0) {
-            [removeList addObject:word];
+            [removeItemIndexes addIndex:index];
         }
+        ++index;
     }
-    if ([removeList count] != 0) {
-        for (NSString *removeWord in removeList) {
-            [words removeObject:removeWord];
-        }
-    }
+    [words removeObjectsAtIndexes:removeItemIndexes];
     
     return words;
 }

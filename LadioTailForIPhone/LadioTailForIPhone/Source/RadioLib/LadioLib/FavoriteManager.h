@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#ifdef LADIO_TAIL
+
 #import "Channel.h"
 
 /**
@@ -92,3 +93,5 @@
 - (BOOL)isFavorite:(Channel *)channel;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

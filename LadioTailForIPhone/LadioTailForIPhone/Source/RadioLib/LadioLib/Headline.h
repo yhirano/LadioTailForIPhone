@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#ifdef LADIO_TAIL
+
 #import "Channel.h"
 
 enum ChannelSortType
@@ -110,3 +111,5 @@ typedef NSInteger ChannelSortType;
 - (Channel *)channelFromMount:(NSString *)mount;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

@@ -108,6 +108,7 @@ enum HeadlineViewDisplayType {
 
 #pragma mark - Private methods
 
+#if defined(LADIO_TAIL)
 - (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
@@ -221,6 +222,72 @@ enum HeadlineViewDisplayType {
     
     return cell;
 }
+#elif defined(RADIO_EDGE)
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+{
+    Channel *channel = (Channel *) _showedChannels[num];
+    
+    NSString *cellIdentifier;
+    
+    // Genreのみが存在する場合
+    if (([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
+        cellIdentifier = @"ChannelCell_Genre_Bitrate";
+    } else {
+        cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
+    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
+
+    if (!([channel.serverName length] == 0)) {
+        serverNameLabel.text = channel.serverName;
+    } else {
+        serverNameLabel.text = @"";
+    }
+    if (!([channel.genre length] == 0)) {
+        genreLabel.text = channel.genre;
+    } else {
+        genreLabel.text = @"";
+    }
+    if (bitrateLabel != nil) {
+        bitrateLabel.text = [self bitrateText:channel.bitrate];
+    }
+    
+    // テーブルセルのテキスト等の色を変える
+    serverNameLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
+    serverNameLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+    
+    genreLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
+    genreLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+    
+    if (bitrateLabel != nil) {
+        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
+        bitrateLabel.clipsToBounds = YES;
+        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bitrate];
+        bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
+        bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+    }
+    
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel listenUrl]];
+    
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    favoriteImageView.hidden = !channel.favorite;
+    
+    return cell;
+}
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
 - (NSInteger)headlineViewDisplayType
 {
@@ -336,10 +403,20 @@ enum HeadlineViewDisplayType {
 
     if (bitrate < 1000) {
         result = [[NSString alloc] initWithFormat:@"%dkbps", bitrate];
-    } else if (bitrate <= 1024) {
+    }
+    // 1000 - 1024
+    else if (bitrate <= 1024) {
         result = @"1Mbps";
+    }
+    // 1025 - 102399 (99.99Mbps)
+    else if (bitrate <= 102399) {
+        result = [[NSString alloc] initWithFormat:@"%.1fMbps", bitrate / (float)1024];
+    }
+    // 102400 - 1048575(999.99Mbps)
+    else if (bitrate <= 1048575) {
+        result = [[NSString alloc] initWithFormat:@"%.0fMbps", bitrate / (float)1024];
     } else {
-        result = [[NSString alloc] initWithFormat:@"%f.1Mbps", bitrate / (float)1024];
+        result = [[NSString alloc] initWithFormat:@"%.1fTbps", bitrate / (float)(1024 * 1024)];
     }
     
     return result;
@@ -425,6 +502,7 @@ enum HeadlineViewDisplayType {
     // ソートタイプを復元する
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     ChannelSortType s = [defaults integerForKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+#if defined(LADIO_TAIL)
     switch (s) {
         case ChannelSortTypeNewly:
         case ChannelSortTypeListeners:
@@ -437,6 +515,22 @@ enum HeadlineViewDisplayType {
             _channelSortType = ChannelSortTypeNewly;
             break;
     }
+#elif defined(RADIO_EDGE)
+    switch (s) {
+        case ChannelSortTypeNewly:
+        case ChannelSortTypeServerName:
+        case ChannelSortTypeGenre:
+        case ChannelSortTypeBitrate:
+            _channelSortType = s;
+            break;
+        case ChannelSortTypeNone:
+        default:
+            _channelSortType = ChannelSortTypeNone;
+            break;
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
     // 設定の変更を補足する
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -646,7 +740,13 @@ enum HeadlineViewDisplayType {
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSURL *playingUrl = [[Player sharedInstance] playingUrl];
             Headline *headline = [Headline sharedInstance];
+#if defined(LADIO_TAIL)
             Channel *channel = [headline channelFromPlayUrl:playingUrl];
+#elif defined(RADIO_EDGE)
+            Channel *channel = [headline channelFromListenUrl:playingUrl];
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -665,10 +765,20 @@ enum HeadlineViewDisplayType {
     // 再生している番組がの何番目かを探索する
     for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
         Channel *channel = _showedChannels[playingChannelIndex];
+
+#if defined(LADIO_TAIL)
         if ([channel isSameMount:playingChannel]) {
             found = YES; // 見つかったことを示す
             break;
         }
+#elif defined(RADIO_EDGE)
+        if ([channel isSameListenUrl:playingChannel]) {
+            found = YES; // 見つかったことを示す
+            break;
+        }
+#else
+        #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
     }
 
     // 見つかった場合はスクロール

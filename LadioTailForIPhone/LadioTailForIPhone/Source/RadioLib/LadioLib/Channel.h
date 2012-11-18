@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#ifdef LADIO_TAIL
 
 /// リスナ数が不明
 #define CHANNEL_UNKNOWN_LISTENER_NUM -1
@@ -60,6 +60,8 @@
 /// タイトル
 @property (copy) NSString *nam;
 
+@property (strong, readonly) NSString *trimedNam;
+
 /// ジャンル
 @property (copy) NSString *gnl;
 
@@ -68,6 +70,8 @@
 
 /// DJ
 @property (copy) NSString *dj;
+
+@property (strong, readonly) NSString *trimedDj;
 
 /// 現在の曲名情報
 @property (copy) NSString *song;
@@ -112,7 +116,15 @@
 
 - (BOOL)isSameMount:(Channel *)channel;
 
+/// お気に入りキャッシュを設定する
+///
+/// ここにお気に入りの状態を設定しておくと、このChannelがお気に入りかどうかのチェックを
+/// FavoriteManagerに問い合わせなくなるため高速化する
+- (void)setFavoriteCache:(BOOL)favorite;
+
 /// 番組画面用のHTMLを取得する
 - (NSString *)descriptionHtml;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

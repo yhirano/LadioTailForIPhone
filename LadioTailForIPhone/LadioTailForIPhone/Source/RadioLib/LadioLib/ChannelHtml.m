@@ -256,7 +256,7 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
 
     if (channelPageHtmlTemplate == nil) {
         NSError *error = nil;
-        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"LadioLibChannelPageHtml"
+        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"
                                                              withExtension:@"mustache"
                                                                     bundle:[NSBundle mainBundle]
                                                                      error:&error];

@@ -65,7 +65,14 @@
 - (void)updatePlayButton
 {
     // 再生ボタンの画像を切り替える
+#if defined(LADIO_TAIL)
     NSURL *url = [_channel playUrl];
+#elif defined(RADIO_EDGE)
+    NSURL *url = [_channel listenUrl];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
@@ -101,7 +108,14 @@
 
 - (IBAction)play:(id)sender
 {
+#if defined(LADIO_TAIL)
     NSURL *url = [_channel playUrl];
+#elif defined(RADIO_EDGE)
+    NSURL *url = [_channel listenUrl];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
@@ -120,9 +134,19 @@
 
 - (IBAction)tweet:(id)sender {
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
+
+#if defined(LADIO_TAIL)
     NSString *tweetText = [[NSString alloc]
                            initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
                            _channel.nam, [_channel.surl absoluteString]];
+#elif defined(RADIO_EDGE)
+    NSString *tweetText = [[NSString alloc]
+                           initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
+                           _channel.serverName, [_channel.listenUrl absoluteString]];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     [tweetView setInitialText:tweetText];
     [self presentModalViewController:tweetView animated:YES];
 }
@@ -153,8 +177,9 @@
                                                  name:RadioLibChannelChangedFavoritesNotification
                                                object:nil];
 
-    NSString *titleString;
     // ナビゲーションタイトルを表示する
+    NSString *titleString;
+#if defined(LADIO_TAIL)
     // タイトルが存在する場合はタイトルを表示する
     if (!([_channel.nam length] == 0)) {
         titleString = _channel.nam;
@@ -162,7 +187,24 @@
     // DJが存在する場合はDJを表示する
     else if (!([_channel.dj length] == 0)) {
         titleString = _channel.dj;
+    } else {
+        titleString = @"";
     }
+#elif defined(RADIO_EDGE)
+    // Server Nameが存在する場合はServer Nameを表示する
+    if (!([_channel.serverName length] == 0)) {
+        titleString = _channel.serverName;
+    }
+    // Genreが存在する場合はGenreを表示する
+    else if (!([_channel.genre length] == 0)) {
+        titleString = _channel.genre;
+    } else {
+        titleString = @"";
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     _topNavigationItem.title = titleString;
 
     // お気に入りボタンの色を変える

@@ -40,20 +40,33 @@
 {
     [super viewDidLoad];
 
+#if defined(LADIO_TAIL)
     self.navigationItem.title = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
+#elif defined(RADIO_EDGE)
+    self.navigationItem.title = NSLocalizedString(@"About Radio Edge", @"Radio Edgeについて");
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
     // メニューボタンの色を変更する
     _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
 
+#if defined(LADIO_TAIL)
+    NSString *appName = @"Ladio Tail";
+#elif defined(RADIO_EDGE)
+    NSString *appName = @"Radio Edge";
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
     NSString *versionNumberString = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleVersionKey];
     NSString *versionInfo = [[NSString alloc] initWithFormat:@"Version %@", versionNumberString];
 
     NSError *error = nil;
 #if DEBUG
     NSString *buildDate = [[NSBundle mainBundle] infoDictionary][@"CFBuildDate"];
-    NSDictionary *dict = @{@"version_info":versionInfo, @"build_date":buildDate};
+    NSDictionary *dict = @{@"app_name":appName, @"version_info":versionInfo, @"build_date":buildDate};
 #else
-    NSDictionary *dict = @{@"version_info":versionInfo};
+    NSDictionary *dict = @{@"app_name":appName, @"version_info":versionInfo};
 #endif /* #if DEBUG */
     NSString *html = [GRMustacheTemplate renderObject:dict
                                         fromResource:@"AboutHtml"

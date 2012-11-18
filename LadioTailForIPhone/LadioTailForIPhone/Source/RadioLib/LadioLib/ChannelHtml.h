@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#ifdef LADIO_TAIL
+
 #import "Channel.h"
 
 @interface ChannelHtml : NSObject
@@ -27,3 +29,5 @@
 + (NSString *)descriptionHtml:(Channel *)channel;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

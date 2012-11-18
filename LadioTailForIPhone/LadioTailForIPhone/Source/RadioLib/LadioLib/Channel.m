@@ -24,6 +24,9 @@
 #import "ChannelHtml.h"
 #import "Channel.h"
 
+/// isMatchの結果を格納するキャッシュ
+static NSCache *matchCache = nil;
+
 /// setTimsFromString用のNSDateFormatter
 static NSDateFormatter *setTimsFromStringDateFormatter = nil;
 
@@ -31,16 +34,65 @@ static NSDateFormatter *setTimsFromStringDateFormatter = nil;
 static NSDateFormatter *timsToStringDateFormatter = nil;
 
 @implementation Channel
+{
+@private
+    NSURL *surl_;
+    NSDate *tims_;
+    NSString *srv_;
+    NSInteger prt_;
+    NSString *mnt_;
+    NSString *type_;
+    NSString *nam_;
+    NSString *gnl_;
+    NSString *desc_;
+    NSString *dj_;
+    NSString *song_;
+    NSURL *url_;
+    NSInteger cln_;
+    NSInteger clns_;
+    NSInteger max_;
+    NSInteger bit_;
+    NSInteger smpl_;
+    NSInteger chs_;
+
+    BOOL hasHashCache_;
+    NSUInteger hashCache_;
+    /// お気に入りキャッシュが有効か
+    BOOL hasFavoriteCache_;
+    /// お気に入りキャッシュ
+    BOOL favoriteCache_;
+}
 
 - (id)init
 {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        matchCache = [[NSCache alloc] init];
+    });
+
     if (self = [super init]) {
-        _cln = CHANNEL_UNKNOWN_LISTENER_NUM;
-        _clns = CHANNEL_UNKNOWN_LISTENER_NUM;
-        _max = CHANNEL_UNKNOWN_LISTENER_NUM;
-        _bit = CHANNEL_UNKNOWN_BITRATE_NUM;
-        _smpl = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
-        _chs = CHANNEL_UNKNOWN_CHANNEL_NUM;
+        surl_ = nil;
+        tims_ = nil;
+        srv_ = nil;
+        prt_ = -1;
+        mnt_ = nil;
+        type_ = nil;
+        nam_ = nil;
+        gnl_ = nil;
+        desc_ = nil;
+        dj_ = nil;
+        song_ = nil;
+        url_ = nil;
+        cln_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        clns_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        max_ = CHANNEL_UNKNOWN_LISTENER_NUM;
+        bit_ = CHANNEL_UNKNOWN_BITRATE_NUM;
+        smpl_ = CHANNEL_UNKNOWN_SAMPLING_RATE_NUM;
+        chs_ = CHANNEL_UNKNOWN_CHANNEL_NUM;
+
+        hasHashCache_ = NO;
+        hasFavoriteCache_ = NO;
+        favoriteCache_ = NO;
     }
     return self;
 }
@@ -49,13 +101,46 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 {
     NSString *format = @"<%@ :%p , surl:%@ tims:%@ srv:%@ prt:%d mnt:%@ type:%@ nam:%@ gnl:%@ desc:%@ dj:%@ song:%@"
                         " url:%@ cln:%d clns:%d max:%d bit:%d smpl:%d chs:%d>";
-    return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, _surl, _tims, _srv, _prt, _mnt,
-                                      _type, _nam, _gnl, _desc, _dj, _song, _url, _cln, _clns, _max, _bit, _smpl, _chs];
+    return [NSString stringWithFormat:format, NSStringFromClass([self class]), self, surl_, tims_, srv_, prt_, mnt_,
+                                      type_, nam_, gnl_, desc_, dj_, song_, url_, cln_, clns_, max_, bit_, smpl_, chs_];
+}
+
+- (NSUInteger)hash
+{
+    if (hasHashCache_) {
+        return hashCache_;
+    }
+    
+    NSUInteger result = 1;
+    NSUInteger prime = 31;
+    
+    result = prime * result + [surl_ hash];
+    result = prime * result + [tims_ hash];
+    result = prime * result + [srv_ hash];
+    result = prime * result + prt_;
+    result = prime * result + [mnt_ hash];
+    result = prime * result + [type_ hash];
+    result = prime * result + [nam_ hash];
+    result = prime * result + [gnl_ hash];
+    result = prime * result + [desc_ hash];
+    result = prime * result + [dj_ hash];
+    result = prime * result + [song_ hash];
+    result = prime * result + [url_ hash];
+    result = prime * result + cln_;
+    result = prime * result + clns_;
+    result = prime * result + max_;
+    result = prime * result + bit_;
+    result = prime * result + smpl_;
+    result = prime * result + chs_;
+    
+    hasHashCache_ = YES;
+    hashCache_ = result;
+    return result;
 }
 
 - (void)setSurlFromString:(NSString *)url
 {
-    _surl = [NSURL URLWithString:url];
+    surl_ = [NSURL URLWithString:url];
 }
 
 - (NSString *)timsToString
@@ -65,7 +150,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         [timsToStringDateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [timsToStringDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
-    return [timsToStringDateFormatter stringFromDate:_tims];
+    return [timsToStringDateFormatter stringFromDate:tims_];
 }
 
 - (void)setTimsFromString:(NSString *)tims
@@ -76,24 +161,231 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
         
     }
-    _tims = [setTimsFromStringDateFormatter dateFromString:tims];
+    tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
 }
 
 - (void)setUrlFromString:(NSString *)url
 {
-    _url = [NSURL URLWithString:url];
+    url_ = [NSURL URLWithString:url];
 }
 
 - (NSURL *)playUrl
 {
-    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", _srv, _prt, _mnt];
+    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
     return [NSURL URLWithString:url];
+}
+
+- (NSURL*)surl
+{
+    return surl_;
+}
+
+- (void)setSurl:(NSURL*)u
+{
+    surl_ = u;
+    hasHashCache_ = NO;
+}
+
+- (NSDate*)tims
+{
+    return tims_;
+}
+
+- (void)setTims:(NSDate*)t
+{
+    tims_ = t;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)srv
+{
+    return srv_;
+}
+
+- (void)setSrv:(NSString*)s
+{
+    srv_ = s;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)prt
+{
+    return prt_;
+}
+
+- (void)setPrt:(NSInteger)p
+{
+    prt_ = p;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)mnt
+{
+    return mnt_;
+}
+
+- (void)setMnt:(NSString*)m
+{
+    mnt_ = m;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)type
+{
+    return type_;
+}
+
+- (void)setType:(NSString*)t
+{
+    type_ = t;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)nam
+{
+    return nam_;
+}
+
+- (void)setNam:(NSString*)n
+{
+    nam_ = n;
+    _trimedNam = [nam_ stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    hasHashCache_ = NO;
+}
+
+- (NSString*)gnl
+{
+    return gnl_;
+}
+
+- (void)setGnl:(NSString*)g
+{
+    gnl_ = g;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)desc
+{
+    return desc_;
+}
+
+- (void)setDesc:(NSString*)d
+{
+    desc_ = d;
+    hasHashCache_ = NO;
+}
+
+- (NSString*)dj
+{
+    return dj_;
+}
+
+- (void)setDj:(NSString*)d
+{
+    dj_ = d;
+    _trimedDj = [dj_ stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    hasHashCache_ = NO;
+}
+
+- (NSString*)song
+{
+    return song_;
+}
+
+- (void)setSong:(NSString*)s
+{
+    song_ = s;
+    hasHashCache_ = NO;
+}
+
+- (NSURL*)url
+{
+    return url_;
+}
+
+- (void)setUrl:(NSURL*)u
+{
+    url_ = u;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)cln
+{
+    return cln_;
+}
+
+- (void)setCln:(NSInteger)c
+{
+    cln_ = c;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)clns
+{
+    return clns_;
+}
+
+- (void)setClns:(NSInteger)c
+{
+    clns_ = c;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)max
+{
+    return max_;
+}
+
+- (void)setMax:(NSInteger)m
+{
+    max_ = m;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)bit
+{
+    return bit_;
+}
+
+- (void)setBit:(NSInteger)b
+{
+    bit_ = b;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)smlp
+{
+    return smpl_;
+}
+
+- (void)setSmlp:(NSInteger)s
+{
+    smpl_ = s;
+    hasHashCache_ = NO;
+}
+
+- (NSInteger)chs
+{
+    return chs_;
+}
+
+- (void)setChs:(NSInteger)c
+{
+    chs_ = c;
+    hasHashCache_ = NO;
 }
 
 - (BOOL)favorite
 {
-    FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
-    return [favoriteManager isFavorite:self];
+    if (hasFavoriteCache_) {
+        return favoriteCache_;
+    } else {
+        FavoriteManager *favoriteManager = [FavoriteManager sharedInstance];
+        BOOL result = [favoriteManager isFavorite:self];
+        hasFavoriteCache_ = YES;
+        favoriteCache_ = result;
+        return result;
+    }
 }
 
 - (void)setFavorite:(BOOL)fav
@@ -119,6 +411,16 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         return YES;
     }
 
+    // 結果がキャッシュにある場合はそれを返す
+    NSString *cacheKey = [searchWords componentsJoinedByString:@"//"];
+    cacheKey = [[NSString alloc] initWithFormat:@"%d//%@", [self hash], cacheKey];
+    NSNumber *cacheResult = [matchCache objectForKey:cacheKey];
+    if (cacheResult != nil) {
+        return [cacheResult boolValue];
+    }
+
+    BOOL result = YES;
+
     // 検索単語を辞書に登録する
     // 辞書は Key:検索単語 Value:マッチしたか
     NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
@@ -130,17 +432,17 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
     // 検索対象文字列を配列にする
     NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:4];
-    if (!([_nam length] == 0)) {
-        [searchedWords addObject:_nam];
+    if (!([nam_ length] == 0)) {
+        [searchedWords addObject:nam_];
     }
-    if (!([_gnl length] == 0)) {
-        [searchedWords addObject:_gnl];
+    if (!([gnl_ length] == 0)) {
+        [searchedWords addObject:gnl_];
     }
-    if (!([_desc length] == 0)) {
-        [searchedWords addObject:_desc];
+    if (!([desc_ length] == 0)) {
+        [searchedWords addObject:desc_];
     }
-    if (!([_dj length] == 0)) {
-        [searchedWords addObject:_dj];
+    if (!([dj_ length] == 0)) {
+        [searchedWords addObject:dj_];
     }
 
     // 検索文字と検索対象文字を比較する
@@ -158,10 +460,15 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     // すべての検索単語がマッチした場合にのみYESを返す
     for (NSNumber *match in [searchDictionary allValues]) {
         if ([match boolValue] == NO) {
-            return NO;
+            result = NO;
+            break;
         }
     }
-    return YES;
+
+    // 結果をキャッシュに格納
+    [matchCache setObject: [[NSNumber alloc] initWithBool:result] forKey:cacheKey];
+
+    return result;
 }
 
 - (BOOL)isSameMount:(Channel *)channel
@@ -169,7 +476,12 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     if (channel == nil) {
         return NO;
     }
-    return [_mnt isEqualToString:channel.mnt];
+    return [mnt_ isEqualToString:channel.mnt];
+}
+
+- (void)setFavoriteCache:(BOOL)favorite {
+    hasFavoriteCache_ = YES;
+    favoriteCache_ = favorite;
 }
 
 - (NSString *)descriptionHtml {
@@ -228,13 +540,13 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
 
     // タイトルで比較
-    result = [Channel compareString:self.nam compared:channel.nam];
+    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルおなじ場合はDJで比較
-    result = [Channel compareString:self.dj compared:channel.dj];
+    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -256,13 +568,13 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
 
     // DJで比較
-    result = [Channel compareString:self.dj compared:channel.dj];
+    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJがおなじ場合はタイトルで比較
-    result = [Channel compareString:self.nam compared:channel.nam];
+    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -284,13 +596,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     } else if (([str1 length] == 0) && ([str2 length] == 0)) {
         return NSOrderedSame;
     } else {
-        NSString *trimStr1 = [str1
-                              stringByTrimmingCharactersInSet:
-                                  [NSCharacterSet whitespaceCharacterSet]];
-        NSString *trimStr2 = [str2
-                              stringByTrimmingCharactersInSet:
-                                  [NSCharacterSet whitespaceCharacterSet]];
-        return [trimStr1 localizedCaseInsensitiveCompare:trimStr2];
+        return [str1 localizedCaseInsensitiveCompare:str2];
     }
 }
 
@@ -314,47 +620,53 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:_surl forKey:@"SURL"];
-    [coder encodeObject:_tims forKey:@"TIMS"];
-    [coder encodeObject:_srv forKey:@"SRV"];
-    [coder encodeInteger:_prt forKey:@"PRT"];
-    [coder encodeObject:_mnt forKey:@"MNT"];
-    [coder encodeObject:_type forKey:@"TYPE"];
-    [coder encodeObject:_nam forKey:@"NAM"];
-    [coder encodeObject:_gnl forKey:@"GNL"];
-    [coder encodeObject:_desc forKey:@"DESC"];
-    [coder encodeObject:_dj forKey:@"DJ"];
-    [coder encodeObject:_song forKey:@"SONG"];
-    [coder encodeObject:_url forKey:@"URL"];
-    [coder encodeInteger:_cln forKey:@"CLN"];
-    [coder encodeInteger:_clns forKey:@"CLNS"];
-    [coder encodeInteger:_max forKey:@"MAX"];
-    [coder encodeInteger:_bit forKey:@"BIT"];
-    [coder encodeInteger:_smpl forKey:@"SMPL"];
-    [coder encodeInteger:_chs forKey:@"CHS"];
+    [coder encodeObject:surl_ forKey:@"SURL"];
+    [coder encodeObject:tims_ forKey:@"TIMS"];
+    [coder encodeObject:srv_ forKey:@"SRV"];
+    [coder encodeInteger:prt_ forKey:@"PRT"];
+    [coder encodeObject:mnt_ forKey:@"MNT"];
+    [coder encodeObject:type_ forKey:@"TYPE"];
+    [coder encodeObject:nam_ forKey:@"NAM"];
+    [coder encodeObject:gnl_ forKey:@"GNL"];
+    [coder encodeObject:desc_ forKey:@"DESC"];
+    [coder encodeObject:dj_ forKey:@"DJ"];
+    [coder encodeObject:song_ forKey:@"SONG"];
+    [coder encodeObject:url_ forKey:@"URL"];
+    [coder encodeInteger:cln_ forKey:@"CLN"];
+    [coder encodeInteger:clns_ forKey:@"CLNS"];
+    [coder encodeInteger:max_ forKey:@"MAX"];
+    [coder encodeInteger:bit_ forKey:@"BIT"];
+    [coder encodeInteger:smpl_ forKey:@"SMPL"];
+    [coder encodeInteger:chs_ forKey:@"CHS"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
-        _surl = [coder decodeObjectForKey:@"SURL"];
-        _tims = [coder decodeObjectForKey:@"TIMS"];
-        _srv = [coder decodeObjectForKey:@"SRV"];
-        _prt = [coder decodeIntegerForKey:@"PRT"];
-        _mnt = [coder decodeObjectForKey:@"MNT"];
-        _type = [coder decodeObjectForKey:@"TYPE"];
-        _nam = [coder decodeObjectForKey:@"NAM"];
-        _gnl = [coder decodeObjectForKey:@"GNL"];
-        _desc = [coder decodeObjectForKey:@"DESC"];
-        _dj = [coder decodeObjectForKey:@"DJ"];
-        _song = [coder decodeObjectForKey:@"SONG"];
-        _url = [coder decodeObjectForKey:@"URL"];
-        _cln = [coder decodeIntegerForKey:@"CLN"];
-        _clns = [coder decodeIntegerForKey:@"CLNS"];
-        _max = [coder decodeIntegerForKey:@"MAX"];
-        _bit = [coder decodeIntegerForKey:@"BIT"];
-        _smpl = [coder decodeIntegerForKey:@"SMPL"];
-        _chs = [coder decodeIntegerForKey:@"CHS"];
+        surl_ = [coder decodeObjectForKey:@"SURL"];
+        tims_ = [coder decodeObjectForKey:@"TIMS"];
+        srv_ = [coder decodeObjectForKey:@"SRV"];
+        prt_ = [coder decodeIntegerForKey:@"PRT"];
+        mnt_ = [coder decodeObjectForKey:@"MNT"];
+        type_ = [coder decodeObjectForKey:@"TYPE"];
+        nam_ = [coder decodeObjectForKey:@"NAM"];
+        _trimedNam = [nam_ stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        gnl_ = [coder decodeObjectForKey:@"GNL"];
+        desc_ = [coder decodeObjectForKey:@"DESC"];
+        dj_ = [coder decodeObjectForKey:@"DJ"];
+        _trimedDj = [dj_ stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        song_ = [coder decodeObjectForKey:@"SONG"];
+        url_ = [coder decodeObjectForKey:@"URL"];
+        cln_ = [coder decodeIntegerForKey:@"CLN"];
+        clns_ = [coder decodeIntegerForKey:@"CLNS"];
+        max_ = [coder decodeIntegerForKey:@"MAX"];
+        bit_ = [coder decodeIntegerForKey:@"BIT"];
+        smpl_ = [coder decodeIntegerForKey:@"SMPL"];
+        chs_ = [coder decodeIntegerForKey:@"CHS"];
+
+        hasHashCache_ = NO;
+        hasFavoriteCache_ = NO;
+        favoriteCache_ = NO;
     }
     return self;
 }
