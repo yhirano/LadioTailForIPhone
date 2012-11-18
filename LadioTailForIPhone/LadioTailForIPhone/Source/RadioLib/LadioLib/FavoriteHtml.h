@@ -20,27 +20,10 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "RadioLib/LadioLib/LadioLib.h"
+#import "Favorite.h"
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+@interface FavoriteHtml : NSObject
 
-@property (strong) Channel *channel;
-
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
-
-- (IBAction)favorite:(id)sender;
-
-- (IBAction)tweet:(id)sender;
++ (NSString *)descriptionHtml:(Favorite *)favorite;
 
 @end

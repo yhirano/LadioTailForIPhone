@@ -21,7 +21,7 @@
  */
 
 #import "LadioTailConfig.h"
-#import "Ladiolib/LadioLib.h"
+#import "RadioLib/Notifications.h"
 #import "SendFavoritesToProviderOperation.h"
 #import "ApnsStorage.h"
 
@@ -58,7 +58,7 @@ static ApnsStorage *instance = nil;
     // 番組のお気に入りの変化通知を受け取る
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(channelFavoritesChanged:)
-                                                 name:LadioLibChannelChangedFavoritesNotification
+                                                 name:RadioLibChannelChangedFavoritesNotification
                                                object:nil];
 }
 
@@ -66,7 +66,7 @@ static ApnsStorage *instance = nil;
 {
     // 番組のお気に入りの変化通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:LadioLibChannelChangedFavoritesNotification
+                                                    name:RadioLibChannelChangedFavoritesNotification
                                                   object:nil];
 }
 

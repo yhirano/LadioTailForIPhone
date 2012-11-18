@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "../Notifications.h"
 #import "Headline.h"
 #import "Channel.h"
 #import "FavoriteManager.h"

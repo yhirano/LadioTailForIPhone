@@ -20,27 +20,20 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "RadioLib/LadioLib/LadioLib.h"
+/// ヘッドラインの取得を開始した際のNotification
+#define RadioLibHeadlineDidStartLoadNotification @"RadioLibHeadlineDidStartLoadNotification"
+/// ヘッドラインの取得に成功した際のNotification
+#define RadioLibHeadlineDidFinishLoadNotification @"RadioLibHeadlineDidFinishLoadNotification"
+/// ヘッドラインの取得に失敗した際のNotification
+#define RadioLibHeadlineFailLoadNotification @"RadioLibHeadlineFailLoadNotification"
+/// ヘッドラインの内容が変更した際のNotification
+#define RadioLibHeadlineChannelChangedNotification @"RadioLibHeadlineChannelChangedNotification"
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+/// お気に入りの情報が変化した際のNotification
+/// 複数のお気に入りが1度に変化した場合、1回発行する
+#define RadioLibChannelChangedFavoritesNotification @"RadioLibChannelChangedFavoritesNotification"
 
-@property (strong) Channel *channel;
+/// お気に入りの情報が変化した際のNotification
+/// お気に入り1つの変更に対し1回発行する
+#define RadioLibChannelChangedFavoriteNotification @"RadioLibChannelChangedFavoriteNotification"
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
-
-- (IBAction)favorite:(id)sender;
-
-- (IBAction)tweet:(id)sender;
-
-@end

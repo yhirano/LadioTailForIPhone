@@ -22,7 +22,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/LadioLib/LadioLib.h"
 
 /// 再生準備開始のNotification
 #define LadioTailPlayerPrepareNotification @"LadioTailPlayerPrepareNotification"

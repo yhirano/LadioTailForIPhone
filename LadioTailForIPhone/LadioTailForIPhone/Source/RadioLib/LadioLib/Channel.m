@@ -21,6 +21,7 @@
  */
 
 #import "FavoriteManager.h"
+#import "ChannelHtml.h"
 #import "Channel.h"
 
 /// setTimsFromString用のNSDateFormatter
@@ -169,6 +170,10 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         return NO;
     }
     return [_mnt isEqualToString:channel.mnt];
+}
+
+- (NSString *)descriptionHtml {
+    return [ChannelHtml descriptionHtml:self];
 }
 
 #pragma mark - Comparison Methods

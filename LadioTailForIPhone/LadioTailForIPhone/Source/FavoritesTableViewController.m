@@ -21,7 +21,7 @@
  */
 
 #import "ViewDeck/IIViewDeckController.h"
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/LadioLib/LadioLib.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ICloudStrorage.h"

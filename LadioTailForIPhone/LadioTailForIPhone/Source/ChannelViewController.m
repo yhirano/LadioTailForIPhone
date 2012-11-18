@@ -23,8 +23,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
 #import "LadioTailConfig.h"
+#import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
-#import "ChannelsHtml.h"
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
@@ -46,7 +46,7 @@
 
     // お気に入りの変化通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:LadioLibChannelChangedFavoritesNotification
+                                                    name:RadioLibChannelChangedFavoritesNotification
                                                   object:nil];
 }
 
@@ -87,7 +87,7 @@
         return;
     }
 
-    NSString *html = [ChannelsHtml channelViewHtml:_channel];
+    NSString *html = [_channel descriptionHtml];
 
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
@@ -150,7 +150,7 @@
     // 番組のお気に入りの変化通知を受け取る
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(channelFavoritesChanged:)
-                                                 name:LadioLibChannelChangedFavoritesNotification
+                                                 name:RadioLibChannelChangedFavoritesNotification
                                                object:nil];
 
     NSString *titleString;
@@ -263,7 +263,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
+            ((WebPageViewController *) viewCon).url = [ReplaceUrlUtil urlForSmartphone:openUrl_];
         }
     }
 }
@@ -282,7 +282,7 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
             if (OPEN_SAFARI_WHEN_CLICK_LINK) {
                 // リンクをクリック時、Safariを起動する
-                [[UIApplication sharedApplication] openURL:[ChannelsHtml urlForSmartphone:[request URL]]];
+                [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
                 return NO;
             } else {
                 openUrl_ = [request URL];

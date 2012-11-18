@@ -61,10 +61,10 @@ enum HeadlineViewDisplayType {
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineChannelChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineFailLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -447,19 +447,19 @@ enum HeadlineViewDisplayType {
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
-                                                 name:LadioLibHeadlineDidStartLoadNotification 
+                                                 name:RadioLibHeadlineDidStartLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidFinishLoad:)
-                                                 name:LadioLibHeadlineDidFinishLoadNotification 
+                                                 name:RadioLibHeadlineDidFinishLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineFailLoad:)
-                                                 name:LadioLibHeadlineFailLoadNotification 
+                                                 name:RadioLibHeadlineFailLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineChannelChanged:)
-                                                 name:LadioLibHeadlineChannelChangedNotification
+                                                 name:RadioLibHeadlineChannelChangedNotification
                                                object:nil];
 
     // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える

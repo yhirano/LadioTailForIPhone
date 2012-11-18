@@ -22,7 +22,7 @@
 
 #import <AudioToolbox/AudioServices.h>
 #import "LadioTailConfig.h"
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/LadioLib/LadioLib.h"
 #import "ICloudStrorage.h"
 #import "ApnsStorage.h"
 #import "AppDelegate.h"

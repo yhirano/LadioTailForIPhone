@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "../Notifications.h"
 #import "FavoriteManager.h"
 #import "Headline.h"
 
@@ -195,7 +196,7 @@ static NSRegularExpression *chsExp = nil;
         // 番組のお気に入りの変化通知を受け取る。番組キャッシュのクリアをする。
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(channelFavoritesChanged:)
-                                                     name:LadioLibChannelChangedFavoritesNotification
+                                                     name:RadioLibChannelChangedFavoritesNotification
                                                    object:nil];
     }
     return self;
@@ -204,7 +205,7 @@ static NSRegularExpression *chsExp = nil;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:LadioLibChannelChangedFavoritesNotification
+                                                    name:RadioLibChannelChangedFavoritesNotification
                                                   object:nil];
 
     isFetchingLock_ = nil;
@@ -224,7 +225,7 @@ static NSRegularExpression *chsExp = nil;
         isFetching_ = YES;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineDidStartLoadNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibHeadlineDidStartLoadNotification object:self];
 
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -257,9 +258,9 @@ static NSRegularExpression *chsExp = nil;
                                    }
 
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:LadioLibHeadlineDidFinishLoadNotification object:self];
+                                           postNotificationName:RadioLibHeadlineDidFinishLoadNotification object:self];
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:LadioLibHeadlineChannelChangedNotification object:self];
+                                           postNotificationName:RadioLibHeadlineChannelChangedNotification object:self];
                                } else if ([data length] == 0 && error == nil) {
                                    NSLog(@"Nothing was downloaded.");
 
@@ -269,7 +270,7 @@ static NSRegularExpression *chsExp = nil;
                                    }
                                    
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
+                                           postNotificationName:RadioLibHeadlineFailLoadNotification object:self];
                                } else if (error != nil) {
                                    NSLog(@"NetLadio fetch headline connection failed! Error: %@ / %@",
                                          [error localizedDescription],
@@ -281,7 +282,7 @@ static NSRegularExpression *chsExp = nil;
                                    }
 
                                    [[NSNotificationCenter defaultCenter]
-                                          postNotificationName:LadioLibHeadlineFailLoadNotification object:self];
+                                          postNotificationName:RadioLibHeadlineFailLoadNotification object:self];
                                }
                            }];
 }
@@ -660,7 +661,7 @@ static NSRegularExpression *chsExp = nil;
     // お気に入りの有無がソート順番に影響するため
     [self clearChannelsCache];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibHeadlineChannelChangedNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibHeadlineChannelChangedNotification object:self];
 }
 
 @end

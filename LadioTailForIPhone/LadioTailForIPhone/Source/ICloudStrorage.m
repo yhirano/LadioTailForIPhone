@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "Ladiolib/LadioLib.h"
+#import "RadioLib/LadioLib/LadioLib.h"
 #import "ICloudStrorage.h"
 
 /// お気に入りを保存のキー
@@ -68,7 +68,7 @@ static ICloudStrorage *instance = nil;
         // 番組のお気に入りの変化通知を受け取る
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(channelFavoritesChanged:)
-                                                     name:LadioLibChannelChangedFavoritesNotification
+                                                     name:RadioLibChannelChangedFavoritesNotification
                                                    object:nil];
 
         // 設定の変更を捕捉する
@@ -90,7 +90,7 @@ static ICloudStrorage *instance = nil;
 
         // 番組のお気に入りの変化通知を受け取らなくする
         [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:LadioLibChannelChangedFavoritesNotification
+                                                        name:RadioLibChannelChangedFavoritesNotification
                                                       object:nil];
 
         // iCloudからの通知を受けなくする

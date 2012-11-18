@@ -20,21 +20,10 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "LadioLib/LadioLib.h"
+#import "Channel.h"
 
-@interface ChannelsHtml : NSObject
+@interface ChannelHtml : NSObject
 
-+ (NSString *)channelViewHtml:(Channel *)channel;
++ (NSString *)descriptionHtml:(Channel *)channel;
 
-+ (NSString *)favoritelViewHtml:(Favorite *)favorite;
-
-/*
- * スマートフォン用サイトのURLを取得する
- * （スマートフォン向けサイトの閲覧がONの場合のみ）
- *
- * @param url URL
- * @return スマートフォン向けサイトの閲覧がONでかつスマートフォン用サイトがあればそのURL、それ以外はurlをそのまま返す
- */
-+ (NSURL *)urlForSmartphone:(NSURL *)url;
 @end

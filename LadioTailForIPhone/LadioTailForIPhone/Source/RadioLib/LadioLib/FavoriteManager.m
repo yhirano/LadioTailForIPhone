@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "../Notifications.h"
 #import "Favorite.h"
 #import "FavoriteManager.h"
 
@@ -78,12 +79,12 @@ static FavoriteManager *instance = nil;
             Favorite *favorite = [[Favorite alloc] init];
             favorite.channel = channel;
             _favorites[channel.mnt] = favorite;
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
         }
 
         if (added) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoritesNotification
                                                                 object:nil];
         }
 
@@ -102,10 +103,10 @@ static FavoriteManager *instance = nil;
         if (_favorites[channel.mnt] != nil) {
             [_favorites removeObjectForKey:channel.mnt];
 
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
 
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoritesNotification
                                                                 object:nil];
         }
 
@@ -138,11 +139,11 @@ static FavoriteManager *instance = nil;
 
             _favorites[favorite.channel.mnt] = favorite;
 
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
         }
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoritesNotification
                                                             object:nil];
 
         // お気に入りを保存する
@@ -169,12 +170,12 @@ static FavoriteManager *instance = nil;
 
             added = YES;
             _favorites[favorite.channel.mnt] = favorite;
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoriteNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:favorite.channel];
         }
 
         if (added) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:LadioLibChannelChangedFavoritesNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoritesNotification
                                                                 object:nil];
         }
 

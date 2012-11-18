@@ -20,15 +20,15 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "Channel.h"
+@interface ReplaceUrlUtil : NSObject
 
-@interface Favorite : NSObject<NSCoding>
-
-/// お気に入りの番組
-@property (strong) Channel *channel;
-
-/// お気に入りに登録した時刻
-@property (strong) NSDate *registedDate;
+/*
+ * スマートフォン用サイトのURLを取得する
+ * （スマートフォン向けサイトの閲覧がONの場合のみ）
+ *
+ * @param url URL
+ * @return スマートフォン向けサイトの閲覧がONでかつスマートフォン用サイトがあればそのURL、それ以外はurlをそのまま返す
+ */
++ (NSURL *)urlForSmartphone:(NSURL *)url;
 
 @end

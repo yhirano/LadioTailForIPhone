@@ -23,15 +23,6 @@
 #import <Foundation/Foundation.h>
 #import "Channel.h"
 
-/// ヘッドラインの取得を開始した際のNotification
-#define LadioLibHeadlineDidStartLoadNotification @"LadioLibHeadlineDidStartLoadNotification"
-/// ヘッドラインの取得に成功した際のNotification
-#define LadioLibHeadlineDidFinishLoadNotification @"LadioLibHeadlineDidFinishLoadNotification"
-/// ヘッドラインの取得に失敗した際のNotification
-#define LadioLibHeadlineFailLoadNotification @"LadioLibHeadlineFailLoadNotification"
-/// ヘッドラインの内容が変更した際のNotification
-#define LadioLibHeadlineChannelChangedNotification @"LadioLibHeadlineChannelChangedNotification"
-
 enum ChannelSortType
 {
     ChannelSortTypeNone,

@@ -21,7 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/LadioLib/LadioLib.h"
 
 @interface FavoriteViewController : UIViewController <UIWebViewDelegate>
 

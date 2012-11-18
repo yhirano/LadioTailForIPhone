@@ -22,7 +22,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "LadioTailConfig.h"
-#import "ChannelsHtml.h"
+#import "RadioLib/ReplaceUrlUtil.h"
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
 
@@ -45,7 +45,7 @@
         return;
     }
     
-    NSString *html = [ChannelsHtml favoritelViewHtml:_favorite];
+    NSString *html = [_favorite descriptionHtml];
     
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
@@ -158,7 +158,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
+            ((WebPageViewController *) viewCon).url = [ReplaceUrlUtil urlForSmartphone:openUrl_];
         }
     }
 }
@@ -177,7 +177,7 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
             if (OPEN_SAFARI_WHEN_CLICK_LINK) {
                 // リンクをクリック時、Safariを起動する
-                [[UIApplication sharedApplication] openURL:[ChannelsHtml urlForSmartphone:[request URL]]];
+                [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
                 return NO;
             } else {
                 openUrl_ = [request URL];

@@ -23,14 +23,6 @@
 #import <Foundation/Foundation.h>
 #import "Channel.h"
 
-/// お気に入りの情報が変化した際のNotification
-/// 複数のお気に入りが1度に変化した場合、1回発行する
-#define LadioLibChannelChangedFavoritesNotification @"LadioLibChannelChangedFavoritesNotification"
-
-/// お気に入りの情報が変化した際のNotification
-/// お気に入り1つの変更に対し1回発行する
-#define LadioLibChannelChangedFavoriteNotification @"LadioLibChannelChangedFavoriteNotification"
-
 /**
  * お気に入りを管理するシングルトンクラス
  */

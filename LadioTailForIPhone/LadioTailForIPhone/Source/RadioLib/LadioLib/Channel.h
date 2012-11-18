@@ -112,4 +112,7 @@
 
 - (BOOL)isSameMount:(Channel *)channel;
 
+/// 番組画面用のHTMLを取得する
+- (NSString *)descriptionHtml;
+
 @end

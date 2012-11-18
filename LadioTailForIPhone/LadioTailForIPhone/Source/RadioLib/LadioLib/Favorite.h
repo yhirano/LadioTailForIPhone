@@ -20,47 +20,18 @@
  * THE SOFTWARE.
  */
 
-#import "Favorite.h"
+#import <Foundation/Foundation.h>
+#import "Channel.h"
 
-@implementation Favorite
+@interface Favorite : NSObject<NSCoding>
 
-- (id)init
-{
-    if (self = [super init]) {
-        // とりあえず現在の時刻を入れておく
-        _registedDate = [NSDate date];
-    }
-    return self;
-}
+/// お気に入りの番組
+@property (strong) Channel *channel;
 
-#pragma mark - Comparison Methods
+/// お気に入りに登録した時刻
+@property (strong) NSDate *registedDate;
 
-- (NSComparisonResult)compareNewly:(Favorite *)favorite
-{
-    return [favorite.registedDate compare:self.registedDate];
-}
-
-#pragma mark - NSCoding methods
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:_registedDate forKey:@"REGISTED_DATE"];
-    if (_channel != nil) {
-        NSData *channelData = [NSKeyedArchiver archivedDataWithRootObject:_channel];
-        [coder encodeObject:channelData forKey:@"CHANNEL"];
-    }
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if (self = [super init]) {
-        _registedDate = [coder decodeObjectForKey:@"REGISTED_DATE"];
-        NSData *channelData = [coder decodeObjectForKey:@"CHANNEL"];
-        if (channelData != nil) {
-            _channel = [NSKeyedUnarchiver unarchiveObjectWithData:channelData];
-        }
-    }
-    return self;
-}
+/// お気に入り画面用のHTMLを取得する
+- (NSString *)descriptionHtml;
 
 @end

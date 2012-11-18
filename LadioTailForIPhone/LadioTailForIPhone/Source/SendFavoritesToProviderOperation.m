@@ -21,7 +21,7 @@
  */
 
 #import "LadioTailConfig.h"
-#import "Ladiolib/LadioLib.h"
+#import "RadioLib/Ladiolib/LadioLib.h"
 #import "SendFavoritesToProviderOperation.h"
 
 @implementation SendFavoritesToProviderOperation
