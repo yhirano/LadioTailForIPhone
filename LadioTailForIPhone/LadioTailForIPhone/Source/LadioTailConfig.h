@@ -145,6 +145,9 @@ extern NSString * const PULL_REFRESH_ARROW_IMAGE;
 // Pull Refreshの背景色
 extern UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR;
 
+/// 一文字ごとに検索を実行するか
+extern const BOOL SEARCH_EACH_CHAR;
+
 /// Pull refreshでヘッドラインを有効にするか
 extern const BOOL PULL_REFRESH_HEADLINE;
 

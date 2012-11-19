@@ -459,11 +459,17 @@ enum HeadlineViewDisplayType {
 
 - (void)updateHeadlineTable
 {
+    if (SEARCH_EACH_CHAR == NO) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // 検索バーの入力を受け付けない
+            _headlineSearchBar.userInteractionEnabled = NO;
+        }];
+    }
+
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
-    // ヘッドラインテーブルを更新
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
@@ -474,7 +480,15 @@ enum HeadlineViewDisplayType {
         }
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
 
+        // ヘッドラインテーブルを更新
         [self.headlineTableView reloadData];
+
+        if (SEARCH_EACH_CHAR == NO) {
+            // 検索バーの入力を受け付ける
+            _headlineSearchBar.userInteractionEnabled = YES;
+            // 検索バーのインジケーターを消す
+            [_headlineSearchBarIndicator stopAnimating];
+        }
     }];
 }
 
@@ -652,6 +666,7 @@ enum HeadlineViewDisplayType {
     [self setPlayingBarButtonItem:nil];
     [self setHeadlineSearchBar:nil];
     [self setHeadlineTableView:nil];
+    [self setHeadlineSearchBarIndicator:nil];
     [super viewDidUnload];
 }
 
@@ -806,11 +821,19 @@ enum HeadlineViewDisplayType {
     // 検索バーに入力された文字列を保持
     [SearchWordManager sharedInstance].searchWord = searchText;
 
-    [self updateHeadlineTable];
+    if (SEARCH_EACH_CHAR) {
+        [self updateHeadlineTable];
+    }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    if (SEARCH_EACH_CHAR == NO) {
+        [_headlineSearchBarIndicator startAnimating];
+        [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+            [self updateHeadlineTable];
+        }];
+    }
     [searchBar resignFirstResponder];
 }
 

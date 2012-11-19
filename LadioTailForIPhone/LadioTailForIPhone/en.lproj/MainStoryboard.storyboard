@@ -515,6 +515,10 @@
                                     <outlet property="delegate" destination="2" id="Bek-dP-x40"/>
                                 </connections>
                             </searchBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="eSv-7x-N6s">
+                                <rect key="frame" x="266" y="11" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.14000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -532,6 +536,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="headlineSearchBar" destination="DeF-xv-Lav" id="eRI-pf-EQv"/>
+                        <outlet property="headlineSearchBarIndicator" destination="eSv-7x-N6s" id="URk-MI-fX7"/>
                         <outlet property="headlineTableView" destination="Zcg-0a-Ezu" id="hSw-mI-1Fy"/>
                         <outlet property="navigateionItem" destination="cIB-qf-6WW" id="lvm-k0-Cn1"/>
                         <outlet property="playingBarButtonItem" destination="hJU-50-Qib" id="kbU-eo-TMI"/>
@@ -1385,6 +1390,7 @@
             <relationships>
                 <relationship kind="action" name="openSideMenu:"/>
                 <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="headlineSearchBarIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>

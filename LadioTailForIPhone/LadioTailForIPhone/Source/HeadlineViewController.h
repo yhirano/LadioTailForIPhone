@@ -40,6 +40,8 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *headlineSearchBar;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *headlineSearchBarIndicator;
+
 @property (weak, nonatomic) IBOutlet UITableView *headlineTableView;
 
 - (void)fetchHeadline;

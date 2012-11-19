@@ -202,6 +202,16 @@ NSString * const PULL_REFRESH_ARROW_IMAGE = @"EGOTableViewPullRefresh.bundle/gra
 // Pull Refreshの背景色
 UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR = [UIColor lightGrayColor];
 
+#if defined(LADIO_TAIL)
+    /// 一文字ごとに検索を実行するか
+    const BOOL SEARCH_EACH_CHAR = YES;
+#elif defined(RADIO_EDGE)
+    /// 一文字ごとに検索を実行するか
+    const BOOL SEARCH_EACH_CHAR = NO;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
 /// Pull refreshでヘッドラインを有効にするか
 const BOOL PULL_REFRESH_HEADLINE = YES;
 
