@@ -101,7 +101,7 @@ static FavoriteManager *instance = nil;
         NSString* urlString = [channel.listenUrl absoluteString];
         if (_favorites[urlString] != nil) {
             [_favorites removeObjectForKey:urlString];
-            [channel setFavoriteCache:YES];
+            [channel setFavoriteCache:NO];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
