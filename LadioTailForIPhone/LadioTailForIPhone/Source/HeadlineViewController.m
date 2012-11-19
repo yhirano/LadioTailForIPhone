@@ -460,17 +460,22 @@ enum HeadlineViewDisplayType {
 - (void)updateHeadlineTable
 {
     if (SEARCH_EACH_CHAR == NO) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([NSThread isMainThread]) {
             // 検索バーの入力を受け付けない
             _headlineSearchBar.userInteractionEnabled = NO;
-        }];
+        } else {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                // 検索バーの入力を受け付けない
+                _headlineSearchBar.userInteractionEnabled = NO;
+            }];
+        }
     }
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([NSThread isMainThread]) {
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -479,29 +484,57 @@ enum HeadlineViewDisplayType {
             navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
         }
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
-
+        
         // ヘッドラインテーブルを更新
         [self.headlineTableView reloadData];
-
+        
         if (SEARCH_EACH_CHAR == NO) {
             // 検索バーの入力を受け付ける
             _headlineSearchBar.userInteractionEnabled = YES;
             // 検索バーのインジケーターを消す
             [_headlineSearchBarIndicator stopAnimating];
         }
-    }];
+    } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // ナビゲーションタイトルを更新
+            NSString *navigationTitleStr = @"";
+            if ([_showedChannels count] == 0) {
+                navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+            } else {
+                navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+            }
+            _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
+            
+            // ヘッドラインテーブルを更新
+            [self.headlineTableView reloadData];
+            
+            if (SEARCH_EACH_CHAR == NO) {
+                // 検索バーの入力を受け付ける
+                _headlineSearchBar.userInteractionEnabled = YES;
+                // 検索バーのインジケーターを消す
+                [_headlineSearchBarIndicator stopAnimating];
+            }
+        }];
+    }
 }
 
 - (void)updatePlayingButton
 {
-    // 再生状態に逢わせて再生ボタンの表示を切り替える
-    if ([[Player sharedInstance] state] == PlayerStatePlay) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([NSThread isMainThread]) {
+        // 再生状態に逢わせて再生ボタンの表示を切り替える
+        if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
-        }];
+        } else {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
     } else {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            self.navigationItem.rightBarButtonItem = nil;
+            // 再生状態に逢わせて再生ボタンの表示を切り替える
+            if ([[Player sharedInstance] state] == PlayerStatePlay) {
+                self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+            } else {
+                self.navigationItem.rightBarButtonItem = nil;
+            }
         }];
     }
 }
@@ -1004,10 +1037,15 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([NSThread isMainThread]) {
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        } else {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                // Pull refreshを終了する
+                [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+            }];
+        }
     }
 }
 
@@ -1018,10 +1056,15 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        // Pull refreshを終了する
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([NSThread isMainThread]) {
+            // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        } else {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                // Pull refreshを終了する
+                [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+            }];
+        }
     }
 }
 
@@ -1040,10 +1083,17 @@ enum HeadlineViewDisplayType {
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
-        // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
-        if ([[Player sharedInstance] state] == PlayerStatePlay) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([NSThread isMainThread]) {
+            // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
+            if ([[Player sharedInstance] state] == PlayerStatePlay) {
                 [self scrollToTopAtPlayingCell];
+            }
+        } else {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
+                if ([[Player sharedInstance] state] == PlayerStatePlay) {
+                    [self scrollToTopAtPlayingCell];
+                }
             }];
         }
     }

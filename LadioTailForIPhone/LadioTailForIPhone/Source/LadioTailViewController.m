@@ -338,11 +338,15 @@
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([NSThread isMainThread]) {
         // 進捗ウィンドウを表示する
         [SVProgressHUD show];
-    }];
+    } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // 進捗ウィンドウを表示する
+            [SVProgressHUD show];
+        }];
+    }
 }
 
 - (void)headlineDidFinishLoad:(NSNotification *)notification
@@ -351,10 +355,15 @@
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([NSThread isMainThread]) {
         // 進捗ウィンドウを消す
         [SVProgressHUD dismiss];
-    }];
+    } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // 進捗ウィンドウを消す
+            [SVProgressHUD dismiss];
+        }];
+    }
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -363,11 +372,17 @@
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
     
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([NSThread isMainThread]) {
         // 進捗ウィンドウにエラー表示
         NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
         [SVProgressHUD showErrorWithStatus:errorStr];
-    }];
+    } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // 進捗ウィンドウにエラー表示
+            NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
+            [SVProgressHUD showErrorWithStatus:errorStr];
+        }];
+    }
 }
 
 @end
