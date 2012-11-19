@@ -463,26 +463,32 @@ enum HeadlineViewDisplayType {
     _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
-    // ナビゲーションタイトルを更新
-    NSString *navigationTitleStr = @"";
-    if ([_showedChannels count] == 0) {
-        navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    } else {
-        navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
-    }
-    _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
-
     // ヘッドラインテーブルを更新
-    [self.headlineTableView reloadData];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        // ナビゲーションタイトルを更新
+        NSString *navigationTitleStr = @"";
+        if ([_showedChannels count] == 0) {
+            navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+        } else {
+            navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+        }
+        _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
+
+        [self.headlineTableView reloadData];
+    }];
 }
 
 - (void)updatePlayingButton
 {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     if ([[Player sharedInstance] state] == PlayerStatePlay) {
-        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+        }];
     } else {
-        self.navigationItem.rightBarButtonItem = nil;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            self.navigationItem.rightBarButtonItem = nil;
+        }];
     }
 }
 
@@ -975,8 +981,10 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            // Pull refreshを終了する
+            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        }];
     }
 }
 
@@ -988,7 +996,9 @@ enum HeadlineViewDisplayType {
 
     if (PULL_REFRESH_HEADLINE) {
         // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        }];
     }
 }
 
@@ -1009,7 +1019,9 @@ enum HeadlineViewDisplayType {
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
         // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
-            [self scrollToTopAtPlayingCell];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [self scrollToTopAtPlayingCell];
+            }];
         }
     }
 }

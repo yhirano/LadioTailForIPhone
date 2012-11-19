@@ -35,6 +35,8 @@ static Headline *instance = nil;
 @private
     /// 番組データリスト
     NSArray *channels_;
+    /// 番組取得処理のNSOperationQueue
+    NSOperationQueue *fetchQueue_;
     /// channelsのロック
     NSObject *channelsLock_;
     /// 番組データリストのキャッシュ
@@ -72,6 +74,7 @@ static Headline *instance = nil;
 - (id)init
 {
     if (self = [super init]) {
+        fetchQueue_ = [[NSOperationQueue alloc] init];
         channelsLock_ = [[NSObject alloc] init];
         channelsCache_ = [[NSCache alloc] init];
         [channelsCache_ setName:@"IcecastLib channels cache"];
@@ -106,6 +109,7 @@ static Headline *instance = nil;
     isFetchingLock_ = nil;
     channelsCache_ = nil;
     channelsLock_ = nil;
+    fetchQueue_ = nil;
 }
 
 - (void)fetchHeadline
@@ -125,7 +129,7 @@ static Headline *instance = nil;
     NSURL *url = [NSURL URLWithString:ICECAST_HEADLINE_XML_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
+                                       queue:fetchQueue_
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if ([data length] > 0 && error == nil) {
                                    NSLog(@"Icecaset fetch headline received. %d bytes received.", [data length]);

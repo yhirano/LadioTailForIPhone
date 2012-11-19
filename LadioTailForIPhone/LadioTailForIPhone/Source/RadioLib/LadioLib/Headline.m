@@ -55,6 +55,8 @@ static NSRegularExpression *chsExp = nil;
 @private
     /// 番組データリスト
     NSArray *channels_;
+    /// 番組取得処理のNSOperationQueue
+    NSOperationQueue *fetchQueue_;
     /// channelsのロック
     NSObject *channelsLock_;
     /// 番組データリストのキャッシュ
@@ -187,6 +189,7 @@ static NSRegularExpression *chsExp = nil;
 - (id)init
 {
     if (self = [super init]) {
+        fetchQueue_ = [[NSOperationQueue alloc] init];
         channelsLock_ = [[NSObject alloc] init];
         channelsCache_ = [[NSCache alloc] init];
         [channelsCache_ setName:@"LadioLib channels cache"];
@@ -211,6 +214,7 @@ static NSRegularExpression *chsExp = nil;
     isFetchingLock_ = nil;
     channelsCache_ = nil;
     channelsLock_ = nil;
+    fetchQueue_ = nil;
 }
 
 - (void)fetchHeadline
@@ -230,7 +234,7 @@ static NSRegularExpression *chsExp = nil;
     NSURL *url = [NSURL URLWithString:NETLADIO_HEADLINE_DAT_V2_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
+                                       queue:fetchQueue_
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if ([data length] > 0 && error == nil) {
                                    NSLog(@"NetLadio fetch headline received. %d bytes received.", [data length]);
@@ -245,7 +249,8 @@ static NSRegularExpression *chsExp = nil;
                                    @synchronized (channelsLock_) {
                                        channels_ = [[NSArray alloc] initWithArray:channels];
 #if DEBUG
-                                       NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.",
+                                       NSLog(@"%@'s channels updated by finished fetch headline."
+                                             " Headline has %d channels.",
                                              NSStringFromClass([self class]), [channels count]);
 #endif /* #if DEBUG */
                                        // 番組表データを更新したのでキャッシュを削除
