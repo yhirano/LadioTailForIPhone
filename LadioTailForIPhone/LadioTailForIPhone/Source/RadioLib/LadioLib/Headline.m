@@ -327,13 +327,18 @@ static NSRegularExpression *chsExp = nil;
     if (!([searchWord length] == 0)) {
         NSArray *words = [Headline splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
-        NSUInteger index = 0;
-        for (Channel *channel in channels) {
+
+        NSObject *lock = [[NSObject alloc] init];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels count], queue, ^(size_t i) {
+            Channel *channel = [channels objectAtIndex:i];
             if ([channel isMatch:words] == NO) {
-                [removeItemIndexes addIndex:index];
+                @synchronized (lock) {
+                    [removeItemIndexes addIndex:i];
+                }
             }
-            ++index;
-        }
+        });
+
         [channels removeObjectsAtIndexes:removeItemIndexes];
     }
 
@@ -369,15 +374,23 @@ static NSRegularExpression *chsExp = nil;
         return nil;
     }
 
+    __block Channel *result = nil;
+    
     @synchronized (channelsLock_) {
-        for (Channel *channel in channels_) {
-            NSURL *url = [channel playUrl];
-            if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
-                return channel;
+        __block BOOL found = NO;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels_ count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = [channels_ objectAtIndex:i];
+                NSURL *url = [channel playUrl];
+                if ([[playUrl absoluteString] isEqualToString:[url absoluteString]]) {
+                    result = channel;
+                    found = YES;
+                }
             }
-        }
+        });
     }
-    return nil;
+    return result;
 }
 
 - (Channel *)channelFromMount:(NSString *)mount;
@@ -386,14 +399,22 @@ static NSRegularExpression *chsExp = nil;
         return nil;
     }
 
+    __block Channel *result = nil;
+    
     @synchronized (channelsLock_) {
-        for (Channel *channel in channels_) {
-            if ([mount isEqualToString:channel.mnt]) {
-                return channel;
+        __block BOOL found = NO;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels_ count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = [channels_ objectAtIndex:i];
+                if ([mount isEqualToString:channel.mnt]) {
+                    result = channel;
+                    found = YES;
+                }
             }
-        }
+        });
     }
-    return nil;
+    return result;
 }
 
 #pragma mark - Private methods

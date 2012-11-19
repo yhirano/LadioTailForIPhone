@@ -204,13 +204,18 @@ static Headline *instance = nil;
     if (!([searchWord length] == 0)) {
         NSArray *words = [Headline splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
-        NSUInteger index = 0;
-        for (Channel *channel in channels) {
+
+        NSObject *lock = [[NSObject alloc] init];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels count], queue, ^(size_t i) {
+            Channel *channel = [channels objectAtIndex:i];
             if ([channel isMatch:words] == NO) {
-                [removeItemIndexes addIndex:index];
+                @synchronized (lock) {
+                    [removeItemIndexes addIndex:i];
+                }
             }
-            ++index;
-        }
+        });
+
         [channels removeObjectsAtIndexes:removeItemIndexes];
     }
 
@@ -246,14 +251,22 @@ static Headline *instance = nil;
         return nil;
     }
 
+    __block Channel *result = nil;
+
     @synchronized (channelsLock_) {
-        for (Channel *channel in channels_) {
-            if ([[listenUrl absoluteString] isEqualToString:[channel.listenUrl absoluteString]]) {
-                return channel;
+        __block BOOL found = NO;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels_ count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = [channels_ objectAtIndex:i];
+                if ([[listenUrl absoluteString] isEqualToString:[channel.listenUrl absoluteString]]) {
+                    result = channel;
+                    found = YES;
+                }
             }
-        }
+        });
     }
-    return nil;
+    return result;
 }
 
 - (Channel *)channelFromServerName:(NSString *)serverName;
@@ -262,14 +275,22 @@ static Headline *instance = nil;
         return nil;
     }
 
+    __block Channel *result = nil;
+
     @synchronized (channelsLock_) {
-        for (Channel *channel in channels_) {
-            if ([serverName isEqualToString:channel.serverName]) {
-                return channel;
+        __block BOOL found = NO;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels_ count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = [channels_ objectAtIndex:i];
+                if ([serverName isEqualToString:channel.serverName]) {
+                    result = channel;
+                    found = YES;
+                }
             }
-        }
+        });
     }
-    return nil;
+    return result;
 }
 
 #pragma mark - NSXMLParserDelegate methods
