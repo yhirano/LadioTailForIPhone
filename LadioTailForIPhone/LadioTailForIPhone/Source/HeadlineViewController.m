@@ -460,22 +460,17 @@ enum HeadlineViewDisplayType {
 - (void)updateHeadlineTable
 {
     if (SEARCH_EACH_CHAR == NO) {
-        if ([NSThread isMainThread]) {
+        [self execMainThread:^{
             // 検索バーの入力を受け付けない
             _headlineSearchBar.userInteractionEnabled = NO;
-        } else {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                // 検索バーの入力を受け付けない
-                _headlineSearchBar.userInteractionEnabled = NO;
-            }];
-        }
+        }];
     }
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
-    if ([NSThread isMainThread]) {
+    [self execMainThread:^{
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -494,47 +489,33 @@ enum HeadlineViewDisplayType {
             // 検索バーのインジケーターを消す
             [_headlineSearchBarIndicator stopAnimating];
         }
-    } else {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            // ナビゲーションタイトルを更新
-            NSString *navigationTitleStr = @"";
-            if ([_showedChannels count] == 0) {
-                navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-            } else {
-                navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
-            }
-            _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
-            
-            // ヘッドラインテーブルを更新
-            [self.headlineTableView reloadData];
-            
-            if (SEARCH_EACH_CHAR == NO) {
-                // 検索バーの入力を受け付ける
-                _headlineSearchBar.userInteractionEnabled = YES;
-                // 検索バーのインジケーターを消す
-                [_headlineSearchBarIndicator stopAnimating];
-            }
-        }];
-    }
+    }];
 }
 
 - (void)updatePlayingButton
 {
-    if ([NSThread isMainThread]) {
+    [self execMainThread:^{
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
         } else {
             self.navigationItem.rightBarButtonItem = nil;
         }
+    }];
+}
+
+/**
+ * メインスレッドで処理を実行する
+ *
+ * @params メインスレッドで処理を実行する
+ */
+- (void)execMainThread:(void (^)(void))exec
+{
+    if ([NSThread isMainThread]) {
+        exec();
     } else {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            // 再生状態に逢わせて再生ボタンの表示を切り替える
-            if ([[Player sharedInstance] state] == PlayerStatePlay) {
-                self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
-            } else {
-                self.navigationItem.rightBarButtonItem = nil;
-            }
+            exec();
         }];
     }
 }
@@ -1037,15 +1018,10 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        if ([NSThread isMainThread]) {
+        [self execMainThread:^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        } else {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                // Pull refreshを終了する
-                [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-            }];
-        }
+        }];
     }
 }
 
@@ -1056,15 +1032,10 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        if ([NSThread isMainThread]) {
+        [self execMainThread:^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        } else {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                // Pull refreshを終了する
-                [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-            }];
-        }
+        }];
     }
 }
 
@@ -1083,19 +1054,12 @@ enum HeadlineViewDisplayType {
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
-        if ([NSThread isMainThread]) {
+        [self execMainThread:^{
             // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
                 [self scrollToTopAtPlayingCell];
             }
-        } else {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
-                if ([[Player sharedInstance] state] == PlayerStatePlay) {
-                    [self scrollToTopAtPlayingCell];
-                }
-            }];
-        }
+        }];
     }
 }
 
