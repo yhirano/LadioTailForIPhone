@@ -773,7 +773,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_update_white.png" highlightedImage="tablecell_update_black.png" id="x4j-eo-qZ0">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_update_white.png" highlightedImage="sidemenu_update_black.png" id="x4j-eo-qZ0">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -796,7 +796,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_newly_white.png" highlightedImage="tablecell_newly_black.png" id="55z-ev-NYM">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_newly_white.png" highlightedImage="sidemenu_newly_black.png" id="55z-ev-NYM">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -807,7 +807,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="DOU-6T-3kn">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="DOU-6T-3kn">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -823,7 +823,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_listeners_white.png" highlightedImage="tablecell_listeners_black.png" id="4u9-6A-sPK">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_listeners_white.png" highlightedImage="sidemenu_listeners_black.png" id="4u9-6A-sPK">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -834,7 +834,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="NtL-s7-L7h">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="NtL-s7-L7h">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -850,7 +850,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_title_white.png" highlightedImage="tablecell_title_black.png" id="2zZ-yK-Q1n">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_title_white.png" highlightedImage="sidemenu_title_black.png" id="2zZ-yK-Q1n">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -861,7 +861,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="U14-DX-ONz">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="U14-DX-ONz">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -877,7 +877,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_dj_white.png" highlightedImage="tablecell_favorite_black.png" id="hAg-TY-sEL">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_dj_white.png" highlightedImage="sidemenu_dj_black.png" id="hAg-TY-sEL">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -888,7 +888,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="Qv2-gx-PVD">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="Qv2-gx-PVD">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -904,7 +904,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_newly_white.png" highlightedImage="tablecell_newly_black.png" id="Z1r-Mn-YPi">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_none_white.png" highlightedImage="sidemenu_none_black.png" id="Z1r-Mn-YPi">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -915,7 +915,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="05d-Zp-qGr">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="05d-Zp-qGr">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -931,7 +931,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_dj_white.png" highlightedImage="tablecell_favorite_black.png" id="fWO-mc-07p">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_genre_white.png" highlightedImage="sidemenu_genre_black.png" id="fWO-mc-07p">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -942,7 +942,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="tgJ-0g-3cE">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="tgJ-0g-3cE">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -958,7 +958,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_listeners_white.png" highlightedImage="tablecell_listeners_black.png" id="TZ6-rv-RPM">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_bitrate_white.png" highlightedImage="sidemenu_bitrate_black.png" id="TZ6-rv-RPM">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -969,7 +969,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="tabelcell_checkmark_white.png" highlightedImage="tabelcell_checkmark_black.png" id="CW4-Jg-5CI">
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="CW4-Jg-5CI">
                                             <rect key="frame" x="4" y="15" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -985,7 +985,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_favorite_yellow.png" highlightedImage="tablecell_favorite_black.png" id="E3F-vB-bif">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_favorite_yellow.png" highlightedImage="sidemenu_favorite_black.png" id="E3F-vB-bif">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1008,7 +1008,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_about_white.png" highlightedImage="tablecell_about_black.png" id="mkY-6y-qFC">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_about_white.png" highlightedImage="sidemenu_about_black.png" id="mkY-6y-qFC">
                                             <rect key="frame" x="24" y="11" width="21" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1310,32 +1310,39 @@
         <image name="button_twitter.png" width="37" height="37"/>
         <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
         <image name="navbarbtn_menu.png" width="20" height="20"/>
+        <image name="sidemenu_about_black.png" width="28" height="28"/>
+        <image name="sidemenu_about_white.png" width="28" height="28"/>
+        <image name="sidemenu_bitrate_black.png" width="28" height="28"/>
+        <image name="sidemenu_bitrate_white.png" width="28" height="28"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_dj_black.png" width="28" height="28"/>
+        <image name="sidemenu_dj_white.png" width="28" height="28"/>
+        <image name="sidemenu_favorite_black.png" width="28" height="28"/>
+        <image name="sidemenu_favorite_yellow.png" width="28" height="28"/>
+        <image name="sidemenu_genre_black.png" width="28" height="28"/>
+        <image name="sidemenu_genre_white.png" width="28" height="28"/>
+        <image name="sidemenu_listeners_black.png" width="28" height="28"/>
+        <image name="sidemenu_listeners_white.png" width="28" height="28"/>
+        <image name="sidemenu_newly_black.png" width="28" height="28"/>
+        <image name="sidemenu_newly_white.png" width="28" height="28"/>
+        <image name="sidemenu_none_black.png" width="28" height="28"/>
+        <image name="sidemenu_none_white.png" width="28" height="28"/>
+        <image name="sidemenu_title_black.png" width="28" height="28"/>
+        <image name="sidemenu_title_white.png" width="28" height="28"/>
+        <image name="sidemenu_update_black.png" width="28" height="28"/>
+        <image name="sidemenu_update_white.png" width="28" height="28"/>
         <image name="tab_others.png" width="16" height="16"/>
-        <image name="tabelcell_checkmark_black.png" width="14" height="14"/>
-        <image name="tabelcell_checkmark_white.png" width="14" height="14"/>
-        <image name="tablecell_about_black.png" width="28" height="28"/>
-        <image name="tablecell_about_white.png" width="28" height="28"/>
         <image name="tablecell_broadcast_black.png" width="14" height="14"/>
         <image name="tablecell_broadcast_white.png" width="14" height="14"/>
-        <image name="tablecell_dj_white.png" width="28" height="28"/>
-        <image name="tablecell_favorite_black.png" width="28" height="28"/>
         <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
-        <image name="tablecell_favorite_yellow.png" width="28" height="28"/>
         <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
         <image name="tablecell_headphones_black.png" width="28" height="28"/>
         <image name="tablecell_headphones_white.png" width="28" height="28"/>
         <image name="tablecell_indicator_black.png" width="16" height="16"/>
         <image name="tablecell_indicator_white.png" width="16" height="16"/>
-        <image name="tablecell_listeners_black.png" width="28" height="28"/>
-        <image name="tablecell_listeners_white.png" width="28" height="28"/>
-        <image name="tablecell_newly_black.png" width="28" height="28"/>
-        <image name="tablecell_newly_white.png" width="28" height="28"/>
         <image name="tablecell_play_black.png" width="14" height="14"/>
         <image name="tablecell_play_white.png" width="14" height="14"/>
-        <image name="tablecell_title_black.png" width="28" height="28"/>
-        <image name="tablecell_title_white.png" width="28" height="28"/>
-        <image name="tablecell_update_black.png" width="28" height="28"/>
-        <image name="tablecell_update_white.png" width="28" height="28"/>
     </resources>
     <classes>
         <class className="AboutNaviViewController" superclassName="UINavigationController">
