@@ -32,8 +32,7 @@
 
 @implementation LadioTailViewController
 {
-    IIViewDeckController *viewDeckController;
-    HeadlineNaviViewController *headlineNaviViewController;
+    IIViewDeckController *viewDeckController_;
 }
 
 -(void)dealloc
@@ -71,24 +70,24 @@
 
     // サイドメニューを設定する
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    headlineNaviViewController =
+    HeadlineNaviViewController* headlineNaviViewController =
         (HeadlineNaviViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
     SideMenuTableViewController *sideMenuTableViewController =
         (SideMenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"SideMenuTableViewController"];
-    viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
+    viewDeckController_ = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
                                                                  leftViewController:sideMenuTableViewController];
-    viewDeckController.view.frame = self.view.bounds;
-    viewDeckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController.leftLedge = 74.0f;
+    viewDeckController_.view.frame = self.view.bounds;
+    viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    viewDeckController_.leftLedge = 74.0f;
 
-    [self.view addSubview:viewDeckController.view];
+    [self.view addSubview:viewDeckController_.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [viewDeckController viewWillAppear:YES];
+    [viewDeckController_ viewWillAppear:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -100,7 +99,7 @@
     // リモコン対応/シェイク対応
     [self becomeFirstResponder];
 
-    [viewDeckController viewDidAppear:animated];
+    [viewDeckController_ viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -109,13 +108,13 @@
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
 
-    [viewDeckController viewWillDisappear:animated];
+    [viewDeckController_ viewWillDisappear:animated];
 
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [viewDeckController viewDidDisappear:animated];
+    [viewDeckController_ viewDidDisappear:animated];
     
     [super viewDidDisappear:animated];
 }
@@ -123,25 +122,25 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
-    [viewDeckController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [viewDeckController_ willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    [viewDeckController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [viewDeckController_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    [viewDeckController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [viewDeckController_ didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [viewDeckController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+    [viewDeckController_ shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         switch (interfaceOrientation) {
@@ -160,7 +159,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    [viewDeckController shouldAutorotate];
+    [viewDeckController_ shouldAutorotate];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return YES;
@@ -194,6 +193,15 @@
 
     // 再生中の番組が存在しない場合（ありえないはずだが）は終了
     if (playingChannel == nil) {
+        return nil;
+    }
+
+    // HeadlineNaviViewControllerを取得する
+    HeadlineNaviViewController *headlineNaviViewController = nil;
+    UIViewController* centerController = viewDeckController_.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+        headlineNaviViewController = (HeadlineNaviViewController*)centerController;
+    } else {
         return nil;
     }
 
@@ -255,6 +263,15 @@
 {
     Channel *result = nil;
     HeadlineViewController *headlineViewController = nil;
+
+    // HeadlineNaviViewControllerを取得する
+    HeadlineNaviViewController *headlineNaviViewController = nil;
+    UIViewController* centerController = viewDeckController_.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+        headlineNaviViewController = (HeadlineNaviViewController*)centerController;
+    } else {
+        return nil;
+    }
 
     // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
     for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
