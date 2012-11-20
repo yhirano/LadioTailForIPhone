@@ -155,7 +155,7 @@ static ICloudStrorage *instance = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailICloudStorageChangedFavoritesNotification
                                                             object:nil];
 
-        // LadioLibChannelChangedFavoritesNotificationが飛んでくるので
+        // RadioLibChannelChangedFavoritesNotificationが飛んでくるので
         // channelFavoritesChanged:を実行しiCloudnに同期される
     }
 }
