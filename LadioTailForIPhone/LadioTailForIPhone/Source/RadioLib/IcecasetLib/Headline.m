@@ -212,8 +212,8 @@ static Headline *instance = nil;
         NSObject *lock = [[NSObject alloc] init];
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_apply([channels count], queue, ^(size_t i) {
-            Channel *channel = [channels objectAtIndex:i];
-            if ([channel isMatch:words] == NO) {
+            Channel *channel = channels[i];
+            if (channel != nil && [channel isMatch:words] == NO) {
                 @synchronized (lock) {
                     [removeItemIndexes addIndex:i];
                 }
@@ -492,6 +492,14 @@ didStartElement:(NSString *)elementName
     // お気に入りが変化したのでキャッシュをクリアする
     // お気に入りの有無がソート順番に影響するため
     [self clearChannelsCache];
+
+    @synchronized (channelsLock_) {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels_ count], queue, ^(size_t i) {
+            // 番組のお気に入りキャッシュをクリアする
+            [channels_[i] clearFavoriteCache];
+        });
+    }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibHeadlineChannelChangedNotification object:self];
 }

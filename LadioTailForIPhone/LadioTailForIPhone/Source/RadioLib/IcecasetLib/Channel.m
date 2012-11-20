@@ -285,12 +285,13 @@ static NSCache *matchCache = nil;
     return [[listenUrl_ absoluteString] isEqualToString:[channel.listenUrl absoluteString]];
 }
 
-- (void)setFavoriteCache:(BOOL)favorite {
-    hasFavoriteCache_ = YES;
-    favoriteCache_ = favorite;
+- (void)clearFavoriteCache
+{
+    hasFavoriteCache_ = NO;
 }
 
-- (NSString *)descriptionHtml {
+- (NSString *)descriptionHtml
+{
     return [ChannelHtml descriptionHtml:self];
 }
 

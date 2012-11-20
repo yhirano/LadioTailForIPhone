@@ -69,11 +69,10 @@
 
 - (BOOL)isSameListenUrl:(Channel *)channel;
 
-/// お気に入りキャッシュを設定する
+/// お気に入りキャッシュをクリアする
 ///
-/// ここにお気に入りの状態を設定しておくと、このChannelがお気に入りかどうかのチェックを
-/// FavoriteManagerに問い合わせなくなるため高速化する
-- (void)setFavoriteCache:(BOOL)favorite;
+/// お気に入りの状態が変わった場合に、番組のお気に入りのキャッシュを削除する必要がある。
+- (void)clearFavoriteCache;
 
 /// 番組画面用のHTMLを取得する
 - (NSString *)descriptionHtml;

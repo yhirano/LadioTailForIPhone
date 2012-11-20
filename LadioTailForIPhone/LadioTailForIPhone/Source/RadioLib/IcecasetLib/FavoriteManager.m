@@ -76,7 +76,6 @@ static FavoriteManager *instance = nil;
             Favorite *favorite = [[Favorite alloc] init];
             favorite.channel = channel;
             _favorites[[channel.listenUrl absoluteString]] = favorite;
-            [channel setFavoriteCache:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];
         }
@@ -101,7 +100,6 @@ static FavoriteManager *instance = nil;
         NSString* urlString = [channel.listenUrl absoluteString];
         if (_favorites[urlString] != nil) {
             [_favorites removeObjectForKey:urlString];
-            [channel setFavoriteCache:NO];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
                                                                 object:channel];

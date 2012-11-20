@@ -479,12 +479,13 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     return [mnt_ isEqualToString:channel.mnt];
 }
 
-- (void)setFavoriteCache:(BOOL)favorite {
-    hasFavoriteCache_ = YES;
-    favoriteCache_ = favorite;
+- (void)clearFavoriteCache
+{
+    hasFavoriteCache_ = NO;
 }
 
-- (NSString *)descriptionHtml {
+- (NSString *)descriptionHtml
+{
     return [ChannelHtml descriptionHtml:self];
 }
 
