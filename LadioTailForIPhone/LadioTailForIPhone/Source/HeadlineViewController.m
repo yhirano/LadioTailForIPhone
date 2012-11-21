@@ -178,10 +178,10 @@ enum HeadlineViewDisplayType {
         listenersLabel.text = @"";
     }
     if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.text = [self dateText:channel.tims];
+        dateLabel.text = [HeadlineViewController dateText:channel.tims];
     }
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.text = [self bitrateText:channel.bit];
+        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bit];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -199,7 +199,7 @@ enum HeadlineViewDisplayType {
         dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         dateLabel.clipsToBounds = YES;
-        dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+        dateLabel.backgroundColor = [HeadlineViewController dateLabelBackgroundColor:channel.tims];
         dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
         dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
     }
@@ -209,7 +209,7 @@ enum HeadlineViewDisplayType {
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bit];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -257,7 +257,7 @@ enum HeadlineViewDisplayType {
         genreLabel.text = @"";
     }
     if (bitrateLabel != nil) {
-        bitrateLabel.text = [self bitrateText:channel.bitrate];
+        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bitrate];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -272,7 +272,7 @@ enum HeadlineViewDisplayType {
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bitrate];
+        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bitrate];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -289,7 +289,7 @@ enum HeadlineViewDisplayType {
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
 
-- (NSInteger)headlineViewDisplayType
++ (NSInteger)headlineViewDisplayType
 {
     NSInteger result = HeadlineViewDisplayTypeElapsedTime;
 
@@ -308,7 +308,7 @@ enum HeadlineViewDisplayType {
     return result;
 }
 
-- (NSString *)dateText:(NSDate *)date
++ (NSString *)dateText:(NSDate *)date
 {
     NSString *result;
     
@@ -358,7 +358,7 @@ enum HeadlineViewDisplayType {
 }
 
 /// 渡された日付と現在の日付から、日付ラベルの背景色を算出する
-- (UIColor *)dateLabelBackgroundColor:(NSDate *)date
++ (UIColor *)dateLabelBackgroundColor:(NSDate *)date
 {
     UIColor *result;
 
@@ -378,15 +378,15 @@ enum HeadlineViewDisplayType {
         // 0分：最も明るい 6時間：最も暗い
         double lighty = 1 - (diffTime / (6 * 60 * 60)); // 明るさ
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
-        darkHue, darkSaturation, darkBrightness, darkAlpha;
+                darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                                  saturation:&ligntSaturation
-                                                  brightness:&ligntBrightness
-                                                       alpha:&lightAlpha];
+                                               saturation:&ligntSaturation
+                                               brightness:&ligntBrightness
+                                                    alpha:&lightAlpha];
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                                 saturation:&darkSaturation
-                                                 brightness:&darkBrightness
-                                                      alpha:&darkAlpha];
+                                              saturation:&darkSaturation
+                                              brightness:&darkBrightness
+                                                   alpha:&darkAlpha];
         CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
         CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
         CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
@@ -397,7 +397,7 @@ enum HeadlineViewDisplayType {
     return result;
 }
 
-- (NSString *)bitrateText:(NSInteger)bitrate
++ (NSString *)bitrateText:(NSInteger)bitrate
 {
     NSString *result;
 
@@ -423,7 +423,7 @@ enum HeadlineViewDisplayType {
 }
 
 /// 渡されたビットレートから、ビットレートラベルの背景色を算出する
-- (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
++ (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
 {
     UIColor *result;
     
@@ -440,13 +440,13 @@ enum HeadlineViewDisplayType {
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
                 darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                                 saturation:&ligntSaturation
-                                                 brightness:&ligntBrightness
-                                                      alpha:&lightAlpha];
+                                                  saturation:&ligntSaturation
+                                                  brightness:&ligntBrightness
+                                                       alpha:&lightAlpha];
         [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                                  saturation:&darkSaturation
-                                                  brightness:&darkBrightness
-                                                       alpha:&darkAlpha];
+                                                 saturation:&darkSaturation
+                                                 brightness:&darkBrightness
+                                                      alpha:&darkAlpha];
         CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
         CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
         CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
@@ -507,7 +507,7 @@ enum HeadlineViewDisplayType {
 /**
  * メインスレッドで処理を実行する
  *
- * @params メインスレッドで処理を実行する
+ * @params メインスレッドで実行する処理
  */
 - (void)execMainThread:(void (^)(void))exec
 {
@@ -639,7 +639,7 @@ enum HeadlineViewDisplayType {
     _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
     // ヘッドライン表示方式を設定
-    headlineViewDisplayType_ = [self headlineViewDisplayType];
+    headlineViewDisplayType_ = [HeadlineViewController headlineViewDisplayType];
     
     if (PULL_REFRESH_HEADLINE) {
         // PullRefreshViewの生成
@@ -996,7 +996,7 @@ enum HeadlineViewDisplayType {
 
 - (void)defaultsChanged:(NSNotification *)notification
 {
-    NSInteger currentHeadlineViewDisplayType = [self headlineViewDisplayType];
+    NSInteger currentHeadlineViewDisplayType = [HeadlineViewController headlineViewDisplayType];
 
     if (headlineViewDisplayType_ != currentHeadlineViewDisplayType) {
         headlineViewDisplayType_ = currentHeadlineViewDisplayType;
