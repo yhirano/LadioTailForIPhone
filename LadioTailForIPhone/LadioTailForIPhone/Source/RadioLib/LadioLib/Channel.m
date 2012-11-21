@@ -57,6 +57,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
     BOOL hasHashCache_;
     NSUInteger hashCache_;
+    NSURL *playUrlCache_;
     /// お気に入りキャッシュが有効か
     BOOL hasFavoriteCache_;
     /// お気に入りキャッシュ
@@ -91,6 +92,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
         chs_ = CHANNEL_UNKNOWN_CHANNEL_NUM;
 
         hasHashCache_ = NO;
+        playUrlCache_ = nil;
         hasFavoriteCache_ = NO;
         favoriteCache_ = NO;
     }
@@ -171,8 +173,11 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
 - (NSURL *)playUrl
 {
-    NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
-    return [NSURL URLWithString:url];
+    if (playUrlCache_ == nil) {
+        NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
+        playUrlCache_ = [NSURL URLWithString:url];
+    }
+    return playUrlCache_;
 }
 
 - (NSURL*)surl
@@ -206,6 +211,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 {
     srv_ = s;
     hasHashCache_ = NO;
+    playUrlCache_ = nil;
 }
 
 - (NSInteger)prt
@@ -217,6 +223,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 {
     prt_ = p;
     hasHashCache_ = NO;
+    playUrlCache_ = nil;
 }
 
 - (NSString*)mnt
@@ -228,6 +235,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 {
     mnt_ = m;
     hasHashCache_ = NO;
+    playUrlCache_ = nil;
 }
 
 - (NSString*)type
