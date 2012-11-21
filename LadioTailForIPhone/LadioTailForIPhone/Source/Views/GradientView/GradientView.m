@@ -34,7 +34,8 @@
     return self;
 }
 
-+(Class)layerClass{
++(Class)layerClass
+{
 	return [GradientLayer class];
 }
 

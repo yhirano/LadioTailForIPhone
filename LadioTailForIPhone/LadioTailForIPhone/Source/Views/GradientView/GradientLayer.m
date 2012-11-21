@@ -25,7 +25,8 @@
 
 @implementation GradientLayer
 
-- (id)init{
+- (id)init
+{
     self = [super init];
 	if (self) {
 		self.colors = @[(id)BOTTOM_BAR_TOP_COLOR.CGColor, (id)(BOTTOM_BAR_BOTTOM_COLOR.CGColor)];

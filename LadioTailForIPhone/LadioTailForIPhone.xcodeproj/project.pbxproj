@@ -65,6 +65,10 @@
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8E9BE9ED1543B36D0029DB70 /* tablecell_favorite_black_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */; };
 		8E9BE9EE1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EC1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png */; };
+		8E9EC6E9165D0F3A00FE5369 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */; };
+		8E9EC6EA165D0F3A00FE5369 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */; };
+		8E9EC6EB165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
+		8E9EC6EC165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8EA3066615ED1A1800107AE7 /* AboutNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3066415ED182500107AE7 /* AboutNaviViewController.m */; };
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8EAC42561632EB2B009C2871 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */; };
@@ -112,8 +116,6 @@
 		8ED117411658779F001BD731 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173A1658779F001BD731 /* Favorite.m */; };
 		8ED117421658779F001BD731 /* FavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173C1658779F001BD731 /* FavoriteManager.m */; };
 		8ED117431658779F001BD731 /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173E1658779F001BD731 /* Headline.m */; };
-		8ED1174A16587BC2001BD731 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174716587BC2001BD731 /* GradientLayer.m */; };
-		8ED1174B16587BC2001BD731 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174916587BC2001BD731 /* GradientView.m */; };
 		8ED1175016587D90001BD731 /* ChannelHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174D16587D8F001BD731 /* ChannelHtml.m */; };
 		8ED1175116587D90001BD731 /* FavoriteHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174F16587D90001BD731 /* FavoriteHtml.m */; };
 		8ED1175416587F8E001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
@@ -182,8 +184,6 @@
 		8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
 		8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8ED117D016588DCB001BD731 /* SendFavoritesToProviderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF52DB01631C28B00DE4063 /* SendFavoritesToProviderOperation.m */; };
-		8ED117D516588DCB001BD731 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174716587BC2001BD731 /* GradientLayer.m */; };
-		8ED117D616588DCB001BD731 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174916587BC2001BD731 /* GradientView.m */; };
 		8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
 		8ED117DB16588DCB001BD731 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
 		8ED117DC16588DCB001BD731 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
@@ -453,6 +453,10 @@
 		8E9AFC8016317DFB0094C738 /* ApnsStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApnsStorage.m; sourceTree = "<group>"; };
 		8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_favorite_black_mini.png; sourceTree = "<group>"; };
 		8E9BE9EC1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_favorite_black_mini@2x.png"; sourceTree = "<group>"; };
+		8E9EC6E5165D0F3A00FE5369 /* GradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientLayer.h; path = Views/GradientView/GradientLayer.h; sourceTree = "<group>"; };
+		8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientLayer.m; path = Views/GradientView/GradientLayer.m; sourceTree = "<group>"; };
+		8E9EC6E7165D0F3A00FE5369 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientView.h; path = Views/GradientView/GradientView.h; sourceTree = "<group>"; };
+		8E9EC6E8165D0F3A00FE5369 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = Views/GradientView/GradientView.m; sourceTree = "<group>"; };
 		8EA3066315ED182500107AE7 /* AboutNaviViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutNaviViewController.h; sourceTree = "<group>"; };
 		8EA3066415ED182500107AE7 /* AboutNaviViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutNaviViewController.m; sourceTree = "<group>"; };
 		8EAB5729155E42DB00F2202C /* LadioTailConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailConfig.h; sourceTree = "<group>"; };
@@ -511,10 +515,6 @@
 		8ED1173D1658779F001BD731 /* Headline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Headline.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Headline.h; sourceTree = SOURCE_ROOT; };
 		8ED1173E1658779F001BD731 /* Headline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Headline.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Headline.m; sourceTree = SOURCE_ROOT; };
 		8ED11744165877EC001BD731 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Notifications.h; path = RadioLib/Notifications.h; sourceTree = "<group>"; };
-		8ED1174616587BC2001BD731 /* GradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientLayer.h; path = GradientView/GradientLayer.h; sourceTree = "<group>"; };
-		8ED1174716587BC2001BD731 /* GradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientLayer.m; path = GradientView/GradientLayer.m; sourceTree = "<group>"; };
-		8ED1174816587BC2001BD731 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientView.h; path = GradientView/GradientView.h; sourceTree = "<group>"; };
-		8ED1174916587BC2001BD731 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = GradientView/GradientView.m; sourceTree = "<group>"; };
 		8ED1174C16587D8E001BD731 /* ChannelHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/ChannelHtml.h; sourceTree = SOURCE_ROOT; };
 		8ED1174D16587D8F001BD731 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/ChannelHtml.m; sourceTree = SOURCE_ROOT; };
 		8ED1174E16587D8F001BD731 /* FavoriteHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/FavoriteHtml.h; sourceTree = SOURCE_ROOT; };
@@ -733,8 +733,8 @@
 				8E0B83301543DC770097984D /* FBNetworkReachability */,
 				8EE8491116029F9F00ABE8B7 /* JRSwizzle */,
 				8E0B835B1543DC770097984D /* SVProgressHUD */,
-				8ED1174516587BA4001BD731 /* GradientView */,
 				8EB905BF15E9B7AF00C27CA1 /* ViewDeck */,
+				8E9EC6E3165D0E2C00FE5369 /* Views */,
 				8ED1173616587773001BD731 /* RadioLib */,
 				8EAB5729155E42DB00F2202C /* LadioTailConfig.h */,
 				8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */,
@@ -980,6 +980,14 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		8E9EC6E3165D0E2C00FE5369 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8ED1174516587BA4001BD731 /* GradientView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		8EAC424B1632EB1C009C2871 /* GoogleAdMobAds */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,10 +1129,10 @@
 		8ED1174516587BA4001BD731 /* GradientView */ = {
 			isa = PBXGroup;
 			children = (
-				8ED1174816587BC2001BD731 /* GradientView.h */,
-				8ED1174916587BC2001BD731 /* GradientView.m */,
-				8ED1174616587BC2001BD731 /* GradientLayer.h */,
-				8ED1174716587BC2001BD731 /* GradientLayer.m */,
+				8E9EC6E5165D0F3A00FE5369 /* GradientLayer.h */,
+				8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */,
+				8E9EC6E7165D0F3A00FE5369 /* GradientView.h */,
+				8E9EC6E8165D0F3A00FE5369 /* GradientView.m */,
 			);
 			name = GradientView;
 			sourceTree = "<group>";
@@ -1595,11 +1603,11 @@
 				8ED117411658779F001BD731 /* Favorite.m in Sources */,
 				8ED117421658779F001BD731 /* FavoriteManager.m in Sources */,
 				8ED117431658779F001BD731 /* Headline.m in Sources */,
-				8ED1174A16587BC2001BD731 /* GradientLayer.m in Sources */,
-				8ED1174B16587BC2001BD731 /* GradientView.m in Sources */,
 				8ED1175016587D90001BD731 /* ChannelHtml.m in Sources */,
 				8ED1175116587D90001BD731 /* FavoriteHtml.m in Sources */,
 				8ED1175416587F8E001BD731 /* ReplaceUrlUtil.m in Sources */,
+				8E9EC6E9165D0F3A00FE5369 /* GradientLayer.m in Sources */,
+				8E9EC6EB165D0F3A00FE5369 /* GradientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1654,8 +1662,6 @@
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
 				8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */,
 				8ED117D016588DCB001BD731 /* SendFavoritesToProviderOperation.m in Sources */,
-				8ED117D516588DCB001BD731 /* GradientLayer.m in Sources */,
-				8ED117D616588DCB001BD731 /* GradientView.m in Sources */,
 				8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */,
 				8ED1186316588DF1001BD731 /* Channel.m in Sources */,
 				8ED1186416588DF1001BD731 /* ChannelHtml.m in Sources */,
@@ -1663,6 +1669,8 @@
 				8ED1186716588DF1001BD731 /* FavoriteManager.m in Sources */,
 				8ED1186816588DF1001BD731 /* Headline.m in Sources */,
 				8EE93AEF1658B3C000F130C8 /* FavoriteHtml.m in Sources */,
+				8E9EC6EA165D0F3A00FE5369 /* GradientLayer.m in Sources */,
+				8E9EC6EC165D0F3A00FE5369 /* GradientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
