@@ -795,29 +795,31 @@ enum HeadlineViewDisplayType {
         return;
     }
 
-    NSInteger playingChannelIndex;
-    BOOL found = NO;
+    __block NSInteger playingChannelIndex;
+    __block BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
-        Channel *channel = _showedChannels[playingChannelIndex];
-
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_apply([_showedChannels count], queue, ^(size_t i) {
+        if (found == NO) {
+            Channel *channel = _showedChannels[i];
 #if defined(LADIO_TAIL)
-        if ([channel isSameMount:playingChannel]) {
-            found = YES; // 見つかったことを示す
-            break;
-        }
+            if ([channel isSameMount:playingChannel]) {
+                playingChannelIndex = i;
+                found = YES; // 見つかったことを示す
+            }
 #elif defined(RADIO_EDGE)
-        if ([channel isSameListenUrl:playingChannel]) {
-            found = YES; // 見つかったことを示す
-            break;
-        }
+            if ([channel isSameListenUrl:playingChannel]) {
+                playingChannelIndex = i;
+                found = YES; // 見つかったことを示す
+            }
 #else
-        #error "Not defined LADIO_TAIL or RADIO_EDGE"
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
-    }
+        }
+    });
 
     // 見つかった場合はスクロール
-    if (found){
+    if (found) {
         NSIndexPath *indexPath = nil;
         if (ADMOB_PUBLISHER_ID == nil) {
             indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];

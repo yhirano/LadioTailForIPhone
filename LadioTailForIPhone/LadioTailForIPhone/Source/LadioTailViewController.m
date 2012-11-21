@@ -216,25 +216,28 @@
     if (headlineViewController != nil) {
         // 番組を取得する
         NSArray *channels = headlineViewController.showedChannels;
-        NSInteger playingChannelIndex;
-        BOOL found = NO;
+        __block NSInteger playingChannelIndex;
+        __block BOOL found = NO;
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
-        for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
-            Channel *channel = channels[playingChannelIndex];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = channels[i];
 #if defined(LADIO_TAIL)
-            if ([channel isSameMount:playingChannel]) {
-                found = YES; // 見つかったことを示す
-                break;
-            }
+                if ([channel isSameMount:playingChannel]) {
+                    playingChannelIndex = i;
+                    found = YES; // 見つかったことを示す
+                }
 #elif defined(RADIO_EDGE)
-            if ([channel isSameListenUrl:playingChannel]) {
-                found = YES; // 見つかったことを示す
-                break;
-            }
+                if ([channel isSameListenUrl:playingChannel]) {
+                    playingChannelIndex = i;
+                    found = YES; // 見つかったことを示す
+                }
 #else
-            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
-        }
+            }
+        });
         // 番組が見つかった場合
         if (found) {
             // 現在再生中の次の番組を返す場合
