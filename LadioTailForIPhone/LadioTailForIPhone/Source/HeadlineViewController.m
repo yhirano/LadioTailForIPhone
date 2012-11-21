@@ -365,18 +365,18 @@ enum HeadlineViewDisplayType {
     NSTimeInterval diffTime = [[NSDate date] timeIntervalSinceDate:date];
 
     // 渡された日付が現在よりも新しい場合（ないはずだが一応）
-    if (diffTime <= 0) {
+    if (diffTime <= HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC) {
         // 最も明るい色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
     }
     // 6時間以上前
-    else if (diffTime >= (6 * 60 * 60)) {
+    else if (diffTime >= HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC) {
         // 最も暗い色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
     } else {
         // 時間が経過するごとに暗い色にする
         // 0分：最も明るい 6時間：最も暗い
-        double lighty = 1 - (diffTime / (6 * 60 * 60)); // 明るさ
+        double lighty = 1 - (diffTime / HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC); // 明るさを0-1で表している
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
                 darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
@@ -427,16 +427,18 @@ enum HeadlineViewDisplayType {
 {
     UIColor *result;
     
-    if(bitrate <= 24) {
+    if(bitrate <= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) {
         // 最も暗い色にする
         result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
-    } else if (bitrate >= 128) {
+    } else if (bitrate >= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE) {
         // 最も明るい色にする
         result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
     } else {
         // ビットレートが低くなるごとに暗い色にする
         // 128kbps：最も明るい 24kbps：最も暗い
-        double lighty = (double)(bitrate - 24) / (double)(128 - 24); // 明るさ
+        double lighty = (double)(bitrate - HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) /
+            (double)(HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE -
+                     HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE); // 明るさを0-1で表している
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
                 darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
