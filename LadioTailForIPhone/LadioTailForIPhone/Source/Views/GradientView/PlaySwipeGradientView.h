@@ -20,20 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "LadioTailConfig.h"
-#import "GradientLayer.h"
+#import "GradientView.h"
 
-@implementation GradientLayer
-
-- (id)init
-{
-    self = [super init];
-	if (self) {
-		self.colors = @[(id)[UIColor whiteColor].CGColor, (id)([UIColor blackColor].CGColor)];
-		self.startPoint = CGPointMake(0.5, 0.0);
-		self.endPoint = CGPointMake(0.5, 1.0);
-	}
-	return self;
-}
+@interface PlaySwipeGradientView : GradientView
 
 @end

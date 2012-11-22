@@ -21,15 +21,16 @@
  */
 
 #import "LadioTailConfig.h"
-#import "GradientLayer.h"
+#import "PlaySwipeGradientLayer.h"
 
-@implementation GradientLayer
+@implementation PlaySwipeGradientLayer
 
 - (id)init
 {
     self = [super init];
 	if (self) {
-		self.colors = @[(id)[UIColor whiteColor].CGColor, (id)([UIColor blackColor].CGColor)];
+		self.colors = @[(id)HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_TOP_COLOR.CGColor,
+                        (id)(HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR.CGColor)];
 		self.startPoint = CGPointMake(0.5, 0.0);
 		self.endPoint = CGPointMake(0.5, 1.0);
 	}

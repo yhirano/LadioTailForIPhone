@@ -1,0 +1,294 @@
+/*
+ * Copyright (c) 2012 Yuichi Hirano
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#import "ChannelTableViewCell.h"
+
+@implementation ChannelTableViewCell
+{
+@private
+    // スワイプで移動するビュー
+    UIView *swipeView_;
+
+    // ジェスチャー
+    UIPanGestureRecognizer* panGesture_;
+    // 移動した位置を記憶しておく
+    CGPoint lastPosition_;
+
+    // 初期位置
+    CGPoint firstPocition_;
+    // スワイプで移動するビューの最大移動量
+    CGSize limitSize_;
+    // スワイプが有効になったと見なされる移動量
+    CGSize enableSize_;
+
+    __weak UITableView* tableView_;
+    __weak id<ChannelTableViewDelegate> tableViewDelegate_;
+}
+
+- (UIView *)swipeView
+{
+    return swipeView_;
+}
+
+- (void)setSwipeView:(UIView *)swipeView
+{
+    swipeView_ = swipeView;
+    firstPocition_ = swipeView.frame.origin;
+    if (panGesture_ == nil) {
+        panGesture_ = [[UIPanGestureRecognizer alloc] init];
+        [panGesture_ addTarget:self action:@selector(didDetectPanning:)];
+        panGesture_.delegate = self;
+    }
+    [self.contentView addGestureRecognizer:panGesture_];
+}
+
+- (void)revertSwipeWithAnimated:(BOOL)animated
+{
+    CGFloat newPositionX = firstPocition_.x;
+
+    if (animated) {
+        panGesture_.enabled = NO;
+        NSTimeInterval duration = 0.24;
+        [UIView animateWithDuration:duration delay:0.0
+                            options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
+                         animations:^{
+                             CGRect frame = swipeView_.frame;
+                             frame.origin.x = newPositionX;
+                             swipeView_.frame = frame;
+                         }
+                         completion:^(BOOL finished) {
+                             [self setSwipeState:ChannelTableViewCellSwipeStateNormal];
+
+                             if ([tableViewDelegate_
+                                    respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
+                                 NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                                 if (indexPath) {
+                                     [tableViewDelegate_ tableView:tableView_
+                                              didChangeSwipeEnable:NO
+                                                           forCell:self
+                                                 forRowAtIndexPath:indexPath];
+                                 }
+                             }
+
+                             panGesture_.enabled = YES;
+                         }];
+    } else {
+        CGRect frame = swipeView_.frame;
+        frame.origin.x = newPositionX;
+        swipeView_.frame = frame;
+        [self setSwipeState:ChannelTableViewCellSwipeStateNormal];
+
+        if ([tableViewDelegate_
+                respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]) {
+            NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+            if (indexPath) {
+                [tableViewDelegate_ tableView:tableView_
+                         didChangeSwipeEnable:NO
+                                      forCell:self
+                            forRowAtIndexPath:indexPath];
+            }
+        }
+    }
+}
+
+#pragma mark - Private methods
+
+- (BOOL)isEnableSwipe
+{
+    if (swipeView_.frame.origin.x > firstPocition_.x + enableSize_.width) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)setSwipeState:(ChannelTableViewCellSwipeState)state
+{
+    if (_swipeState == state) {
+        return;
+    }
+
+    _swipeState = state;
+
+    if ([tableViewDelegate_ respondsToSelector:@selector(tableView:didChangeSwipeState:forRowAtIndexPath:)]) {
+        NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+        if (indexPath) {
+            [tableViewDelegate_ tableView:tableView_ didChangeSwipeState:_swipeState forRowAtIndexPath:indexPath];
+        }
+    }
+}
+
+#pragma mark - Gesture action
+
+- (void)didDetectPanning:(UIPanGestureRecognizer *)gesture
+{
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            lastPosition_ = [gesture locationInView:self];
+            break;
+        }
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint position = [gesture locationInView:self];
+            CGRect frame = swipeView_.frame;
+
+            CGFloat diff = (position.x - lastPosition_.x);
+            if (diff == 0) {
+                ;
+            } else if (frame.origin.x + diff <= firstPocition_.x) {
+                frame.origin.x = firstPocition_.x;
+                dispatch_async(dispatch_get_current_queue(), ^{
+                    BOOL befoure = [self isEnableSwipe];
+                    swipeView_.frame = frame;
+                    BOOL after = [self isEnableSwipe];
+
+                    if (befoure != after) {
+                        if([tableViewDelegate_
+                            respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
+                            NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                            if (indexPath) {
+                                [tableViewDelegate_ tableView:tableView_
+                                         didChangeSwipeEnable:after
+                                                      forCell:self
+                                            forRowAtIndexPath:indexPath];
+                            }
+                        }
+                    }
+                });
+            } else if (frame.origin.x + diff <= firstPocition_.x + limitSize_.width) {
+                frame.origin.x += diff;
+                dispatch_async(dispatch_get_current_queue(), ^{
+                    BOOL befoure = [self isEnableSwipe];
+                    swipeView_.frame = frame;
+                    BOOL after = [self isEnableSwipe];
+                    
+                    if (befoure != after) {
+                        if([tableViewDelegate_
+                            respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
+                            NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                            if (indexPath) {
+                                [tableViewDelegate_ tableView:tableView_
+                                         didChangeSwipeEnable:after
+                                                      forCell:self
+                                            forRowAtIndexPath:indexPath];
+                            }
+                        }
+                    }
+                });
+            }
+
+            [self setSwipeState:ChannelTableViewCellSwipeStateSwiping];
+
+            lastPosition_ = position;
+            break;
+        }
+        default:
+        {
+            if (_swipeState == ChannelTableViewCellSwipeStateSwiping) {
+                if ([self isEnableSwipe]) {
+                    if([tableViewDelegate_
+                        respondsToSelector:@selector(tableViewDidSwipeEnable:forCell:forRowAtIndexPath:)]){
+                        NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                        if (indexPath) {
+                            [tableViewDelegate_ tableViewDidSwipeEnable:tableView_
+                                                                forCell:self
+                                                      forRowAtIndexPath:indexPath];
+                        }
+                    }
+                }
+                [self revertSwipeWithAnimated:YES];
+            }
+            break;
+        }
+    }
+}
+
+#pragma mark - UIView methods
+
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    [super willMoveToSuperview:newSuperview];
+    
+    if(![newSuperview isKindOfClass:[UITableView class]]) {
+        return;
+    }
+    
+    tableView_ = (UITableView*)newSuperview;
+    tableViewDelegate_ = (id<ChannelTableViewDelegate>)tableView_.delegate;
+}
+
+- (void)didMoveToSuperview
+{
+    [super didMoveToSuperview];
+
+    if ([self.superview isEqual:tableView_]) {
+        NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+        if ([tableViewDelegate_ respondsToSelector:@selector(tableView:sizeForRowAtIndexPath:)]) {
+            limitSize_.width = [tableViewDelegate_ tableView:tableView_ sizeForRowAtIndexPath:indexPath];
+        }
+        if ([tableViewDelegate_ respondsToSelector:@selector(tableView:swipeEnableSizeForRowAtIndexPath:)]) {
+            enableSize_.width = [tableViewDelegate_ tableView:tableView_ swipeEnableSizeForRowAtIndexPath:indexPath];
+        }
+    }
+}
+#pragma mark - UITableViewCell methods
+
+- (void)prepareForReuse
+{
+    [self revertSwipeWithAnimated:NO];
+}
+
+#pragma mark - UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    BOOL allow = YES;
+    if ([tableViewDelegate_ respondsToSelector:@selector(tableView:shouldAllowSwipingForRowAtIndexPath:)]) {
+        NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+        if (indexPath) {
+            allow = [tableViewDelegate_ tableView:tableView_ shouldAllowSwipingForRowAtIndexPath:indexPath];
+        }
+    }
+    if (!allow) {
+        return NO;
+    }
+
+    return YES;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    CGPoint velocity = [panGesture_ velocityInView:self.contentView];
+
+    if (fabs(velocity.x) < fabs(velocity.y)) {
+        return NO;
+    }
+
+    // 自身や他のセルが選択されている場合
+    if (self.isSelected || (tableView_ && [tableView_ indexPathForSelectedRow])) {
+        return NO;
+    }
+
+    return YES;
+}
+
+@end

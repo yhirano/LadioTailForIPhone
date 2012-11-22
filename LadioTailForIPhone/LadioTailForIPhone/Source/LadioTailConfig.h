@@ -148,6 +148,15 @@ extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR;
 /// テーブルセルのビットレートのテキスト選択時カラー
 extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
 
+/// プレイスワイプビューの文字色
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+
+/// プレイスワイプビューの背景色（上）
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_TOP_COLOR;
+
+/// プレイスワイプビューの背景色（下）
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR;
+
 // Pull Refreshのテキスト色
 extern UIColor * const PULL_REFRESH_TEXT_COLOR;
 

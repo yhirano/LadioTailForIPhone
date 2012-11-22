@@ -205,6 +205,22 @@ UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR = [UIColor blackColor];
 /// テーブルセルのビットレートのテキスト選択時カラー
 UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
+/// プレイスワイプビューの文字色
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR = [UIColor blackColor];
+
+/// プレイスワイプビューの背景色（上）
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_TOP_COLOR = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                           saturation:(89.0f / 100.0f)
+                                                                           brightness:(95.0f / 100.0f)
+                                                                                alpha:1.0f];
+
+
+/// プレイスワイプビューの背景色（下）
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                              saturation:(89.0f / 100.0f)
+                                                                              brightness:(57.0f / 100.0f)
+                                                                                   alpha:1.0f];
+
 // Pull Refreshのテキスト色
 UIColor * const PULL_REFRESH_TEXT_COLOR = [UIColor darkGrayColor];
 

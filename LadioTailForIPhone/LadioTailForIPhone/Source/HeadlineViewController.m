@@ -23,6 +23,7 @@
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "GoogleAdMobAds/GADBannerView.h"
+#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
@@ -32,12 +33,12 @@
 /// 選択されたソート種類を覚えておくためのキー
 #define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
 
-enum HeadlineViewDisplayType {
+typedef enum {
     HeadlineViewDisplayTypeOnlyTitleAndDj,
     HeadlineViewDisplayTypeElapsedTime,
     HeadlineViewDisplayTypeBitrate,
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
-};
+} HeadlineViewDisplayType;
 
 @implementation HeadlineViewController
 {
@@ -150,18 +151,23 @@ enum HeadlineViewDisplayType {
         }
     }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ChannelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
     UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
-    
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
@@ -213,13 +219,27 @@ enum HeadlineViewDisplayType {
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
+
+    BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
+    playImageView.hidden = !playing;
     
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
-    
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
     favoriteImageView.hidden = !channel.favorite;
-    
+
+    ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
+    channelCell.swipeView = swipeView;
+
+    anchorLabel.textColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.highlightedTextColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.text = @"";
+
+    if (playing) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
+    }
+
     return cell;
 }
 #elif defined(RADIO_EDGE)
@@ -244,7 +264,12 @@ enum HeadlineViewDisplayType {
     
     UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UIView *swipeView = (UIView *) [cell viewWithTag:10];
 
     if (!([channel.serverName length] == 0)) {
         serverNameLabel.text = channel.serverName;
@@ -276,13 +301,27 @@ enum HeadlineViewDisplayType {
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
+
+    BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
+    playImageView.hidden = !playing;
     
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel listenUrl]];
-    
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
     favoriteImageView.hidden = !channel.favorite;
+
+    ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
+    channelCell.swipeView = swipeView;
+
+    anchorLabel.textColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.highlightedTextColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.text = @"";
     
+    if (playing) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
+    }
+
     return cell;
 }
 #else
@@ -992,6 +1031,81 @@ enum HeadlineViewDisplayType {
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
 {
     return [NSDate date]; // should return date data source was last changed
+}
+
+#pragma mark - ChannelTableViewDelegate methods
+
+- (BOOL) tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath;
+{
+    PlayerState playerState = [[Player sharedInstance] state];
+    if (playerState == PlayerStatePrepare) {
+        return NO;
+    }
+
+    return YES;
+}
+
+-  (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return 50;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return 38;
+}
+
+- (void)   tableView:(UITableView *)tableView
+didChangeSwipeEnable:(BOOL)enable
+             forCell:(ChannelTableViewCell *)cell
+   forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    if (enable) {
+        Channel *channel = (Channel *) _showedChannels[indexPath.row];
+        if (channel) {
+#if defined(LADIO_TAIL)
+            BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
+#elif defined(RADIO_EDGE)
+            BOOL playing = [[Player sharedInstance] isPlaying:channel.listenUrl];
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+            if (playing) {
+                anchorLabel.text = @"STOP";
+            } else {
+                anchorLabel.text = @"PLAY";
+            }
+        } else {
+            anchorLabel.text = @"";
+        }
+    } else {
+        anchorLabel.text = @"";
+    }
+}
+
+- (void)tableViewDidSwipeEnable:(UITableView *)tableView
+                        forCell:(ChannelTableViewCell *)cell
+              forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Channel *channel = (Channel *) _showedChannels[indexPath.row];
+    if (channel) {
+#if defined(LADIO_TAIL)
+        BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
+#elif defined(RADIO_EDGE)
+        BOOL playing = [[Player sharedInstance] isPlaying:channel.listenUrl];
+#else
+        #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+        if (playing) {
+            [[Player sharedInstance] stop];
+        } else {
+            [[Player sharedInstance] playChannel:channel];
+        }
+    }
+
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    anchorLabel.text = @"";
 }
 
 #pragma mark - NSUserDefaults notifications

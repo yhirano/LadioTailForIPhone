@@ -21,15 +21,15 @@
  */
 
 #import "LadioTailConfig.h"
-#import "GradientLayer.h"
+#import "BottomBarGradientLayer.h"
 
-@implementation GradientLayer
+@implementation BottomBarGradientLayer
 
 - (id)init
 {
     self = [super init];
 	if (self) {
-		self.colors = @[(id)[UIColor whiteColor].CGColor, (id)([UIColor blackColor].CGColor)];
+		self.colors = @[(id)BOTTOM_BAR_TOP_COLOR.CGColor, (id)(BOTTOM_BAR_BOTTOM_COLOR.CGColor)];
 		self.startPoint = CGPointMake(0.5, 0.0);
 		self.endPoint = CGPointMake(0.5, 1.0);
 	}
