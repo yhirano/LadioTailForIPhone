@@ -24,7 +24,7 @@
 #import "Player.h"
 
 /// 停止する理由
-enum StopReason
+typedef enum
 {
     StopReasonUser,
     StopReasonAnotherUrlPlay,
@@ -33,9 +33,7 @@ enum StopReason
     StopReasonFailedToPlayToEndTime,
     StopReasonStatusFailed,
     StopReasonInterruption,
-};
-
-typedef NSInteger StopReason;
+} StopReason;
 
 static Player *instance = nil;
 
