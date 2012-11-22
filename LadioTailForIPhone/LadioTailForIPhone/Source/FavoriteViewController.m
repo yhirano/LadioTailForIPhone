@@ -22,7 +22,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "LadioTailConfig.h"
-#import "ChannelsHtml.h"
+#import "RadioLib/ReplaceUrlUtil.h"
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
 
@@ -45,7 +45,7 @@
         return;
     }
     
-    NSString *html = [ChannelsHtml favoritelViewHtml:_favorite];
+    NSString *html = [_favorite descriptionHtml];
     
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
@@ -62,8 +62,9 @@
     [super viewDidLoad];
 
     // ナビゲーションタイトルを表示する
-    // タイトルが存在する場合はタイトルを表示する
     NSString *titleString;
+#if defined(LADIO_TAIL)
+    // タイトルが存在する場合はタイトルを表示する
     if (!([_favorite.channel.nam length] == 0)) {
         titleString = _favorite.channel.nam;
     }
@@ -75,6 +76,21 @@
     else {
         titleString = _favorite.channel.mnt;
     }
+#elif defined(RADIO_EDGE)
+    // Server Nameが存在する場合はタイトルを表示する
+    if (!([_favorite.channel.serverName length] == 0)) {
+        titleString = _favorite.channel.serverName;
+    }
+    // Genreが存在する場合はGenreを表示する
+    else if (!([_favorite.channel.genre length] == 0)) {
+        titleString = _favorite.channel.genre;
+    } else {
+        titleString = @"";
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     _topNavigationItem.title = titleString;
 
     // Web画面からの戻るボタンのテキストと色を書き換える
@@ -158,7 +174,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
+            ((WebPageViewController *) viewCon).url = [ReplaceUrlUtil urlForSmartphone:openUrl_];
         }
     }
 }
@@ -177,7 +193,7 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
             if (OPEN_SAFARI_WHEN_CLICK_LINK) {
                 // リンクをクリック時、Safariを起動する
-                [[UIApplication sharedApplication] openURL:[ChannelsHtml urlForSmartphone:[request URL]]];
+                [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
                 return NO;
             } else {
                 openUrl_ = [request URL];

@@ -21,7 +21,7 @@
  */
 
 #import "LadioTailConfig.h"
-#import "Ladiolib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 #import "SendFavoritesToProviderOperation.h"
 
 @implementation SendFavoritesToProviderOperation
@@ -65,7 +65,13 @@
     for (int i = 0; i < [favorites count]; ++i) {
         Favorite *favorite = [favorites objectAtIndex:i];
         Channel *channel = favorite.channel;
+#if defined(LADIO_TAIL)
         favoritesJson = [[NSString alloc] initWithFormat:@"%@\"%@\"", favoritesJson, channel.mnt];
+#elif defined(RADIO_EDGE)
+        favoritesJson = [[NSString alloc] initWithFormat:@"%@\"%@\"", favoritesJson, [channel.listenUrl absoluteString]];
+#else
+        #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
         // Add ','.
         if (i < [favorites count] - 1) {
             favoritesJson = [[NSString alloc] initWithFormat:@"%@,", favoritesJson];

@@ -23,7 +23,7 @@
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 #import "Player.h"
 #import "HeadlineNaviViewController.h"
 #import "SideMenuTableViewController.h"
@@ -32,15 +32,14 @@
 
 @implementation LadioTailViewController
 {
-    IIViewDeckController *viewDeckController;
-    HeadlineNaviViewController *headlineNaviViewController;
+    IIViewDeckController *viewDeckController_;
 }
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineFailLoadNotification object:nil];
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -55,15 +54,15 @@
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
-                                                 name:LadioLibHeadlineDidStartLoadNotification 
+                                                 name:RadioLibHeadlineDidStartLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidFinishLoad:)
-                                                 name:LadioLibHeadlineDidFinishLoadNotification 
+                                                 name:RadioLibHeadlineDidFinishLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineFailLoad:)
-                                                 name:LadioLibHeadlineFailLoadNotification 
+                                                 name:RadioLibHeadlineFailLoadNotification 
                                                object:nil];
 #ifdef DEBUG
     NSLog(@"%@ registed headline update notifications.", NSStringFromClass([self class]));
@@ -71,24 +70,24 @@
 
     // サイドメニューを設定する
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    headlineNaviViewController =
+    HeadlineNaviViewController* headlineNaviViewController =
         (HeadlineNaviViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
     SideMenuTableViewController *sideMenuTableViewController =
         (SideMenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"SideMenuTableViewController"];
-    viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
+    viewDeckController_ = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
                                                                  leftViewController:sideMenuTableViewController];
-    viewDeckController.view.frame = self.view.bounds;
-    viewDeckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController.leftLedge = 74.0f;
+    viewDeckController_.view.frame = self.view.bounds;
+    viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    viewDeckController_.leftLedge = 74.0f;
 
-    [self.view addSubview:viewDeckController.view];
+    [self.view addSubview:viewDeckController_.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [viewDeckController viewWillAppear:YES];
+    [viewDeckController_ viewWillAppear:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -100,7 +99,7 @@
     // リモコン対応/シェイク対応
     [self becomeFirstResponder];
 
-    [viewDeckController viewDidAppear:animated];
+    [viewDeckController_ viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -109,13 +108,13 @@
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
 
-    [viewDeckController viewWillDisappear:animated];
+    [viewDeckController_ viewWillDisappear:animated];
 
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [viewDeckController viewDidDisappear:animated];
+    [viewDeckController_ viewDidDisappear:animated];
     
     [super viewDidDisappear:animated];
 }
@@ -123,25 +122,25 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
-    [viewDeckController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [viewDeckController_ willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    [viewDeckController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [viewDeckController_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    [viewDeckController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [viewDeckController_ didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [viewDeckController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+    [viewDeckController_ shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         switch (interfaceOrientation) {
@@ -160,7 +159,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    [viewDeckController shouldAutorotate];
+    [viewDeckController_ shouldAutorotate];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return YES;
@@ -197,6 +196,15 @@
         return nil;
     }
 
+    // HeadlineNaviViewControllerを取得する
+    HeadlineNaviViewController *headlineNaviViewController = nil;
+    UIViewController* centerController = viewDeckController_.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+        headlineNaviViewController = (HeadlineNaviViewController*)centerController;
+    } else {
+        return nil;
+    }
+
     // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
     for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
         if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
@@ -208,16 +216,28 @@
     if (headlineViewController != nil) {
         // 番組を取得する
         NSArray *channels = headlineViewController.showedChannels;
-        NSInteger playingChannelIndex;
-        BOOL found = NO;
+        __block NSInteger playingChannelIndex;
+        __block BOOL found = NO;
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
-        for (playingChannelIndex = 0; playingChannelIndex < [channels count]; ++playingChannelIndex) {
-            Channel *channel = channels[playingChannelIndex];
-            if ([channel isSameMount:playingChannel]) {
-                found = YES; // 見つかったことを示す
-                break;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([channels count], queue, ^(size_t i) {
+            if (found == NO) {
+                Channel *channel = channels[i];
+#if defined(LADIO_TAIL)
+                if ([channel isSameMount:playingChannel]) {
+                    playingChannelIndex = i;
+                    found = YES; // 見つかったことを示す
+                }
+#elif defined(RADIO_EDGE)
+                if ([channel isSameListenUrl:playingChannel]) {
+                    playingChannelIndex = i;
+                    found = YES; // 見つかったことを示す
+                }
+#else
+#error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
             }
-        }
+        });
         // 番組が見つかった場合
         if (found) {
             // 現在再生中の次の番組を返す場合
@@ -247,6 +267,15 @@
     Channel *result = nil;
     HeadlineViewController *headlineViewController = nil;
 
+    // HeadlineNaviViewControllerを取得する
+    HeadlineNaviViewController *headlineNaviViewController = nil;
+    UIViewController* centerController = viewDeckController_.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+        headlineNaviViewController = (HeadlineNaviViewController*)centerController;
+    } else {
+        return nil;
+    }
+
     // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
     for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
         if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
@@ -266,6 +295,22 @@
     }
 
     return result;
+}
+
+/**
+ * メインスレッドで処理を実行する
+ *
+ * @params メインスレッドで処理を実行する
+ */
+- (void)execMainThread:(void (^)(void))exec
+{
+    if ([NSThread isMainThread]) {
+        exec();
+    } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            exec();
+        }];
+    }
 }
 
 #pragma mark - UIResponder methods
@@ -329,9 +374,11 @@
 #ifdef DEBUG
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
-    // 進捗ウィンドウを表示する
-    [SVProgressHUD show];
+
+    [self execMainThread:^{
+        // 進捗ウィンドウを表示する
+        [SVProgressHUD show];
+    }];
 }
 
 - (void)headlineDidFinishLoad:(NSNotification *)notification
@@ -339,9 +386,11 @@
 #ifdef DEBUG
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
-    // 進捗ウィンドウを消す
-    [SVProgressHUD dismiss];
+
+    [self execMainThread:^{
+        // 進捗ウィンドウを消す
+        [SVProgressHUD dismiss];
+    }];
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -349,10 +398,12 @@
 #ifdef DEBUG
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
-    
-    // 進捗ウィンドウにエラー表示
-    NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
-    [SVProgressHUD showErrorWithStatus:errorStr];
+
+    [self execMainThread:^{
+        // 進捗ウィンドウにエラー表示
+        NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
+        [SVProgressHUD showErrorWithStatus:errorStr];
+    }];
 }
 
 @end

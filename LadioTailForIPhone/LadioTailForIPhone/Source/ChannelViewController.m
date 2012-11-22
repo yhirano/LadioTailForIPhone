@@ -23,8 +23,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
 #import "LadioTailConfig.h"
+#import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
-#import "ChannelsHtml.h"
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
@@ -46,7 +46,7 @@
 
     // お気に入りの変化通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:LadioLibChannelChangedFavoritesNotification
+                                                    name:RadioLibChannelChangedFavoritesNotification
                                                   object:nil];
 }
 
@@ -65,7 +65,14 @@
 - (void)updatePlayButton
 {
     // 再生ボタンの画像を切り替える
+#if defined(LADIO_TAIL)
     NSURL *url = [_channel playUrl];
+#elif defined(RADIO_EDGE)
+    NSURL *url = [_channel listenUrl];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
@@ -87,7 +94,7 @@
         return;
     }
 
-    NSString *html = [ChannelsHtml channelViewHtml:_channel];
+    NSString *html = [_channel descriptionHtml];
 
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
@@ -101,7 +108,14 @@
 
 - (IBAction)play:(id)sender
 {
+#if defined(LADIO_TAIL)
     NSURL *url = [_channel playUrl];
+#elif defined(RADIO_EDGE)
+    NSURL *url = [_channel listenUrl];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     Player *player = [Player sharedInstance];
     if ([player isPlaying:url]) {
         [player stop];
@@ -120,9 +134,19 @@
 
 - (IBAction)tweet:(id)sender {
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
+
+#if defined(LADIO_TAIL)
     NSString *tweetText = [[NSString alloc]
                            initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
                            _channel.nam, [_channel.surl absoluteString]];
+#elif defined(RADIO_EDGE)
+    NSString *tweetText = [[NSString alloc]
+                           initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
+                           _channel.serverName, [_channel.listenUrl absoluteString]];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     [tweetView setInitialText:tweetText];
     [self presentModalViewController:tweetView animated:YES];
 }
@@ -150,11 +174,12 @@
     // 番組のお気に入りの変化通知を受け取る
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(channelFavoritesChanged:)
-                                                 name:LadioLibChannelChangedFavoritesNotification
+                                                 name:RadioLibChannelChangedFavoritesNotification
                                                object:nil];
 
-    NSString *titleString;
     // ナビゲーションタイトルを表示する
+    NSString *titleString;
+#if defined(LADIO_TAIL)
     // タイトルが存在する場合はタイトルを表示する
     if (!([_channel.nam length] == 0)) {
         titleString = _channel.nam;
@@ -162,7 +187,24 @@
     // DJが存在する場合はDJを表示する
     else if (!([_channel.dj length] == 0)) {
         titleString = _channel.dj;
+    } else {
+        titleString = @"";
     }
+#elif defined(RADIO_EDGE)
+    // Server Nameが存在する場合はServer Nameを表示する
+    if (!([_channel.serverName length] == 0)) {
+        titleString = _channel.serverName;
+    }
+    // Genreが存在する場合はGenreを表示する
+    else if (!([_channel.genre length] == 0)) {
+        titleString = _channel.genre;
+    } else {
+        titleString = @"";
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     _topNavigationItem.title = titleString;
 
     // お気に入りボタンの色を変える
@@ -263,7 +305,7 @@
         // URLを遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[WebPageViewController class]]) {
-            ((WebPageViewController *) viewCon).url = [ChannelsHtml urlForSmartphone:openUrl_];
+            ((WebPageViewController *) viewCon).url = [ReplaceUrlUtil urlForSmartphone:openUrl_];
         }
     }
 }
@@ -282,7 +324,7 @@
         if ([scheme compare:@"http"] == NSOrderedSame) {
             if (OPEN_SAFARI_WHEN_CLICK_LINK) {
                 // リンクをクリック時、Safariを起動する
-                [[UIApplication sharedApplication] openURL:[ChannelsHtml urlForSmartphone:[request URL]]];
+                [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
                 return NO;
             } else {
                 openUrl_ = [request URL];

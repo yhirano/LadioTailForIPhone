@@ -21,7 +21,7 @@
  */
 
 #import "ViewDeck/IIViewDeckController.h"
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ICloudStrorage.h"
@@ -173,6 +173,7 @@
     return [favorites_ count];
 }
 
+#if defined(LADIO_TAIL)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Favorite *favorite = (Favorite *)favorites_[indexPath.row];
@@ -202,13 +203,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-
+    
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *mountTagLabel = (UILabel *) [cell viewWithTag:3];
     UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
     UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
-
+    
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
@@ -242,22 +243,97 @@
         broadcastImageView.hidden = YES;
     }
     
-
+    
     // テーブルセルのテキスト等の色を変える
     titleLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
     titleLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
-
+    
     djLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
     djLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
-
+    
     mountTagLabel.textColor = FAVORITES_CELL_TAG_TEXT_COLOR;
     mountTagLabel.highlightedTextColor = FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
-
+    
     mountLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
     mountLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
     
     return cell;
 }
+#elif defined(RADIO_EDGE)
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Favorite *favorite = (Favorite *)favorites_[indexPath.row];
+    Headline *headline = [Headline sharedInstance];
+    Player *player = [Player sharedInstance];
+    Channel *channel = favorite.channel;
+    
+    NSString *cellIdentifier;
+    
+    // Server NameとGenreが存在する場合
+    if (!([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
+        cellIdentifier = @"FavoriteCell";
+    }
+    // Server Nameのみが存在する場合
+    else if (!([channel.serverName length] == 0) && [channel.genre length] == 0) {
+        cellIdentifier = @"FavoriteTitleOnlyCell";
+    }
+    // Genreのみが存在する場合
+    else if ([channel.serverName length] == 0 && !([channel.genre length] == 0)) {
+        cellIdentifier = @"FavoriteDjOnlyCell";
+    } else {
+        cellIdentifier = @"FavoriteCell";
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
+    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
+    UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
+    
+    if (!([channel.serverName length] == 0)) {
+        serverNameLabel.text = channel.serverName;
+    } else {
+        serverNameLabel.text = @"";
+    }
+    if (!([channel.genre length] == 0)) {
+        genreLabel.text = channel.genre;
+    } else {
+        genreLabel.text = @"";
+    }
+    // 再生中
+    if ([[player playingChannel] isSameListenUrl:channel]) {
+        broadcastImageView.hidden = NO;
+        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
+        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+    }
+    // 配信中
+    else if ([headline channelFromListenUrl:channel.listenUrl] != nil) {
+        broadcastImageView.hidden = NO;
+        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
+        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+    }
+    // 配信されていない
+    else {
+        broadcastImageView.hidden = YES;
+    }
+    
+    
+    // テーブルセルのテキスト等の色を変える
+    serverNameLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+    serverNameLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+    
+    genreLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
+    genreLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
+
+    return cell;
+}
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
 -  (void)tableView:(UITableView *)tableView
    willDisplayCell:(UITableViewCell *)cell

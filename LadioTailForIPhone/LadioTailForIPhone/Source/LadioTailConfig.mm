@@ -160,11 +160,17 @@ UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT = [UIColor colorWithRe
                                                                              blue:(140.0f / 255)
                                                                             alpha:1.0f];
 
+/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT の時間（秒）
+const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC = 0;
+
 /// テーブルセルの日付の背景の色（暗い方）
 UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK = [UIColor colorWithRed:(120.0f / 255)
                                                                            green:(120.0f / 255)
                                                                             blue:(120.0f / 255)
                                                                            alpha:1.0f];
+
+/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK の時間（秒）
+const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC = 6 * 60 * 60;
 
 /// テーブルセルの日付のテキストカラー
 UIColor * const HEADLINE_CELL_DATE_TEXT_COLOR = [UIColor blackColor];
@@ -181,17 +187,39 @@ UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT = [UIColor colorWit
                                                                           brightness:(70.0f / 100.0f)
                                                                                alpha:1.0f];
 
+/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT のビットレート
+const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE = 128;
+
 /// テーブルセルのビットレートの背景の色（暗い方）
 UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK = [UIColor colorWithHue:(40.0f / 359.0f)
                                                                          saturation:(89.0f / 100.0f)
                                                                          brightness:(57.0f / 100.0f)
                                                                               alpha:1.0f];
 
+/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK のビットレート
+const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE = 24;
+
 /// テーブルセルのビットレートのテキストカラー
 UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR = [UIColor blackColor];
 
 /// テーブルセルのビットレートのテキスト選択時カラー
 UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR = [UIColor blackColor];
+
+/// プレイスワイプビューの文字色
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR = [UIColor blackColor];
+
+/// プレイスワイプビューの背景色（上）
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_TOP_COLOR = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                           saturation:(89.0f / 100.0f)
+                                                                           brightness:(95.0f / 100.0f)
+                                                                                alpha:1.0f];
+
+
+/// プレイスワイプビューの背景色（下）
+UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR = [UIColor colorWithHue:(40.0f / 359.0f)
+                                                                              saturation:(89.0f / 100.0f)
+                                                                              brightness:(57.0f / 100.0f)
+                                                                                   alpha:1.0f];
 
 // Pull Refreshのテキスト色
 UIColor * const PULL_REFRESH_TEXT_COLOR = [UIColor darkGrayColor];
@@ -201,6 +229,16 @@ NSString * const PULL_REFRESH_ARROW_IMAGE = @"EGOTableViewPullRefresh.bundle/gra
 
 // Pull Refreshの背景色
 UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR = [UIColor lightGrayColor];
+
+#if defined(LADIO_TAIL)
+    /// 一文字ごとに検索を実行するか
+    const BOOL SEARCH_EACH_CHAR = YES;
+#elif defined(RADIO_EDGE)
+    /// 一文字ごとに検索を実行するか
+    const BOOL SEARCH_EACH_CHAR = NO;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
 /// Pull refreshでヘッドラインを有効にするか
 const BOOL PULL_REFRESH_HEADLINE = YES;

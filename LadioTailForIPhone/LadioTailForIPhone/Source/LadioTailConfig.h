@@ -112,8 +112,14 @@ extern const CGFloat HEADLINE_CELL_DATE_CORNER_RADIUS;
 /// テーブルセルの日付の背景の色（明るい方）
 extern UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
 
+/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT の時間（秒）
+extern const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC;
+
 /// テーブルセルの日付の背景の色（暗い方）
 extern UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
+
+/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK の時間（秒）
+extern const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC;
 
 /// テーブルセルの日付のテキストカラー
 extern UIColor * const HEADLINE_CELL_DATE_TEXT_COLOR;
@@ -127,14 +133,29 @@ extern const CGFloat HEADLINE_CELL_BITRATE_CORNER_RADIUS;
 /// テーブルセルのビットレートの背景の色（明るい方）
 extern UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
 
+/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT のビットレート
+extern const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE;
+
 /// テーブルセルのビットレートの背景の色（暗い方）
 extern UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
+
+/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK のビットレート
+extern const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE;
 
 /// テーブルセルのビットレートのテキストカラー
 extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR;
 
 /// テーブルセルのビットレートのテキスト選択時カラー
 extern UIColor * const HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+
+/// プレイスワイプビューの文字色
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+
+/// プレイスワイプビューの背景色（上）
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_TOP_COLOR;
+
+/// プレイスワイプビューの背景色（下）
+extern UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR;
 
 // Pull Refreshのテキスト色
 extern UIColor * const PULL_REFRESH_TEXT_COLOR;
@@ -144,6 +165,9 @@ extern NSString * const PULL_REFRESH_ARROW_IMAGE;
 
 // Pull Refreshの背景色
 extern UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR;
+
+/// 一文字ごとに検索を実行するか
+extern const BOOL SEARCH_EACH_CHAR;
 
 /// Pull refreshでヘッドラインを有効にするか
 extern const BOOL PULL_REFRESH_HEADLINE;

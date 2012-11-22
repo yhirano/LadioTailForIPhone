@@ -23,6 +23,7 @@
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "GoogleAdMobAds/GADBannerView.h"
+#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
@@ -32,12 +33,12 @@
 /// 選択されたソート種類を覚えておくためのキー
 #define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
 
-enum HeadlineViewDisplayType {
+typedef enum {
     HeadlineViewDisplayTypeOnlyTitleAndDj,
     HeadlineViewDisplayTypeElapsedTime,
     HeadlineViewDisplayTypeBitrate,
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
-};
+} HeadlineViewDisplayType;
 
 @implementation HeadlineViewController
 {
@@ -61,10 +62,10 @@ enum HeadlineViewDisplayType {
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidStartLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineDidFinishLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineFailLoadNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioLibHeadlineChannelChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidFinishLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineFailLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
 #ifdef DEBUG
     NSLog(@"%@ unregisted headline update notifications.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
@@ -108,6 +109,7 @@ enum HeadlineViewDisplayType {
 
 #pragma mark - Private methods
 
+#if defined(LADIO_TAIL)
 - (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
@@ -149,18 +151,23 @@ enum HeadlineViewDisplayType {
         }
     }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ChannelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
     UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];;
-    
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
     } else {
@@ -177,10 +184,10 @@ enum HeadlineViewDisplayType {
         listenersLabel.text = @"";
     }
     if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.text = [self dateText:channel.tims];
+        dateLabel.text = [HeadlineViewController dateText:channel.tims];
     }
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.text = [self bitrateText:channel.bit];
+        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bit];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -198,7 +205,7 @@ enum HeadlineViewDisplayType {
         dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         dateLabel.clipsToBounds = YES;
-        dateLabel.backgroundColor = [self dateLabelBackgroundColor:channel.tims];
+        dateLabel.backgroundColor = [HeadlineViewController dateLabelBackgroundColor:channel.tims];
         dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
         dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
     }
@@ -208,21 +215,120 @@ enum HeadlineViewDisplayType {
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [self bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bit];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
+
+    BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
+    playImageView.hidden = !playing;
     
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    playImageView.hidden = ![[Player sharedInstance] isPlaying:[channel playUrl]];
-    
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
     favoriteImageView.hidden = !channel.favorite;
-    
+
+    ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
+    channelCell.swipeView = swipeView;
+
+    anchorLabel.textColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.highlightedTextColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.text = @"";
+
+    if (playing) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
+    }
+
     return cell;
 }
+#elif defined(RADIO_EDGE)
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+{
+    Channel *channel = (Channel *) _showedChannels[num];
+    
+    NSString *cellIdentifier;
+    
+    // Genreのみが存在する場合
+    if (([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
+        cellIdentifier = @"ChannelCell_Genre_Bitrate";
+    } else {
+        cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
+    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UIView *swipeView = (UIView *) [cell viewWithTag:10];
 
-- (NSInteger)headlineViewDisplayType
+    if (!([channel.serverName length] == 0)) {
+        serverNameLabel.text = channel.serverName;
+    } else {
+        serverNameLabel.text = @"";
+    }
+    if (!([channel.genre length] == 0)) {
+        genreLabel.text = channel.genre;
+    } else {
+        genreLabel.text = @"";
+    }
+    if (bitrateLabel != nil) {
+        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bitrate];
+    }
+    
+    // テーブルセルのテキスト等の色を変える
+    serverNameLabel.textColor = HEADLINE_CELL_TITLE_TEXT_COLOR;
+    serverNameLabel.highlightedTextColor = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+    
+    genreLabel.textColor = HEADLINE_CELL_DJ_TEXT_COLOR;
+    genreLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+    
+    if (bitrateLabel != nil) {
+        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
+        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
+        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
+        bitrateLabel.clipsToBounds = YES;
+        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bitrate];
+        bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
+        bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
+    }
+
+    BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
+    playImageView.hidden = !playing;
+    
+    favoriteImageView.hidden = !channel.favorite;
+
+    ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
+    channelCell.swipeView = swipeView;
+
+    anchorLabel.textColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.highlightedTextColor = HEADLINE_CELL_PLAY_SWIPE_TEXT_COLOR;
+    anchorLabel.text = @"";
+    
+    if (playing) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
+    }
+
+    return cell;
+}
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
++ (NSInteger)headlineViewDisplayType
 {
     NSInteger result = HeadlineViewDisplayTypeElapsedTime;
 
@@ -241,7 +347,7 @@ enum HeadlineViewDisplayType {
     return result;
 }
 
-- (NSString *)dateText:(NSDate *)date
++ (NSString *)dateText:(NSDate *)date
 {
     NSString *result;
     
@@ -291,35 +397,35 @@ enum HeadlineViewDisplayType {
 }
 
 /// 渡された日付と現在の日付から、日付ラベルの背景色を算出する
-- (UIColor *)dateLabelBackgroundColor:(NSDate *)date
++ (UIColor *)dateLabelBackgroundColor:(NSDate *)date
 {
     UIColor *result;
 
     NSTimeInterval diffTime = [[NSDate date] timeIntervalSinceDate:date];
 
     // 渡された日付が現在よりも新しい場合（ないはずだが一応）
-    if (diffTime <= 0) {
+    if (diffTime <= HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC) {
         // 最も明るい色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
     }
     // 6時間以上前
-    else if (diffTime >= (6 * 60 * 60)) {
+    else if (diffTime >= HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC) {
         // 最も暗い色にする
         result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
     } else {
         // 時間が経過するごとに暗い色にする
         // 0分：最も明るい 6時間：最も暗い
-        double lighty = 1 - (diffTime / (6 * 60 * 60)); // 明るさ
+        double lighty = 1 - (diffTime / HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC); // 明るさを0-1で表している
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
-        darkHue, darkSaturation, darkBrightness, darkAlpha;
+                darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                                  saturation:&ligntSaturation
-                                                  brightness:&ligntBrightness
-                                                       alpha:&lightAlpha];
+                                               saturation:&ligntSaturation
+                                               brightness:&ligntBrightness
+                                                    alpha:&lightAlpha];
         [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                                 saturation:&darkSaturation
-                                                 brightness:&darkBrightness
-                                                      alpha:&darkAlpha];
+                                              saturation:&darkSaturation
+                                              brightness:&darkBrightness
+                                                   alpha:&darkAlpha];
         CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
         CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
         CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
@@ -330,46 +436,58 @@ enum HeadlineViewDisplayType {
     return result;
 }
 
-- (NSString *)bitrateText:(NSInteger)bitrate
++ (NSString *)bitrateText:(NSInteger)bitrate
 {
     NSString *result;
 
     if (bitrate < 1000) {
         result = [[NSString alloc] initWithFormat:@"%dkbps", bitrate];
-    } else if (bitrate <= 1024) {
+    }
+    // 1000 - 1024
+    else if (bitrate <= 1024) {
         result = @"1Mbps";
+    }
+    // 1025 - 102399 (99.99Mbps)
+    else if (bitrate <= 102399) {
+        result = [[NSString alloc] initWithFormat:@"%.1fMbps", bitrate / (float)1024];
+    }
+    // 102400 - 1048575(999.99Mbps)
+    else if (bitrate <= 1048575) {
+        result = [[NSString alloc] initWithFormat:@"%.0fMbps", bitrate / (float)1024];
     } else {
-        result = [[NSString alloc] initWithFormat:@"%f.1Mbps", bitrate / (float)1024];
+        result = [[NSString alloc] initWithFormat:@"%.1fTbps", bitrate / (float)(1024 * 1024)];
     }
     
     return result;
 }
 
 /// 渡されたビットレートから、ビットレートラベルの背景色を算出する
-- (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
++ (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
 {
     UIColor *result;
     
-    if(bitrate <= 24) {
+    if(bitrate <= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) {
         // 最も暗い色にする
         result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
-    } else if (bitrate >= 128) {
+    } else if (bitrate >= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE) {
         // 最も明るい色にする
         result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
     } else {
         // ビットレートが低くなるごとに暗い色にする
         // 128kbps：最も明るい 24kbps：最も暗い
-        double lighty = (double)(bitrate - 24) / (double)(128 - 24); // 明るさ
+        double lighty = (double)(bitrate - HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) /
+            (double)(HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE -
+                     HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE); // 明るさを0-1で表している
         CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
                 darkHue, darkSaturation, darkBrightness, darkAlpha;
         [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                                 saturation:&ligntSaturation
-                                                 brightness:&ligntBrightness
-                                                      alpha:&lightAlpha];
+                                                  saturation:&ligntSaturation
+                                                  brightness:&ligntBrightness
+                                                       alpha:&lightAlpha];
         [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                                  saturation:&darkSaturation
-                                                  brightness:&darkBrightness
-                                                       alpha:&darkAlpha];
+                                                 saturation:&darkSaturation
+                                                 brightness:&darkBrightness
+                                                      alpha:&darkAlpha];
         CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
         CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
         CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
@@ -382,30 +500,64 @@ enum HeadlineViewDisplayType {
 
 - (void)updateHeadlineTable
 {
+    if (SEARCH_EACH_CHAR == NO) {
+        [self execMainThread:^{
+            // 検索バーの入力を受け付けない
+            _headlineSearchBar.userInteractionEnabled = NO;
+        }];
+    }
+
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:[SearchWordManager sharedInstance].searchWord];
 
-    // ナビゲーションタイトルを更新
-    NSString *navigationTitleStr = @"";
-    if ([_showedChannels count] == 0) {
-        navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
-    } else {
-        navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
-    }
-    _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
-
-    // ヘッドラインテーブルを更新
-    [self.headlineTableView reloadData];
+    [self execMainThread:^{
+        // ナビゲーションタイトルを更新
+        NSString *navigationTitleStr = @"";
+        if ([_showedChannels count] == 0) {
+            navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+        } else {
+            navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+        }
+        _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
+        
+        // ヘッドラインテーブルを更新
+        [self.headlineTableView reloadData];
+        
+        if (SEARCH_EACH_CHAR == NO) {
+            // 検索バーの入力を受け付ける
+            _headlineSearchBar.userInteractionEnabled = YES;
+            // 検索バーのインジケーターを消す
+            [_headlineSearchBarIndicator stopAnimating];
+        }
+    }];
 }
 
 - (void)updatePlayingButton
 {
-    // 再生状態に逢わせて再生ボタンの表示を切り替える
-    if ([[Player sharedInstance] state] == PlayerStatePlay) {
-        self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+    [self execMainThread:^{
+        // 再生状態に逢わせて再生ボタンの表示を切り替える
+        if ([[Player sharedInstance] state] == PlayerStatePlay) {
+            self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+        } else {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
+    }];
+}
+
+/**
+ * メインスレッドで処理を実行する
+ *
+ * @params メインスレッドで実行する処理
+ */
+- (void)execMainThread:(void (^)(void))exec
+{
+    if ([NSThread isMainThread]) {
+        exec();
     } else {
-        self.navigationItem.rightBarButtonItem = nil;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            exec();
+        }];
     }
 }
 
@@ -425,6 +577,7 @@ enum HeadlineViewDisplayType {
     // ソートタイプを復元する
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     ChannelSortType s = [defaults integerForKey:SELECTED_CHANNEL_SORT_TYPE_INDEX];
+#if defined(LADIO_TAIL)
     switch (s) {
         case ChannelSortTypeNewly:
         case ChannelSortTypeListeners:
@@ -437,6 +590,22 @@ enum HeadlineViewDisplayType {
             _channelSortType = ChannelSortTypeNewly;
             break;
     }
+#elif defined(RADIO_EDGE)
+    switch (s) {
+        case ChannelSortTypeNewly:
+        case ChannelSortTypeServerName:
+        case ChannelSortTypeGenre:
+        case ChannelSortTypeBitrate:
+            _channelSortType = s;
+            break;
+        case ChannelSortTypeNone:
+        default:
+            _channelSortType = ChannelSortTypeNone;
+            break;
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
     // 設定の変更を補足する
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -447,19 +616,19 @@ enum HeadlineViewDisplayType {
     // ヘッドラインの取得開始と終了をハンドリングし、ヘッドライン更新ボタンの有効無効の切り替えやテーブル更新を行う
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidStartLoad:)
-                                                 name:LadioLibHeadlineDidStartLoadNotification 
+                                                 name:RadioLibHeadlineDidStartLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineDidFinishLoad:)
-                                                 name:LadioLibHeadlineDidFinishLoadNotification 
+                                                 name:RadioLibHeadlineDidFinishLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineFailLoad:)
-                                                 name:LadioLibHeadlineFailLoadNotification 
+                                                 name:RadioLibHeadlineFailLoadNotification 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(headlineChannelChanged:)
-                                                 name:LadioLibHeadlineChannelChangedNotification
+                                                 name:RadioLibHeadlineChannelChangedNotification
                                                object:nil];
 
     // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
@@ -511,7 +680,7 @@ enum HeadlineViewDisplayType {
     _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
     // ヘッドライン表示方式を設定
-    headlineViewDisplayType_ = [self headlineViewDisplayType];
+    headlineViewDisplayType_ = [HeadlineViewController headlineViewDisplayType];
     
     if (PULL_REFRESH_HEADLINE) {
         // PullRefreshViewの生成
@@ -552,6 +721,7 @@ enum HeadlineViewDisplayType {
     [self setPlayingBarButtonItem:nil];
     [self setHeadlineSearchBar:nil];
     [self setHeadlineTableView:nil];
+    [self setHeadlineSearchBarIndicator:nil];
     [super viewDidUnload];
 }
 
@@ -646,7 +816,13 @@ enum HeadlineViewDisplayType {
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSURL *playingUrl = [[Player sharedInstance] playingUrl];
             Headline *headline = [Headline sharedInstance];
+#if defined(LADIO_TAIL)
             Channel *channel = [headline channelFromPlayUrl:playingUrl];
+#elif defined(RADIO_EDGE)
+            Channel *channel = [headline channelFromListenUrl:playingUrl];
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
             ((ChannelViewController *) viewCon).channel = channel;
         }
     }
@@ -660,19 +836,31 @@ enum HeadlineViewDisplayType {
         return;
     }
 
-    NSInteger playingChannelIndex;
-    BOOL found = NO;
+    __block NSInteger playingChannelIndex;
+    __block BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    for (playingChannelIndex = 0; playingChannelIndex < [_showedChannels count]; ++playingChannelIndex) {
-        Channel *channel = _showedChannels[playingChannelIndex];
-        if ([channel isSameMount:playingChannel]) {
-            found = YES; // 見つかったことを示す
-            break;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_apply([_showedChannels count], queue, ^(size_t i) {
+        if (found == NO) {
+            Channel *channel = _showedChannels[i];
+#if defined(LADIO_TAIL)
+            if ([channel isSameMount:playingChannel]) {
+                playingChannelIndex = i;
+                found = YES; // 見つかったことを示す
+            }
+#elif defined(RADIO_EDGE)
+            if ([channel isSameListenUrl:playingChannel]) {
+                playingChannelIndex = i;
+                found = YES; // 見つかったことを示す
+            }
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
         }
-    }
+    });
 
     // 見つかった場合はスクロール
-    if (found){
+    if (found) {
         NSIndexPath *indexPath = nil;
         if (ADMOB_PUBLISHER_ID == nil) {
             indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];
@@ -690,11 +878,19 @@ enum HeadlineViewDisplayType {
     // 検索バーに入力された文字列を保持
     [SearchWordManager sharedInstance].searchWord = searchText;
 
-    [self updateHeadlineTable];
+    if (SEARCH_EACH_CHAR) {
+        [self updateHeadlineTable];
+    }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    if (SEARCH_EACH_CHAR == NO) {
+        [_headlineSearchBarIndicator startAnimating];
+        [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+            [self updateHeadlineTable];
+        }];
+    }
     [searchBar resignFirstResponder];
 }
 
@@ -837,11 +1033,86 @@ enum HeadlineViewDisplayType {
     return [NSDate date]; // should return date data source was last changed
 }
 
+#pragma mark - ChannelTableViewDelegate methods
+
+- (BOOL) tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath;
+{
+    PlayerState playerState = [[Player sharedInstance] state];
+    if (playerState == PlayerStatePrepare) {
+        return NO;
+    }
+
+    return YES;
+}
+
+-  (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return 50;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return 38;
+}
+
+- (void)   tableView:(UITableView *)tableView
+didChangeSwipeEnable:(BOOL)enable
+             forCell:(ChannelTableViewCell *)cell
+   forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    if (enable) {
+        Channel *channel = (Channel *) _showedChannels[indexPath.row];
+        if (channel) {
+#if defined(LADIO_TAIL)
+            BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
+#elif defined(RADIO_EDGE)
+            BOOL playing = [[Player sharedInstance] isPlaying:channel.listenUrl];
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+            if (playing) {
+                anchorLabel.text = @"STOP";
+            } else {
+                anchorLabel.text = @"PLAY";
+            }
+        } else {
+            anchorLabel.text = @"";
+        }
+    } else {
+        anchorLabel.text = @"";
+    }
+}
+
+- (void)tableViewDidSwipeEnable:(UITableView *)tableView
+                        forCell:(ChannelTableViewCell *)cell
+              forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Channel *channel = (Channel *) _showedChannels[indexPath.row];
+    if (channel) {
+#if defined(LADIO_TAIL)
+        BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
+#elif defined(RADIO_EDGE)
+        BOOL playing = [[Player sharedInstance] isPlaying:channel.listenUrl];
+#else
+        #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+        if (playing) {
+            [[Player sharedInstance] stop];
+        } else {
+            [[Player sharedInstance] playChannel:channel];
+        }
+    }
+
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    anchorLabel.text = @"";
+}
+
 #pragma mark - NSUserDefaults notifications
 
 - (void)defaultsChanged:(NSNotification *)notification
 {
-    NSInteger currentHeadlineViewDisplayType = [self headlineViewDisplayType];
+    NSInteger currentHeadlineViewDisplayType = [HeadlineViewController headlineViewDisplayType];
 
     if (headlineViewDisplayType_ != currentHeadlineViewDisplayType) {
         headlineViewDisplayType_ = currentHeadlineViewDisplayType;
@@ -865,8 +1136,10 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        [self execMainThread:^{
+            // Pull refreshを終了する
+            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        }];
     }
 }
 
@@ -877,8 +1150,10 @@ enum HeadlineViewDisplayType {
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        // Pull refreshを終了する
-        [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        [self execMainThread:^{
+            // Pull refreshを終了する
+            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
+        }];
     }
 }
 
@@ -897,10 +1172,12 @@ enum HeadlineViewDisplayType {
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
-        // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
-        if ([[Player sharedInstance] state] == PlayerStatePlay) {
-            [self scrollToTopAtPlayingCell];
-        }
+        [self execMainThread:^{
+            // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
+            if ([[Player sharedInstance] state] == PlayerStatePlay) {
+                [self scrollToTopAtPlayingCell];
+            }
+        }];
     }
 }
 

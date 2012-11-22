@@ -22,7 +22,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
 
 /// 再生準備開始のNotification
 #define LadioTailPlayerPrepareNotification @"LadioTailPlayerPrepareNotification"
@@ -31,14 +31,12 @@
 /// 再生停止のNotification
 #define LadioTailPlayerDidStopNotification @"LadioTailPlayerDidStopNotification"
 
-enum PlayerState
+typedef enum
 {
     PlayerStateIdle,
     PlayerStatePrepare,
     PlayerStatePlay,
-};
-
-typedef NSInteger PlayerState;
+} PlayerState;
 
 @interface Player : NSObject <AVAudioSessionDelegate>
 

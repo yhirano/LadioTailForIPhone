@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Favorites</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>favorites_icloud_sync</string>
+			<key>Title</key>
+			<string>iCloud Sync</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Shake</string>
+			<key>Key</key>
+			<string>operation_shake</string>
+			<key>DefaultValue</key>
+			<string>shake_do_nothing</string>
+			<key>Titles</key>
+			<array>
+				<string>Do nothing</string>
+				<string>Update channels</string>
+				<string>Play random</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>shake_do_nothing</string>
+				<string>shake_update_headline</string>
+				<string>shake_play_random</string>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>

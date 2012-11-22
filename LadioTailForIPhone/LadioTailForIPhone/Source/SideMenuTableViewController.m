@@ -199,7 +199,7 @@
                 case 0: // Update
                 {
                     cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"UpdateCell"];
+                                           withCellWithIdentifier:@"UpdateCell"];
                     
                     UILabel *updateLabel = (UILabel *) [cell viewWithTag:2];
                     updateLabel.text = NSLocalizedString(@"Update", @"更新");
@@ -214,11 +214,12 @@
             }
             break;
         case 1: // Sort Section
+#if defined(LADIO_TAIL)
             switch (indexPath.row) {
                 case 0: // Newly
                 {
                     cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"NewlyCell"];
+                                           withCellWithIdentifier:@"NewlyCell"];
                     
                     UILabel *newlyLabel = (UILabel *) [cell viewWithTag:2];
                     newlyLabel.text = NSLocalizedString(@"Newly", @"新規");
@@ -226,7 +227,7 @@
                     // テーブルセルのテキスト等の色を変える
                     newlyLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     newlyLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
-
+                    
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
@@ -235,15 +236,15 @@
                 case 1: // Listeners
                 {
                     cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"ListenersCell"];
-
+                                           withCellWithIdentifier:@"ListenersCell"];
+                    
                     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:2];
                     listenersLabel.text = NSLocalizedString(@"Listeners", @"リスナー数");
-                        
+                    
                     // テーブルセルのテキスト等の色を変える
                     listenersLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     listenersLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
-
+                    
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeListeners);
@@ -252,15 +253,15 @@
                 case 2: // Title
                 {
                     cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"TitleCell"];
-
+                                           withCellWithIdentifier:@"TitleCell"];
+                    
                     UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
                     titleLabel.text = NSLocalizedString(@"Title", @"タイトル");
-
+                    
                     // テーブルセルのテキスト等の色を変える
                     titleLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     titleLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
-
+                    
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeTitle);
@@ -269,15 +270,15 @@
                 case 3: // DJ
                 {
                     cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"DjCell"];
-
+                                           withCellWithIdentifier:@"DjCell"];
+                    
                     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
                     djLabel.text = NSLocalizedString(@"DJ", @"DJ");
-
+                    
                     // テーブルセルのテキスト等の色を変える
                     djLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     djLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
-
+                    
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeDj);
@@ -287,6 +288,83 @@
                     break;
             }
             break;
+#elif defined(RADIO_EDGE)
+            switch (indexPath.row) {
+                case 0: // None
+                {
+                    cell = [SideMenuTableViewController tableView:tableView
+                                           withCellWithIdentifier:@"NoneCell"];
+                    
+                    UILabel *noneLabel = (UILabel *) [cell viewWithTag:2];
+                    noneLabel.text = NSLocalizedString(@"NoneSort", @"並べ替えない");
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    noneLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    noneLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    // チェックマークの表示
+                    UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
+                    checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
+                    break;
+                }
+                case 1: // Server Name
+                {
+                    cell = [SideMenuTableViewController tableView:tableView
+                                           withCellWithIdentifier:@"TitleCell"];
+                    
+                    UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
+                    titleLabel.text = NSLocalizedString(@"Title", @"タイトル");
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    titleLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    titleLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    // チェックマークの表示
+                    UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
+                    checkImage.hidden = (channelSortType != ChannelSortTypeServerName);
+                    break;
+                }
+                case 2: // Genre
+                {
+                    cell = [SideMenuTableViewController tableView:tableView
+                                           withCellWithIdentifier:@"GenreCell"];
+                    
+                    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
+                    genreLabel.text = NSLocalizedString(@"Genre", @"ジャンル");
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    genreLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    genreLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    // チェックマークの表示
+                    UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
+                    checkImage.hidden = (channelSortType != ChannelSortTypeGenre);
+                    break;
+                }
+                case 3: // Bitrate
+                {
+                    cell = [SideMenuTableViewController tableView:tableView
+                                           withCellWithIdentifier:@"BitrateCell"];
+                    
+                    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
+                    djLabel.text = NSLocalizedString(@"Bitrate", @"ビットレート");
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    djLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    djLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    // チェックマークの表示
+                    UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
+                    checkImage.hidden = (channelSortType != ChannelSortTypeBitrate);
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+#else
+            #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
         case 2: // Others Section
             switch (indexPath.row) {
                 case 0: // Favorite
@@ -309,8 +387,14 @@
                                                             withCellWithIdentifier:@"AboutCell"];
 
                     UILabel *aboutLabel = (UILabel *) [cell viewWithTag:2];
+#if defined(LADIO_TAIL)
                     aboutLabel.text = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
-                    
+#elif defined(RADIO_EDGE)
+                    aboutLabel.text = NSLocalizedString(@"About Radio Edge", @"Radio Edgeについて");
+#else
+                    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
                     // テーブルセルのテキスト等の色を変える
                     aboutLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     aboutLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
@@ -414,6 +498,7 @@
             if ([self isCenterControllerClass:[HeadlineNaviViewController class]
                          andTopViewController:[HeadlineViewController class]]) {
                 ChannelSortType channelSortType = ChannelSortTypeNone;
+#if defined(LADIO_TAIL)
                 switch (indexPath.row) {
                     case 0: // Newly
                         channelSortType = ChannelSortTypeNewly;
@@ -430,6 +515,26 @@
                     default:
                         break;
                 }
+#elif defined(RADIO_EDGE)
+                switch (indexPath.row) {
+                    case 0: // None
+                        channelSortType = ChannelSortTypeNewly;
+                        break;
+                    case 1: // Server Name
+                        channelSortType = ChannelSortTypeServerName;
+                        break;
+                    case 2: // Genre
+                        channelSortType = ChannelSortTypeGenre;
+                        break;
+                    case 3: // Bitrate
+                        channelSortType = ChannelSortTypeBitrate;
+                        break;
+                    default:
+                        break;
+                }
+#else
+                #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 
                 [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
 
@@ -452,6 +557,7 @@
                     self.viewDeckController.centerController = headlineNaviViewController;
 
                     ChannelSortType channelSortType = ChannelSortTypeNone;
+#if defined(LADIO_TAIL)
                     switch (indexPath.row) {
                         case 0: // Newly
                             channelSortType = ChannelSortTypeNewly;
@@ -468,6 +574,26 @@
                         default:
                             break;
                     }
+#elif defined(RADIO_EDGE)
+                    switch (indexPath.row) {
+                        case 0: // None
+                            channelSortType = ChannelSortTypeNewly;
+                            break;
+                        case 1: // Server Name
+                            channelSortType = ChannelSortTypeServerName;
+                            break;
+                        case 2: // Genre
+                            channelSortType = ChannelSortTypeGenre;
+                            break;
+                        case 3: // Bitrate
+                            channelSortType = ChannelSortTypeBitrate;
+                            break;
+                        default:
+                            break;
+                    }
+#else
+#error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
                     
                     [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
 

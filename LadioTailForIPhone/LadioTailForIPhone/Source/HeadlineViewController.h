@@ -22,10 +22,11 @@
 
 #import <UIKit/UIKit.h>
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
-#import "LadioLib/LadioLib.h"
+#import "RadioLib/RadioLib.h"
+#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 
 @interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
-                                                      EGORefreshTableHeaderDelegate>
+                                                      EGORefreshTableHeaderDelegate, ChannelTableViewDelegate>
 
 @property (nonatomic) ChannelSortType channelSortType;
 
@@ -39,6 +40,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *playingBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *headlineSearchBar;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *headlineSearchBarIndicator;
 
 @property (weak, nonatomic) IBOutlet UITableView *headlineTableView;
 

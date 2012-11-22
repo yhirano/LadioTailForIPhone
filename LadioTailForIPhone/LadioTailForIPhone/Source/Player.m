@@ -24,7 +24,7 @@
 #import "Player.h"
 
 /// 停止する理由
-enum StopReason
+typedef enum
 {
     StopReasonUser,
     StopReasonAnotherUrlPlay,
@@ -33,9 +33,7 @@ enum StopReason
     StopReasonFailedToPlayToEndTime,
     StopReasonStatusFailed,
     StopReasonInterruption,
-};
-
-typedef NSInteger StopReason;
+} StopReason;
 
 static Player *instance = nil;
 
@@ -150,10 +148,18 @@ static Player *instance = nil;
 {
     @synchronized (self) {
         // 既に再生中のURLとおなじ場合は何もしない
-        if ([self isPlaying:channel.playUrl]) {
+        NSURL *url;
+#if defined(LADIO_TAIL)
+        url = channel.playUrl;
+#elif defined(RADIO_EDGE)
+        url = channel.listenUrl;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+        if ([self isPlaying:url]) {
             return;
         }
-        
+
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
@@ -161,7 +167,7 @@ static Player *instance = nil;
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
-                [self playProc:channel.playUrl channel:channel];
+                [self playProc:url channel:channel];
                 break;
             case PlayerStatePrepare:
             default:
@@ -295,6 +301,7 @@ static Player *instance = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
     [self acviveAudioSession];
     player_ = [AVPlayer playerWithURL:url];
+    player_.allowsAirPlayVideo = NO; // VideoをAirPlayしない場合はNOにしてしまった方がいいらしい
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
     
