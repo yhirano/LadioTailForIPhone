@@ -1062,7 +1062,12 @@ didChangeSwipeEnable:(BOOL)enable
 {
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
     if (enable) {
-        Channel *channel = (Channel *) _showedChannels[indexPath.row];
+        Channel *channel = nil;
+        if (ADMOB_PUBLISHER_ID == nil) {
+            channel = (Channel *) _showedChannels[indexPath.row];
+        } else {
+            channel = (Channel *) _showedChannels[indexPath.row - 1];
+        }
         if (channel) {
 #if defined(LADIO_TAIL)
             BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
@@ -1088,7 +1093,12 @@ didChangeSwipeEnable:(BOOL)enable
                         forCell:(ChannelTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = (Channel *) _showedChannels[indexPath.row];
+    Channel *channel = nil;
+    if (ADMOB_PUBLISHER_ID == nil) {
+        channel = (Channel *) _showedChannels[indexPath.row];
+    } else {
+        channel = (Channel *) _showedChannels[indexPath.row - 1];
+    }
     if (channel) {
 #if defined(LADIO_TAIL)
         BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
