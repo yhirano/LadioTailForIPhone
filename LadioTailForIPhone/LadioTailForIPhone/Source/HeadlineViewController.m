@@ -157,16 +157,23 @@ typedef enum {
         cell = [[ChannelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
-    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
-    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+    UIImageView *headphoneImageView = (UIImageView *) [cell viewWithTag:1];
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *djLabel = (UILabel *) [cell viewWithTag:3];
+    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:4];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:5];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:6];
+    UILabel *dateLabel = (UILabel *) [cell viewWithTag:7];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:8];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
+    UIView *swipeView = (UIView *) [cell viewWithTag:11];
+
+    if ([channel isPlaySupported] == NO) {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
+    } else {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
+    }
 
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
@@ -235,6 +242,9 @@ typedef enum {
     if (playing) {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else if ([channel isPlaySupported] == NO) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
     } else {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
@@ -262,14 +272,21 @@ typedef enum {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
-    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
-    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+    UIImageView *headphoneImageView = (UIImageView *) [cell viewWithTag:1];
+    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *genreLabel = (UILabel *) [cell viewWithTag:3];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:5];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:6];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:8];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
+    UIView *swipeView = (UIView *) [cell viewWithTag:11];
+
+    if ([channel isPlaySupported] == NO) {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
+    } else {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
+    }
 
     if (!([channel.serverName length] == 0)) {
         serverNameLabel.text = channel.serverName;
@@ -317,6 +334,9 @@ typedef enum {
     if (playing) {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else if ([channel isPlaySupported] == NO) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
     } else {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
@@ -1060,7 +1080,7 @@ didChangeSwipeEnable:(BOOL)enable
              forCell:(ChannelTableViewCell *)cell
    forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     if (enable) {
         Channel *channel = nil;
         if (ADMOB_PUBLISHER_ID == nil) {
@@ -1078,6 +1098,8 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
             if (playing) {
                 anchorLabel.text = @"STOP";
+            } else if ([channel isPlaySupported] == NO) {
+                anchorLabel.text = @"";
             } else {
                 anchorLabel.text = @"PLAY";
             }
@@ -1109,12 +1131,14 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
         if (playing) {
             [[Player sharedInstance] stop];
+        } else if ([channel isPlaySupported] == NO) {
+            ;
         } else {
             [[Player sharedInstance] playChannel:channel];
         }
     }
 
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     anchorLabel.text = @"";
 }
 

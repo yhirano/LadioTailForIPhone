@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import <AVFoundation/AVAsset.h>
 #import "FavoriteManager.h"
 #import "ChannelHtml.h"
 #import "Channel.h"
@@ -44,6 +45,8 @@ static NSCache *matchCache = nil;
     BOOL hasFavoriteCache_;
     /// お気に入りキャッシュ
     BOOL favoriteCache_;
+    BOOL hasPlaySupportedCache_;
+    BOOL playSupportedCache_;
 }
 
 - (id)init
@@ -66,6 +69,8 @@ static NSCache *matchCache = nil;
         hasHashCache_ = NO;
         hasFavoriteCache_ = NO;
         favoriteCache_ = NO;
+        hasPlaySupportedCache_ = NO;
+        playSupportedCache_ = NO;
     }
     return self;
 }
@@ -132,6 +137,7 @@ static NSCache *matchCache = nil;
 {
     serverType_ = s;
     hasHashCache_ = NO;
+    hasPlaySupportedCache_ = NO;
 }
 
 - (NSString*)genre
@@ -283,6 +289,29 @@ static NSCache *matchCache = nil;
         return NO;
     }
     return [[listenUrl_ absoluteString] isEqualToString:[channel.listenUrl absoluteString]];
+}
+
+- (BOOL)isPlaySupported
+{
+    if (hasPlaySupportedCache_) {
+        return playSupportedCache_;
+    }
+    
+    BOOL result;
+    
+    // OSがサポートしているかをチェック
+    result = [AVURLAsset isPlayableExtendedMIMEType:serverType_];
+    // MIMEにvideoが含まれていないかをチェック
+    if (result &&
+        [serverType_ rangeOfString:@"video"
+                           options:(NSCaseInsensitiveSearch | NSLiteralSearch)].location != NSNotFound) {
+        result = NO;
+    }
+    
+    hasPlaySupportedCache_ = YES;
+    playSupportedCache_ = result;
+    
+    return result;
 }
 
 - (void)clearFavoriteCache
