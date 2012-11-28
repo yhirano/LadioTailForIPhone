@@ -600,7 +600,7 @@ typedef enum {
             break;
         case ChannelSortTypeNone:
         default:
-            _channelSortType = ChannelSortTypeNone;
+            _channelSortType = ChannelSortTypeNewly;
             break;
     }
 #else
