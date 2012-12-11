@@ -170,139 +170,185 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#if defined(LADIO_TAIL)
+    return [favorites_ count] + 1; // 追加セルを足す
+#elif defined(RADIO_EDGE)
     return [favorites_ count];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 }
 
 #if defined(LADIO_TAIL)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Favorite *favorite = (Favorite *)favorites_[indexPath.row];
-    Headline *headline = [Headline sharedInstance];
-    Player *player = [Player sharedInstance];
-    Channel *channel = favorite.channel;
-    
-    NSString *cellIdentifier;
-    
-    // タイトルかDJが存在する場合
-    if (!([channel.nam length] == 0) || !([channel.dj length] == 0)) {
-        cellIdentifier = @"FavoriteCell";
-    } else {
-        cellIdentifier = @"FavoriteMountOnlyCell";
+    UITableViewCell *cell = nil;
+
+    // Add Favorite
+    if (indexPath.row == [favorites_ count]) {
+        NSString *cellIdentifier = @"AddFavoriteCell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+
+        UILabel *addFavoriteLabel = (UILabel *) [cell viewWithTag:1];
+        addFavoriteLabel.text = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
+        addFavoriteLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+        addFavoriteLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
     }
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *mountTagLabel = (UILabel *) [cell viewWithTag:3];
-    UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
-    UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
-    
-    if (!([channel.nam length] == 0)) {
-        titleLabel.text = channel.nam;
-    } else {
-        titleLabel.text = @"";
-    }
-    if (!([channel.dj length] == 0)) {
-        djLabel.text = channel.dj;
-    } else {
-        djLabel.text = @"";
-    }
-    mountTagLabel.text = NSLocalizedString(@"Mount", @"マウント");
-    if (!([channel.mnt length] == 0)) {
-        mountLabel.text = channel.mnt;
-    } else {
-        mountLabel.text = @"";
-    }
-    // 再生中
-    if ([[player playingChannel] isSameMount:channel]) {
-        broadcastImageView.hidden = NO;
-        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
-    }
-    // 配信中
-    else if ([headline channelFromMount:channel.mnt] != nil) {
-        broadcastImageView.hidden = NO;
-        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
-    }
-    // 配信されていない
+    // Favorite
     else {
-        broadcastImageView.hidden = YES;
+        Favorite *favorite = (Favorite *)favorites_[indexPath.row];
+        Headline *headline = [Headline sharedInstance];
+        Player *player = [Player sharedInstance];
+        Channel *channel = favorite.channel;
+        
+        NSString *cellIdentifier;
+        
+        // タイトルかDJが存在する場合
+        if (!([channel.nam length] == 0) || !([channel.dj length] == 0)) {
+            cellIdentifier = @"FavoriteCell";
+        } else {
+            cellIdentifier = @"FavoriteMountOnlyCell";
+        }
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        
+        UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
+        UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
+        UILabel *mountTagLabel = (UILabel *) [cell viewWithTag:3];
+        UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
+        UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
+        
+        if (!([channel.nam length] == 0)) {
+            titleLabel.text = channel.nam;
+        } else {
+            titleLabel.text = @"";
+        }
+        if (!([channel.dj length] == 0)) {
+            djLabel.text = channel.dj;
+        } else {
+            djLabel.text = @"";
+        }
+        mountTagLabel.text = NSLocalizedString(@"Mount", @"マウント");
+        if (!([channel.mnt length] == 0)) {
+            mountLabel.text = channel.mnt;
+        } else {
+            mountLabel.text = @"";
+        }
+        // 再生中
+        if ([[player playingChannel] isSameMount:channel]) {
+            broadcastImageView.hidden = NO;
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+        }
+        // 配信中
+        else if ([headline channelFromMount:channel.mnt] != nil) {
+            broadcastImageView.hidden = NO;
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+        }
+        // 配信されていない
+        else {
+            broadcastImageView.hidden = YES;
+        }
+        
+        // テーブルセルのテキスト等の色を変える
+        titleLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+        titleLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+        
+        djLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
+        djLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
+        
+        mountTagLabel.textColor = FAVORITES_CELL_TAG_TEXT_COLOR;
+        mountTagLabel.highlightedTextColor = FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
+        
+        mountLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+        mountLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
     }
-    
-    // テーブルセルのテキスト等の色を変える
-    titleLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
-    titleLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
-    
-    djLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
-    djLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
-    
-    mountTagLabel.textColor = FAVORITES_CELL_TAG_TEXT_COLOR;
-    mountTagLabel.highlightedTextColor = FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
-    
-    mountLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
-    mountLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
     
     return cell;
 }
 #elif defined(RADIO_EDGE)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Favorite *favorite = (Favorite *)favorites_[indexPath.row];
-    Headline *headline = [Headline sharedInstance];
-    Player *player = [Player sharedInstance];
-    Channel *channel = favorite.channel;
-    
-    NSString *cellIdentifier = @"FavoriteCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    UITableViewCell *cell = nil;
+
+    // Add Favorite
+    if (indexPath.row == [favorites_ count]) {
+        NSString *cellIdentifier = @"AddFavoriteCell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        
+        UILabel *addFavoriteLabel = (UILabel *) [cell viewWithTag:1];
+        addFavoriteLabel.text = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
+        addFavoriteLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+        addFavoriteLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
     }
-    
-    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
-    UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
-    
-    if (!([channel.serverName length] == 0)) {
-        serverNameLabel.text = channel.serverName;
-    } else {
-        serverNameLabel.text = @"";
-    }
-    if (!([channel.genre length] == 0)) {
-        genreLabel.text = channel.genre;
-    } else {
-        genreLabel.text = @"";
-    }
-    // 再生中
-    if ([[player playingChannel] isSameListenUrl:channel]) {
-        broadcastImageView.hidden = NO;
-        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
-    }
-    // 配信中
-    else if ([headline channelFromListenUrl:channel.listenUrl] != nil) {
-        broadcastImageView.hidden = NO;
-        [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-        [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
-    }
-    // 配信されていない
+    // Favorite
     else {
-        broadcastImageView.hidden = YES;
+        Favorite *favorite = (Favorite *)favorites_[indexPath.row];
+        Headline *headline = [Headline sharedInstance];
+        Player *player = [Player sharedInstance];
+        Channel *channel = favorite.channel;
+        
+        NSString *cellIdentifier = @"FavoriteCell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        
+        UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
+        UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
+        UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
+        
+        if (!([channel.serverName length] == 0)) {
+            serverNameLabel.text = channel.serverName;
+        } else {
+            serverNameLabel.text = @"";
+        }
+        if (!([channel.genre length] == 0)) {
+            genreLabel.text = channel.genre;
+        } else {
+            genreLabel.text = @"";
+        }
+        // 再生中
+        if ([[player playingChannel] isSameListenUrl:channel]) {
+            broadcastImageView.hidden = NO;
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+        }
+        // 配信中
+        else if ([headline channelFromListenUrl:channel.listenUrl] != nil) {
+            broadcastImageView.hidden = NO;
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+        }
+        // 配信されていない
+        else {
+            broadcastImageView.hidden = YES;
+        }
+        
+        // テーブルセルのテキスト等の色を変える
+        serverNameLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
+        serverNameLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+        
+        genreLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
+        genreLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
     }
-    
-    // テーブルセルのテキスト等の色を変える
-    serverNameLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
-    serverNameLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
-    
-    genreLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
-    genreLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
 
     return cell;
 }
@@ -329,8 +375,27 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+#if defined(LADIO_TAIL)
+    // Add Favorite
+    if (indexPath.row == [favorites_ count]) {
+        return NO;
+    }
+    // お気に入りは削除可能
+    else {
+        return YES;
+    }
+#elif defined(RADIO_EDGE)
     // すべて削除可能
     return YES;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
 }
 
 -   (void)tableView:(UITableView *)tableView
@@ -351,8 +416,87 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+#if defined(LADIO_TAIL)
+    // Add Favorite
+    if (indexPath.row == [favorites_ count]) {
+        NSString* title = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
+        NSString* message = NSLocalizedString(@"Please enter the mount name.", @"お気に入りに追加するマウントを入力してください");
+        NSString* cancel = NSLocalizedString(@"Cancel", @"キャンセル");
+        NSString* add = NSLocalizedString(@"Add", @"追加");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title
+                                                         message:message
+                                                        delegate:self
+                                               cancelButtonTitle:cancel
+                                               otherButtonTitles:add, nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        UITextField *alertTextField = [alert textFieldAtIndex:0];
+        alertTextField.keyboardType = UIKeyboardTypeASCIICapable;
+        alertTextField.placeholder = @"/mountname";
+        [alert show];
+    }
+    // Select a favorite
+    else {
+        [self performSegueWithIdentifier:@"SelectFavorite" sender:self];
+    }
+#elif defined(RADIO_EDGE)
     [self performSegueWithIdentifier:@"SelectFavorite" sender:self];
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
 }
+
+#pragma mark - UIAlertViewDelegate methods
+
+#if defined(LADIO_TAIL)
+- (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0: // Cancel
+            break;
+        case 1: // Add
+        {
+            UITextField *alertTextField = [alertView textFieldAtIndex:0];
+            NSString *input = alertTextField.text;
+            if (input.length <= 0) {
+                break;
+            }
+            
+            NSError *error = nil;
+            NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"^(/*)(\\w*)"
+                                                                                        options:0
+                                                                                          error:&error];
+            if (error != nil) {
+                NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+                break;
+            }
+            
+            NSString *mount = nil;
+            NSTextCheckingResult *match = [expression firstMatchInString:input
+                                                                 options:0
+                                                                   range:NSMakeRange(0, input.length)];
+            if (match.numberOfRanges >= 2) {
+                mount = [input substringWithRange:[match rangeAtIndex:2]];
+            }
+            if (mount.length > 0) {
+                // お気に入り登録
+                Channel *channel = [[Channel alloc] init];
+                channel.mnt = [[NSString alloc] initWithFormat:@"/%@", mount];
+                [channel setFavorite:YES];
+            }
+
+            [self updateFavolitesArray];
+            [self.tableView reloadData];
+            break;
+        }
+        default:
+            break;
+    }
+
+    // ハイライト解除
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+#endif
 
 #pragma mark - iCloud notification
 
