@@ -194,10 +194,14 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
 
-        UILabel *addFavoriteLabel = (UILabel *) [cell viewWithTag:1];
+        UILabel *addFavoriteLabel = (UILabel *) [cell viewWithTag:2];
         addFavoriteLabel.text = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
         addFavoriteLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
         addFavoriteLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+        [addFavoriteLabel sizeToFit];
+        UIView *addFavoriteView = (UIView *) [cell viewWithTag:1];
+        [addFavoriteView sizeToFit];
+        addFavoriteView.center = cell.center;
     }
     // Favorite
     else {
@@ -295,6 +299,10 @@
         addFavoriteLabel.text = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
         addFavoriteLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
         addFavoriteLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+        [addFavoriteLabel sizeToFit];
+        UIView *addFavoriteView = (UIView *) [cell viewWithTag:1];
+        [addFavoriteView sizeToFit];
+        addFavoriteView.center = cell.center;
     }
     // Favorite
     else {
