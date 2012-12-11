@@ -367,12 +367,12 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     hasHashCache_ = NO;
 }
 
-- (NSInteger)smlp
+- (NSInteger)smpl
 {
     return smpl_;
 }
 
-- (void)setSmlp:(NSInteger)s
+- (void)setSmpl:(NSInteger)s
 {
     smpl_ = s;
     hasHashCache_ = NO;
