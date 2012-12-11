@@ -183,17 +183,9 @@
     
     NSString *cellIdentifier;
     
-    // タイトルとDJが存在する場合
-    if (!([channel.nam length] == 0) && !([channel.dj length] == 0)) {
+    // タイトルかDJが存在する場合
+    if (!([channel.nam length] == 0) || !([channel.dj length] == 0)) {
         cellIdentifier = @"FavoriteCell";
-    }
-    // タイトルのみが存在する場合
-    else if (!([channel.nam length] == 0) && [channel.dj length] == 0) {
-        cellIdentifier = @"FavoriteTitleOnlyCell";
-    }
-    // DJのみが存在する場合
-    else if ([channel.nam length] == 0 && !([channel.dj length] == 0)) {
-        cellIdentifier = @"FavoriteDjOnlyCell";
     } else {
         cellIdentifier = @"FavoriteMountOnlyCell";
     }
@@ -243,7 +235,6 @@
         broadcastImageView.hidden = YES;
     }
     
-    
     // テーブルセルのテキスト等の色を変える
     titleLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
     titleLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
@@ -267,22 +258,7 @@
     Player *player = [Player sharedInstance];
     Channel *channel = favorite.channel;
     
-    NSString *cellIdentifier;
-    
-    // Server NameとGenreが存在する場合
-    if (!([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
-        cellIdentifier = @"FavoriteCell";
-    }
-    // Server Nameのみが存在する場合
-    else if (!([channel.serverName length] == 0) && [channel.genre length] == 0) {
-        cellIdentifier = @"FavoriteTitleOnlyCell";
-    }
-    // Genreのみが存在する場合
-    else if ([channel.serverName length] == 0 && !([channel.genre length] == 0)) {
-        cellIdentifier = @"FavoriteDjOnlyCell";
-    } else {
-        cellIdentifier = @"FavoriteCell";
-    }
+    NSString *cellIdentifier = @"FavoriteCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -320,7 +296,6 @@
     else {
         broadcastImageView.hidden = YES;
     }
-    
     
     // テーブルセルのテキスト等の色を変える
     serverNameLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;

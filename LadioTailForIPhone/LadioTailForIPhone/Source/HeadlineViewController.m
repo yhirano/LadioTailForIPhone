@@ -116,39 +116,20 @@ typedef enum {
     
     NSString *cellIdentifier;
     
-    // DJのみが存在する場合
-    if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_Dj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_Dj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_Dj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_Dj_BitrateAndTime";
-                break;
-        }
-    } else {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_TitleAndDj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
-                break;
-        }
+    switch (headlineViewDisplayType_) {
+        case HeadlineViewDisplayTypeElapsedTime:
+            cellIdentifier = @"ChannelCell_TitleAndDj_Time";
+            break;
+        case HeadlineViewDisplayTypeBitrate:
+            cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
+            break;
+        case HeadlineViewDisplayTypeOnlyTitleAndDj:
+            cellIdentifier = @"ChannelCell_TitleAndDj";
+            break;
+        case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+        default:
+            cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
+            break;
     }
     
     ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -257,14 +238,7 @@ typedef enum {
 {
     Channel *channel = (Channel *) _showedChannels[num];
     
-    NSString *cellIdentifier;
-    
-    // Genreのみが存在する場合
-    if (([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
-        cellIdentifier = @"ChannelCell_Genre_Bitrate";
-    } else {
-        cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
-    }
+    NSString *cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
