@@ -67,8 +67,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    // Remote Notification を受信しないようにする
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    
     // お気に入りをプロバイダに送信しないようにする
-    [[ApnsStorage sharedInstance] registApnsService];
+    [[ApnsStorage sharedInstance] unregistApnsService];
 
     // iCloudからの通知を受けなくする
     [[ICloudStrorage sharedInstance] unregistICloudNotification];
