@@ -201,7 +201,7 @@
         [addFavoriteLabel sizeToFit];
         UIView *addFavoriteView = (UIView *) [cell viewWithTag:1];
         [addFavoriteView sizeToFit];
-        addFavoriteView.center = cell.center;
+        addFavoriteView.center = cell.contentView.center;
     }
     // Favorite
     else {
