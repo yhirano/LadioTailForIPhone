@@ -220,6 +220,20 @@ static Player *instance = nil;
     }
 }
 
+- (BOOL)isPreparing:(NSURL *)url
+{
+    NSURL *preparingUrl;
+    @synchronized (self) {
+        preparingUrl = [self preparingUrl];
+    }
+    
+    if (preparingUrl != nil) {
+        return [[preparingUrl absoluteString] isEqualToString:[url absoluteString]];
+    } else {
+        return NO;
+    }
+}
+
 - (PlayerState)state
 {
     @synchronized (self) {
@@ -249,6 +263,34 @@ static Player *instance = nil;
                 return playChannel_;
             case PlayerStateIdle:
             case PlayerStatePrepare:
+            default:
+                return nil;
+        }
+    }
+}
+
+- (NSURL *)preparingUrl
+{
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePrepare:
+                return playUrl_;
+            case PlayerStateIdle:
+            case PlayerStatePlay:
+            default:
+                return nil;
+        }
+    }
+}
+
+- (Channel *)preparingChannel
+{
+    @synchronized (self) {
+        switch (state_) {
+            case PlayerStatePrepare:
+                return playChannel_;
+            case PlayerStateIdle:
+            case PlayerStatePlay:
             default:
                 return nil;
         }

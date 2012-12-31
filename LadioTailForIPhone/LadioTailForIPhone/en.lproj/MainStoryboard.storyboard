@@ -104,6 +104,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" tag="12" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="l5e-ur-b3a">
+                                                            <rect key="frame" x="3" y="19" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -173,6 +177,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" tag="12" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="87C-uB-3wd">
+                                                            <rect key="frame" x="3" y="19" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -249,6 +257,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" tag="12" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="wbs-Qj-DqF">
+                                                            <rect key="frame" x="3" y="19" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -325,6 +337,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" tag="12" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="Vpf-fw-3e9">
+                                                            <rect key="frame" x="3" y="19" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -394,6 +410,10 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" tag="12" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="pNi-Tt-mu9">
+                                                            <rect key="frame" x="3" y="19" width="20" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>

@@ -149,6 +149,7 @@ typedef enum {
     UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     UIView *swipeView = (UIView *) [cell viewWithTag:11];
+    UIActivityIndicatorView *preparingIndicator = (UIActivityIndicatorView *) [cell viewWithTag:12];
 
     if ([channel isPlaySupported] == NO) {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
@@ -211,6 +212,14 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
     playImageView.hidden = !playing;
     
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
+    BOOL preparing = [[Player sharedInstance] isPreparing:[channel playUrl]];
+    if (preparing) {
+        [preparingIndicator startAnimating];
+    }
+    preparingIndicator.hidden = !preparing;
+    
     favoriteImageView.hidden = !channel.favorite;
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
@@ -255,6 +264,7 @@ typedef enum {
     UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     UIView *swipeView = (UIView *) [cell viewWithTag:11];
+    UIActivityIndicatorView *preparingIndicator = (UIActivityIndicatorView *) [cell viewWithTag:12];
 
     if ([channel isPlaySupported] == NO) {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
@@ -296,6 +306,14 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
     playImageView.hidden = !playing;
     
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
+    BOOL preparing = [[Player sharedInstance] isPreparing:[channel listenUrl]];
+    if (preparing) {
+        [preparingIndicator startAnimating];
+    }
+    preparingIndicator.hidden = !preparing;
+
     favoriteImageView.hidden = !channel.favorite;
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
@@ -626,6 +644,10 @@ typedef enum {
                                                object:nil];
 
     // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerPrepareNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playStateChanged:)
                                                  name:LadioTailPlayerDidPlayNotification
