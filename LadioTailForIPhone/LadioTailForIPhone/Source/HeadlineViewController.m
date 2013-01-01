@@ -110,7 +110,7 @@ typedef enum {
 #pragma mark - Private methods
 
 #if defined(LADIO_TAIL)
-- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(NSInteger)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
     
@@ -243,7 +243,7 @@ typedef enum {
     return cell;
 }
 #elif defined(RADIO_EDGE)
-- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(NSInteger)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
     
@@ -508,6 +508,26 @@ typedef enum {
     }
     
     return result;
+}
+
+/// 指定されたTableViewのIndexPathから何番目の番組かを取得する
++ (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
+{
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return indexPath.row;
+    } else {
+        return indexPath.row - 1;
+    }
+}
+
+/// 指定された何番目の番組からTableViewのIndexPathを取得する
++ (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
+{
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return [NSIndexPath indexPathForRow:channelIndex inSection:0];
+    } else {
+        return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
+    }
 }
 
 - (void)updateHeadlineTable
@@ -815,12 +835,8 @@ typedef enum {
         // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSInteger channelIndex = 0;
-            if (ADMOB_PUBLISHER_ID == nil) {
-                channelIndex = [_headlineTableView indexPathForSelectedRow].row;
-            } else {
-                channelIndex = [_headlineTableView indexPathForSelectedRow].row - 1;
-            }
+            NSInteger channelIndex =
+                [HeadlineViewController channelIndexFromIndexPath:[_headlineTableView indexPathForSelectedRow]];
             Channel *channel = _showedChannels[channelIndex];
             ((ChannelViewController *) viewCon).channel = channel;
         }
@@ -877,12 +893,7 @@ typedef enum {
 
     // 見つかった場合はスクロール
     if (found) {
-        NSIndexPath *indexPath = nil;
-        if (ADMOB_PUBLISHER_ID == nil) {
-            indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];
-        } else {
-            indexPath = [NSIndexPath indexPathForRow:(playingChannelIndex + 1) inSection:0];
-        }
+        NSIndexPath *indexPath = [HeadlineViewController indexPathFromChannelIndex:playingChannelIndex];
         [_headlineTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
@@ -937,34 +948,33 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
-        return [self tableView:tableView createChannelCell:indexPath.row];
-    } else {
-        if (indexPath.row == 0) {
-            NSString *cellIdentifier;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                cellIdentifier = @"ChannelCell_Ad_iPad";
-            } else {
-                cellIdentifier = @"ChannelCell_Ad_iPhone";
-            }
-
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            }
-
-            CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-            CGRect screenRect = [[UIScreen mainScreen] bounds];
-            CGFloat screenWidth = screenRect.size.width;
-            adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-            [cell addSubview:adBannerView_];
-            [adBannerView_ loadRequest:[GADRequest request]];
-
-            return cell;
+    // 広告View
+    if (ADMOB_PUBLISHER_ID && indexPath.row == 0) {
+        NSString *cellIdentifier;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            cellIdentifier = @"ChannelCell_Ad_iPad";
         } else {
-            return [self tableView:tableView createChannelCell:(indexPath.row - 1)];
+            cellIdentifier = @"ChannelCell_Ad_iPhone";
         }
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        }
+        
+        CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
+        [cell addSubview:adBannerView_];
+        [adBannerView_ loadRequest:[GADRequest request]];
+        
+        return cell;
+    }
+    // 広告View以外のView
+    else {
+        return [self tableView:tableView createChannelCell:[HeadlineViewController channelIndexFromIndexPath:indexPath]];
     }
 }
 
@@ -1078,12 +1088,8 @@ didChangeSwipeEnable:(BOOL)enable
 {
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     if (enable) {
-        Channel *channel = nil;
-        if (ADMOB_PUBLISHER_ID == nil) {
-            channel = (Channel *) _showedChannels[indexPath.row];
-        } else {
-            channel = (Channel *) _showedChannels[indexPath.row - 1];
-        }
+        NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+        Channel *channel = (Channel *) _showedChannels[channelIndex];
         if (channel) {
 #if defined(LADIO_TAIL)
             BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
@@ -1111,12 +1117,8 @@ didChangeSwipeEnable:(BOOL)enable
                         forCell:(ChannelTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = nil;
-    if (ADMOB_PUBLISHER_ID == nil) {
-        channel = (Channel *) _showedChannels[indexPath.row];
-    } else {
-        channel = (Channel *) _showedChannels[indexPath.row - 1];
-    }
+    NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+    Channel *channel = (Channel *) _showedChannels[channelIndex];
     if (channel) {
 #if defined(LADIO_TAIL)
         BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
