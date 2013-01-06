@@ -110,45 +110,26 @@ typedef enum {
 #pragma mark - Private methods
 
 #if defined(LADIO_TAIL)
-- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(NSInteger)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
     
     NSString *cellIdentifier;
     
-    // DJのみが存在する場合
-    if (([channel.nam length] == 0) && !([channel.dj length] == 0)) {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_Dj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_Dj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_Dj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_Dj_BitrateAndTime";
-                break;
-        }
-    } else {
-        switch (headlineViewDisplayType_) {
-            case HeadlineViewDisplayTypeElapsedTime:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Time";
-                break;
-            case HeadlineViewDisplayTypeBitrate:
-                cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
-                break;
-            case HeadlineViewDisplayTypeOnlyTitleAndDj:
-                cellIdentifier = @"ChannelCell_TitleAndDj";
-                break;
-            case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
-            default:
-                cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
-                break;
-        }
+    switch (headlineViewDisplayType_) {
+        case HeadlineViewDisplayTypeElapsedTime:
+            cellIdentifier = @"ChannelCell_TitleAndDj_Time";
+            break;
+        case HeadlineViewDisplayTypeBitrate:
+            cellIdentifier = @"ChannelCell_TitleAndDj_Bitrate";
+            break;
+        case HeadlineViewDisplayTypeOnlyTitleAndDj:
+            cellIdentifier = @"ChannelCell_TitleAndDj";
+            break;
+        case HeadlineViewDisplayTypeElapsedTimeAndBitrate:
+        default:
+            cellIdentifier = @"ChannelCell_TitleAndDj_BitrateAndTime";
+            break;
     }
     
     ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -157,16 +138,24 @@ typedef enum {
         cell = [[ChannelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:3];
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    UILabel *dateLabel = (UILabel *) [cell viewWithTag:6];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
-    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
-    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+    UIImageView *headphoneImageView = (UIImageView *) [cell viewWithTag:1];
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *djLabel = (UILabel *) [cell viewWithTag:3];
+    UILabel *listenersLabel = (UILabel *) [cell viewWithTag:4];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:5];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:6];
+    UILabel *dateLabel = (UILabel *) [cell viewWithTag:7];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:8];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
+    UIView *swipeView = (UIView *) [cell viewWithTag:11];
+    UIActivityIndicatorView *preparingIndicator = (UIActivityIndicatorView *) [cell viewWithTag:12];
+
+    if ([channel isPlaySupported] == NO) {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
+    } else {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
+    }
 
     if (!([channel.nam length] == 0)) {
         titleLabel.text = channel.nam;
@@ -223,6 +212,14 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
     playImageView.hidden = !playing;
     
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
+    BOOL preparing = [[Player sharedInstance] isPreparing:[channel playUrl]];
+    if (preparing) {
+        [preparingIndicator startAnimating];
+    }
+    preparingIndicator.hidden = !preparing;
+    
     favoriteImageView.hidden = !channel.favorite;
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
@@ -235,6 +232,9 @@ typedef enum {
     if (playing) {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else if ([channel isPlaySupported] == NO) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
     } else {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
@@ -243,18 +243,11 @@ typedef enum {
     return cell;
 }
 #elif defined(RADIO_EDGE)
-- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(int)num
+- (UITableViewCell *)tableView:(UITableView *)tableView createChannelCell:(NSInteger)num
 {
     Channel *channel = (Channel *) _showedChannels[num];
     
-    NSString *cellIdentifier;
-    
-    // Genreのみが存在する場合
-    if (([channel.serverName length] == 0) && !([channel.genre length] == 0)) {
-        cellIdentifier = @"ChannelCell_Genre_Bitrate";
-    } else {
-        cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
-    }
+    NSString *cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -262,14 +255,22 @@ typedef enum {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
-    UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
-    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:4];
-    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:5];
-    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:7];
-    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:8];
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
-    UIView *swipeView = (UIView *) [cell viewWithTag:10];
+    UIImageView *headphoneImageView = (UIImageView *) [cell viewWithTag:1];
+    UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:2];
+    UILabel *genreLabel = (UILabel *) [cell viewWithTag:3];
+    UIImageView *playImageView = (UIImageView *) [cell viewWithTag:5];
+    UIImageView *favoriteImageView = (UIImageView *) [cell viewWithTag:6];
+    UILabel *bitrateLabel = (UILabel *) [cell viewWithTag:8];
+    UIImageView *anchorImage = (UIImageView *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
+    UIView *swipeView = (UIView *) [cell viewWithTag:11];
+    UIActivityIndicatorView *preparingIndicator = (UIActivityIndicatorView *) [cell viewWithTag:12];
+
+    if ([channel isPlaySupported] == NO) {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_gray"]];
+    } else {
+        [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
+    }
 
     if (!([channel.serverName length] == 0)) {
         serverNameLabel.text = channel.serverName;
@@ -305,6 +306,14 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
     playImageView.hidden = !playing;
     
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
+    BOOL preparing = [[Player sharedInstance] isPreparing:[channel listenUrl]];
+    if (preparing) {
+        [preparingIndicator startAnimating];
+    }
+    preparingIndicator.hidden = !preparing;
+
     favoriteImageView.hidden = !channel.favorite;
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
@@ -317,6 +326,9 @@ typedef enum {
     if (playing) {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_stop_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_stop_black"]];
+    } else if ([channel isPlaySupported] == NO) {
+        [anchorImage setImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
+        [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_notsupported_black"]];
     } else {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
@@ -498,6 +510,26 @@ typedef enum {
     return result;
 }
 
+/// 指定されたTableViewのIndexPathから何番目の番組かを取得する
++ (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
+{
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return indexPath.row;
+    } else {
+        return indexPath.row - 1;
+    }
+}
+
+/// 指定された何番目の番組からTableViewのIndexPathを取得する
++ (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
+{
+    if (ADMOB_PUBLISHER_ID == nil) {
+        return [NSIndexPath indexPathForRow:channelIndex inSection:0];
+    } else {
+        return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
+    }
+}
+
 - (void)updateHeadlineTable
 {
     if (SEARCH_EACH_CHAR == NO) {
@@ -600,7 +632,7 @@ typedef enum {
             break;
         case ChannelSortTypeNone:
         default:
-            _channelSortType = ChannelSortTypeNone;
+            _channelSortType = ChannelSortTypeNewly;
             break;
     }
 #else
@@ -632,6 +664,10 @@ typedef enum {
                                                object:nil];
 
     // 再生状態が切り替わるごとに再生ボタンなどの表示を切り替える
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playStateChanged:)
+                                                 name:LadioTailPlayerPrepareNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playStateChanged:)
                                                  name:LadioTailPlayerDidPlayNotification
@@ -799,12 +835,8 @@ typedef enum {
         // 番組情報を遷移先のViewに設定
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
-            NSInteger channelIndex = 0;
-            if (ADMOB_PUBLISHER_ID == nil) {
-                channelIndex = [_headlineTableView indexPathForSelectedRow].row;
-            } else {
-                channelIndex = [_headlineTableView indexPathForSelectedRow].row - 1;
-            }
+            NSInteger channelIndex =
+                [HeadlineViewController channelIndexFromIndexPath:[_headlineTableView indexPathForSelectedRow]];
             Channel *channel = _showedChannels[channelIndex];
             ((ChannelViewController *) viewCon).channel = channel;
         }
@@ -861,12 +893,7 @@ typedef enum {
 
     // 見つかった場合はスクロール
     if (found) {
-        NSIndexPath *indexPath = nil;
-        if (ADMOB_PUBLISHER_ID == nil) {
-            indexPath = [NSIndexPath indexPathForRow:playingChannelIndex inSection:0];
-        } else {
-            indexPath = [NSIndexPath indexPathForRow:(playingChannelIndex + 1) inSection:0];
-        }
+        NSIndexPath *indexPath = [HeadlineViewController indexPathFromChannelIndex:playingChannelIndex];
         [_headlineTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
@@ -921,34 +948,33 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
-        return [self tableView:tableView createChannelCell:indexPath.row];
-    } else {
-        if (indexPath.row == 0) {
-            NSString *cellIdentifier;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                cellIdentifier = @"ChannelCell_Ad_iPad";
-            } else {
-                cellIdentifier = @"ChannelCell_Ad_iPhone";
-            }
-
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            }
-
-            CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-            CGRect screenRect = [[UIScreen mainScreen] bounds];
-            CGFloat screenWidth = screenRect.size.width;
-            adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-            [cell addSubview:adBannerView_];
-            [adBannerView_ loadRequest:[GADRequest request]];
-
-            return cell;
+    // 広告View
+    if (ADMOB_PUBLISHER_ID && indexPath.row == 0) {
+        NSString *cellIdentifier;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            cellIdentifier = @"ChannelCell_Ad_iPad";
         } else {
-            return [self tableView:tableView createChannelCell:(indexPath.row - 1)];
+            cellIdentifier = @"ChannelCell_Ad_iPhone";
         }
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        }
+        
+        CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
+        [cell addSubview:adBannerView_];
+        [adBannerView_ loadRequest:[GADRequest request]];
+        
+        return cell;
+    }
+    // 広告View以外のView
+    else {
+        return [self tableView:tableView createChannelCell:[HeadlineViewController channelIndexFromIndexPath:indexPath]];
     }
 }
 
@@ -1060,14 +1086,10 @@ didChangeSwipeEnable:(BOOL)enable
              forCell:(ChannelTableViewCell *)cell
    forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     if (enable) {
-        Channel *channel = nil;
-        if (ADMOB_PUBLISHER_ID == nil) {
-            channel = (Channel *) _showedChannels[indexPath.row];
-        } else {
-            channel = (Channel *) _showedChannels[indexPath.row - 1];
-        }
+        NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+        Channel *channel = (Channel *) _showedChannels[channelIndex];
         if (channel) {
 #if defined(LADIO_TAIL)
             BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
@@ -1078,6 +1100,8 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
             if (playing) {
                 anchorLabel.text = @"STOP";
+            } else if ([channel isPlaySupported] == NO) {
+                anchorLabel.text = @"";
             } else {
                 anchorLabel.text = @"PLAY";
             }
@@ -1093,12 +1117,8 @@ didChangeSwipeEnable:(BOOL)enable
                         forCell:(ChannelTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Channel *channel = nil;
-    if (ADMOB_PUBLISHER_ID == nil) {
-        channel = (Channel *) _showedChannels[indexPath.row];
-    } else {
-        channel = (Channel *) _showedChannels[indexPath.row - 1];
-    }
+    NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+    Channel *channel = (Channel *) _showedChannels[channelIndex];
     if (channel) {
 #if defined(LADIO_TAIL)
         BOOL playing = [[Player sharedInstance] isPlaying:channel.playUrl];
@@ -1109,12 +1129,14 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
         if (playing) {
             [[Player sharedInstance] stop];
+        } else if ([channel isPlaySupported] == NO) {
+            ;
         } else {
             [[Player sharedInstance] playChannel:channel];
         }
     }
 
-    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:9];
+    UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     anchorLabel.text = @"";
 }
 

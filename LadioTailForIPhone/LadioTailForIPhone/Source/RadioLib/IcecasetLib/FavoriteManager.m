@@ -21,6 +21,7 @@
  */
 
 #import "../Notifications.h"
+#import "Headline.h"
 #import "Favorite.h"
 #import "FavoriteManager.h"
 
@@ -44,8 +45,18 @@ static FavoriteManager *instance = nil;
     if (self = [super init]) {
         // データを復元する
         [self loadFavorites];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(headlineChannelChanged:)
+                                                     name:RadioLibHeadlineChannelChangedNotification
+                                                   object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
 }
 
 - (void)addFavorite:(Channel *)channel
@@ -188,6 +199,26 @@ static FavoriteManager *instance = nil;
     @synchronized(self) {
         return _favorites[[channel.listenUrl absoluteString]] != nil;
     }
+}
+
+#pragma mark - Headline notification
+
+- (void)headlineChannelChanged:(NSNotification *)notification
+{
+    // お気に入りの番組情報を更新する
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSArray *channels = [Headline sharedInstance].channels;
+    dispatch_apply([channels count], queue, ^(size_t i) {
+        Channel *channel = channels[i];
+        if (channel != nil) {
+            NSString* urlString = [channel.listenUrl absoluteString];
+            Favorite *favorite = _favorites[urlString];
+            if (favorite) {
+                favorite.channel = channel;
+            }
+        }
+    });
+    [self storeFavorites];
 }
 
 #pragma mark - Private methods

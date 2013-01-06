@@ -79,6 +79,13 @@ typedef enum
 - (BOOL)isPlaying:(NSURL *)url;
 
 /**
+ * 指定したURLが再生準備中かを取得する
+ *
+ * @return 再生準備中の場合はYES、それ以外はNO。
+ */
+- (BOOL)isPreparing:(NSURL *)url;
+
+/**
  * 再生状態を取得する
  *
  * @return 再生状態
@@ -98,5 +105,19 @@ typedef enum
  * @return 再生中の番組。再生していない場合はnil。playChannelで番組を再生した場合にのみ有効。
  */
 - (Channel *)playingChannel;
+
+/**
+ * 再生準備中のURLを取得する
+ *
+ * @return 再生準備中のURL。再生準備中でない場合はnil。
+ */
+- (NSURL *)preparingUrl;
+
+/**
+ * 再生準備中の番組を取得する
+ *
+ * @return 再生準備中の番組。再生準備中でない場合はnil。playChannelで番組を再生した場合にのみ有効。
+ */
+- (Channel *)preparingChannel;
 
 @end

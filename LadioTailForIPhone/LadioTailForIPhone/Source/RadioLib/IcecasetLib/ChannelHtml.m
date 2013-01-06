@@ -81,26 +81,17 @@ static GRMustacheTemplate *channelPageHtmlTemplate = nil;
         tag = NSLocalizedString(@"Song", @"曲");
         [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
-    // フォーマット
-    {
-        if (channel.bitrate != 0 || !([channel.serverType length] == 0)) {
-            tag = NSLocalizedString(@"Format", @"フォーマット");
-            value = @"";
-            // ビットレート
-            if (channel.bitrate != 0) {
-                value = [NSString stringWithFormat:@"%dkbps", channel.bitrate];
-                if (!([channel.serverType length] == 0)) {
-                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
-                }
-            }
-            
-            // 種類
-            if (!([channel.serverType length] == 0)) {
-                value = [NSString stringWithFormat:@"%@%@", value, channel.serverType];
-            }
-
-            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-        }
+    // ビットレート
+    if (channel.bitrate != 0) {
+        tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
+        value = [NSString stringWithFormat:@"%dkbps", channel.bitrate];
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    }
+    // 種類
+    value = channel.serverType;
+    if (!([value length] == 0)) {
+        tag =  NSLocalizedString(@"Format", @"フォーマット");
+        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
     }
 #if DEBUG
     // fid

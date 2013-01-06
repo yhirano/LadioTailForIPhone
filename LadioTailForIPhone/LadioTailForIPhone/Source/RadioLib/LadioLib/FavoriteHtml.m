@@ -115,59 +115,41 @@ static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
             [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
         }
     }
-    // フォーマット
-    {
-        if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM
-            || channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
-            || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
-            || !([channel.type length] == 0)) {
-            tag = NSLocalizedString(@"Format", @"フォーマット");
-            value = @"";
-            // ビットレート
-            if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
-                value = [NSString stringWithFormat:@"%dkbps", channel.bit];
-                if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM
-                    || channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM
-                    || !([channel.type length] == 0)) {
-                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
-                }
-            }
-            
-            // チャンネル数
-            if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
-                NSString *chsStr;
-                switch (channel.chs) {
-                    case 1:
-                        chsStr = NSLocalizedString(@"Mono", @"モノラル");
-                        break;
-                    case 2:
-                        chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
-                        break;
-                    default:
-                        chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
-                        break;
-                }
-                value = [NSString stringWithFormat:@"%@%@", value, chsStr];
-                if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM || !([channel.type length] == 0)) {
-                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
-                }
-            }
-            
-            // サンプリングレート数
-            if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
-                value = [NSString stringWithFormat:@"%@%dHz", value, channel.smpl];
-                if (!([channel.type length] == 0)) {
-                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
-                }
-            }
-            
-            // 種類
-            if (!([channel.type length] == 0)) {
-                value = [NSString stringWithFormat:@"%@%@", value, channel.type];
-            }
-            
-            [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
+    // ビットレート
+    if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
+        tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
+        value = [NSString stringWithFormat:@"%dkbps", channel.bit];
+        [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
+    }
+    // チャンネル数
+    if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
+        tag =  NSLocalizedString(@"Stereo/Mono", @"ステレオ/モノラル");
+        NSString *chsStr;
+        switch (channel.chs) {
+            case 1:
+                chsStr = NSLocalizedString(@"Mono", @"モノラル");
+                break;
+            case 2:
+                chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
+                break;
+            default:
+                chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
+                break;
         }
+        value = [NSString stringWithFormat:@"%@", chsStr];
+        [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
+    }
+    // サンプリングレート
+    if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
+        tag =  NSLocalizedString(@"Samplerate", @"サンプリングレート");
+        value = [NSString stringWithFormat:@"%dHz", channel.smpl];
+        [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
+    }
+    // フォーマット
+    value = channel.type;
+    if (!([value length] == 0)) {
+        tag =  NSLocalizedString(@"Format", @"フォーマット");
+        [channelInfo addObject:[[FavoriteInfo alloc] initWithTag:tag value:value]];
     }
     // マウント
     value = channel.mnt;

@@ -91,6 +91,8 @@
 
     // このクラスがNSOperationを継承したクラスなので、サーバにお気に入りの情報を同期で送信する。
     // また、iOS5環境だと、非同期通信だと正常に送信できていなかったため、同期で送信している。
+    // NSURLConnectionの非同期通信は、メインスレッドで行う必要があるらしいが、このNSOperationは別スレッドで行っているため、
+    // ここでは非同期通信にする。
     NSURLResponse* response = nil;
     NSError* error = nil;
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];

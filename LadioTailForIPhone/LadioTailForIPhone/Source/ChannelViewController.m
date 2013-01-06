@@ -74,17 +74,27 @@
 #endif
 
     Player *player = [Player sharedInstance];
+    // 再生中
     if ([player isPlaying:url]) {
         [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
-    } else {
-        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+
+        // 再生ボタンの有効無効を切り替える
+        if ([player state] == PlayerStatePrepare) {
+            _playButton.enabled = NO;
+        } else {
+            _playButton.enabled = YES;
+        }
     }
-    
-    // 再生ボタンの有効無効を切り替える
-    if ([player state] == PlayerStatePrepare) {
-        _playButton.enabled = NO;
-    } else {
-        _playButton.enabled = YES;
+    // 再生中以外
+    else {
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+
+        // 再生ボタンの有効無効を切り替える
+        if ([player state] == PlayerStatePrepare || [_channel isPlaySupported] == NO) {
+            _playButton.enabled = NO;
+        } else {
+            _playButton.enabled = YES;
+        }
     }
 }
 
