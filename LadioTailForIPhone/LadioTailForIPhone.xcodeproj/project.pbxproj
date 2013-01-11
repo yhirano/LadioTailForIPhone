@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E0B21FB1552136400A0347A /* AboutHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B21FA1552136400A0347A /* AboutHtml.mustache */; };
-		8E0B83631543DC770097984D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B831F1543DC770097984D /* AboutViewController.m */; };
 		8E0B83661543DC770097984D /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83251543DC770097984D /* ChannelViewController.m */; };
 		8E0B83681543DC770097984D /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832A1543DC770097984D /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E0B83691543DC770097984D /* EGOTableViewPullRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B832B1543DC770097984D /* EGOTableViewPullRefresh.bundle */; };
@@ -91,7 +89,6 @@
 		8E9EC6EC165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8E9EC6F0165D118C00FE5369 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6EF165D118C00FE5369 /* ChannelTableViewCell.m */; };
 		8E9EC6F1165D118C00FE5369 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6EF165D118C00FE5369 /* ChannelTableViewCell.m */; };
-		8EA3066615ED1A1800107AE7 /* AboutNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3066415ED182500107AE7 /* AboutNaviViewController.m */; };
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8EAC42561632EB2B009C2871 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */; };
 		8EAC42581632F193009C2871 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42571632F193009C2871 /* StoreKit.framework */; };
@@ -141,8 +138,6 @@
 		8ED1175016587D90001BD731 /* ChannelHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174D16587D8F001BD731 /* ChannelHtml.m */; };
 		8ED1175116587D90001BD731 /* FavoriteHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1174F16587D90001BD731 /* FavoriteHtml.m */; };
 		8ED1175416587F8E001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
-		8ED1175816588603001BD731 /* about_wallpaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1175616588603001BD731 /* about_wallpaper.png */; };
-		8ED1175916588603001BD731 /* about_wallpaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1175716588603001BD731 /* about_wallpaper@2x.png */; };
 		8ED1178E165887AD001BD731 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1177F165887AD001BD731 /* Default-568h@2x.png */; };
 		8ED1178F165887AD001BD731 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED11780165887AD001BD731 /* Default-Landscape.png */; };
 		8ED11790165887AD001BD731 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED11781165887AD001BD731 /* Default-Landscape@2x.png */; };
@@ -161,7 +156,6 @@
 		8ED1179F165888EA001BD731 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1179D165888A2001BD731 /* Settings.bundle */; };
 		8ED117A216588DCB001BD731 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B57153712BB007352FD /* main.m */; };
 		8ED117A316588DCB001BD731 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83811543DEC80097984D /* AppDelegate.m */; };
-		8ED117A416588DCB001BD731 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B831F1543DC770097984D /* AboutViewController.m */; };
 		8ED117A516588DCB001BD731 /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83251543DC770097984D /* ChannelViewController.m */; };
 		8ED117A616588DCB001BD731 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832A1543DC770097984D /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8ED117A716588DCB001BD731 /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832D1543DC770097984D /* FavoritesTableViewController.m */; };
@@ -180,7 +174,6 @@
 		8ED117B416588DCB001BD731 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */; };
 		8ED117B516588DCB001BD731 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C315E9B7AF00C27CA1 /* WrapController.m */; };
 		8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */; };
-		8ED117B716588DCB001BD731 /* AboutNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA3066415ED182500107AE7 /* AboutNaviViewController.m */; };
 		8ED117B816588DCB001BD731 /* GRMustache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE848C716029CE800ABE8B7 /* GRMustache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8ED117B916588DCB001BD731 /* GRMustacheCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE848CB16029CE800ABE8B7 /* GRMustacheCompiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8ED117BA16588DCB001BD731 /* GRMustacheError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE848CD16029CE800ABE8B7 /* GRMustacheError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -275,7 +268,6 @@
 		8ED1181D16588DCB001BD731 /* tablecell_broadcast_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1B1544F3B400E77F3B /* tablecell_broadcast_black@2x.png */; };
 		8ED1181E16588DCB001BD731 /* tablecell_broadcast_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1C1544F3B400E77F3B /* tablecell_broadcast_white.png */; };
 		8ED1181F16588DCB001BD731 /* tablecell_broadcast_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1D1544F3B400E77F3B /* tablecell_broadcast_white@2x.png */; };
-		8ED1182016588DCB001BD731 /* AboutHtml.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B21FA1552136400A0347A /* AboutHtml.mustache */; };
 		8ED1182116588DCB001BD731 /* button_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA615C4C90500F18C3F /* button_twitter.png */; };
 		8ED1182216588DCB001BD731 /* button_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */; };
 		8ED1182316588DCB001BD731 /* sidemenu_dj_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E34950415EA0FED0081A646 /* sidemenu_dj_black.png */; };
@@ -310,8 +302,6 @@
 		8ED1186716588DF1001BD731 /* FavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1185F16588DF1001BD731 /* FavoriteManager.m */; };
 		8ED1186816588DF1001BD731 /* Headline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1186116588DF1001BD731 /* Headline.m */; };
 		8ED1186D16588F8C001BD731 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1186C16588F8B001BD731 /* Settings.bundle */; };
-		8ED1188016588FC4001BD731 /* about_wallpaper.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1186F16588FC4001BD731 /* about_wallpaper.png */; };
-		8ED1188116588FC4001BD731 /* about_wallpaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1187016588FC4001BD731 /* about_wallpaper@2x.png */; };
 		8ED118A016588FF5001BD731 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189116588FF5001BD731 /* Default-568h@2x.png */; };
 		8ED118A116588FF5001BD731 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189216588FF5001BD731 /* Default-Landscape.png */; };
 		8ED118A216588FF5001BD731 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189316588FF5001BD731 /* Default-Landscape@2x.png */; };
@@ -398,9 +388,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8E0B21FA1552136400A0347A /* AboutHtml.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AboutHtml.mustache; sourceTree = "<group>"; };
-		8E0B831E1543DC770097984D /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
-		8E0B831F1543DC770097984D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		8E0B83241543DC770097984D /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
 		8E0B83251543DC770097984D /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
 		8E0B83291543DC770097984D /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -495,8 +482,6 @@
 		8E9EC6E8165D0F3A00FE5369 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = Views/GradientView/GradientView.m; sourceTree = "<group>"; };
 		8E9EC6EE165D118C00FE5369 /* ChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelTableViewCell.h; path = Views/ChannelTableViewCell/ChannelTableViewCell.h; sourceTree = "<group>"; };
 		8E9EC6EF165D118C00FE5369 /* ChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelTableViewCell.m; path = Views/ChannelTableViewCell/ChannelTableViewCell.m; sourceTree = "<group>"; };
-		8EA3066315ED182500107AE7 /* AboutNaviViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutNaviViewController.h; sourceTree = "<group>"; };
-		8EA3066415ED182500107AE7 /* AboutNaviViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutNaviViewController.m; sourceTree = "<group>"; };
 		8EAB5729155E42DB00F2202C /* LadioTailConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailConfig.h; sourceTree = "<group>"; };
 		8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LadioTailConfig.mm; sourceTree = "<group>"; };
 		8EAC424C1632EB1C009C2871 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -559,8 +544,6 @@
 		8ED1174F16587D90001BD731 /* FavoriteHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoriteHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/FavoriteHtml.m; sourceTree = SOURCE_ROOT; };
 		8ED1175216587F8D001BD731 /* ReplaceUrlUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReplaceUrlUtil.h; path = RadioLib/ReplaceUrlUtil.h; sourceTree = "<group>"; };
 		8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReplaceUrlUtil.m; path = RadioLib/ReplaceUrlUtil.m; sourceTree = "<group>"; };
-		8ED1175616588603001BD731 /* about_wallpaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = about_wallpaper.png; path = LadioTail/about_wallpaper.png; sourceTree = "<group>"; };
-		8ED1175716588603001BD731 /* about_wallpaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about_wallpaper@2x.png"; path = "LadioTail/about_wallpaper@2x.png"; sourceTree = "<group>"; };
 		8ED1177F165887AD001BD731 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/LadioTail/Default-568h@2x.png"; sourceTree = "<group>"; };
 		8ED11780165887AD001BD731 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/LadioTail/Default-Landscape.png"; sourceTree = "<group>"; };
 		8ED11781165887AD001BD731 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/LadioTail/Default-Landscape@2x.png"; sourceTree = "<group>"; };
@@ -590,8 +573,6 @@
 		8ED1186116588DF1001BD731 /* Headline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Headline.m; path = RadioLib/IcecasetLib/Headline.m; sourceTree = "<group>"; };
 		8ED1186916588EBF001BD731 /* RadioEdgeForIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RadioEdgeForIPhone-Info.plist"; sourceTree = "<group>"; };
 		8ED1186C16588F8B001BD731 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Settings/RadioEdge/Settings.bundle; sourceTree = "<group>"; };
-		8ED1186F16588FC4001BD731 /* about_wallpaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_wallpaper.png; sourceTree = "<group>"; };
-		8ED1187016588FC4001BD731 /* about_wallpaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_wallpaper@2x.png"; sourceTree = "<group>"; };
 		8ED1189116588FF5001BD731 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/RadioEdge/Default-568h@2x.png"; sourceTree = "<group>"; };
 		8ED1189216588FF5001BD731 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/RadioEdge/Default-Landscape.png"; sourceTree = "<group>"; };
 		8ED1189316588FF5001BD731 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/RadioEdge/Default-Landscape@2x.png"; sourceTree = "<group>"; };
@@ -796,10 +777,6 @@
 				8E0B832D1543DC770097984D /* FavoritesTableViewController.m */,
 				8E0B832E1543DC770097984D /* FavoriteViewController.h */,
 				8E0B832F1543DC770097984D /* FavoriteViewController.m */,
-				8EA3066315ED182500107AE7 /* AboutNaviViewController.h */,
-				8EA3066415ED182500107AE7 /* AboutNaviViewController.m */,
-				8E0B831E1543DC770097984D /* AboutViewController.h */,
-				8E0B831F1543DC770097984D /* AboutViewController.m */,
 				8E9928D115490D230015CA5D /* ICloudStrorage.h */,
 				8E9928D215490D230015CA5D /* ICloudStrorage.m */,
 				8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */,
@@ -926,8 +903,6 @@
 		8E16282E15385E55007A2DBE /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				8ED11755165885F1001BD731 /* LadioTail */,
-				8ED1186E16588FC4001BD731 /* RadioEdge */,
 				8EFAD39215432EC400DA316F /* button_allow_left.png */,
 				8EFAD39315432EC400DA316F /* button_allow_left@2x.png */,
 				8EFAD39415432EC400DA316F /* button_allow_right.png */,
@@ -1143,7 +1118,6 @@
 			children = (
 				8EC3BBD11541057300F6DC08 /* ChannelPageHtml.mustache */,
 				8EC3BBEB15412B9500F6DC08 /* ChannelLinkHtml.mustache */,
-				8E0B21FA1552136400A0347A /* AboutHtml.mustache */,
 			);
 			path = Templetes;
 			sourceTree = "<group>";
@@ -1199,15 +1173,6 @@
 			name = GradientView;
 			sourceTree = "<group>";
 		};
-		8ED11755165885F1001BD731 /* LadioTail */ = {
-			isa = PBXGroup;
-			children = (
-				8ED1175616588603001BD731 /* about_wallpaper.png */,
-				8ED1175716588603001BD731 /* about_wallpaper@2x.png */,
-			);
-			name = LadioTail;
-			sourceTree = "<group>";
-		};
 		8ED1177E16588798001BD731 /* LadioTail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1254,15 +1219,6 @@
 			name = RadioEdge;
 			sourceTree = "<group>";
 		};
-		8ED1186E16588FC4001BD731 /* RadioEdge */ = {
-			isa = PBXGroup;
-			children = (
-				8ED1186F16588FC4001BD731 /* about_wallpaper.png */,
-				8ED1187016588FC4001BD731 /* about_wallpaper@2x.png */,
-			);
-			path = RadioEdge;
-			sourceTree = "<group>";
-		};
 		8EE8491116029F9F00ABE8B7 /* JRSwizzle */ = {
 			isa = PBXGroup;
 			children = (
@@ -1281,8 +1237,8 @@
 			buildPhases = (
 				8EC23B43153712BB007352FD /* Sources */,
 				8EC23B44153712BB007352FD /* Frameworks */,
+				8E31758516A0967100F0C6BA /* ShellScript */,
 				8EC23B45153712BB007352FD /* Resources */,
-				8EDDA15D160A97D3006B6DCF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1299,8 +1255,8 @@
 			buildPhases = (
 				8ED117A116588DCB001BD731 /* Sources */,
 				8ED117DA16588DCB001BD731 /* Frameworks */,
+				8E31758616A098A500F0C6BA /* ShellScript */,
 				8ED117EA16588DCB001BD731 /* Resources */,
-				8ED1184F16588DCB001BD731 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1397,7 +1353,6 @@
 				8E62BA1F1544F3B400E77F3B /* tablecell_broadcast_black@2x.png in Resources */,
 				8E62BA201544F3B400E77F3B /* tablecell_broadcast_white.png in Resources */,
 				8E62BA211544F3B400E77F3B /* tablecell_broadcast_white@2x.png in Resources */,
-				8E0B21FB1552136400A0347A /* AboutHtml.mustache in Resources */,
 				8EF24FA815C4C90500F18C3F /* button_twitter.png in Resources */,
 				8EF24FA915C4C90500F18C3F /* button_twitter@2x.png in Resources */,
 				8E34951815EA0FED0081A646 /* sidemenu_dj_black.png in Resources */,
@@ -1426,8 +1381,6 @@
 				8E34953315EA12EB0081A646 /* sidemenu_checkmark_white@2x.png in Resources */,
 				8E34953615EA15F20081A646 /* navbarbtn_menu.png in Resources */,
 				8E34953715EA15F20081A646 /* navbarbtn_menu@2x.png in Resources */,
-				8ED1175816588603001BD731 /* about_wallpaper.png in Resources */,
-				8ED1175916588603001BD731 /* about_wallpaper@2x.png in Resources */,
 				8ED1178E165887AD001BD731 /* Default-568h@2x.png in Resources */,
 				8ED1178F165887AD001BD731 /* Default-Landscape.png in Resources */,
 				8ED11790165887AD001BD731 /* Default-Landscape@2x.png in Resources */,
@@ -1522,7 +1475,6 @@
 				8ED1181D16588DCB001BD731 /* tablecell_broadcast_black@2x.png in Resources */,
 				8ED1181E16588DCB001BD731 /* tablecell_broadcast_white.png in Resources */,
 				8ED1181F16588DCB001BD731 /* tablecell_broadcast_white@2x.png in Resources */,
-				8ED1182016588DCB001BD731 /* AboutHtml.mustache in Resources */,
 				8ED1182116588DCB001BD731 /* button_twitter.png in Resources */,
 				8ED1182216588DCB001BD731 /* button_twitter@2x.png in Resources */,
 				8ED1182316588DCB001BD731 /* sidemenu_dj_black.png in Resources */,
@@ -1552,8 +1504,6 @@
 				8ED1183B16588DCB001BD731 /* navbarbtn_menu.png in Resources */,
 				8ED1183C16588DCB001BD731 /* navbarbtn_menu@2x.png in Resources */,
 				8ED1186D16588F8C001BD731 /* Settings.bundle in Resources */,
-				8ED1188016588FC4001BD731 /* about_wallpaper.png in Resources */,
-				8ED1188116588FC4001BD731 /* about_wallpaper@2x.png in Resources */,
 				8ED118A016588FF5001BD731 /* Default-568h@2x.png in Resources */,
 				8ED118A116588FF5001BD731 /* Default-Landscape.png in Resources */,
 				8ED118A216588FF5001BD731 /* Default-Landscape@2x.png in Resources */,
@@ -1593,7 +1543,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8ED1184F16588DCB001BD731 /* ShellScript */ = {
+		8E31758516A0967100F0C6BA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1604,9 +1554,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildPlist=\"./LadioTailForIPhone/RadioEdgeForIPhone-Info.plist\"\nCFBuildDate=$(date '+%Y/%m/%d %H:%M %Z')\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $CFBuildDate\" $buildPlist";
+			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:9:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/LadioTail/Settings.bundle/Root.plist";
 		};
-		8EDDA15D160A97D3006B6DCF /* ShellScript */ = {
+		8E31758616A098A500F0C6BA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1617,7 +1567,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildPlist=\"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\"\nCFBuildDate=$(date '+%Y/%m/%d %H:%M %Z')\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $CFBuildDate\" $buildPlist";
+			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/RadioEdgeForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:5:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/RadioEdge/Settings.bundle/Root.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1628,7 +1578,6 @@
 			files = (
 				8EC23B58153712BB007352FD /* main.m in Sources */,
 				8E0B83821543DFD20097984D /* AppDelegate.m in Sources */,
-				8E0B83631543DC770097984D /* AboutViewController.m in Sources */,
 				8E0B83661543DC770097984D /* ChannelViewController.m in Sources */,
 				8E0B83681543DC770097984D /* EGORefreshTableHeaderView.m in Sources */,
 				8E0B836A1543DC770097984D /* FavoritesTableViewController.m in Sources */,
@@ -1647,7 +1596,6 @@
 				8EB905C415E9B7AF00C27CA1 /* IIViewDeckController.m in Sources */,
 				8EB905C515E9B7AF00C27CA1 /* WrapController.m in Sources */,
 				8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */,
-				8EA3066615ED1A1800107AE7 /* AboutNaviViewController.m in Sources */,
 				8EE848FB16029D1700ABE8B7 /* GRMustache.m in Sources */,
 				8EE848FC16029D1700ABE8B7 /* GRMustacheCompiler.m in Sources */,
 				8EE848FD16029D1700ABE8B7 /* GRMustacheError.m in Sources */,
@@ -1696,7 +1644,6 @@
 			files = (
 				8ED117A216588DCB001BD731 /* main.m in Sources */,
 				8ED117A316588DCB001BD731 /* AppDelegate.m in Sources */,
-				8ED117A416588DCB001BD731 /* AboutViewController.m in Sources */,
 				8ED117A516588DCB001BD731 /* ChannelViewController.m in Sources */,
 				8ED117A616588DCB001BD731 /* EGORefreshTableHeaderView.m in Sources */,
 				8ED117A716588DCB001BD731 /* FavoritesTableViewController.m in Sources */,
@@ -1715,7 +1662,6 @@
 				8ED117B416588DCB001BD731 /* IIViewDeckController.m in Sources */,
 				8ED117B516588DCB001BD731 /* WrapController.m in Sources */,
 				8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */,
-				8ED117B716588DCB001BD731 /* AboutNaviViewController.m in Sources */,
 				8ED117B816588DCB001BD731 /* GRMustache.m in Sources */,
 				8ED117B916588DCB001BD731 /* GRMustacheCompiler.m in Sources */,
 				8ED117BA16588DCB001BD731 /* GRMustacheError.m in Sources */,

@@ -5,10 +5,10 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Favorites</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
@@ -21,10 +21,10 @@
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Browse the smartphone site</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
@@ -37,20 +37,18 @@
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string></string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>Headline</string>
-			<key>Key</key>
-			<string>view_headline</string>
 			<key>DefaultValue</key>
 			<string>view_headline_elapsed_time</string>
+			<key>Key</key>
+			<string>view_headline</string>
+			<key>Title</key>
+			<string>Headline</string>
 			<key>Titles</key>
 			<array>
 				<string>Only title and DJ</string>
@@ -58,6 +56,8 @@
 				<string>Bitrate</string>
 				<string>Elapsed time and Bitrate</string>
 			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
 				<string>view_headline_only_title_and_dj</string>
@@ -67,32 +67,56 @@
 			</array>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string></string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>Shake</string>
-			<key>Key</key>
-			<string>operation_shake</string>
 			<key>DefaultValue</key>
 			<string>shake_do_nothing</string>
+			<key>Key</key>
+			<string>operation_shake</string>
+			<key>Title</key>
+			<string>Shake</string>
 			<key>Titles</key>
 			<array>
 				<string>Do nothing</string>
 				<string>Update channels</string>
 				<string>Play random</string>
 			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
 				<string>shake_do_nothing</string>
 				<string>shake_update_headline</string>
 				<string>shake_play_random</string>
 			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string></string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>1.5.1</string>
+			<key>Key</key>
+			<string>app_version</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>About</string>
+			<key>Title</key>
+			<string>About</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>© 2012-2013 Yuichi Hirano
+
+This software is used the following libraries.
+
+----
+
+- EGOTableViewPullRefresh
+Copyright 2009 enormego
+
+----
+
+- FBNetworkReachability
+Copyright (c) 2011 Hiroshi Hashiguchi
+
+----
+
+- GRMustache
+Copyright (c) 2012 Gwendal Roué
+
+----
+
+- IIViewDeckController
+Copyright (C) 2011, Tom Adriaenssen
+
+----
+
+- JRSwizzle
+Copyright (c) 2007-2011 Jonathan 'Wolf' Rentzsch
+
+----
+
+- SVProgressHUD
+Copyright (c) 2011 Sam Vermette
+
+----
+
+- Gentleface Toolbar Icon Set
+Copyright © 2009 Gentleface</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+	</array>
+</dict>
+</plist>

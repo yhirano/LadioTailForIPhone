@@ -26,8 +26,6 @@
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
 #import "FavoritesTableViewController.h"
-#import "AboutNaviViewController.h"
-#import "AboutViewController.h"
 #import "SideMenuTableViewController.h"
 
 @implementation SideMenuTableViewController
@@ -92,7 +90,7 @@
     // テーブルの境界線の色を変える
     self.tableView.separatorColor = SIDEMENU_TABLE_SEPARATOR_COLOR;
 
-    // お気に入り・About画面からの戻るボタンのテキストと色を書き換える
+    // お気に入り画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = @"Others";
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered
@@ -163,7 +161,7 @@
         case 1: // Sort Section
             return 4;
         case 2: // Others Section
-            return 2;
+            return 1;
         default:
             return 0;
     }
@@ -176,8 +174,6 @@
             return @"Update";
         case 1: // Sort Section
             return @"Sort";
-        case 2: // Others Section
-            return @"Others";
         default:
             return @"";
     }
@@ -378,26 +374,6 @@
                     // テーブルセルのテキスト等の色を変える
                     favoritesLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     favoritesLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
-
-                    break;
-                }
-                case 1: // About
-                {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"AboutCell"];
-
-                    UILabel *aboutLabel = (UILabel *) [cell viewWithTag:2];
-#if defined(LADIO_TAIL)
-                    aboutLabel.text = NSLocalizedString(@"About Ladio Tail", @"Ladio Tailについて");
-#elif defined(RADIO_EDGE)
-                    aboutLabel.text = NSLocalizedString(@"About Radio Edge", @"Radio Edgeについて");
-#else
-                    #error "Not defined LADIO_TAIL or RADIO_EDGE"
-#endif
-
-                    // テーブルセルのテキスト等の色を変える
-                    aboutLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
-                    aboutLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
 
                     break;
                 }
@@ -622,30 +598,6 @@
                             FavoriteNaviViewController *favoriteNaviViewController = (FavoriteNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];
                             self.viewDeckController.centerController = favoriteNaviViewController;
-
-                            // チェックマーク位置変更のためテーブルを更新
-                            [tableView reloadData];
-                        }];
-                    }
-                    break;
-                }
-                case 1: // About
-                {
-                    // CenterControllerがAboutNaviViewControllerで、かつAboutViewControllerが表示中の場合
-                    // サイドメニューを閉じる
-                    if ([self isCenterControllerClass:[AboutNaviViewController class]
-                                 andTopViewController:[AboutViewController class]]) {
-                        [self.viewDeckController closeLeftViewAnimated:YES];
-                    }
-                    // CenterControllerがAboutNaviViewControllerでない、またはAboutViewControllerが表示中でない場合
-                    // サイドメニューをバウンドしセンターを変更
-                    else {
-                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
-                        {
-                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                            AboutNaviViewController *aboutNaviViewController = (AboutNaviViewController *)
-                                [storyboard instantiateViewControllerWithIdentifier:@"AboutNaviViewController"];
-                            self.viewDeckController.centerController = aboutNaviViewController;
 
                             // チェックマーク位置変更のためテーブルを更新
                             [tableView reloadData];
