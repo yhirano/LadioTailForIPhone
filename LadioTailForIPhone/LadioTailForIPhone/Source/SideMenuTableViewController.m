@@ -174,6 +174,8 @@
             return @"Update";
         case 1: // Sort Section
             return @"Sort";
+        case 2: // Others Section
+            return @"Others";
         default:
             return @"";
     }
