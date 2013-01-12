@@ -223,8 +223,11 @@ typedef enum {
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel playUrl]];
     if (preparing) {
         [preparingIndicator startAnimating];
+        preparingIndicator.hidden = NO;
+    } else {
+        [preparingIndicator stopAnimating];
+        preparingIndicator.hidden = YES;
     }
-    preparingIndicator.hidden = !preparing;
     
     favoriteImageView.hidden = !channel.favorite;
 
@@ -317,8 +320,11 @@ typedef enum {
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel listenUrl]];
     if (preparing) {
         [preparingIndicator startAnimating];
+        preparingIndicator.hidden = NO;
+    } else {
+        [preparingIndicator stopAnimating];
+        preparingIndicator.hidden = YES;
     }
-    preparingIndicator.hidden = !preparing;
 
     favoriteImageView.hidden = !channel.favorite;
 
