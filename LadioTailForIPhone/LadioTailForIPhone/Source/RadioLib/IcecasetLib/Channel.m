@@ -83,6 +83,57 @@ static NSCache *matchCache = nil;
                                       serverType_, genre_, bitrate_, sampleRate_, channels_];
 }
 
+- (BOOL)isEqual:(id)other
+{
+    if (other == self) {
+        return YES;
+    }
+    if (!other || ![other isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    Channel *otherChannel = (Channel*)other;
+    if (self.serverName == nil) {
+        if (otherChannel.serverName != nil) {
+            return NO;
+        }
+    } else if (![self.serverName isEqual:otherChannel.serverName]) {
+        return NO;
+    }
+    if (self.listenUrl == nil) {
+        if (otherChannel.listenUrl != nil) {
+            return NO;
+        }
+    } else if (![[self.listenUrl absoluteString] isEqual:[otherChannel.listenUrl absoluteString]]) {
+        return NO;
+    }
+    if (self.serverType == nil) {
+        if (otherChannel.serverType != nil) {
+            return NO;
+        }
+    } else if (![self.serverType isEqual:otherChannel.serverType]) {
+        return NO;
+    }
+    if (self.genre == nil) {
+        if (otherChannel.genre != nil) {
+            return NO;
+        }
+    } else if (![self.genre isEqual:otherChannel.genre]) {
+        return NO;
+    }
+    if (self.bitrate != otherChannel.bitrate) {
+        return NO;
+    }
+    if (self.sampleRate != otherChannel.sampleRate) {
+        return NO;
+    }
+    if (self.channels != otherChannel.channels) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (NSUInteger)hash
 {
     if (hasHashCache_) {
@@ -90,7 +141,7 @@ static NSCache *matchCache = nil;
     }
 
     NSUInteger result = 1;
-    NSUInteger prime = 31;
+    static const NSUInteger prime = 31;
     
     result = prime * result + [serverName_ hash];
     result = prime * result + [listenUrl_ hash];
@@ -331,7 +382,7 @@ static NSCache *matchCache = nil;
     NSComparisonResult result;
     
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class] compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -354,19 +405,19 @@ static NSCache *matchCache = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class] compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // Server Nameで比較
-    result = [Channel compareString:self.trimedServerName compared:channel.trimedServerName];
+    result = [[self class] compareString:self.trimedServerName compared:channel.trimedServerName];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // Server Nameおなじ場合はGenreで比較
-    result = [Channel compareString:self.trimedGenre compared:channel.trimedGenre];
+    result = [[self class] compareString:self.trimedGenre compared:channel.trimedGenre];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -382,19 +433,19 @@ static NSCache *matchCache = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class] compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // Genreで比較
-    result = [Channel compareString:self.trimedGenre compared:channel.trimedGenre];
+    result = [[self class] compareString:self.trimedGenre compared:channel.trimedGenre];
     if (result != NSOrderedSame) {
         return result;
     }
     
     // Genreおなじ場合はServer Nameで比較
-    result = [Channel compareString:self.trimedServerName compared:channel.trimedServerName];
+    result = [[self class] compareString:self.trimedServerName compared:channel.trimedServerName];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -410,7 +461,7 @@ static NSCache *matchCache = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class] compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -459,7 +510,7 @@ static NSCache *matchCache = nil;
     return result;
 }
 
-#pragma mark  - NSCoding methods
+#pragma mark - NSCoding methods
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {

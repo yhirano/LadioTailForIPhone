@@ -26,6 +26,10 @@
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
 
+@interface FavoriteViewController () <UIWebViewDelegate>
+
+@end
+
 @implementation FavoriteViewController
 {
 @private

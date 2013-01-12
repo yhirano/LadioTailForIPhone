@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "RadioLib/RadioLib.h"
 
-@interface ChannelViewController : UIViewController <UIWebViewDelegate>
+@interface ChannelViewController : UIViewController
 
 @property (strong) Channel *channel;
 

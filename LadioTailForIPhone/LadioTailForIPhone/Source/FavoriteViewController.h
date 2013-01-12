@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "RadioLib/RadioLib.h"
 
-@interface FavoriteViewController : UIViewController <UIWebViewDelegate>
+@interface FavoriteViewController : UIViewController
 
 @property (strong) Favorite *favorite;
 

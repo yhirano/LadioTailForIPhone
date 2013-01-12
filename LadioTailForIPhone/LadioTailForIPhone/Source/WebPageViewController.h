@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WebPageViewController : UIViewController <UIWebViewDelegate>
+@interface WebPageViewController : UIViewController
 
 @property (strong) NSURL *url;
 

@@ -38,7 +38,7 @@ typedef enum
     PlayerStatePlay,
 } PlayerState;
 
-@interface Player : NSObject <AVAudioSessionDelegate>
+@interface Player : NSObject
 
 + (Player *)sharedInstance;
 

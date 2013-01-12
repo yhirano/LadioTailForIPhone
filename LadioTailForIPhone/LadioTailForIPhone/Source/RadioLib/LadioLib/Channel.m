@@ -112,6 +112,111 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
                                       type_, nam_, gnl_, desc_, dj_, song_, url_, cln_, clns_, max_, bit_, smpl_, chs_];
 }
 
+- (BOOL)isEqual:(id)other
+{
+    if (other == self) {
+        return YES;
+    }
+    if (!other || ![other isKindOfClass:[self class]]) {
+        return NO;
+    }
+
+    Channel *otherChannel = (Channel*)other;
+    if (self.surl == nil) {
+        if (otherChannel.surl != nil) {
+            return NO;
+        }
+    } else if (![[self.surl absoluteString] isEqual:[otherChannel.surl absoluteString]]) {
+        return NO;
+    }
+    if (self.tims == nil) {
+        if (otherChannel.tims != nil) {
+            return NO;
+        }
+    } else if (![self.tims isEqual:otherChannel.tims]) {
+        return NO;
+    }
+    if (self.prt != otherChannel.prt) {
+        return NO;
+    }
+    if (self.mnt == nil) {
+        if (otherChannel.mnt != nil) {
+            return NO;
+        }
+    } else if (![self.mnt isEqual:otherChannel.mnt]) {
+        return NO;
+    }
+    if (self.type == nil) {
+        if (otherChannel.type != nil) {
+            return NO;
+        }
+    } else if (![self.type isEqual:otherChannel.type]) {
+        return NO;
+    }
+    if (self.nam == nil) {
+        if (otherChannel.nam != nil) {
+            return NO;
+        }
+    } else if (![self.nam isEqual:otherChannel.nam]) {
+        return NO;
+    }
+    if (self.gnl == nil) {
+        if (otherChannel.gnl != nil) {
+            return NO;
+        }
+    } else if (![self.gnl isEqual:otherChannel.gnl]) {
+        return NO;
+    }
+    if (self.desc == nil) {
+        if (otherChannel.desc != nil) {
+            return NO;
+        }
+    } else if (![self.desc isEqual:otherChannel.desc]) {
+        return NO;
+    }
+    if (self.dj == nil) {
+        if (otherChannel.dj != nil) {
+            return NO;
+        }
+    } else if (![self.dj isEqual:otherChannel.dj]) {
+        return NO;
+    }
+    if (self.song == nil) {
+        if (otherChannel.song != nil) {
+            return NO;
+        }
+    } else if (![self.song isEqual:otherChannel.song]) {
+        return NO;
+    }
+    if (self.url == nil) {
+        if (otherChannel.url != nil) {
+            return NO;
+        }
+    } else if (![[self.url absoluteString] isEqual:[otherChannel.url absoluteString]]) {
+        return NO;
+    }
+    if (self.cln != otherChannel.cln) {
+        return NO;
+    }
+    if (self.clns != otherChannel.clns) {
+        return NO;
+    }
+    if (self.max != otherChannel.max) {
+        return NO;
+    }
+    if (self.bit != otherChannel.bit) {
+        return NO;
+    }
+    if (self.smpl != otherChannel.smpl) {
+        return NO;
+    }
+    if (self.chs != otherChannel.chs) {
+        return NO;
+    }
+
+    return YES;
+}
+
 - (NSUInteger)hash
 {
     if (hasHashCache_) {
@@ -119,7 +224,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     }
     
     NSUInteger result = 1;
-    NSUInteger prime = 31;
+    static const NSUInteger prime = 31;
     
     result = prime * result + [surl_ hash];
     result = prime * result + [tims_ hash];
@@ -532,7 +637,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -548,7 +653,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -571,19 +676,19 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルで比較
-    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルおなじ場合はDJで比較
-    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -599,19 +704,19 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJで比較
-    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJがおなじ場合はタイトルで比較
-    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
