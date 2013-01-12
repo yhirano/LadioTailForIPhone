@@ -637,7 +637,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -653,7 +653,7 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -676,19 +676,19 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルで比較
-    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルおなじ場合はDJで比較
-    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -704,19 +704,19 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [Channel compareFavorite:self compared:channel];
+    result = [[self class]compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJで比較
-    result = [Channel compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJがおなじ場合はタイトルで比較
-    result = [Channel compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }

@@ -196,8 +196,7 @@
             switch (indexPath.row) {
                 case 0: // Update
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"UpdateCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"UpdateCell"];
                     
                     UILabel *updateLabel = (UILabel *) [cell viewWithTag:2];
                     updateLabel.text = NSLocalizedString(@"Update", @"更新");
@@ -216,8 +215,7 @@
             switch (indexPath.row) {
                 case 0: // Newly
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"NewlyCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"NewlyCell"];
                     
                     UILabel *newlyLabel = (UILabel *) [cell viewWithTag:2];
                     newlyLabel.text = NSLocalizedString(@"Newly", @"新規");
@@ -233,8 +231,7 @@
                 }
                 case 1: // Listeners
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"ListenersCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"ListenersCell"];
                     
                     UILabel *listenersLabel = (UILabel *) [cell viewWithTag:2];
                     listenersLabel.text = NSLocalizedString(@"Listeners", @"リスナー数");
@@ -250,8 +247,7 @@
                 }
                 case 2: // Title
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"TitleCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"TitleCell"];
                     
                     UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
                     titleLabel.text = NSLocalizedString(@"Title", @"タイトル");
@@ -267,8 +263,7 @@
                 }
                 case 3: // DJ
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"DjCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"DjCell"];
                     
                     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
                     djLabel.text = NSLocalizedString(@"DJ", @"DJ");
@@ -290,8 +285,7 @@
             switch (indexPath.row) {
                 case 0: // None
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"NoneCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"NoneCell"];
                     
                     UILabel *noneLabel = (UILabel *) [cell viewWithTag:2];
                     noneLabel.text = NSLocalizedString(@"NoneSort", @"並べ替えない");
@@ -307,8 +301,7 @@
                 }
                 case 1: // Server Name
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"TitleCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"TitleCell"];
                     
                     UILabel *titleLabel = (UILabel *) [cell viewWithTag:2];
                     titleLabel.text = NSLocalizedString(@"Title", @"タイトル");
@@ -324,8 +317,7 @@
                 }
                 case 2: // Genre
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"GenreCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"GenreCell"];
                     
                     UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
                     genreLabel.text = NSLocalizedString(@"Genre", @"ジャンル");
@@ -341,8 +333,7 @@
                 }
                 case 3: // Bitrate
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                           withCellWithIdentifier:@"BitrateCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"BitrateCell"];
                     
                     UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
                     djLabel.text = NSLocalizedString(@"Bitrate", @"ビットレート");
@@ -367,8 +358,7 @@
             switch (indexPath.row) {
                 case 0: // Favorite
                 {
-                    cell = [SideMenuTableViewController tableView:tableView
-                                                            withCellWithIdentifier:@"FavoritesCell"];
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"FavoritesCell"];
                     
                     UILabel *favoritesLabel = (UILabel *) [cell viewWithTag:2];
                     favoritesLabel.text = NSLocalizedString(@"Favorites", @"お気に入り 複数");

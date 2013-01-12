@@ -330,7 +330,7 @@ static NSRegularExpression *chsExp = nil;
 
     // フィルタリング
     if (!([searchWord length] == 0)) {
-        NSArray *words = [Headline splitStringByWhiteSpace:searchWord];
+        NSArray *words = [[self class] splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
 
         NSObject *lock = [[NSObject alloc] init];

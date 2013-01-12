@@ -21,12 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 #import "RadioLib/RadioLib.h"
-#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 
-@interface HeadlineViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
-                                                      EGORefreshTableHeaderDelegate, ChannelTableViewDelegate>
+@interface HeadlineViewController : UIViewController
 
 @property (nonatomic) ChannelSortType channelSortType;
 

@@ -37,6 +37,10 @@ typedef enum
 
 static Player *instance = nil;
 
+@interface Player () <AVAudioSessionDelegate>
+
+@end
+
 @implementation Player
 {
 @private

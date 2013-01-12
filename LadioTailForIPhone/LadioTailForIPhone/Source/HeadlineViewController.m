@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "GoogleAdMobAds/GADBannerView.h"
@@ -39,6 +40,11 @@ typedef enum {
     HeadlineViewDisplayTypeBitrate,
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
+
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate,
+                                      ChannelTableViewDelegate>
+
+@end
 
 @implementation HeadlineViewController
 {
@@ -173,10 +179,10 @@ typedef enum {
         listenersLabel.text = @"";
     }
     if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.text = [HeadlineViewController dateText:channel.tims];
+        dateLabel.text = [[self class] dateText:channel.tims];
     }
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bit];
+        bitrateLabel.text = [[self class] bitrateText:channel.bit];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -194,7 +200,7 @@ typedef enum {
         dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         dateLabel.clipsToBounds = YES;
-        dateLabel.backgroundColor = [HeadlineViewController dateLabelBackgroundColor:channel.tims];
+        dateLabel.backgroundColor = [[self class] dateLabelBackgroundColor:channel.tims];
         dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
         dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
     }
@@ -204,7 +210,7 @@ typedef enum {
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.backgroundColor = [[self class] bitrateLabelBackgroundColor:channel.bit];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -283,7 +289,7 @@ typedef enum {
         genreLabel.text = @"";
     }
     if (bitrateLabel != nil) {
-        bitrateLabel.text = [HeadlineViewController bitrateText:channel.bitrate];
+        bitrateLabel.text = [[self class] bitrateText:channel.bitrate];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -298,7 +304,7 @@ typedef enum {
         bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
         bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
         bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [HeadlineViewController bitrateLabelBackgroundColor:channel.bitrate];
+        bitrateLabel.backgroundColor = [[self class] bitrateLabelBackgroundColor:channel.bitrate];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -716,7 +722,7 @@ typedef enum {
     _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
     // ヘッドライン表示方式を設定
-    headlineViewDisplayType_ = [HeadlineViewController headlineViewDisplayType];
+    headlineViewDisplayType_ = [[self class] headlineViewDisplayType];
     
     if (PULL_REFRESH_HEADLINE) {
         // PullRefreshViewの生成
@@ -836,7 +842,7 @@ typedef enum {
         UIViewController *viewCon = [segue destinationViewController];
         if ([viewCon isKindOfClass:[ChannelViewController class]]) {
             NSInteger channelIndex =
-                [HeadlineViewController channelIndexFromIndexPath:[_headlineTableView indexPathForSelectedRow]];
+                [[self class] channelIndexFromIndexPath:[_headlineTableView indexPathForSelectedRow]];
             Channel *channel = _showedChannels[channelIndex];
             ((ChannelViewController *) viewCon).channel = channel;
         }
@@ -893,7 +899,7 @@ typedef enum {
 
     // 見つかった場合はスクロール
     if (found) {
-        NSIndexPath *indexPath = [HeadlineViewController indexPathFromChannelIndex:playingChannelIndex];
+        NSIndexPath *indexPath = [[self class] indexPathFromChannelIndex:playingChannelIndex];
         [_headlineTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
@@ -974,7 +980,7 @@ typedef enum {
     }
     // 広告View以外のView
     else {
-        return [self tableView:tableView createChannelCell:[HeadlineViewController channelIndexFromIndexPath:indexPath]];
+        return [self tableView:tableView createChannelCell:[[self class] channelIndexFromIndexPath:indexPath]];
     }
 }
 
@@ -1088,7 +1094,7 @@ didChangeSwipeEnable:(BOOL)enable
 {
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
     if (enable) {
-        NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+        NSInteger channelIndex = [[self class] channelIndexFromIndexPath:indexPath];
         Channel *channel = (Channel *) _showedChannels[channelIndex];
         if (channel) {
 #if defined(LADIO_TAIL)
@@ -1117,7 +1123,7 @@ didChangeSwipeEnable:(BOOL)enable
                         forCell:(ChannelTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger channelIndex = [HeadlineViewController channelIndexFromIndexPath:indexPath];
+    NSInteger channelIndex = [[self class] channelIndexFromIndexPath:indexPath];
     Channel *channel = (Channel *) _showedChannels[channelIndex];
     if (channel) {
 #if defined(LADIO_TAIL)
@@ -1144,7 +1150,7 @@ didChangeSwipeEnable:(BOOL)enable
 
 - (void)defaultsChanged:(NSNotification *)notification
 {
-    NSInteger currentHeadlineViewDisplayType = [HeadlineViewController headlineViewDisplayType];
+    NSInteger currentHeadlineViewDisplayType = [[self class] headlineViewDisplayType];
 
     if (headlineViewDisplayType_ != currentHeadlineViewDisplayType) {
         headlineViewDisplayType_ = currentHeadlineViewDisplayType;

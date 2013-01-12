@@ -24,6 +24,10 @@
 #import "LadioTailConfig.h"
 #import "WebPageViewController.h"
 
+@interface WebPageViewController () <UIWebViewDelegate>
+
+@end
+
 @implementation WebPageViewController
 {
 @private

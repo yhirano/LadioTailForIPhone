@@ -28,6 +28,10 @@
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
+@interface ChannelViewController () <UIWebViewDelegate>
+
+@end
+
 @implementation ChannelViewController
 {
 @private
