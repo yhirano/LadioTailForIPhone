@@ -83,6 +83,57 @@ static NSCache *matchCache = nil;
                                       serverType_, genre_, bitrate_, sampleRate_, channels_];
 }
 
+- (BOOL)isEqual:(id)other
+{
+    if (other == self) {
+        return YES;
+    }
+    if (!other || ![other isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    Channel *otherChannel = (Channel*)other;
+    if (self.serverName == nil) {
+        if (otherChannel.serverName != nil) {
+            return NO;
+        }
+    } else if (![self.serverName isEqual:otherChannel.serverName]) {
+        return NO;
+    }
+    if (self.listenUrl == nil) {
+        if (otherChannel.listenUrl != nil) {
+            return NO;
+        }
+    } else if (![[self.listenUrl absoluteString] isEqual:[otherChannel.listenUrl absoluteString]]) {
+        return NO;
+    }
+    if (self.serverType == nil) {
+        if (otherChannel.serverType != nil) {
+            return NO;
+        }
+    } else if (![self.serverType isEqual:otherChannel.serverType]) {
+        return NO;
+    }
+    if (self.genre == nil) {
+        if (otherChannel.genre != nil) {
+            return NO;
+        }
+    } else if (![self.genre isEqual:otherChannel.genre]) {
+        return NO;
+    }
+    if (self.bitrate != otherChannel.bitrate) {
+        return NO;
+    }
+    if (self.sampleRate != otherChannel.sampleRate) {
+        return NO;
+    }
+    if (self.channels != otherChannel.channels) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (NSUInteger)hash
 {
     if (hasHashCache_) {
@@ -90,7 +141,7 @@ static NSCache *matchCache = nil;
     }
 
     NSUInteger result = 1;
-    NSUInteger prime = 31;
+    static const NSUInteger prime = 31;
     
     result = prime * result + [serverName_ hash];
     result = prime * result + [listenUrl_ hash];

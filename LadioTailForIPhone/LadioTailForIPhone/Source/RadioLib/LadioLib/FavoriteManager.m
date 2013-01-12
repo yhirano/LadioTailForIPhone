@@ -213,15 +213,25 @@ static FavoriteManager *instance = nil;
     // お気に入りの番組情報を更新する
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     NSArray *channels = [Headline sharedInstance].channels;
+    __block BOOL changed = NO;
     dispatch_apply([channels count], queue, ^(size_t i) {
         Channel *channel = channels[i];
         if (channel != nil) {
             Favorite *favorite = _favorites[channel.mnt];
-            if (favorite) {
+            if (favorite != nil && ![favorite.channel isEqual:channel]) {
+                changed = YES;
                 favorite.channel = channel;
+                [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoriteNotification
+                                                                    object:favorite.channel];
             }
         }
     });
+
+    if (changed) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RadioLibChannelChangedFavoritesNotification
+                                                            object:nil];
+    }
+
     [self storeFavorites];
 }
 
