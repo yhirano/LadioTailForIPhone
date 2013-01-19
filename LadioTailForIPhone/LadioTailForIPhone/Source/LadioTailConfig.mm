@@ -151,53 +151,11 @@ UIColor * const HEADLINE_CELL_LISTENERS_TEXT_COLOR = [UIColor whiteColor];
 /// テーブルセルのリスナー数のテキスト選択時カラー
 UIColor * const HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
-/// テーブルセルの日付の背景丸さ
-const CGFloat HEADLINE_CELL_DATE_CORNER_RADIUS = 7;
-
-/// テーブルセルの日付の背景の色（明るい方）
-UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT = [UIColor colorWithRed:(140.0f / 255)
-                                                                            green:(140.0f / 255)
-                                                                             blue:(140.0f / 255)
-                                                                            alpha:1.0f];
-
-/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT の時間（秒）
-const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC = 0;
-
-/// テーブルセルの日付の背景の色（暗い方）
-UIColor * const HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK = [UIColor colorWithRed:(120.0f / 255)
-                                                                           green:(120.0f / 255)
-                                                                            blue:(120.0f / 255)
-                                                                           alpha:1.0f];
-
-/// HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK の時間（秒）
-const NSInteger HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC = 6 * 60 * 60;
-
 /// テーブルセルの日付のテキストカラー
 UIColor * const HEADLINE_CELL_DATE_TEXT_COLOR = [UIColor blackColor];
 
 /// テーブルセルの日付のテキスト選択時カラー
 UIColor * const HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR = [UIColor blackColor];
-
-/// テーブルセルのビットレートの背景丸さ
-const CGFloat HEADLINE_CELL_BITRATE_CORNER_RADIUS = HEADLINE_CELL_DATE_CORNER_RADIUS;
-
-/// テーブルセルのビットレートの背景の色（明るい方）
-UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT = [UIColor colorWithHue:(40.0f / 359.0f)
-                                                                          saturation:(89.0f / 100.0f)
-                                                                          brightness:(70.0f / 100.0f)
-                                                                               alpha:1.0f];
-
-/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT のビットレート
-const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE = 128;
-
-/// テーブルセルのビットレートの背景の色（暗い方）
-UIColor * const HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK = [UIColor colorWithHue:(40.0f / 359.0f)
-                                                                         saturation:(89.0f / 100.0f)
-                                                                         brightness:(57.0f / 100.0f)
-                                                                              alpha:1.0f];
-
-/// HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK のビットレート
-const NSInteger HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE = 24;
 
 /// テーブルセルのビットレートのテキストカラー
 UIColor * const HEADLINE_CELL_BITRATE_TEXT_COLOR = [UIColor blackColor];
