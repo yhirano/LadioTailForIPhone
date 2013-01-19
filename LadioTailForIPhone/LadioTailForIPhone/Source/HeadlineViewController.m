@@ -210,7 +210,7 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
     playImageView.hidden = !playing;
     
-    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.725, 0.725); // Indicatorのサイズ変更
     preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel playUrl]];
     if (preparing) {
@@ -303,7 +303,7 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
     playImageView.hidden = !playing;
     
-    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.725, 0.725); // Indicatorのサイズ変更
     preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel listenUrl]];
     if (preparing) {
