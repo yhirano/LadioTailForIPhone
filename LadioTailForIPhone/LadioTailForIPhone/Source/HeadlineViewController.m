@@ -66,6 +66,8 @@ typedef enum {
 {
     tempPlayingBarButtonItem_ = nil;
 
+    adBannerView_.rootViewController = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
@@ -976,14 +978,14 @@ typedef enum {
         
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            [cell addSubview:adBannerView_];
+            [adBannerView_ loadRequest:[GADRequest request]];
         }
         
         CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = screenRect.size.width;
         adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-        [cell addSubview:adBannerView_];
-        [adBannerView_ loadRequest:[GADRequest request]];
         
         return cell;
     }
