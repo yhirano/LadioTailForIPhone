@@ -151,11 +151,11 @@
 
 #if defined(LADIO_TAIL)
     NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
+                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
                            _channel.nam, [_channel.surl absoluteString]];
 #elif defined(RADIO_EDGE)
     NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultText", @"Twitterデフォルト投稿文"),
+                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
                            _channel.serverName, [_channel.listenUrl absoluteString]];
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"

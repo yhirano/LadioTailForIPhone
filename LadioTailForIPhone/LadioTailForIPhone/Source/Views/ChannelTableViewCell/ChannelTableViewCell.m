@@ -29,7 +29,7 @@
     UIView *swipeView_;
 
     // ジェスチャー
-    UIPanGestureRecognizer* panGesture_;
+    UIPanGestureRecognizer *panGesture_;
     // 移動した位置を記憶しておく
     CGPoint lastPosition_;
 
@@ -40,8 +40,13 @@
     // スワイプが有効になったと見なされる移動量
     CGSize enableSize_;
 
-    __weak UITableView* tableView_;
+    __weak UITableView *tableView_;
     __weak id<ChannelTableViewDelegate> tableViewDelegate_;
+}
+
+- (void)dealloc
+{
+    panGesture_.delegate = nil;
 }
 
 - (UIView *)swipeView

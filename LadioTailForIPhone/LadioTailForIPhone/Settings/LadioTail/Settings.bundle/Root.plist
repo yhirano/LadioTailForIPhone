@@ -102,7 +102,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>1.5.1</string>
+			<string>1.5.3</string>
 			<key>Key</key>
 			<string>app_version</string>
 			<key>Title</key>

@@ -66,6 +66,8 @@ typedef enum {
 {
     tempPlayingBarButtonItem_ = nil;
 
+    adBannerView_.rootViewController = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
@@ -196,21 +198,13 @@ typedef enum {
     listenersLabel.highlightedTextColor = HEADLINE_CELL_LISTENERS_TEXT_SELECTED_COLOR;
     
     if (dateLabel != nil && !dateLabel.hidden) {
-        dateLabel.layer.cornerRadius = HEADLINE_CELL_DATE_CORNER_RADIUS;
-        dateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
-        dateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
-        dateLabel.clipsToBounds = YES;
-        dateLabel.backgroundColor = [[self class] dateLabelBackgroundColor:channel.tims];
+        dateLabel.backgroundColor = [UIColor colorWithPatternImage:[[self class] dateLabelBackgroundImage:channel.tims]];
         dateLabel.textColor = HEADLINE_CELL_DATE_TEXT_COLOR;
         dateLabel.highlightedTextColor = HEADLINE_CELL_DATE_TEXT_SELECTED_COLOR;
     }
     
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
-        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
-        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
-        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
-        bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [[self class] bitrateLabelBackgroundColor:channel.bit];
+        bitrateLabel.backgroundColor = [UIColor colorWithPatternImage:[[self class] bitrateLabelBackgroundImage:channel.bit]];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -218,7 +212,7 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel playUrl]];
     playImageView.hidden = !playing;
     
-    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.725, 0.725); // Indicatorのサイズ変更
     preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel playUrl]];
     if (preparing) {
@@ -303,11 +297,7 @@ typedef enum {
     genreLabel.highlightedTextColor = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
     
     if (bitrateLabel != nil) {
-        bitrateLabel.layer.cornerRadius = HEADLINE_CELL_BITRATE_CORNER_RADIUS;
-        bitrateLabel.layer.shouldRasterize = YES; // パフォーマンス向上のため
-        bitrateLabel.layer.masksToBounds = NO; // パフォーマンス向上のため
-        bitrateLabel.clipsToBounds = YES;
-        bitrateLabel.backgroundColor = [[self class] bitrateLabelBackgroundColor:channel.bitrate];
+        bitrateLabel.backgroundColor = [UIColor colorWithPatternImage:[[self class] bitrateLabelBackgroundImage:channel.bitrate]];
         bitrateLabel.textColor = HEADLINE_CELL_BITRATE_TEXT_COLOR;
         bitrateLabel.highlightedTextColor = HEADLINE_CELL_BITRATE_TEXT_SELECTED_COLOR;
     }
@@ -315,7 +305,7 @@ typedef enum {
     BOOL playing = [[Player sharedInstance] isPlaying:[channel listenUrl]];
     playImageView.hidden = !playing;
     
-    preparingIndicator.transform = CGAffineTransformMakeScale(0.8, 0.8); // Indicatorのサイズ変更
+    preparingIndicator.transform = CGAffineTransformMakeScale(0.725, 0.725); // Indicatorのサイズ変更
     preparingIndicator.center = playImageView.center; // 再生アイコンとIndicatorの中心をあわせる
     BOOL preparing = [[Player sharedInstance] isPreparing:[channel listenUrl]];
     if (preparing) {
@@ -420,45 +410,61 @@ typedef enum {
     return result;
 }
 
-/// 渡された日付と現在の日付から、日付ラベルの背景色を算出する
-+ (UIColor *)dateLabelBackgroundColor:(NSDate *)date
+/// 渡された日付と現在の日付から、日付ラベルの背景画像を返す
++ (UIImage *)dateLabelBackgroundImage:(NSDate *)date
 {
-    UIColor *result;
-
+    UIImage *result;
+    
     NSTimeInterval diffTime = [[NSDate date] timeIntervalSinceDate:date];
-
+    
     // 渡された日付が現在よりも新しい場合（ないはずだが一応）
-    if (diffTime <= HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT_SEC) {
-        // 最も明るい色にする
-        result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT;
-    }
-    // 6時間以上前
-    else if (diffTime >= HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC) {
-        // 最も暗い色にする
-        result = HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK;
+    if (diffTime <= 0) {
+        result = [UIImage imageNamed:@"date_label_background_01"];
+    } else if (0 < diffTime && diffTime <= 1 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_01"];
+    } else if (1 * 18 * 60 < diffTime && diffTime <= 2 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_02"];
+    } else if (2 * 18 * 60 < diffTime && diffTime <= 3 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_03"];
+    } else if (3 * 18 * 60 < diffTime && diffTime <= 4 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_04"];
+    } else if (4 * 18 * 60 < diffTime && diffTime <= 5 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_05"];
+    } else if (5 * 18 * 60 < diffTime && diffTime <= 6 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_06"];
+    } else if (6 * 18 * 60 < diffTime && diffTime <= 7 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_07"];
+    } else if (7 * 18 * 60 < diffTime && diffTime <= 8 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_08"];
+    } else if (8 * 18 * 60 < diffTime && diffTime <= 9 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_09"];
+    } else if (9 * 18 * 60 < diffTime && diffTime <= 10 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_10"];
+    } else if (10 * 18 * 60 < diffTime && diffTime <= 11 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_11"];
+    } else if (11 * 18 * 60 < diffTime && diffTime <= 12 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_12"];
+    } else if (12 * 18 * 60 < diffTime && diffTime <= 13 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_13"];
+    } else if (13 * 18 * 60 < diffTime && diffTime <= 14 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_14"];
+    } else if (14 * 18 * 60 < diffTime && diffTime <= 15 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_15"];
+    } else if (15 * 18 * 60 < diffTime && diffTime <= 16 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_16"];
+    } else if (16 * 18 * 60 < diffTime && diffTime <= 17 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_17"];
+    } else if (17 * 18 * 60 < diffTime && diffTime <= 18 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_18"];
+    } else if (18 * 18 * 60 < diffTime && diffTime <= 19 * 18 * 60) {
+        result = [UIImage imageNamed:@"date_label_background_19"];
     } else {
-        // 時間が経過するごとに暗い色にする
-        // 0分：最も明るい 6時間：最も暗い
-        double lighty = 1 - (diffTime / HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK_SEC); // 明るさを0-1で表している
-        CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
-                darkHue, darkSaturation, darkBrightness, darkAlpha;
-        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                               saturation:&ligntSaturation
-                                               brightness:&ligntBrightness
-                                                    alpha:&lightAlpha];
-        [HEADLINE_CELL_DATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                              saturation:&darkSaturation
-                                              brightness:&darkBrightness
-                                                   alpha:&darkAlpha];
-        CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
-        CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
-        CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
-        CGFloat alpha = ((lightAlpha - darkAlpha) * lighty) + darkAlpha;
-        result = [[UIColor alloc] initWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+        result = [UIImage imageNamed:@"date_label_background_20"];
     }
-
+    
     return result;
 }
+
 
 + (NSString *)bitrateText:(NSInteger)bitrate
 {
@@ -485,38 +491,37 @@ typedef enum {
     return result;
 }
 
-/// 渡されたビットレートから、ビットレートラベルの背景色を算出する
-+ (UIColor *)bitrateLabelBackgroundColor:(NSInteger)bitrate
+/// 渡されたビットレートから、ビットレートラベルの背景画像を返す
++ (UIImage *)bitrateLabelBackgroundImage:(NSInteger)bitrate
 {
-    UIColor *result;
+    UIImage *result;
     
-    if(bitrate <= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) {
-        // 最も暗い色にする
-        result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK;
-    } else if (bitrate >= HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE) {
-        // 最も明るい色にする
-        result = HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT;
+    if (bitrate <= 24) {
+        result = [UIImage imageNamed:@"bitrate_label_background_01"];
+    } else if (24 < bitrate && bitrate <= 32) {
+        result = [UIImage imageNamed:@"bitrate_label_background_02"];
+    } else if (32 < bitrate && bitrate <= 40) {
+        result = [UIImage imageNamed:@"bitrate_label_background_03"];
+    } else if (40 < bitrate && bitrate <= 48) {
+        result = [UIImage imageNamed:@"bitrate_label_background_04"];
+    } else if (48 < bitrate && bitrate <= 56) {
+        result = [UIImage imageNamed:@"bitrate_label_background_05"];
+    } else if (56 < bitrate && bitrate <= 64) {
+        result = [UIImage imageNamed:@"bitrate_label_background_06"];
+    } else if (64 < bitrate && bitrate <= 72) {
+        result = [UIImage imageNamed:@"bitrate_label_background_07"];
+    } else if (72 < bitrate && bitrate <= 80) {
+        result = [UIImage imageNamed:@"bitrate_label_background_08"];
+    } else if (80 < bitrate && bitrate <= 88) {
+        result = [UIImage imageNamed:@"bitrate_label_background_09"];
+    } else if (88 < bitrate && bitrate <= 96) {
+        result = [UIImage imageNamed:@"bitrate_label_background_10"];
+    } else if (96 < bitrate && bitrate <= 104) {
+        result = [UIImage imageNamed:@"bitrate_label_background_11"];
+    } else if (104 < bitrate && bitrate <= 112) {
+        result = [UIImage imageNamed:@"bitrate_label_background_12"];
     } else {
-        // ビットレートが低くなるごとに暗い色にする
-        // 128kbps：最も明るい 24kbps：最も暗い
-        double lighty = (double)(bitrate - HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE) /
-            (double)(HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT_BITRATE -
-                     HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK_BITRATE); // 明るさを0-1で表している
-        CGFloat lightHue, ligntSaturation, ligntBrightness, lightAlpha,
-                darkHue, darkSaturation, darkBrightness, darkAlpha;
-        [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_LIGHT getHue:&lightHue
-                                                  saturation:&ligntSaturation
-                                                  brightness:&ligntBrightness
-                                                       alpha:&lightAlpha];
-        [HEADLINE_CELL_BITRATE_BACKGROUND_COLOR_DARK getHue:&darkHue
-                                                 saturation:&darkSaturation
-                                                 brightness:&darkBrightness
-                                                      alpha:&darkAlpha];
-        CGFloat hue = ((lightHue - darkHue) * lighty) + darkHue;
-        CGFloat saturation = ((ligntSaturation - darkSaturation) * lighty) + darkSaturation;
-        CGFloat brightness = ((ligntBrightness - darkBrightness) * lighty) + darkBrightness;
-        CGFloat alpha = ((lightAlpha - darkAlpha) * lighty) + darkAlpha;
-        result = [[UIColor alloc] initWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+        result = [UIImage imageNamed:@"bitrate_label_background_13"];
     }
     
     return result;
@@ -973,14 +978,14 @@ typedef enum {
         
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            [cell addSubview:adBannerView_];
+            [adBannerView_ loadRequest:[GADRequest request]];
         }
         
         CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = screenRect.size.width;
         adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-        [cell addSubview:adBannerView_];
-        [adBannerView_ loadRequest:[GADRequest request]];
         
         return cell;
     }
