@@ -46,6 +46,8 @@
 
 - (void)dealloc
 {
+    // didDetectPanningの呼び出しで落ちることがあるようなので、明示的にactionとdelegateを削除してみる
+    [panGesture_ removeTarget:nil action:NULL];
     panGesture_.delegate = nil;
 }
 
