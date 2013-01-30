@@ -40,65 +40,65 @@
 @interface Channel : NSObject <NSCoding>
 
 /// 番組の詳細内容を表示するサイトのURL
-@property (strong) NSURL *surl;
+@property (nonatomic, strong) NSURL *surl;
 
 /// 放送開始時刻
-@property (copy) NSDate *tims;
+@property (nonatomic, strong) NSDate *tims;
 
 /// 配信サーバホスト名
-@property (copy) NSString *srv;
+@property (nonatomic, strong) NSString *srv;
 
 /// 配信サーバポート番号
 @property NSInteger prt;
 
 /// 配信サーバマウント
-@property (copy) NSString *mnt;
+@property (nonatomic, strong) NSString *mnt;
 
 /// 配信フォーマットの種類
-@property (copy) NSString *type;
+@property (nonatomic, strong) NSString *type;
 
 /// タイトル
-@property (copy) NSString *nam;
+@property (nonatomic, strong) NSString *nam;
 
-@property (strong, readonly) NSString *trimedNam;
+@property (nonatomic, strong, readonly) NSString *trimedNam;
 
 /// ジャンル
-@property (copy) NSString *gnl;
+@property (nonatomic, strong) NSString *gnl;
 
 /// 放送内容
-@property (copy) NSString *desc;
+@property (nonatomic, strong) NSString *desc;
 
 /// DJ
-@property (copy) NSString *dj;
+@property (nonatomic, strong) NSString *dj;
 
-@property (strong, readonly) NSString *trimedDj;
+@property (nonatomic, strong, readonly) NSString *trimedDj;
 
 /// 現在の曲名情報
-@property (copy) NSString *song;
+@property (nonatomic, strong) NSString *song;
 
 /// WebサイトのURL
-@property (strong) NSURL *url;
+@property (nonatomic, strong) NSURL *url;
 
 /// 現リスナ数
-@property NSInteger cln;
+@property (nonatomic, assign) NSInteger cln;
 
 /// 総リスナ数
-@property NSInteger clns;
+@property (nonatomic, assign) NSInteger clns;
 
 /// 最大リスナ数
-@property NSInteger max;
+@property (nonatomic, assign) NSInteger max;
 
 /// ビットレート（Kbps）
-@property NSInteger bit;
+@property (nonatomic, assign) NSInteger bit;
 
 /// サンプリングレート
-@property NSInteger smpl;
+@property (nonatomic, assign) NSInteger smpl;
 
 /// チャンネル数
-@property NSInteger chs;
+@property (nonatomic, assign) NSInteger chs;
 
 /// お気に入りに登録済みか
-@property BOOL favorite;
+@property (nonatomic, assign) BOOL favorite;
 
 - (void)setSurlFromString:(NSString *)url;
 

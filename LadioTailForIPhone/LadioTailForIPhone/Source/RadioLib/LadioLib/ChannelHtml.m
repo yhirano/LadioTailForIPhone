@@ -27,9 +27,9 @@
 
 @interface ChannelInfo : NSObject
 
-@property (strong) NSString *tag;
+@property (nonatomic, strong, readonly) NSString *tag;
 
-@property (strong) NSString *value;
+@property (nonatomic, strong, readonly) NSString *value;
 
 - (id)initWithTag:(NSString *)tag value:(NSString *)value;
 

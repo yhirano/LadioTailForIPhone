@@ -29,7 +29,7 @@
  */
 @interface SearchWordManager : NSObject
 
-@property (copy) NSString *searchWord;
+@property (nonatomic, strong) NSString *searchWord;
 
 + (SearchWordManager *)sharedInstance;
 

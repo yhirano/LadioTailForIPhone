@@ -24,7 +24,7 @@
 
 @interface WebPageViewController : UIViewController
 
-@property (strong) NSURL *url;
+@property (nonatomic, strong) NSURL *url;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
 

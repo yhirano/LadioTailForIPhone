@@ -25,10 +25,10 @@
 
 @interface HeadlineViewController : UIViewController
 
-@property (nonatomic) ChannelSortType channelSortType;
+@property (nonatomic, assign) ChannelSortType channelSortType;
 
 /// テーブルに表示している番組
-@property (strong ,readonly) NSArray *showedChannels;
+@property (nonatomic, strong ,readonly) NSArray *showedChannels;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 

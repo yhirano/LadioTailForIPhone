@@ -31,35 +31,35 @@
 @property NSInteger fid;
 
 /// Server Name
-@property (copy) NSString *serverName;
+@property (nonatomic, strong) NSString *serverName;
 
-@property (strong, readonly) NSString *trimedServerName;
+@property (nonatomic, strong, readonly) NSString *trimedServerName;
 
 /// Listen URL
-@property (strong) NSURL *listenUrl;
+@property (nonatomic, strong) NSURL *listenUrl;
 
 /// ジャンル
-@property (copy) NSString *genre;
+@property (nonatomic, strong) NSString *genre;
 
-@property (strong, readonly) NSString *trimedGenre;
+@property (nonatomic, strong, readonly) NSString *trimedGenre;
 
 /// Current Song
-@property (copy) NSString *currentSong;
+@property (nonatomic, strong) NSString *currentSong;
 
 /// Server Type
-@property (copy) NSString *serverType;
+@property (nonatomic, strong) NSString *serverType;
 
 /// ビットレート（Kbps）
-@property NSInteger bitrate;
+@property (nonatomic, assign) NSInteger bitrate;
 
 /// サンプリングレート
-@property NSInteger sampleRate;
+@property (nonatomic, assign) NSInteger sampleRate;
 
 /// チャンネル数
-@property NSInteger channels;
+@property (nonatomic, assign) NSInteger channels;
 
 /// お気に入りに登録済みか
-@property BOOL favorite;
+@property (nonatomic, assign) BOOL favorite;
 
 - (void)switchFavorite;
 

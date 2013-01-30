@@ -25,7 +25,7 @@
 
 @interface ChannelViewController : UIViewController
 
-@property (strong) Channel *channel;
+@property (nonatomic, strong) Channel *channel;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
 
