@@ -28,12 +28,11 @@
 #define FAVORITES_KEY_V1 @"FAVORITES_V1"
 #define FAVORITES_KEY_V2 @"FAVORITES_V2"
 
-static FavoriteManager *instance = nil;
-
 @implementation FavoriteManager
 
 + (FavoriteManager *)sharedInstance
 {
+    static FavoriteManager *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[FavoriteManager alloc] init];

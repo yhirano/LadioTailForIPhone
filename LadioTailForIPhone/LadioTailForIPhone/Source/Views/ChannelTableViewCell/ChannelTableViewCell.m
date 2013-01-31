@@ -24,7 +24,6 @@
 
 @implementation ChannelTableViewCell
 {
-@private
     // スワイプで移動するビュー
     UIView *swipeView_;
 

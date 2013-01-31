@@ -27,8 +27,22 @@
 /// ねとらじのヘッドラインのURL DAT v2
 #define NETLADIO_HEADLINE_DAT_V2_URL @"http://yp.ladio.net/stats/list.v2.zdat"
 
-/// ヘッドラインのインスタンス
-static Headline *instance = nil;
+@implementation Headline
+{
+    /// 番組データリスト
+    NSArray *channels_;
+    /// 番組取得処理のNSOperationQueue
+    NSOperationQueue *fetchQueue_;
+    /// channelsのロック
+    NSObject *channelsLock_;
+    /// 番組データリストのキャッシュ
+    /// ソートやフィルタリングの結果をキャッシュしておく
+    NSCache *channelsCache_;
+    /// ヘッドラインを取得中か
+    BOOL isFetching_;
+    /// isFetchingのロック
+    NSObject *isFetchingLock_;
+}
 
 // ヘッドライン解析用のRegularExpression
 static NSRegularExpression *surlExp = nil;
@@ -50,26 +64,9 @@ static NSRegularExpression *bitExp = nil;
 static NSRegularExpression *smplExp = nil;
 static NSRegularExpression *chsExp = nil;
 
-@implementation Headline
-{
-@private
-    /// 番組データリスト
-    NSArray *channels_;
-    /// 番組取得処理のNSOperationQueue
-    NSOperationQueue *fetchQueue_;
-    /// channelsのロック
-    NSObject *channelsLock_;
-    /// 番組データリストのキャッシュ
-    /// ソートやフィルタリングの結果をキャッシュしておく
-    NSCache *channelsCache_;
-    /// ヘッドラインを取得中か
-    BOOL isFetching_;
-    /// isFetchingのロック
-    NSObject *isFetchingLock_;
-}
-
 + (Headline *)sharedInstance
 {
+    static Headline *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];

@@ -32,7 +32,6 @@
 
 @implementation FavoriteViewController
 {
-@private
     NSURL *openUrl_;
 }
 

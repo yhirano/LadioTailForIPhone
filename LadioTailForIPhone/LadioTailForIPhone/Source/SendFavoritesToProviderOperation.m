@@ -26,7 +26,6 @@
 
 @implementation SendFavoritesToProviderOperation
 {
-@private
     /// デバイストークン
     NSString *deviceToken_;
 }

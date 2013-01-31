@@ -26,17 +26,15 @@
 /// お気に入りを保存のキー
 #define FAVORITES_V1 @"FAVORITES_V1"
 
-static ICloudStrorage *instance = nil;
-
 @implementation ICloudStrorage
 {
-@private
     /// お気に入りを同期するか
     BOOL syncFavorites_;
 }
 
 + (ICloudStrorage *)sharedInstance
 {
+    static ICloudStrorage *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[ICloudStrorage alloc] init];

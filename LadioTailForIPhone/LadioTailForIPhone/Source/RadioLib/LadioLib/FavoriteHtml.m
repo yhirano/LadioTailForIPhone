@@ -50,11 +50,11 @@
 
 @implementation FavoriteHtml
 
-static GRMustacheTemplate *channelPageHtmlTemplate = nil;
-static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
-
 + (NSString *)descriptionHtml:(Favorite *)favorite
 {
+    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
+    static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
+
     Channel *channel = favorite.channel;
     if (favorite == nil || channel == nil) {
         return nil;

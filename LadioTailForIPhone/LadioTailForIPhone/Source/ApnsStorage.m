@@ -28,16 +28,14 @@
 /// デバイストークンを記憶するためのキー
 #define DEVICE_TOKEN @"DEVICE_TOKEN"
 
-static ApnsStorage *instance = nil;
-
 @implementation ApnsStorage
 {
-@private
     NSOperationQueue *sendFavoritesOperationQueue_;
 }
 
 + (ApnsStorage *)sharedInstance
 {
+    static ApnsStorage *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[ApnsStorage alloc] init];

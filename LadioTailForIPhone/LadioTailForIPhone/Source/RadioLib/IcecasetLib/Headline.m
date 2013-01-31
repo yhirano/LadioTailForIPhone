@@ -27,12 +27,8 @@
 /// IcecastのヘッドラインのURL
 #define ICECAST_HEADLINE_XML_URL @"http://dir.xiph.org/yp.xml"
 
-/// ヘッドラインのインスタンス
-static Headline *instance = nil;
-
 @implementation Headline
 {
-@private
     /// 番組データリスト
     NSArray *channels_;
     /// 番組取得処理のNSOperationQueue
@@ -64,6 +60,7 @@ static Headline *instance = nil;
 
 + (Headline *)sharedInstance
 {
+    static Headline *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];

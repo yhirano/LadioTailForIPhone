@@ -50,11 +50,11 @@
 
 @implementation ChannelHtml
 
-static GRMustacheTemplate *channelPageHtmlTemplate = nil;
-static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
-
 + (NSString *)descriptionHtml:(Channel *)channel
 {
+    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
+    static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
+
     if (channel == nil) {
         return nil;
     }

@@ -22,12 +22,11 @@
 
 #import "SearchWordManager.h"
 
-static SearchWordManager *instance = nil;
-
 @implementation SearchWordManager
 
 + (SearchWordManager *)sharedInstance
 {
+    static SearchWordManager *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[SearchWordManager alloc] init];

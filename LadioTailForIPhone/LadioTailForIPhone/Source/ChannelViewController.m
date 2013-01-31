@@ -34,7 +34,6 @@
 
 @implementation ChannelViewController
 {
-@private
     /// 開くURL
     NSURL *openUrl_;
 }

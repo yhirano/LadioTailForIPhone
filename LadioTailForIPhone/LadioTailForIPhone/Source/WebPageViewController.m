@@ -30,7 +30,6 @@
 
 @implementation WebPageViewController
 {
-@private
     /// ページを読み込み中か
     BOOL isPageLoading_;
 }

@@ -25,18 +25,8 @@
 #import "ChannelHtml.h"
 #import "Channel.h"
 
-/// isMatchの結果を格納するキャッシュ
-static NSCache *matchCache = nil;
-
-/// setTimsFromString用のNSDateFormatter
-static NSDateFormatter *setTimsFromStringDateFormatter = nil;
-
-/// timsToString用のNSDateFormatter
-static NSDateFormatter *timsToStringDateFormatter = nil;
-
 @implementation Channel
 {
-@private
     NSURL *surl_;
     NSDate *tims_;
     NSString *srv_;
@@ -66,6 +56,15 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     BOOL hasPlaySupportedCache_;
     BOOL playSupportedCache_;
 }
+
+/// isMatchの結果を格納するキャッシュ
+static NSCache *matchCache = nil;
+
+/// setTimsFromString用のNSDateFormatter
+static NSDateFormatter *setTimsFromStringDateFormatter = nil;
+
+/// timsToString用のNSDateFormatter
+static NSDateFormatter *timsToStringDateFormatter = nil;
 
 - (id)init
 {

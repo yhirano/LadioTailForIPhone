@@ -48,7 +48,6 @@ typedef enum {
 
 @implementation HeadlineViewController
 {
-@private
     /// ヘッドラインの表示方式
     NSInteger headlineViewDisplayType_;
 
