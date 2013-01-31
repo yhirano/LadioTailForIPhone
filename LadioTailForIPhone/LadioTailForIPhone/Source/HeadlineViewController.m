@@ -1130,16 +1130,33 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
             if (playing) {
                 anchorLabel.text = @"STOP";
+                [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+                anchorLabel.alpha = 0;
+                [UIView animateWithDuration:0.24 delay:0.0
+                                    options:UIViewAnimationCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                                 animations:^{
+                                     anchorLabel.alpha = 1;
+                                 }
+                                 completion:nil];
             } else if ([channel isPlaySupported] == NO) {
                 anchorLabel.text = @"";
             } else {
                 anchorLabel.text = @"PLAY";
+                [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+                anchorLabel.alpha = 0;
+                [UIView animateWithDuration:0.24 delay:0.0
+                                    options:UIViewAnimationCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                                 animations:^{
+                                     anchorLabel.alpha = 1;
+                                 }
+                                 completion:nil];
             }
         } else {
             anchorLabel.text = @"";
         }
     } else {
-        anchorLabel.text = @"";
+        [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+        anchorLabel.alpha = 0;
     }
 }
 
