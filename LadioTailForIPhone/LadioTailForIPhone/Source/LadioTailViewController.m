@@ -78,7 +78,7 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController_.leftLedge = 74.0f;
+    viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE;
 
     [self.view addSubview:viewDeckController_.view];
 }
