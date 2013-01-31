@@ -42,7 +42,7 @@ typedef enum {
 } HeadlineViewDisplayType;
 
 @interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate,
-                                      ChannelTableViewDelegate>
+                                      IIViewDeckControllerDelegate, ChannelTableViewDelegate>
 
 @end
 
@@ -67,7 +67,9 @@ typedef enum {
     tempPlayingBarButtonItem_ = nil;
 
     adBannerView_.rootViewController = nil;
-    
+
+    self.viewDeckController.delegate = nil;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
@@ -694,6 +696,8 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
+    self.viewDeckController.delegate = self;
+
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
@@ -935,6 +939,7 @@ typedef enum {
             [self updateHeadlineTable];
         }];
     }
+    // キーボードを閉じる
     [searchBar resignFirstResponder];
 }
 
@@ -1076,9 +1081,18 @@ typedef enum {
     return [NSDate date]; // should return date data source was last changed
 }
 
+#pragma mark - IIViewDeckControllerDelegate methods
+
+- (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated
+{
+    // キーボードを閉じる
+    [_headlineSearchBar resignFirstResponder];
+    return YES;
+}
+
 #pragma mark - ChannelTableViewDelegate methods
 
-- (BOOL) tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     PlayerState playerState = [[Player sharedInstance] state];
     if (playerState == PlayerStatePrepare) {
@@ -1088,12 +1102,12 @@ typedef enum {
     return YES;
 }
 
--  (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 38;
 }
