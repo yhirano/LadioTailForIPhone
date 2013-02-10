@@ -23,6 +23,9 @@
 #import "SearchWordManager.h"
 
 @implementation SearchWordManager
+{
+    NSString *_searchWord;
+}
 
 + (SearchWordManager *)sharedInstance
 {
@@ -32,6 +35,20 @@
         instance = [[SearchWordManager alloc] init];
     });
     return instance;
+}
+
+- (NSString*)searchWord
+{
+    @synchronized (self) {
+        return _searchWord;
+    }
+}
+
+- (void)setSearchWord:(NSString *)searchWord
+{
+    @synchronized (self) {
+        _searchWord = searchWord;
+    }
 }
 
 @end
