@@ -163,7 +163,7 @@
                 ;
             } else if (frame.origin.x + diff <= firstPocition_.x) {
                 frame.origin.x = firstPocition_.x;
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];
@@ -183,7 +183,7 @@
                 });
             } else if (frame.origin.x + diff <= firstPocition_.x + limitSize_.width) {
                 frame.origin.x += diff;
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];

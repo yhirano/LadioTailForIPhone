@@ -891,8 +891,7 @@ typedef enum {
     __block NSInteger playingChannelIndex;
     __block BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_apply([_showedChannels count], queue, ^(size_t i) {
+    dispatch_apply([_showedChannels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
         if (found == NO) {
             Channel *channel = _showedChannels[i];
 #if defined(LADIO_TAIL)
