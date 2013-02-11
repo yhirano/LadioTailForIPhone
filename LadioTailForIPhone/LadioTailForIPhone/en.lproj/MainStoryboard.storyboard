@@ -1090,11 +1090,10 @@
             </objects>
             <point key="canvasLocation" x="1997" y="1117"/>
         </scene>
-        <!--Favorite Navi View Controller - Others-->
+        <!--Favorite Navi View Controller-->
         <scene sceneID="g9d-96-7ZR">
             <objects>
                 <navigationController storyboardIdentifier="FavoriteNaviViewController" id="5dg-fd-ZAe" customClass="FavoriteNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Others" image="tab_others.png" id="dKw-le-K1T"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="YZz-ed-b2g">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1139,7 +1138,6 @@
         <image name="sidemenu_title_white.png" width="28" height="28"/>
         <image name="sidemenu_update_black.png" width="28" height="28"/>
         <image name="sidemenu_update_white.png" width="28" height="28"/>
-        <image name="tab_others.png" width="16" height="16"/>
         <image name="tablecell_broadcast_black.png" width="14" height="14"/>
         <image name="tablecell_broadcast_white.png" width="14" height="14"/>
         <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
