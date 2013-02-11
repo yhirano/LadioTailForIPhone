@@ -335,7 +335,6 @@
 		8ED117CD16588DCB001BD731 /* GRMustacheVariableElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE848F916029CE800ABE8B7 /* GRMustacheVariableElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
 		8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
-		8ED117D016588DCB001BD731 /* SendFavoritesToProviderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF52DB01631C28B00DE4063 /* SendFavoritesToProviderOperation.m */; };
 		8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
 		8ED117DB16588DCB001BD731 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
 		8ED117DC16588DCB001BD731 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
@@ -477,7 +476,6 @@
 		8EF24FA815C4C90500F18C3F /* button_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA615C4C90500F18C3F /* button_twitter.png */; };
 		8EF24FA915C4C90500F18C3F /* button_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */; };
 		8EF24FAC15C4C99E00F18C3F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF24FAB15C4C99E00F18C3F /* Twitter.framework */; };
-		8EF52DB11631C28B00DE4063 /* SendFavoritesToProviderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF52DB01631C28B00DE4063 /* SendFavoritesToProviderOperation.m */; };
 		8EFAD3751542D1D300DA316F /* tablecell_indicator_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD3731542D1D300DA316F /* tablecell_indicator_black.png */; };
 		8EFAD3761542D1D300DA316F /* tablecell_indicator_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD3741542D1D300DA316F /* tablecell_indicator_white.png */; };
 		8EFAD3B615432EC500DA316F /* button_allow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD39215432EC400DA316F /* button_allow_left.png */; };
@@ -851,8 +849,6 @@
 		8EF24FA615C4C90500F18C3F /* button_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_twitter.png; sourceTree = "<group>"; };
 		8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_twitter@2x.png"; sourceTree = "<group>"; };
 		8EF24FAB15C4C99E00F18C3F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
-		8EF52DAF1631C28B00DE4063 /* SendFavoritesToProviderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendFavoritesToProviderOperation.h; sourceTree = "<group>"; };
-		8EF52DB01631C28B00DE4063 /* SendFavoritesToProviderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendFavoritesToProviderOperation.m; sourceTree = "<group>"; };
 		8EFAD3731542D1D300DA316F /* tablecell_indicator_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_indicator_black.png; sourceTree = "<group>"; };
 		8EFAD3741542D1D300DA316F /* tablecell_indicator_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_indicator_white.png; sourceTree = "<group>"; };
 		8EFAD39215432EC400DA316F /* button_allow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_allow_left.png; sourceTree = "<group>"; };
@@ -984,8 +980,6 @@
 				8E9928D215490D230015CA5D /* ICloudStrorage.m */,
 				8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */,
 				8E9AFC8016317DFB0094C738 /* ApnsStorage.m */,
-				8EF52DAF1631C28B00DE4063 /* SendFavoritesToProviderOperation.h */,
-				8EF52DB01631C28B00DE4063 /* SendFavoritesToProviderOperation.m */,
 				8E0B83571543DC770097984D /* Player.h */,
 				8E0B83581543DC770097984D /* Player.m */,
 				8E0B83591543DC770097984D /* SearchWordManager.h */,
@@ -2019,7 +2013,6 @@
 				8EE8491016029D1700ABE8B7 /* GRMustacheVariableElement.m in Sources */,
 				8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */,
 				8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */,
-				8EF52DB11631C28B00DE4063 /* SendFavoritesToProviderOperation.m in Sources */,
 				8ED117401658779F001BD731 /* Channel.m in Sources */,
 				8ED117411658779F001BD731 /* Favorite.m in Sources */,
 				8ED117421658779F001BD731 /* FavoriteManager.m in Sources */,
@@ -2086,7 +2079,6 @@
 				8ED117CD16588DCB001BD731 /* GRMustacheVariableElement.m in Sources */,
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
 				8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */,
-				8ED117D016588DCB001BD731 /* SendFavoritesToProviderOperation.m in Sources */,
 				8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */,
 				8ED1186316588DF1001BD731 /* Channel.m in Sources */,
 				8ED1186416588DF1001BD731 /* ChannelHtml.m in Sources */,
