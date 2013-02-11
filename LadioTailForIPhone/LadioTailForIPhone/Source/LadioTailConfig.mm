@@ -274,9 +274,16 @@ const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
 /// お気に入りをプロバイダに送信しない場合はnil
 NSString * const PROVIDER_URL = nil;
 
-#pragma mark - AdMob config
+#pragma mark - Ad config
+
+/// 広告を表示するか
+const BOOL IS_SHOW_AD = NO;
+
+/// nend ID
+NSString * const NEND_ID = nil;
+
+/// nend Spot ID
+NSString * const NEND_SPOT_ID = nil;
 
 /// AdMob Publisher ID
-///
-/// 広告を表示しない場合はnil
 NSString * const ADMOB_PUBLISHER_ID = nil;

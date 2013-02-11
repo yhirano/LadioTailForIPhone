@@ -23,12 +23,12 @@
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
-#import "GoogleAdMobAds/GADBannerView.h"
 #import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "SearchWordManager.h"
 #import "Player.h"
 #import "ChannelViewController.h"
+#import "AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -57,18 +57,16 @@ typedef enum {
     /// PullRefreshView
     EGORefreshTableHeaderView *refreshHeaderView_;
 
-    /// 広告View
-    GADBannerView *adBannerView_;
-    
     /// ViewDeckController
     IIViewDeckController *viewDeckController_;
+
+    /// 広告セル
+    AdViewCell *adViewCell_;
 }
 
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
-
-    adBannerView_.rootViewController = nil;
 
     viewDeckController_.delegate = nil;
     viewDeckController_ = nil;
@@ -535,7 +533,7 @@ typedef enum {
 /// 指定されたTableViewのIndexPathから何番目の番組かを取得する
 + (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return indexPath.row;
     } else {
         return indexPath.row - 1;
@@ -545,7 +543,7 @@ typedef enum {
 /// 指定された何番目の番組からTableViewのIndexPathを取得する
 + (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return [NSIndexPath indexPathForRow:channelIndex inSection:0];
     } else {
         return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
@@ -764,17 +762,6 @@ typedef enum {
             refreshHeaderView_ = view;
         }
     }
-
-    if (ADMOB_PUBLISHER_ID != nil) {
-        // 広告Viewを生成
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeLeaderboard];
-        } else {
-            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-        }
-        adBannerView_.adUnitID = ADMOB_PUBLISHER_ID;
-        adBannerView_.rootViewController = self;
-    }
 }
 
 - (void)viewDidUnload
@@ -802,10 +789,21 @@ typedef enum {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
 
+    // 広告の定期ロード再開
+    [adViewCell_ resume];
+
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
     // http://d.hatena.ne.jp/kimada/20090917/1253187128
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    // 広告の定期ロード中断
+    [adViewCell_ pause];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -957,7 +955,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return [_showedChannels count];
     } else {
         NSInteger result = [_showedChannels count];
@@ -976,27 +974,15 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 広告View
-    if (ADMOB_PUBLISHER_ID && indexPath.row == 0) {
-        NSString *cellIdentifier;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            cellIdentifier = @"ChannelCell_Ad_iPad";
-        } else {
-            cellIdentifier = @"ChannelCell_Ad_iPhone";
-        }
-        
+    if (IS_SHOW_AD && indexPath.row == 0) {
+        NSString *cellIdentifier = @"ChannelCell_Ad";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            [cell addSubview:adBannerView_];
-            [adBannerView_ loadRequest:[GADRequest request]];
+            adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            adViewCell_.rootViewController = self;
+            [adViewCell_ load];
+            cell = adViewCell_;
         }
-        
-        CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-        
         return cell;
     }
     // 広告View以外のView
@@ -1026,14 +1012,14 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return 54;
     } else {
         if (indexPath.row == 0) {
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                return kGADAdSizeLeaderboard.size.height + 2;
+            if (!adViewCell_) {
+                return 54;
             } else {
-                return kGADAdSizeBanner.size.height;
+                return [adViewCell_ cellSize].height;
             }
         } else {
             return 54;
@@ -1043,7 +1029,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
