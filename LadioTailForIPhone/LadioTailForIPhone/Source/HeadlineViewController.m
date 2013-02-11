@@ -59,6 +59,9 @@ typedef enum {
 
     /// 広告View
     GADBannerView *adBannerView_;
+    
+    /// ViewDeckController
+    IIViewDeckController *viewDeckController_;
 }
 
 - (void)dealloc
@@ -67,7 +70,8 @@ typedef enum {
 
     adBannerView_.rootViewController = nil;
 
-    self.viewDeckController.delegate = nil;
+    viewDeckController_.delegate = nil;
+    viewDeckController_ = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
@@ -695,7 +699,10 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
-    self.viewDeckController.delegate = self;
+    // dealloc時にself.viewDeckControllerでviewDeckControllerが取得できないようであるため
+    // ここでviewDeckController_にself.viewDeckControllerを保持する
+    viewDeckController_ = self.viewDeckController;
+    viewDeckController_.delegate = self;
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
