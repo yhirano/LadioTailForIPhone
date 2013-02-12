@@ -1314,8 +1314,6 @@
 		8EC23B3C153712BB007352FD = {
 			isa = PBXGroup;
 			children = (
-				8E4B62E916C8ED3800218055 /* Security.framework */,
-				8E4B62E616C8E9ED00218055 /* libNendAd.a */,
 				8EC23B51153712BB007352FD /* LadioTailForIPhone */,
 				8EC23B4A153712BB007352FD /* Frameworks */,
 				8EC23B48153712BB007352FD /* Products */,
@@ -1335,6 +1333,7 @@
 			isa = PBXGroup;
 			children = (
 				8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */,
+				8E4B62E616C8E9ED00218055 /* libNendAd.a */,
 				8E4982881579AA3200B43FB8 /* libz.dylib */,
 				8EAC42601632F331009C2871 /* AdSupport.framework */,
 				8EAC425B1632F252009C2871 /* AudioToolbox.framework */,
@@ -1345,6 +1344,7 @@
 				8EAC425E1632F2BD009C2871 /* MessageUI.framework */,
 				8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */,
 				8E16282215383107007A2DBE /* QuartzCore.framework */,
+				8E4B62E916C8ED3800218055 /* Security.framework */,
 				8EAC42571632F193009C2871 /* StoreKit.framework */,
 				8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */,
 				8EF24FAB15C4C99E00F18C3F /* Twitter.framework */,
