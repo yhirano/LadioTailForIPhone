@@ -38,7 +38,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string></string>
+			<string>Display</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -68,7 +68,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string></string>
+			<string>Operation</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
