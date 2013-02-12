@@ -25,7 +25,6 @@
 #import "ViewDeck/IIViewDeckController.h"
 #import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
-#import "SearchWordManager.h"
 #import "Player.h"
 #import "ChannelViewController.h"
 #import "AdViewCell.h"
@@ -50,6 +49,9 @@ typedef enum {
 {
     /// ヘッドラインの表示方式
     NSInteger headlineViewDisplayType_;
+
+    /// 検索ワード
+    NSString *searchWord_;
 
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
@@ -561,7 +563,7 @@ typedef enum {
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
-                              searchWord:[SearchWordManager sharedInstance].searchWord];
+                              searchWord:searchWord_];
 
     [self execMainThread:^{
         // ナビゲーションタイトルを更新
@@ -777,14 +779,8 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // タブの切り替えごとにヘッドラインテーブルを更新する
-    // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
+    // 表示後とにヘッドラインテーブルを更新する
     [self updateHeadlineTable];
-
-    // タブの切り替えごとに検索バーを更新する
-    // 別タブで入力した検索バーのテキストをこのタブでも使うため
-    NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
-    _headlineSearchBar.text = searchWord;
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
@@ -927,7 +923,7 @@ typedef enum {
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
-    [SearchWordManager sharedInstance].searchWord = searchText;
+    searchWord_ = searchText;
 
     if (SEARCH_EACH_CHAR) {
         [self updateHeadlineTable];

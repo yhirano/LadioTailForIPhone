@@ -18,7 +18,6 @@
 		8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
 		8E0B83771543DC770097984D /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuTableViewController.m */; };
 		8E0B83781543DC770097984D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
-		8E0B83791543DC770097984D /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835A1543DC770097984D /* SearchWordManager.m */; };
 		8E0B837A1543DC770097984D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B835C1543DC770097984D /* SVProgressHUD.bundle */; };
 		8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
 		8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
@@ -350,7 +349,6 @@
 		8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
 		8ED117AD16588DCB001BD731 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuTableViewController.m */; };
 		8ED117AE16588DCB001BD731 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
-		8ED117AF16588DCB001BD731 /* SearchWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835A1543DC770097984D /* SearchWordManager.m */; };
 		8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
 		8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
 		8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
@@ -539,8 +537,6 @@
 		8E0B83561543DC770097984D /* SideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuTableViewController.m; sourceTree = "<group>"; };
 		8E0B83571543DC770097984D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		8E0B83581543DC770097984D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		8E0B83591543DC770097984D /* SearchWordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWordManager.h; sourceTree = "<group>"; };
-		8E0B835A1543DC770097984D /* SearchWordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWordManager.m; sourceTree = "<group>"; };
 		8E0B835C1543DC770097984D /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		8E0B835D1543DC770097984D /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		8E0B835E1543DC770097984D /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -991,8 +987,6 @@
 				8E9AFC8016317DFB0094C738 /* ApnsStorage.m */,
 				8E0B83571543DC770097984D /* Player.h */,
 				8E0B83581543DC770097984D /* Player.m */,
-				8E0B83591543DC770097984D /* SearchWordManager.h */,
-				8E0B835A1543DC770097984D /* SearchWordManager.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -2002,7 +1996,6 @@
 				8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */,
 				8E0B83771543DC770097984D /* SideMenuTableViewController.m in Sources */,
 				8E0B83781543DC770097984D /* Player.m in Sources */,
-				8E0B83791543DC770097984D /* SearchWordManager.m in Sources */,
 				8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
 				8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */,
@@ -2069,7 +2062,6 @@
 				8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */,
 				8ED117AD16588DCB001BD731 /* SideMenuTableViewController.m in Sources */,
 				8ED117AE16588DCB001BD731 /* Player.m in Sources */,
-				8ED117AF16588DCB001BD731 /* SearchWordManager.m in Sources */,
 				8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
 				8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */,
