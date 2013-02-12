@@ -200,7 +200,6 @@
 		8E4F38D716AB02F400466B02 /* date_label_background_20.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4F385416AB02F400466B02 /* date_label_background_20.png */; };
 		8E4F38D816AB02F400466B02 /* date_label_background_20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4F385516AB02F400466B02 /* date_label_background_20@2x.png */; };
 		8E4F38D916AB02F400466B02 /* date_label_background_20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4F385516AB02F400466B02 /* date_label_background_20@2x.png */; };
-		8E5ECD8116CA8DB700D20F16 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B62E216C8DB9A00218055 /* AdViewCell.m */; };
 		8E5ECD5516CA897A00D20F16 /* GRMustache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD1E16CA897A00D20F16 /* GRMustache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E5ECD5616CA897A00D20F16 /* GRMustache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD1E16CA897A00D20F16 /* GRMustache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E5ECD5716CA897A00D20F16 /* GRMustacheAccumulatorTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD2016CA897A00D20F16 /* GRMustacheAccumulatorTag.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -245,6 +244,9 @@
 		8E5ECD7E16CA897A00D20F16 /* GRMustacheToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD5116CA897A00D20F16 /* GRMustacheToken.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E5ECD7F16CA897A00D20F16 /* GRMustacheVariableTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD5316CA897A00D20F16 /* GRMustacheVariableTag.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E5ECD8016CA897A00D20F16 /* GRMustacheVariableTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD5316CA897A00D20F16 /* GRMustacheVariableTag.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8E5ECD8116CA8DB700D20F16 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B62E216C8DB9A00218055 /* AdViewCell.m */; };
+		8E5ECD8516CA9A5D00D20F16 /* OpenInChromeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD8416CA9A5D00D20F16 /* OpenInChromeController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8E5ECD8616CA9A5D00D20F16 /* OpenInChromeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD8416CA9A5D00D20F16 /* OpenInChromeController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E62BA1E1544F3B400E77F3B /* tablecell_broadcast_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1A1544F3B400E77F3B /* tablecell_broadcast_black.png */; };
 		8E62BA1F1544F3B400E77F3B /* tablecell_broadcast_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1B1544F3B400E77F3B /* tablecell_broadcast_black@2x.png */; };
 		8E62BA201544F3B400E77F3B /* tablecell_broadcast_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62BA1C1544F3B400E77F3B /* tablecell_broadcast_white.png */; };
@@ -712,6 +714,8 @@
 		8E5ECD5216CA897A00D20F16 /* GRMustacheVariableTag_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVariableTag_private.h; sourceTree = "<group>"; };
 		8E5ECD5316CA897A00D20F16 /* GRMustacheVariableTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRMustacheVariableTag.m; sourceTree = "<group>"; };
 		8E5ECD5416CA897A00D20F16 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		8E5ECD8316CA9A5D00D20F16 /* OpenInChromeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInChromeController.h; path = OpenInChrome/OpenInChromeController.h; sourceTree = "<group>"; };
+		8E5ECD8416CA9A5D00D20F16 /* OpenInChromeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInChromeController.m; path = OpenInChrome/OpenInChromeController.m; sourceTree = "<group>"; };
 		8E62BA1A1544F3B400E77F3B /* tablecell_broadcast_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_broadcast_black.png; sourceTree = "<group>"; };
 		8E62BA1B1544F3B400E77F3B /* tablecell_broadcast_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_broadcast_black@2x.png"; sourceTree = "<group>"; };
 		8E62BA1C1544F3B400E77F3B /* tablecell_broadcast_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_broadcast_white.png; sourceTree = "<group>"; };
@@ -952,6 +956,7 @@
 				8E0B83301543DC770097984D /* FBNetworkReachability */,
 				8EE8491116029F9F00ABE8B7 /* JRSwizzle */,
 				8E4B62E416C8E9C000218055 /* NendAd */,
+				8E5ECD8216CA9A3D00D20F16 /* OpenInChrome */,
 				8E0B835B1543DC770097984D /* SVProgressHUD */,
 				8EB905BF15E9B7AF00C27CA1 /* ViewDeck */,
 				8E9EC6E3165D0E2C00FE5369 /* Views */,
@@ -1271,6 +1276,15 @@
 				8E4B62E516C8E9C000218055 /* NADView.h */,
 			);
 			path = NendAd;
+			sourceTree = "<group>";
+		};
+		8E5ECD8216CA9A3D00D20F16 /* OpenInChrome */ = {
+			isa = PBXGroup;
+			children = (
+				8E5ECD8316CA9A5D00D20F16 /* OpenInChromeController.h */,
+				8E5ECD8416CA9A5D00D20F16 /* OpenInChromeController.m */,
+			);
+			name = OpenInChrome;
 			sourceTree = "<group>";
 		};
 		8E9EC6E3165D0E2C00FE5369 /* Views */ = {
@@ -2035,6 +2049,7 @@
 				8E5ECD7B16CA897A00D20F16 /* GRMustacheTextComponent.m in Sources */,
 				8E5ECD7D16CA897A00D20F16 /* GRMustacheToken.m in Sources */,
 				8E5ECD7F16CA897A00D20F16 /* GRMustacheVariableTag.m in Sources */,
+				8E5ECD8516CA9A5D00D20F16 /* OpenInChromeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2101,6 +2116,7 @@
 				8E5ECD7C16CA897A00D20F16 /* GRMustacheTextComponent.m in Sources */,
 				8E5ECD7E16CA897A00D20F16 /* GRMustacheToken.m in Sources */,
 				8E5ECD8016CA897A00D20F16 /* GRMustacheVariableTag.m in Sources */,
+				8E5ECD8616CA9A5D00D20F16 /* OpenInChromeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
+#import "OpenInChrome/OpenInChromeController.h"
 #import "LadioTailConfig.h"
 #import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
@@ -334,11 +335,28 @@
         if ([scheme compare:@"about"] == NSOrderedSame) {
             return YES;
         }
-        if ([scheme compare:@"http"] == NSOrderedSame) {
-            if (OPEN_SAFARI_WHEN_CLICK_LINK) {
-                // リンクをクリック時、Safariを起動する
+        if ([scheme compare:@"http"] == NSOrderedSame || [scheme compare:@"https"] == NSOrderedSame) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *webBrowser = [defaults stringForKey:@"web_browser"];
+            if ([webBrowser isEqualToString:@"web_browser_safari"]) {
+                // Safariを起動する
                 [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
                 return NO;
+            } else if ([webBrowser isEqualToString:@"web_browser_google_chrome"]) {
+                OpenInChromeController *openInChromeController = [[OpenInChromeController alloc] init];
+                // Chromeがインストール済み
+                if ([openInChromeController isChromeInstalled]) {
+                    [openInChromeController openInChrome:[ReplaceUrlUtil urlForSmartphone:[request URL]]
+                                         withCallbackURL:nil
+                                            createNewTab:YES];
+                    return NO;
+                }
+                // Chromeが未インストール
+                else {
+                    // リンクをクリック時、Safariを起動する
+                    [[UIApplication sharedApplication] openURL:[ReplaceUrlUtil urlForSmartphone:[request URL]]];
+                    return NO;
+                }
             } else {
                 openUrl_ = [request URL];
                 [self performSegueWithIdentifier:@"OpenUrl" sender:self];

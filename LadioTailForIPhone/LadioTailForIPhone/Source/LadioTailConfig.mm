@@ -221,9 +221,6 @@ UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)
 /// 下部Viewの下部の色
 UIColor * const BOTTOM_BAR_BOTTOM_COLOR = [UIColor blackColor];
 
-/// リンクをクリックするとSafariが開く
-const BOOL OPEN_SAFARI_WHEN_CLICK_LINK = NO;
-
 #pragma mark - Favorites table view config
 
 /// テーブルの背景の色
