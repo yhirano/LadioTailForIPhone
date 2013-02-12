@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,40 +20,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheTextComponent_private.h"
 
-/**
- * The GRMustacheInvocation class gives you information about the values that
- * are found in the context stack when rendering tags such as `{{name}}`.
- *
- * You'll be given GRMustacheInvocation instances when providing a
- * GRMustacheTemplateDelegate to your templates.
- *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/delegate.md
- * 
- * @see GRMustacheTemplateDelegate
- *
- * @since v1.12
- */
-@interface GRMustacheInvocation : NSObject {
-@private
-    id _returnValue;
-    id _token;
+
+@interface GRMustacheTextComponent()
+@property (nonatomic, retain) NSString *text;
+- (id)initWithString:(NSString *)text;
+@end
+
+
+@implementation GRMustacheTextComponent
+@synthesize text=_text;
+
++ (id)textComponentWithString:(NSString *)text
+{
+    return [[[self alloc] initWithString:text] autorelease];
 }
 
-/**
- * The return value of the invocation.
- *
- * For instance, the invocation that you would get for a `{{name}}` tag would
- * have the name in the `returnValue` property.
- *
- * In a template's delegate methods, you can set the returnValue of an
- * invocation, and alter a template rendering.
- *
- * @see GRMustacheTemplateDelegate
- *
- * @since v1.12
- */
-@property (nonatomic, retain) id returnValue AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+- (void)dealloc
+{
+    [_text release];
+    [super dealloc];
+}
+
+#pragma mark <GRMustacheTemplateComponent>
+
+- (BOOL)renderContentType:(GRMustacheContentType)requiredContentType inBuffer:(NSMutableString *)buffer withContext:(GRMustacheContext *)context error:(NSError **)error
+{
+    [buffer appendString:_text];
+    return YES;
+}
+
+- (id<GRMustacheTemplateComponent>)resolveTemplateComponent:(id<GRMustacheTemplateComponent>)component
+{
+    // text components can not override any other component
+    return component;
+}
+
+#pragma mark Private
+
+- (id)initWithString:(NSString *)text
+{
+    NSAssert(text, @"WTF");
+    self = [self init];
+    if (self) {
+        self.text = text;
+    }
+    return self;
+}
+
 @end

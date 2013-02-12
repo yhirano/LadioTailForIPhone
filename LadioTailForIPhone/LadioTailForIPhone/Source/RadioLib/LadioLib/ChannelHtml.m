@@ -97,19 +97,21 @@
     // URL
     value = [channel.url absoluteString];
     if (!([value length] == 0)) {
+        NSError *error = nil;
         if (channelLinkHtmlTemplate == nil) {
-            NSError *error = nil;
+            error = nil;
             channelLinkHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelLinkHtml"
-                                                                 withExtension:@"mustache"
-                                                                        bundle:[NSBundle mainBundle]
+                                                                        bundle:nil
                                                                          error:&error];
             if (error != nil) {
                 NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
             }
         }
-        value = [channelLinkHtmlTemplate renderObject:@{@"url":value}];
-        // 何も返ってこない場合（多分実装エラー）は何もしない
-        if (value != nil) {
+        error = nil;
+        value = [channelLinkHtmlTemplate renderObject:@{@"url":value} error:&error];
+        if (error != nil) {
+            NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);
+        } else {
             tag =  NSLocalizedString(@"Site", @"サイト");
             [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
         }
@@ -236,17 +238,21 @@
 
     NSDictionary *data = @{@"channels": channelInfo};
 
+    NSError *error = nil;
     if (channelPageHtmlTemplate == nil) {
-        NSError *error = nil;
-        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"
-                                                             withExtension:@"mustache"
-                                                                    bundle:[NSBundle mainBundle]
-                                                                     error:&error];
+        error = nil;
+        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml" bundle:nil error:&error];
         if (error != nil) {
             NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
         }
     }
-    NSString *result = [channelPageHtmlTemplate renderObject:data];
+
+    error = nil;
+    NSString *result = [channelPageHtmlTemplate renderObject:data error:&error];
+    if (error != nil) {
+        NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);
+    }
+
     return result;
 }
 

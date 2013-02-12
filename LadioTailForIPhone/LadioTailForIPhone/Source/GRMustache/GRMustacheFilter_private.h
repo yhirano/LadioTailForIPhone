@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,40 +20,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros_private.h"
-#import "GRMustacheRenderingElement_private.h"
 
-@class GRMustacheExpression;
 
-/**
- * A GRMustacheVariableElement is a rendering element that renders variable
- * substitution tags such as `{{name}}` and `{{{name}}}`.
- *
- * For instance, the template string "{{name}} is {{age}} years old." would give
- * two GRMustacheVariableElement instances:
- *
- * - a GRMustacheVariableElement that renders the `name` key in a context.
- * - a GRMustacheVariableElement that renders the `age` key in a context.
- *
- * @see GRMustacheRenderingElement
- */
-@interface GRMustacheVariableElement: NSObject<GRMustacheRenderingElement> {
-@private
-    GRMustacheExpression *_expression;
-    BOOL _raw;
-}
+// Documented in GRMustacheFilter.h
+@protocol GRMustacheFilter <NSObject>
+@required
+
+// Documented in GRMustacheFilter.h
+- (id)transformedValue:(id)object GRMUSTACHE_API_PUBLIC;
+
+@optional
 
 /**
- * Builds and returns a GRMustacheVariableElement.
+ * Returns a new filter that uses the _object_ parameter.
  *
- * @param expression  The expression that would evaluate against a context
- *                    stack.
- * @param raw         NO if the value should be rendered HTML-escaped.
+ * Filter currying is involved in `f(a,...)` expressions, filters with more than
+ * one argument.
  *
- * @return a GRMustacheVariableElement
+ * The evaluation of `f(a,b)` is implemented as `f(a)(b)`: the filter `f` is
+ * asked for a curried filter using argument `a`. This curried filter `g` is
+ * then applied to `b`:
  *
- * @see GRMustacheExpression
+ * g = f(a)
+ * f(a,b) = g(b)
  */
-+ (id)variableElementWithExpression:(GRMustacheExpression *)expression raw:(BOOL)raw GRMUSTACHE_API_INTERNAL;
+- (id<GRMustacheFilter>)filterByCurryingArgument:(id)object GRMUSTACHE_API_INTERNAL;
+@end
+
+
+// Documented in GRMustacheFilter.h
+@interface GRMustacheFilter : NSObject<GRMustacheFilter>
+
+// Documented in GRMustacheFilter.h
++ (id)filterWithBlock:(id(^)(id value))block GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheFilter.h
++ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block GRMUSTACHE_API_PUBLIC;
 
 @end

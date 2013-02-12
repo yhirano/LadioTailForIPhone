@@ -128,17 +128,22 @@
 
     NSDictionary *data = @{@"channels": channelInfo};
 
+    NSError *error = nil;
     if (channelPageHtmlTemplate == nil) {
-        NSError *error = nil;
         channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"
-                                                             withExtension:@"mustache"
-                                                                    bundle:[NSBundle mainBundle]
+                                                                    bundle:nil
                                                                      error:&error];
         if (error != nil) {
             NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
         }
     }
-    NSString *result = [channelPageHtmlTemplate renderObject:data];
+
+    error = nil;
+    NSString *result = [channelPageHtmlTemplate renderObject:data error:&error];
+    if (error != nil) {
+        NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);
+    }
+
     return result;
 }
 

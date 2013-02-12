@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,8 @@
 
 @class GRMustacheTemplate;
 @class GRMustacheTemplateRepository;
+@class GRMustacheConfiguration;
+@protocol GRMustacheTemplateComponent;
 
 // Documented in GRMustacheTemplateRepository.h
 @protocol GRMustacheTemplateRepositoryDataSource <NSObject>
@@ -34,7 +36,7 @@
 - (id<NSCopying>)templateRepository:(GRMustacheTemplateRepository *)templateRepository templateIDForName:(NSString *)name relativeToTemplateID:(id)baseTemplateID GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-- (NSString *)templateRepository:(GRMustacheTemplateRepository *)templateRepository templateStringForTemplateID:(id)templateID error:(NSError **)outError GRMUSTACHE_API_PUBLIC;
+- (NSString *)templateRepository:(GRMustacheTemplateRepository *)templateRepository templateStringForTemplateID:(id)templateID error:(NSError **)error GRMUSTACHE_API_PUBLIC;
 @end
 
 // Documented in GRMustacheTemplateRepository.h
@@ -43,32 +45,23 @@
     id<GRMustacheTemplateRepositoryDataSource> _dataSource;
     NSMutableDictionary *_templateForTemplateID;
     id _currentlyParsedTemplateID;
+    GRMustacheConfiguration *_configuration;
 }
 
 // Documented in GRMustacheTemplateRepository.h
 @property (nonatomic, assign) id<GRMustacheTemplateRepositoryDataSource> dataSource GRMUSTACHE_API_PUBLIC;
 
-#if !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+// Documented in GRMustacheTemplateRepository.h
+@property (nonatomic, copy) GRMustacheConfiguration *configuration GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
 + (id)templateRepositoryWithBaseURL:(NSURL *)URL GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-+ (id)templateRepositoryWithBaseURL:(NSURL *)URL templateExtension:(NSString *)ext GRMUSTACHE_API_PUBLIC;
-
-// Documented in GRMustacheTemplateRepository.h
-+ (id)templateRepositoryWithBaseURL:(NSURL *)URL templateExtension:(NSString *)ext GRMUSTACHE_API_PUBLIC;
-
-// Documented in GRMustacheTemplateRepository.h
 + (id)templateRepositoryWithBaseURL:(NSURL *)URL templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding GRMUSTACHE_API_PUBLIC;
-
-#endif /* if !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000 */
 
 // Documented in GRMustacheTemplateRepository.h
 + (id)templateRepositoryWithDirectory:(NSString *)path GRMUSTACHE_API_PUBLIC;
-
-// Documented in GRMustacheTemplateRepository.h
-+ (id)templateRepositoryWithDirectory:(NSString *)path templateExtension:(NSString *)ext GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
 + (id)templateRepositoryWithDirectory:(NSString *)path templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding GRMUSTACHE_API_PUBLIC;
@@ -77,20 +70,18 @@
 + (id)templateRepositoryWithBundle:(NSBundle *)bundle GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-+ (id)templateRepositoryWithBundle:(NSBundle *)bundle templateExtension:(NSString *)ext GRMUSTACHE_API_PUBLIC;
-
-// Documented in GRMustacheTemplateRepository.h
 + (id)templateRepositoryWithBundle:(NSBundle *)bundle templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-+ (id)templateRepositoryWithPartialsDictionary:(NSDictionary *)partialsDictionary GRMUSTACHE_API_PUBLIC;
++ (id)templateRepositoryWithDictionary:(NSDictionary *)partialsDictionary GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
 + (id)templateRepository GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-- (GRMustacheTemplate *)templateForName:(NSString *)name error:(NSError **)outError GRMUSTACHE_API_PUBLIC;
+- (GRMustacheTemplate *)templateNamed:(NSString *)name error:(NSError **)error GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheTemplateRepository.h
-- (GRMustacheTemplate *)templateFromString:(NSString *)templateString error:(NSError **)outError GRMUSTACHE_API_PUBLIC;
+- (GRMustacheTemplate *)templateFromString:(NSString *)templateString error:(NSError **)error GRMUSTACHE_API_PUBLIC;
+
 @end

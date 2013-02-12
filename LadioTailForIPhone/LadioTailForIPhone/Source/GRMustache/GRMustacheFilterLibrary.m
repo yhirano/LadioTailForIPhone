@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "GRMustacheFilterLibrary_private.h"
-#import "GRMustacheFilter.h"
+#import "GRMustacheFilter_private.h"
 
 
 // =============================================================================
@@ -82,11 +82,11 @@
 
 - (id)transformedValue:(id)object
 {
-    if (object == nil || object == [NSNull null]) {
+    if (object == nil || [object isKindOfClass:[NSNull class]]) {
         return [NSNumber numberWithBool:YES];
     }
     
-    if ([object conformsToProtocol:@protocol(NSFastEnumeration)]) {
+    if (![object isKindOfClass:[NSDictionary class]] && [object conformsToProtocol:@protocol(NSFastEnumeration)]) {
         for (id _ in object) {
             return [NSNumber numberWithBool:NO];
         }
@@ -110,11 +110,11 @@
 
 - (id)transformedValue:(id)object
 {
-    if (object == nil || object == [NSNull null]) {
+    if (object == nil || [object isKindOfClass:[NSNull class]]) {
         return [NSNumber numberWithBool:YES];
     }
     
-    if ([object conformsToProtocol:@protocol(NSFastEnumeration)]) {
+    if (![object isKindOfClass:[NSDictionary class]] && [object conformsToProtocol:@protocol(NSFastEnumeration)]) {
         for (id _ in object) {
             return [NSNumber numberWithBool:NO];
         }

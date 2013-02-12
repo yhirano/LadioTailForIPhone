@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,89 +24,73 @@
 #import "GRMustacheAvailabilityMacros_private.h"
 #import "GRMustacheParser_private.h"
 #import "GRMustache_private.h"
+#import "GRMustacheConfiguration_private.h"
 
 
 @class GRMustacheCompiler;
-@protocol GRMustacheRenderingElement;
-
-
-// =============================================================================
-#pragma mark - <GRMustacheCompilerDataSource>
+@class GRMustacheTemplateRepository;
+@protocol GRMustacheTemplateComponent;
 
 /**
- * The protocol for a GRMustacheCompiler's dataSource.
- * 
- * The dataSource's responsability is to provide an object conforming to the
- * GRMustacheRenderingElement protocol when the compiler meets a partial Mustache
- * tag such as {{>name}}.
- * 
- * @see GRMustacheTemplateRepository
- * @see GRMustacheRenderingElement
+ * The GRMustacheAST represents the abstract syntax tree of a template.
  */
-@protocol GRMustacheCompilerDataSource <NSObject>
-@required
+@interface GRMustacheAST : NSObject {
+@private
+    NSArray *_templateComponents;
+    GRMustacheContentType _contentType;
+}
 
 /**
- * Sent when a compiler has found a partial tag such as `{{> name}}`.
- * 
- * This method should return a rendering element that represents the partial.
- * 
- * The _name_ parameter is guaranteed to be not nil, non empty, and stripped of
- * white-space characters.
- * 
- * @param compiler  The template compiler asking for a rendering element
- * @param name            The partial name
- * @param outError        If there is an error loading or parsing the partial,
- *                        upon return contains an NSError object that describes
- *                        the problem.
- *
- * @return A <GRMustacheRenderingElement> instance
- * 
- * @see [GRMustacheTemplateRepository compiler:renderingElementForPartialName:error:]
- * @see GRMustacheRenderingElement
+ * An NSArray containing <GRMustacheTemplateComponent> instances
  */
-- (id<GRMustacheRenderingElement>)compiler:(GRMustacheCompiler *)compiler renderingElementForPartialName:(NSString *)name error:(NSError **)outError GRMUSTACHE_API_INTERNAL;
+@property (nonatomic, retain, readonly) NSArray *templateComponents GRMUSTACHE_API_INTERNAL;
+
+/**
+ * The content type of the AST
+ */
+@property (nonatomic, readonly) GRMustacheContentType contentType GRMUSTACHE_API_INTERNAL;
 @end
-
-
-// =============================================================================
-#pragma mark - GRMustacheCompiler
 
 /**
  * The GRMustacheCompiler interprets GRMustacheTokens provided by a
  * GRMustacheParser, and outputs a syntax tree of objects conforming to the
- * GRMustacheRenderingElement protocol, the rendering elements that make a
+ * GRMustacheTemplateComponent protocol, the template components that make a
  * Mustache template.
  * 
- * @see GRMustacheRenderingElement
+ * @see GRMustacheTemplateComponent
  * @see GRMustacheToken
  * @see GRMustacheParser
  */
 @interface GRMustacheCompiler : NSObject<GRMustacheParserDelegate> {
 @private
     NSError *_fatalError;
-    NSMutableArray *_elementsStack;
-    NSMutableArray *_sectionOpeningTokenStack;
-    NSMutableArray *_currentElements;
-    GRMustacheToken *_currentSectionOpeningToken;
-    id<GRMustacheCompilerDataSource> _dataSource;
+    NSMutableArray *_componentsStack;
+    NSMutableArray *_openingTokenStack;
+    NSMutableArray *_currentComponents;
+    GRMustacheToken *_currentOpeningToken;
+    GRMustacheTemplateRepository *_templateRepository;
+    GRMustacheContentType _contentType;
+    BOOL _contentTypeLocked;
 }
 
 /**
- * The compiler's dataSource.
- * 
- * The data source is sent messages as the compiler finds partial tags such as
- * `{{> name}}`.
- * 
- * @see GRMustacheCompilerDataSource
+ * The template repository that provides partial templates to the compiler.
  */
-@property (nonatomic, assign) id<GRMustacheCompilerDataSource> dataSource GRMUSTACHE_API_INTERNAL;
+@property (nonatomic, assign) GRMustacheTemplateRepository *templateRepository GRMUSTACHE_API_INTERNAL;
 
 /**
- * Returns an NSArray of objects conforming to the GRMustacheRenderingElement
- * protocol.
+ * Returns an initialized compiler.
+ *
+ * @param configuration  The GRMustacheConfiguration that affects the
+ *                       compilation phase.
+ * @return a compiler
+ */
+- (id)initWithConfiguration:(GRMustacheConfiguration *)configuration GRMUSTACHE_API_INTERNAL;
+
+/**
+ * Returns a Mustache Abstract Syntax Tree.
  * 
- * The array will contain something if a GRMustacheParser has provided
+ * The AST will contain something if a GRMustacheParser has provided
  * GRMustacheToken instances to the compiler.
  * 
  * For instance:
@@ -127,16 +111,15 @@
  *     // Parse some string
  *     [parser parseTemplateString:... templateID:...];
  *     
- *     // Extract rendering elements from the compiler
- *     NSArray *renderingElements = [compiler renderingElementsReturningError:...];
+ *     // Extract template components from the compiler
+ *     GRMustacheAST *AST = [compiler ASTReturningError:...];
  *
- * @param outError  If there is an error building rendering elements, upon
- *                  return contains an NSError object that describes the
- *                  problem.
+ * @param error  If there is an error building the abstract syntax tree, upon
+ *               return contains an NSError object that describes the problem.
  *
- * @return An NSArray containing <GRMustacheRenderingElement> instances
+ * @return A GRMustacheAST instance
  * 
- * @see GRMustacheRenderingElement
+ * @see GRMustacheAST
  */
-- (NSArray *)renderingElementsReturningError:(NSError **)outError GRMUSTACHE_API_INTERNAL;
+- (GRMustacheAST *)ASTReturningError:(NSError **)error GRMUSTACHE_API_INTERNAL;
 @end
