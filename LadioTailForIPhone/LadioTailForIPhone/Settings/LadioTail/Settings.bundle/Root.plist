@@ -38,7 +38,35 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string></string>
+			<string>Browse the external site</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>web_browser_internal</string>
+			<key>Key</key>
+			<string>web_browser</string>
+			<key>Title</key>
+			<string>Web browser</string>
+			<key>Titles</key>
+			<array>
+				<string>Internal browser</string>
+				<string>Safari</string>
+				<string>Google Chrome</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>web_browser_internal</string>
+				<string>web_browser_safari</string>
+				<string>web_browser_google_chrome</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Display</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -68,13 +96,13 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string></string>
+			<string>Operation</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>shake_do_nothing</string>
+			<string>1.5.4</string>
 			<key>Key</key>
 			<string>operation_shake</string>
 			<key>Title</key>

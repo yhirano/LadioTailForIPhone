@@ -22,21 +22,11 @@
 
 #import <AVFoundation/AVAsset.h>
 #import "FavoriteManager.h"
-#import "ChannelHtml.h"
+#import "Html/ChannelHtml.h"
 #import "Channel.h"
-
-/// isMatchの結果を格納するキャッシュ
-static NSCache *matchCache = nil;
-
-/// setTimsFromString用のNSDateFormatter
-static NSDateFormatter *setTimsFromStringDateFormatter = nil;
-
-/// timsToString用のNSDateFormatter
-static NSDateFormatter *timsToStringDateFormatter = nil;
 
 @implementation Channel
 {
-@private
     NSURL *surl_;
     NSDate *tims_;
     NSString *srv_;
@@ -66,6 +56,9 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
     BOOL hasPlaySupportedCache_;
     BOOL playSupportedCache_;
 }
+
+/// isMatchの結果を格納するキャッシュ
+static NSCache *matchCache = nil;
 
 - (id)init
 {
@@ -257,22 +250,25 @@ static NSDateFormatter *timsToStringDateFormatter = nil;
 
 - (NSString *)timsToString
 {
-    if (timsToStringDateFormatter == nil) {
+    static NSDateFormatter *timsToStringDateFormatter = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         timsToStringDateFormatter = [[NSDateFormatter alloc] init];
         [timsToStringDateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [timsToStringDateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-    }
+    });
     return [timsToStringDateFormatter stringFromDate:tims_];
 }
 
 - (void)setTimsFromString:(NSString *)tims
 {
-    if (setTimsFromStringDateFormatter == nil) {
+    static NSDateFormatter *setTimsFromStringDateFormatter = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         setTimsFromStringDateFormatter = [[NSDateFormatter alloc] init];
         [setTimsFromStringDateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
         [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-        
-    }
+    });
     tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
 }
 

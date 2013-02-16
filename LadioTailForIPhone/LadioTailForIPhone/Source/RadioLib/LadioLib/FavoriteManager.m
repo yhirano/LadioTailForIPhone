@@ -28,12 +28,11 @@
 #define FAVORITES_KEY_V1 @"FAVORITES_V1"
 #define FAVORITES_KEY_V2 @"FAVORITES_V2"
 
-static FavoriteManager *instance = nil;
-
 @implementation FavoriteManager
 
 + (FavoriteManager *)sharedInstance
 {
+    static FavoriteManager *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[FavoriteManager alloc] init];
@@ -211,10 +210,9 @@ static FavoriteManager *instance = nil;
 - (void)headlineChannelChanged:(NSNotification *)notification
 {
     // お気に入りの番組情報を更新する
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     NSArray *channels = [Headline sharedInstance].channels;
     __block BOOL changed = NO;
-    dispatch_apply([channels count], queue, ^(size_t i) {
+    dispatch_apply([channels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
         Channel *channel = channels[i];
         if (channel != nil) {
             Favorite *favorite = _favorites[channel.mnt];

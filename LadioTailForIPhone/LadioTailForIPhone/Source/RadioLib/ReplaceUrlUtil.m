@@ -24,9 +24,7 @@
 
 @implementation ReplaceUrlUtil
 
-static NSRegularExpression *urlLivedoorJbbsThreadExp = nil;
 static NSString *urlLivedoorJbbsThreadPattern = @"^http://jbbs\\.livedoor\\.jp/bbs/read\\.cgi/(\\w+)/(\\d+)/(\\d+)/(.*)";
-static NSRegularExpression *urlLivedoorJbbsBbsExp = nil;
 static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w+)/(\\d+)/(.*)";
 
 + (NSURL *)urlForSmartphone:(NSURL *)url
@@ -38,8 +36,10 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
     BOOL browseSmartphoneSiteLivedoorJbbs = [defaults boolForKey:@"browse_smartphone_site_livedoor_jbbs"];
     
     if (browseSmartphoneSiteLivedoorJbbs) {
-        // 正規表現を生成
-        if (urlLivedoorJbbsThreadExp == nil) {
+        static dispatch_once_t onceToken = 0;
+        static NSRegularExpression *urlLivedoorJbbsThreadExp = nil;
+        static NSRegularExpression *urlLivedoorJbbsBbsExp = nil;
+        dispatch_once(&onceToken, ^{
             NSError *error = nil;
             urlLivedoorJbbsThreadExp = [NSRegularExpression regularExpressionWithPattern:urlLivedoorJbbsThreadPattern
                                                                                  options:0
@@ -47,16 +47,15 @@ static NSString *urlLivedoorJbbsBbsPattern = @"^http://jbbs\\.livedoor\\.jp/(\\w
             if (error != nil) {
                 NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
             }
-        }
-        if (urlLivedoorJbbsBbsExp == nil) {
-            NSError *error = nil;
+
+            error = nil;
             urlLivedoorJbbsBbsExp = [NSRegularExpression regularExpressionWithPattern:urlLivedoorJbbsBbsPattern
                                                                               options:0
                                                                                 error:&error];
             if (error != nil) {
                 NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
             }
-        }
+        });
         
         // 解析
         NSString *directory = nil;

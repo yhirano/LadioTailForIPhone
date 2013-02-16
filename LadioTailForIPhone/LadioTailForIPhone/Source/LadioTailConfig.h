@@ -38,6 +38,9 @@ FOUNDATION_EXPORT UIColor * const PLAYING_BUTTON_COLOR;
 
 #pragma mark - Side menu table view config
 
+/// サイドメニューを開いた際の残り幅
+FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE;
+
 /// テーブルの背景の色
 FOUNDATION_EXPORT UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;
 
@@ -235,6 +238,15 @@ FOUNDATION_EXPORT const NSTimeInterval PLAY_TIMEOUT_SEC;
 FOUNDATION_EXPORT NSString * const PROVIDER_URL;
 
 #pragma mark - AdMob config
+
+/// 広告を表示するか
+FOUNDATION_EXPORT const BOOL IS_SHOW_AD;
+
+/// nend ID
+FOUNDATION_EXPORT NSString * const NEND_ID;
+
+/// nend Spot ID
+FOUNDATION_EXPORT NSString * const NEND_SPOT_ID;
 
 /// AdMob Publisher ID
 FOUNDATION_EXPORT NSString * const ADMOB_PUBLISHER_ID;

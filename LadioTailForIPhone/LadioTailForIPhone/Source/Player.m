@@ -35,15 +35,12 @@ typedef enum
     StopReasonInterruption,
 } StopReason;
 
-static Player *instance = nil;
-
 @interface Player () <AVAudioSessionDelegate>
 
 @end
 
 @implementation Player
 {
-@private
     // Player
     AVPlayer *player_;
     // 再生状態
@@ -58,6 +55,7 @@ static Player *instance = nil;
 
 + (Player *)sharedInstance
 {
+    static Player *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Player alloc] init];

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "FavoriteHtml.h"
+#import "Html/FavoriteHtml.h"
 #import "Favorite.h"
 
 @implementation Favorite

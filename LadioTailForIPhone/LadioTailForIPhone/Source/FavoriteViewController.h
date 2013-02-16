@@ -25,7 +25,7 @@
 
 @interface FavoriteViewController : UIViewController
 
-@property (strong) Favorite *favorite;
+@property (nonatomic, strong) Favorite *favorite;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
 

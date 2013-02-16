@@ -22,7 +22,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string></string>
+			<string>Operation</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -56,7 +56,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>1.0.3</string>
+			<string>1.0.4</string>
 			<key>Key</key>
 			<string>app_version</string>
 			<key>Title</key>

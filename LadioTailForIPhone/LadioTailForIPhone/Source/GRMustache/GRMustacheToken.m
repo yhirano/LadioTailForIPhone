@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +28,21 @@
 /**
  * @see +[GRMustacheToken tokenWithType:value:templateString:templateID:line:range:]
  */
-- (id)initWithType:(GRMustacheTokenType)type value:(GRMustacheTokenValue)value templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range;
+- (id)initWithType:(GRMustacheTokenType)type templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range text:(NSString *)text expression:(GRMustacheExpression *)expression invalidExpression:(BOOL)invalidExpression partialName:(NSString *)partialName pragma:(NSString *)pragma;
 
 @end
 
 @implementation GRMustacheToken
 @synthesize type=_type;
-@synthesize value=_value;
 @synthesize templateString=_templateString;
 @synthesize templateID=_templateID;
 @synthesize line=_line;
 @synthesize range=_range;
+@synthesize text=_text;
+@synthesize expression=_expression;
+@synthesize invalidExpression=_invalidExpression;
+@synthesize partialName=_partialName;
+@synthesize pragma=_pragma;
 
 - (void)dealloc
 {
@@ -47,24 +51,32 @@
     [super dealloc];
 }
 
-+ (id)tokenWithType:(GRMustacheTokenType)type value:(GRMustacheTokenValue)value templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range
++ (id)tokenWithType:(GRMustacheTokenType)type templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range text:(NSString *)text expression:(GRMustacheExpression *)expression invalidExpression:(BOOL)invalidExpression partialName:(NSString *)partialName pragma:(NSString *)pragma
 {
-    return [[[self alloc] initWithType:type value:value templateString:templateString templateID:templateID line:line range:range] autorelease];
+    return [[[self alloc] initWithType:type templateString:templateString templateID:templateID line:line range:range text:text expression:expression invalidExpression:invalidExpression partialName:partialName pragma:pragma] autorelease];
 }
 
+- (id)tokenWithExpression:(GRMustacheExpression *)expression
+{
+    return [[[GRMustacheToken alloc] initWithType:_type templateString:_templateString templateID:_templateID line:_line range:_range text:_text expression:expression invalidExpression:_invalidExpression partialName:_partialName pragma:_pragma] autorelease];
+}
 
 #pragma mark Private
 
-- (id)initWithType:(GRMustacheTokenType)type value:(GRMustacheTokenValue)value templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range
+- (id)initWithType:(GRMustacheTokenType)type templateString:(NSString *)templateString templateID:(id)templateID line:(NSUInteger)line range:(NSRange)range text:(NSString *)text expression:(GRMustacheExpression *)expression invalidExpression:(BOOL)invalidExpression partialName:(NSString *)partialName pragma:(NSString *)pragma;
 {
     self = [self init];
     if (self) {
         _type = type;
-        _value = value;
         _templateString = [templateString retain];
         _templateID = [templateID retain];
         _line = line;
         _range = range;
+        _text = text;
+        _expression = expression;
+        _invalidExpression = invalidExpression;
+        _partialName = partialName;
+        _pragma = pragma;
     }
     return self;
 }
@@ -74,10 +86,5 @@
     return [_templateString substringWithRange:_range];
 }
 
-- (GRMustacheTokenValue)value
-{
-    [[_value.object retain] autorelease];
-    return _value;
-}
 @end
 

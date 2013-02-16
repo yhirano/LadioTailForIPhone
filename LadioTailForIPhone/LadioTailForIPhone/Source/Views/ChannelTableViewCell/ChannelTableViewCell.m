@@ -24,7 +24,6 @@
 
 @implementation ChannelTableViewCell
 {
-@private
     // スワイプで移動するビュー
     UIView *swipeView_;
 
@@ -46,6 +45,8 @@
 
 - (void)dealloc
 {
+    // didDetectPanningの呼び出しで落ちることがあるようなので、明示的にactionとdelegateを削除してみる
+    [panGesture_ removeTarget:nil action:NULL];
     panGesture_.delegate = nil;
 }
 
@@ -162,7 +163,7 @@
                 ;
             } else if (frame.origin.x + diff <= firstPocition_.x) {
                 frame.origin.x = firstPocition_.x;
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];
@@ -182,7 +183,7 @@
                 });
             } else if (frame.origin.x + diff <= firstPocition_.x + limitSize_.width) {
                 frame.origin.x += diff;
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];

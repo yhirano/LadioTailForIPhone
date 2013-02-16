@@ -30,7 +30,6 @@
 
 @implementation FavoritesTableViewController
 {
-@private
     NSMutableArray *favorites_;
 }
 

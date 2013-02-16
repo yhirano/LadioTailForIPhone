@@ -27,10 +27,10 @@
 @interface Favorite : NSObject<NSCoding>
 
 /// お気に入りの番組
-@property (strong) Channel *channel;
+@property (nonatomic, strong) Channel *channel;
 
 /// お気に入りに登録した時刻
-@property (strong) NSDate *registedDate;
+@property (nonatomic, strong) NSDate *registedDate;
 
 /// お気に入り画面用のHTMLを取得する
 - (NSString *)descriptionHtml;

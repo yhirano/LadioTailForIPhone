@@ -22,15 +22,11 @@
 
 #import <AVFoundation/AVAsset.h>
 #import "FavoriteManager.h"
-#import "ChannelHtml.h"
+#import "Html/ChannelHtml.h"
 #import "Channel.h"
-
-/// isMatchの結果を格納するキャッシュ
-static NSCache *matchCache = nil;
 
 @implementation Channel
 {
-@private
     NSString *serverName_;
     NSURL* listenUrl_;
     NSString *serverType_;
@@ -48,6 +44,9 @@ static NSCache *matchCache = nil;
     BOOL hasPlaySupportedCache_;
     BOOL playSupportedCache_;
 }
+
+/// isMatchの結果を格納するキャッシュ
+static NSCache *matchCache = nil;
 
 - (id)init
 {

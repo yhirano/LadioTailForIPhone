@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "GRMustacheFilter.h"
-
-NSString * const GRMustacheFilterException = @"GRMustacheFilterException";
+#import "GRMustacheFilter_private.h"
 
 // =============================================================================
 #pragma mark - Private concrete class GRMustacheBlockFilter
 
 /**
- * Private subclass of GRMustacheFilter that filter values by calling a block.
+ * Private subclass of GRMustacheFilter that filters a single argument by
+ * calling a block.
  */
 @interface GRMustacheBlockFilter: GRMustacheFilter {
 @private
     id(^_block)(id value);
 }
 - (id)initWithBlock:(id(^)(id value))block;
+@end
+
+
+// =============================================================================
+#pragma mark - Private concrete class GRMustacheBlockVariadicFilter
+
+/**
+ * Private subclass of GRMustacheFilter that filters an array of arguments by
+ * calling a block.
+ */
+@interface GRMustacheBlockVariadicFilter: GRMustacheFilter {
+@private
+    NSArray *_arguments;
+    id(^_block)(NSArray *arguments);
+}
+- (id)initWithBlock:(id(^)(NSArray *arguments))block arguments:(NSArray *)arguments;
 @end
 
 
@@ -46,6 +61,11 @@ NSString * const GRMustacheFilterException = @"GRMustacheFilterException";
 + (id)filterWithBlock:(id(^)(id value))block
 {
     return [[[GRMustacheBlockFilter alloc] initWithBlock:block] autorelease];
+}
+
++ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block
+{
+    return [[[GRMustacheBlockVariadicFilter alloc] initWithBlock:block arguments:[NSArray array]] autorelease];
 }
 
 - (id)transformedValue:(id)object
@@ -86,6 +106,49 @@ NSString * const GRMustacheFilterException = @"GRMustacheFilterException";
     }
     
     return nil;
+}
+
+@end
+
+
+// =============================================================================
+#pragma mark - Private concrete class GRMustacheBlockVariadicFilter
+
+@implementation GRMustacheBlockVariadicFilter
+
+- (id)initWithBlock:(id(^)(NSArray *arguments))block arguments:(NSArray *)arguments
+{
+    self = [self init];
+    if (self) {
+        _block = [block copy];
+        _arguments = [arguments retain];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [_block release];
+    [_arguments release];
+    [super dealloc];
+}
+
+
+#pragma mark <GRMustacheFilter>
+
+- (id)transformedValue:(id)object
+{
+    if (_block) {
+        NSArray *arguments = [_arguments arrayByAddingObject:(object ?: [NSNull null])];
+        return _block(arguments);
+    }
+    return nil;
+}
+
+- (id<GRMustacheFilter>)filterByCurryingArgument:(id)object
+{
+    NSArray *arguments = [_arguments arrayByAddingObject:(object ?: [NSNull null])];
+    return [[[GRMustacheBlockVariadicFilter alloc] initWithBlock:_block arguments:arguments] autorelease];
 }
 
 @end

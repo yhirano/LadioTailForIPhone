@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,10 @@
 #import "GRMustacheExpression_private.h"
 
 /**
- * The GRMustacheImplicitIteratorExpression is able to return the value of the
- * top object of a context stack.
+ * The GRMustacheImplicitIteratorExpression is able to return the current
+ * context object of a rendering context.
  *
+ * @see GRMustacheContext
  * @see GRMustacheExpression
  */
 @interface GRMustacheImplicitIteratorExpression : GRMustacheExpression
@@ -38,5 +39,5 @@
  *
  * @return A GRMustacheImplicitIteratorExpression.
  */
-+ (id)expression;
++ (id)expression GRMUSTACHE_API_INTERNAL;
 @end

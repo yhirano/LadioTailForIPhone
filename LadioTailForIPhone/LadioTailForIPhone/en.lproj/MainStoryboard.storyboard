@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Headline View Controller - ON AIR-->
@@ -37,7 +37,7 @@
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="9999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="Q8z-ON-Sg9">
                                                             <rect key="frame" x="18" y="34" width="38" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,7 +51,7 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="4Ns-42-dVY">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="V5x-6F-Lpk">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
@@ -77,11 +77,11 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" id="wPm-dG-Oxc" customClass="PlaySwipeGradientView">
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="mr1-Bh-Tmk">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -95,7 +95,7 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kUb-G2-wRp">
                                                     <rect key="frame" x="4" y="26" width="36" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -124,7 +124,7 @@
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="9999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="UuX-42-dhi">
                                                             <rect key="frame" x="18" y="34" width="38" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -138,7 +138,7 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="LJ5-7W-UEF">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="U2I-XX-ElE">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
@@ -150,11 +150,11 @@
                                                         </imageView>
                                                         <view contentMode="scaleToFill" id="FoJ-Dk-LfI" customClass="PlaySwipeGradientView">
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="Xzk-Jj-zWx">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -168,7 +168,7 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0px-kb-aJg">
                                                     <rect key="frame" x="4" y="26" width="36" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -197,7 +197,7 @@
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="9999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="TEG-3V-hhb">
                                                             <rect key="frame" x="18" y="34" width="38" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -211,7 +211,7 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="gX2-NX-hWP">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="CIa-Cp-egq">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
@@ -230,11 +230,11 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" id="xF8-pu-DQ1" customClass="PlaySwipeGradientView">
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="Uk0-3k-BjS">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -248,7 +248,7 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Zs-tH-KEe">
                                                     <rect key="frame" x="4" y="26" width="36" height="26"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -277,7 +277,7 @@
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="9999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RON-LU-MPu">
                                                             <rect key="frame" x="18" y="34" width="38" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -291,7 +291,7 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="a3E-8v-lFa">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="dke-uJ-Pdc">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
@@ -310,11 +310,11 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" id="gUk-Hi-4st" customClass="PlaySwipeGradientView">
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="jYu-i1-gRJ">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -328,7 +328,7 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1U0-Yn-k6Z">
                                                     <rect key="frame" x="4" y="26" width="36" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -364,7 +364,7 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="EUV-TP-6ji">
                                                             <rect key="frame" x="23" y="13" width="28" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="uMa-0G-KF7">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
@@ -383,11 +383,11 @@
                                                         </label>
                                                         <view contentMode="scaleToFill" id="Sux-NE-TxJ" customClass="PlaySwipeGradientView">
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="MfN-jB-6qA">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -401,7 +401,7 @@
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ihp-JI-S64">
                                                     <rect key="frame" x="4" y="26" width="36" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -472,7 +472,7 @@
                             <webView opaque="NO" contentMode="scaleToFill" id="bLh-Zp-H9I">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" id="dCA-ip-Jy9" customClass="BottomBarGradientView">
@@ -547,7 +547,7 @@
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" id="R8j-hH-AEk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.16" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.16041286496350368" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" id="XNu-Tt-9CH" customClass="BottomBarGradientView">
@@ -1072,7 +1072,7 @@
                             <webView opaque="NO" contentMode="scaleToFill" id="CEd-C8-daf">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
@@ -1090,11 +1090,10 @@
             </objects>
             <point key="canvasLocation" x="1997" y="1117"/>
         </scene>
-        <!--Favorite Navi View Controller - Others-->
+        <!--Favorite Navi View Controller-->
         <scene sceneID="g9d-96-7ZR">
             <objects>
                 <navigationController storyboardIdentifier="FavoriteNaviViewController" id="5dg-fd-ZAe" customClass="FavoriteNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Others" image="tab_others.png" id="dKw-le-K1T"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="YZz-ed-b2g">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1139,7 +1138,6 @@
         <image name="sidemenu_title_white.png" width="28" height="28"/>
         <image name="sidemenu_update_black.png" width="28" height="28"/>
         <image name="sidemenu_update_white.png" width="28" height="28"/>
-        <image name="tab_others.png" width="16" height="16"/>
         <image name="tablecell_broadcast_black.png" width="14" height="14"/>
         <image name="tablecell_broadcast_white.png" width="14" height="14"/>
         <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
@@ -1237,7 +1235,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="uMs-fw-DSO"/>
         <segue reference="CF2-OT-Flv"/>
-        <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>

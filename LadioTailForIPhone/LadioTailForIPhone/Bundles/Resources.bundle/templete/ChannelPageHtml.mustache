@@ -1,0 +1,89 @@
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./Resources.bundle/css/ladiotail.min.css" />
+    <link rel="stylesheet" href="./Resources.bundle/css/jquery.mobile.structure-1.2.0.min.css" />
+    <script src="./Resources.bundle/js/jquery-1.8.2.min.js"></script>
+    <script src="./Resources.bundle/js/jquery.mobile-1.2.0.min.js"></script>
+    <style type="text/css">
+      #title, #sub-title, #notification-text {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      div.info-tag {
+        font-size: small;
+      }
+      div.info-value {
+        font-weight: bold;
+        overflow: visible;
+        white-space: normal;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-role="page" data-theme="a">
+      <div data-role="content">
+        {{#templete_info}}
+          {{^ isBlank(title) }}
+            <h3 id="title">
+              {{! HTML-escaped }}
+              {{{title}}}
+            </h3>
+          {{/ isBlank(title) }}
+
+          {{^ isBlank(subTitle) }}
+            <p id="sub-title">
+              {{! HTML-escaped }}
+              {{{subTitle}}}
+            </p>
+          {{/ isBlank(subTitle) }}
+
+          {{^ isBlank(notificationText) }}
+            <p id="notification-text">
+              {{! HTML-escaped }}
+              {{{notificationText}}}
+            </p>
+          {{/ isBlank(notificationText) }}
+
+          {{^ isEmpty(info) }}
+            <ul data-role="listview" data-divider-theme="a" data-inset="true">
+              <li data-role="list-divider" role="heading">Detail</li>
+              {{#info}}
+                <li>
+                  <div class="info-tag">
+                    {{tag}}
+                  </div>
+                  <div class="info-value">
+                    {{! HTML-escaped }}
+                    {{{value}}}
+                  </div>
+                </li>
+              {{/info}}
+            </ul>
+          {{/ isEmpty(info) }}
+
+          {{^ isEmpty(debugInfo) }}
+            <ul data-role="listview" data-divider-theme="a" data-inset="true">
+              <li data-role="list-divider" role="heading">Debug</li>
+              {{#debugInfo}}
+                <li>
+                  <div class="info-tag">
+                    {{tag}}
+                  </div>
+                  <div class="info-value">
+                    {{! HTML-escaped }}
+                    {{{value}}}
+                  </div>
+                </li>
+              {{/debugInfo}}
+            </ul>
+          {{/ isEmpty(debugInfo) }}
+        {{/templete_info}}
+      </div>
+    </div>
+  </body>
+</html>

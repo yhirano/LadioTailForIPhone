@@ -78,7 +78,7 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController_.leftLedge = 74.0f;
+    viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE;
 
     [self.view addSubview:viewDeckController_.view];
 }
@@ -219,8 +219,7 @@
         __block NSInteger playingChannelIndex;
         __block BOOL found = NO;
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_apply([channels count], queue, ^(size_t i) {
+        dispatch_apply([channels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             if (found == NO) {
                 Channel *channel = channels[i];
 #if defined(LADIO_TAIL)

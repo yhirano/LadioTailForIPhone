@@ -23,12 +23,11 @@
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
-#import "GoogleAdMobAds/GADBannerView.h"
 #import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
-#import "SearchWordManager.h"
 #import "Player.h"
 #import "ChannelViewController.h"
+#import "AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -42,15 +41,17 @@ typedef enum {
 } HeadlineViewDisplayType;
 
 @interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate,
-                                      ChannelTableViewDelegate>
+                                      IIViewDeckControllerDelegate, ChannelTableViewDelegate>
 
 @end
 
 @implementation HeadlineViewController
 {
-@private
     /// ヘッドラインの表示方式
     NSInteger headlineViewDisplayType_;
+
+    /// 検索ワード
+    NSString *searchWord_;
 
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
@@ -58,16 +59,20 @@ typedef enum {
     /// PullRefreshView
     EGORefreshTableHeaderView *refreshHeaderView_;
 
-    /// 広告View
-    GADBannerView *adBannerView_;
+    /// ViewDeckController
+    IIViewDeckController *viewDeckController_;
+
+    /// 広告セル
+    AdViewCell *adViewCell_;
 }
 
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
 
-    adBannerView_.rootViewController = nil;
-    
+    viewDeckController_.delegate = nil;
+    viewDeckController_ = nil;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
@@ -530,7 +535,7 @@ typedef enum {
 /// 指定されたTableViewのIndexPathから何番目の番組かを取得する
 + (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return indexPath.row;
     } else {
         return indexPath.row - 1;
@@ -540,7 +545,7 @@ typedef enum {
 /// 指定された何番目の番組からTableViewのIndexPathを取得する
 + (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return [NSIndexPath indexPathForRow:channelIndex inSection:0];
     } else {
         return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
@@ -558,7 +563,7 @@ typedef enum {
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
-                              searchWord:[SearchWordManager sharedInstance].searchWord];
+                              searchWord:searchWord_];
 
     [self execMainThread:^{
         // ナビゲーションタイトルを更新
@@ -694,6 +699,11 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
+    // dealloc時にself.viewDeckControllerでviewDeckControllerが取得できないようであるため
+    // ここでviewDeckController_にself.viewDeckControllerを保持する
+    viewDeckController_ = self.viewDeckController;
+    viewDeckController_.delegate = self;
+
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
@@ -754,17 +764,6 @@ typedef enum {
             refreshHeaderView_ = view;
         }
     }
-
-    if (ADMOB_PUBLISHER_ID != nil) {
-        // 広告Viewを生成
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeLeaderboard];
-        } else {
-            adBannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-        }
-        adBannerView_.adUnitID = ADMOB_PUBLISHER_ID;
-        adBannerView_.rootViewController = self;
-    }
 }
 
 - (void)viewDidUnload
@@ -780,22 +779,27 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // タブの切り替えごとにヘッドラインテーブルを更新する
-    // 別タブで更新したヘッドラインをこのタブのテーブルでも使うため
+    // 表示後とにヘッドラインテーブルを更新する
     [self updateHeadlineTable];
-
-    // タブの切り替えごとに検索バーを更新する
-    // 別タブで入力した検索バーのテキストをこのタブでも使うため
-    NSString *searchWord = [SearchWordManager sharedInstance].searchWord;
-    _headlineSearchBar.text = searchWord;
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
+
+    // 広告の定期ロード再開
+    [adViewCell_ resume];
 
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
     // http://d.hatena.ne.jp/kimada/20090917/1253187128
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    // 広告の定期ロード中断
+    [adViewCell_ pause];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -888,8 +892,7 @@ typedef enum {
     __block NSInteger playingChannelIndex;
     __block BOOL found = NO;
     // 再生している番組がの何番目かを探索する
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_apply([_showedChannels count], queue, ^(size_t i) {
+    dispatch_apply([_showedChannels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
         if (found == NO) {
             Channel *channel = _showedChannels[i];
 #if defined(LADIO_TAIL)
@@ -920,7 +923,7 @@ typedef enum {
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
-    [SearchWordManager sharedInstance].searchWord = searchText;
+    searchWord_ = searchText;
 
     if (SEARCH_EACH_CHAR) {
         [self updateHeadlineTable];
@@ -935,6 +938,7 @@ typedef enum {
             [self updateHeadlineTable];
         }];
     }
+    // キーボードを閉じる
     [searchBar resignFirstResponder];
 }
 
@@ -947,7 +951,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return [_showedChannels count];
     } else {
         NSInteger result = [_showedChannels count];
@@ -966,27 +970,15 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 広告View
-    if (ADMOB_PUBLISHER_ID && indexPath.row == 0) {
-        NSString *cellIdentifier;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            cellIdentifier = @"ChannelCell_Ad_iPad";
-        } else {
-            cellIdentifier = @"ChannelCell_Ad_iPhone";
-        }
-        
+    if (IS_SHOW_AD && indexPath.row == 0) {
+        NSString *cellIdentifier = @"ChannelCell_Ad";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            [cell addSubview:adBannerView_];
-            [adBannerView_ loadRequest:[GADRequest request]];
+            adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            adViewCell_.rootViewController = self;
+            [adViewCell_ load];
+            cell = adViewCell_;
         }
-        
-        CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        adBannerView_.center = CGPointMake(screenWidth / 2, cellHeight / 2);
-        
         return cell;
     }
     // 広告View以外のView
@@ -1016,14 +1008,14 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         return 54;
     } else {
         if (indexPath.row == 0) {
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                return kGADAdSizeLeaderboard.size.height + 2;
+            if (!adViewCell_) {
+                return 54;
             } else {
-                return kGADAdSizeBanner.size.height;
+                return [adViewCell_ cellSize].height;
             }
         } else {
             return 54;
@@ -1033,7 +1025,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (ADMOB_PUBLISHER_ID == nil) {
+    if (!IS_SHOW_AD) {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
@@ -1076,9 +1068,18 @@ typedef enum {
     return [NSDate date]; // should return date data source was last changed
 }
 
+#pragma mark - IIViewDeckControllerDelegate methods
+
+- (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated
+{
+    // キーボードを閉じる
+    [_headlineSearchBar resignFirstResponder];
+    return YES;
+}
+
 #pragma mark - ChannelTableViewDelegate methods
 
-- (BOOL) tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     PlayerState playerState = [[Player sharedInstance] state];
     if (playerState == PlayerStatePrepare) {
@@ -1088,12 +1089,12 @@ typedef enum {
     return YES;
 }
 
--  (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 38;
 }
@@ -1117,16 +1118,33 @@ didChangeSwipeEnable:(BOOL)enable
 #endif
             if (playing) {
                 anchorLabel.text = @"STOP";
+                [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+                anchorLabel.alpha = 0;
+                [UIView animateWithDuration:0.24 delay:0.0
+                                    options:UIViewAnimationCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                                 animations:^{
+                                     anchorLabel.alpha = 1;
+                                 }
+                                 completion:nil];
             } else if ([channel isPlaySupported] == NO) {
                 anchorLabel.text = @"";
             } else {
                 anchorLabel.text = @"PLAY";
+                [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+                anchorLabel.alpha = 0;
+                [UIView animateWithDuration:0.24 delay:0.0
+                                    options:UIViewAnimationCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                                 animations:^{
+                                     anchorLabel.alpha = 1;
+                                 }
+                                 completion:nil];
             }
         } else {
             anchorLabel.text = @"";
         }
     } else {
-        anchorLabel.text = @"";
+        [anchorLabel.layer removeAllAnimations]; // アニメーションのキャンセル
+        anchorLabel.alpha = 0;
     }
 }
 

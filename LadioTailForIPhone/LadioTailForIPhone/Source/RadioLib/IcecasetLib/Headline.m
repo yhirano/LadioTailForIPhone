@@ -27,12 +27,8 @@
 /// IcecastのヘッドラインのURL
 #define ICECAST_HEADLINE_XML_URL @"http://dir.xiph.org/yp.xml"
 
-/// ヘッドラインのインスタンス
-static Headline *instance = nil;
-
 @implementation Headline
 {
-@private
     /// 番組データリスト
     NSArray *channels_;
     /// 番組取得処理のNSOperationQueue
@@ -64,6 +60,7 @@ static Headline *instance = nil;
 
 + (Headline *)sharedInstance
 {
+    static Headline *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         instance = [[Headline alloc] init];
@@ -209,16 +206,18 @@ static Headline *instance = nil;
         NSArray *words = [[self class] splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
 
-        NSObject *lock = [[NSObject alloc] init];
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_apply([channels count], queue, ^(size_t i) {
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
+        dispatch_apply([channels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             Channel *channel = channels[i];
             if (channel != nil && [channel isMatch:words] == NO) {
-                @synchronized (lock) {
+                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+                {
                     [removeItemIndexes addIndex:i];
                 }
+                dispatch_semaphore_signal(semaphore);
             }
         });
+        dispatch_release(semaphore);
 
         [channels removeObjectsAtIndexes:removeItemIndexes];
     }
@@ -259,8 +258,7 @@ static Headline *instance = nil;
 
     @synchronized (channelsLock_) {
         __block BOOL found = NO;
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_apply([channels_ count], queue, ^(size_t i) {
+        dispatch_apply([channels_ count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             if (found == NO) {
                 Channel *channel = [channels_ objectAtIndex:i];
                 if ([[listenUrl absoluteString] isEqualToString:[channel.listenUrl absoluteString]]) {
@@ -283,8 +281,7 @@ static Headline *instance = nil;
 
     @synchronized (channelsLock_) {
         __block BOOL found = NO;
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_apply([channels_ count], queue, ^(size_t i) {
+        dispatch_apply([channels_ count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             if (found == NO) {
                 Channel *channel = [channels_ objectAtIndex:i];
                 if ([serverName isEqualToString:channel.serverName]) {
@@ -494,8 +491,7 @@ didStartElement:(NSString *)elementName
     [self clearChannelsCache];
 
     @synchronized (channelsLock_) {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_apply([channels_ count], queue, ^(size_t i) {
+        dispatch_apply([channels_ count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             // 番組のお気に入りキャッシュをクリアする
             [channels_[i] clearFavoriteCache];
         });

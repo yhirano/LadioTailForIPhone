@@ -21,6 +21,7 @@ Ladio Tail for iPhoneには下記のリソースが含まれています。
 * [GRMustache](https://github.com/groue/GRMustache) - MIT License
 * [IIViewDeckController](https://github.com/Inferis/ViewDeck) - MIT License
 * [JRSwizzle](https://github.com/groue/jrswizzle) - MIT License
+* [OpenInChrome](https://github.com/GoogleChrome/OpenInChrome) - Modified BSD License
 * [SVProgressHUD](https://github.com/samvermette/SVProgressHUD) - MIT License
 
 * [Gentleface Toolbar Icon Set](http://www.gentleface.com/free_icon_set.html) - The Creative Commons Attribution-NonCommercial

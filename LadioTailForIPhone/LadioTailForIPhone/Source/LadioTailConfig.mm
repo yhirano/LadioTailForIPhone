@@ -44,6 +44,9 @@ UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
 
 #pragma mark - Side menu table view config
 
+/// サイドメニューを開いた際の残り幅
+const CGFloat SIDEMENU_LEFT_LEDGE = 74.0f;
+
 /// テーブルの背景の色
 UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
                                                                   green:(40.0f / 255)
@@ -218,9 +221,6 @@ UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)
 /// 下部Viewの下部の色
 UIColor * const BOTTOM_BAR_BOTTOM_COLOR = [UIColor blackColor];
 
-/// リンクをクリックするとSafariが開く
-const BOOL OPEN_SAFARI_WHEN_CLICK_LINK = NO;
-
 #pragma mark - Favorites table view config
 
 /// テーブルの背景の色
@@ -271,9 +271,16 @@ const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
 /// お気に入りをプロバイダに送信しない場合はnil
 NSString * const PROVIDER_URL = nil;
 
-#pragma mark - AdMob config
+#pragma mark - Ad config
+
+/// 広告を表示するか
+const BOOL IS_SHOW_AD = NO;
+
+/// nend ID
+NSString * const NEND_ID = nil;
+
+/// nend Spot ID
+NSString * const NEND_SPOT_ID = nil;
 
 /// AdMob Publisher ID
-///
-/// 広告を表示しない場合はnil
 NSString * const ADMOB_PUBLISHER_ID = nil;

@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2012 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,6 @@
 
 // =============================================================================
 #pragma mark - <GRMustacheFilter>
-
-/**
- * The name of exceptions raised by GRMustache whenever a filter is missing, or
- * the object expected to conform to the <GRMustacheFilter> protocol does not.
- *
- * @see GRMustacheFilter protocol
- *
- * @since v4.3
- */
-extern NSString * const GRMustacheFilterException AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
 
 
 /**
@@ -67,7 +57,7 @@ extern NSString * const GRMustacheFilterException AVAILABLE_GRMUSTACHE_VERSION_5
  *
  * @since v4.3
  */
-- (id)transformedValue:(id)object AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
+- (id)transformedValue:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
 
@@ -101,7 +91,30 @@ extern NSString * const GRMustacheFilterException AVAILABLE_GRMUSTACHE_VERSION_5
  * @return a GRMustacheFilter object.
  *
  * @since v4.3
+ *
+ * @see variadicFilterWithBlock:
  */
-+ (id)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER;
++ (id)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+
+/**
+ * Returns a GRMustacheFilter object that executes the provided block, given an
+ * array of arguments.
+ *
+ * Those filters can evaluate expressions like `{{ f(a,b) }}`.
+ *
+ * GRMustache will invoke the filter regardless of the number of arguments in
+ * the template: `{{ f(a) }}`, `{{ f(a,b) }}` and `{{ f(a,b,c) }}` will provide
+ * arrays of 1, 2, and 3 arguments respectively. It is your responsability to
+ * check that you are provided with as many arguments as you expect.
+ *
+ * @param block   The block that transforms its input.
+ *
+ * @return a GRMustacheFilter object.
+ *
+ * @since v5.5
+ *
+ * @see filterWithBlock:
+ */
++ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
