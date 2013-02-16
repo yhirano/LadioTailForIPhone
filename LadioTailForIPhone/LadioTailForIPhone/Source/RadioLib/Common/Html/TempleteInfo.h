@@ -20,17 +20,35 @@
  * THE SOFTWARE.
  */
 
-#import "../../GRMustache/GRMustache.h"
-#import "ChannelHtml.h"
-#import "FavoriteHtml.h"
+/// テンプレートに渡す情報
+@interface TempleteInfo : NSObject
 
-@class FavoriteInfo;
+/// タイトル
+@property (nonatomic, strong) NSString *title;
 
-@implementation FavoriteHtml
+/// サブタイトル
+@property (nonatomic, strong) NSString *subTitle;
 
-+ (NSString *)descriptionHtml:(Favorite *)favorite
-{
-    return [ChannelHtml descriptionHtml:favorite.channel];
-}
+/// 注目テキスト
+@property (nonatomic, strong) NSString *notificationText;
+
+/// 表示情報
+/// TempleteSubInfoのリスト
+@property (nonatomic, strong) NSArray *info;
+
+/// デバッグ情報
+/// TempleteSubInfoのリスト
+@property (nonatomic, strong) NSArray *debugInfo;
+
+@end
+
+/// テンプレートに表示する情報
+@interface TempleteSubInfo : NSObject
+
+@property (nonatomic, strong, readonly) NSString *tag;
+
+@property (nonatomic, strong, readonly) NSString *value;
+
+- (id)initWithTag:(NSString *)tag value:(NSString *)value;
 
 @end

@@ -20,14 +20,14 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
+#ifdef LADIO_TAIL
 
-#import "Favorite.h"
+#import "../Channel.h"
 
-@interface FavoriteHtml : NSObject
+@interface ChannelHtml : NSObject
 
-+ (NSString *)descriptionHtml:(Favorite *)favorite;
++ (NSString *)descriptionHtml:(Channel *)channel;
 
 @end
 
-#endif // #ifdef RADIO_EDGE
+#endif // #ifdef LADIO_TAIL

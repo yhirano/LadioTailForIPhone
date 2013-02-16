@@ -472,7 +472,7 @@
                             <webView opaque="NO" contentMode="scaleToFill" id="bLh-Zp-H9I">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" id="dCA-ip-Jy9" customClass="BottomBarGradientView">
@@ -547,7 +547,7 @@
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" id="R8j-hH-AEk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.16" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.16041286496350368" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" id="XNu-Tt-9CH" customClass="BottomBarGradientView">
@@ -1072,7 +1072,7 @@
                             <webView opaque="NO" contentMode="scaleToFill" id="CEd-C8-daf">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
@@ -1235,7 +1235,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="uMs-fw-DSO"/>
         <segue reference="CF2-OT-Flv"/>
-        <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -109,6 +109,13 @@
     backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
     
+    // WebViewのスクロールの影を消す
+    for (UIView *view in [[[_descriptionWebView subviews] objectAtIndex:0] subviews]) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            view.hidden = YES;
+        }
+    }
+
     // 表示情報を生成する
     [self writeDescription];
 }

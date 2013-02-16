@@ -22,7 +22,7 @@
 
 #ifdef RADIO_EDGE
 
-#import "Channel.h"
+#import "../Channel.h"
 
 @interface ChannelHtml : NSObject
 

@@ -20,119 +20,84 @@
  * THE SOFTWARE.
  */
 
-#import "../../GRMustache/GRMustache.h"
+#import "../../../GRMustache/GRMustache.h"
+#import "../../Common/Html/TempleteInfo.h"
 #import "ChannelHtml.h"
-
-@class ChannelInfo;
-
-@interface ChannelInfo : NSObject
-
-@property (nonatomic, strong, readonly) NSString *tag;
-
-@property (nonatomic, strong, readonly) NSString *value;
-
-- (id)initWithTag:(NSString *)tag value:(NSString *)value;
-
-@end
-
-@implementation ChannelInfo
-
-- (id)initWithTag:(NSString *)tag value:(NSString *)value
-{
-    if (self = [self init]) {
-        _tag = tag;
-        _value = value;
-    }
-    return self;
-}
-
-@end
 
 @implementation ChannelHtml
 
 + (NSString *)descriptionHtml:(Channel *)channel
 {
-    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
-    static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
-
     if (channel == nil) {
         return nil;
     }
 
-    NSMutableArray *channelInfo = [[NSMutableArray alloc] init];
+    TempleteInfo *templeteInfo = [[TempleteInfo alloc] init];
+    templeteInfo.title = channel.nam;
+    if ([channel.dj length] > 0) {
+        templeteInfo.subTitle = [[NSLocalizedString(@"DJ", @"DJ")
+                                  stringByAppendingString:@": "]
+                                  stringByAppendingString:channel.dj];
+    }
+    templeteInfo.notificationText = [NSString stringWithFormat:
+                                     NSLocalizedString(@"%d people are listening now", @"現在X人が視聴しています"),
+                                     channel.cln];
+
+    NSMutableArray *info = [[NSMutableArray alloc] init];
 
     NSString *tag;
     NSString *value;
 
-    // タイトル
-    value = channel.nam;
-    if (!([value length] == 0)) {
-        tag = NSLocalizedString(@"Title", @"タイトル");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-    }
-    // DJ
-    value = channel.dj;
-    if (!([value length] == 0)) {
-        tag = NSLocalizedString(@"DJ", @"DJ");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-    }
     // ジャンル
     value = channel.gnl;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag = NSLocalizedString(@"Genre", @"ジャンル");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 詳細
     value = channel.desc;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag = NSLocalizedString(@"Description", @"詳細");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 曲
     value = channel.song;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag = NSLocalizedString(@"Song", @"曲");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // URL
     value = [channel.url absoluteString];
-    if (!([value length] == 0)) {
-        NSError *error = nil;
-        if (channelLinkHtmlTemplate == nil) {
-            error = nil;
-            channelLinkHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelLinkHtml"
-                                                                        bundle:nil
+    if ([value length] > 0) {
+        static GRMustacheTemplate *channelLinkHtmlTemplate = nil;
+        static dispatch_once_t onceToken = 0;
+        dispatch_once(&onceToken, ^{
+            NSError *error = nil;
+            NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+            channelLinkHtmlTemplate = [GRMustacheTemplate templateFromResource:@"templete/ChannelLinkHtml"
+                                                                        bundle:[NSBundle bundleWithPath:bundlePath]
                                                                          error:&error];
             if (error != nil) {
                 NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
             }
-        }
-        error = nil;
+        });
+        NSError *error = nil;
         value = [channelLinkHtmlTemplate renderObject:@{@"url":value} error:&error];
         if (error != nil) {
             NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);
         } else {
             tag =  NSLocalizedString(@"Site", @"サイト");
-            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+            [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
         }
     }
     // リスナー
     {
-        if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM
-            || channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
+        if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM
             || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
             // リスナー数
             tag = NSLocalizedString(@"Listeners", @"リスナー数");
             value = @"";
-            if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                value = [NSString stringWithFormat:@"%@ %d",
-                     NSLocalizedString(@"Listeners", @"リスナー数"),
-                     channel.cln];
-                if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM || channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                    value = [NSString stringWithFormat:@"%@%@", value, @" / "];
-                }
-            }
-            
+
             // 最大リスナー数
             if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
                 value = [NSString stringWithFormat:@"%@%@ %d",
@@ -152,20 +117,20 @@
                          channel.clns];
             }
 
-            [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+            [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
         }
     }
     // 開始時刻
     value = channel.timsToString;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag =  NSLocalizedString(@"At", @"開始時刻");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // ビットレート
     if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
         tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
         value = [NSString stringWithFormat:@"%dkbps", channel.bit];
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // チャンネル数
     if (channel.chs != CHANNEL_UNKNOWN_CHANNEL_NUM) {
@@ -183,71 +148,82 @@
                 break;
         }
         value = [NSString stringWithFormat:@"%@", chsStr];
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // サンプリングレート
     if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
         tag =  NSLocalizedString(@"Samplerate", @"サンプリングレート");
         value = [NSString stringWithFormat:@"%dHz", channel.smpl];
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // フォーマット
     value = channel.type;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag =  NSLocalizedString(@"Format", @"フォーマット");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // マウント
     value = channel.mnt;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag = NSLocalizedString(@"Mount", @"マウント");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
+
+    templeteInfo.info = [NSArray arrayWithArray:info];
+
 #if DEBUG
+    NSMutableArray *debugInfo = [[NSMutableArray alloc] init];
+
     // 番組の詳細内容を表示するサイトのURL
     value = [channel.surl absoluteString];
-    if (!([value length] == 0)) {
-        NSString *tag = @"- SURL";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    if ([value length] > 0) {
+        NSString *tag = @"SURL";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 配信サーバホスト名
     value = channel.srv;
-    if (!([value length] == 0)) {
-        NSString *tag = @"- SRV";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    if ([value length] > 0) {
+        NSString *tag = @"SRV";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 配信サーバポート番号
     value = [[NSNumber numberWithInt:channel.prt] stringValue];;
-    if (!([value length] == 0)) {
-        NSString *tag = @"- PRT";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    if ([value length] > 0) {
+        NSString *tag = @"PRT";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // お気に入り
     value = (channel.favorite ? @"YES" : @"NO");
-    if (!([value length] == 0)) {
-        NSString *tag = @"- Favorite";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    if ([value length] > 0) {
+        NSString *tag = @"Favorite";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 再生URL
     value = [[channel playUrl] absoluteString];
-    if (!([value length] == 0)) {
-        NSString *tag = @"- PlayUrl";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+    if ([value length] > 0) {
+        NSString *tag = @"PlayUrl";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
+
+    templeteInfo.debugInfo = [NSArray arrayWithArray:debugInfo];
 #endif /* #if DEBUG */
 
-    NSDictionary *data = @{@"channels": channelInfo};
+    NSDictionary *data = @{@"templete_info": templeteInfo};
 
-    NSError *error = nil;
-    if (channelPageHtmlTemplate == nil) {
-        error = nil;
-        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml" bundle:nil error:&error];
+    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        NSError *error = nil;
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"templete/ChannelPageHtml"
+                                                                    bundle:[NSBundle bundleWithPath:bundlePath]
+                                                                     error:&error];
         if (error != nil) {
             NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
         }
-    }
+    });
 
-    error = nil;
+    NSError *error = nil;
     NSString *result = [channelPageHtmlTemplate renderObject:data error:&error];
     if (error != nil) {
         NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);

@@ -20,14 +20,21 @@
  * THE SOFTWARE.
  */
 
-#ifdef LADIO_TAIL
+#import "TempleteInfo.h"
 
-#import "Favorite.h"
-
-@interface FavoriteHtml : NSObject
-
-+ (NSString *)descriptionHtml:(Favorite *)favorite;
+@implementation TempleteInfo
 
 @end
 
-#endif // #ifdef LADIO_TAIL
+@implementation TempleteSubInfo
+
+- (id)initWithTag:(NSString *)tag value:(NSString *)value
+{
+    if (self = [self init]) {
+        _tag = tag;
+        _value = value;
+    }
+    return self;
+}
+
+@end

@@ -22,11 +22,11 @@
 
 #ifdef LADIO_TAIL
 
-#import "Channel.h"
+#import "../Favorite.h"
 
-@interface ChannelHtml : NSObject
+@interface FavoriteHtml : NSObject
 
-+ (NSString *)descriptionHtml:(Channel *)channel;
++ (NSString *)descriptionHtml:(Favorite *)favorite;
 
 @end
 

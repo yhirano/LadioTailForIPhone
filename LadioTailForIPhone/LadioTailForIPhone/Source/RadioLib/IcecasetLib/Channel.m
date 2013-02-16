@@ -22,7 +22,7 @@
 
 #import <AVFoundation/AVAsset.h>
 #import "FavoriteManager.h"
-#import "ChannelHtml.h"
+#import "Html/ChannelHtml.h"
 #import "Channel.h"
 
 @implementation Channel

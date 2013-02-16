@@ -20,125 +20,105 @@
  * THE SOFTWARE.
  */
 
-#import "../../GRMustache/GRMustache.h"
+#import "../../../GRMustache/GRMustache.h"
+#import "../../Common/Html/TempleteInfo.h"
 #import "ChannelHtml.h"
-
-@class ChannelInfo;
-
-@interface ChannelInfo : NSObject
-
-@property (nonatomic, strong) NSString *tag;
-
-@property (nonatomic, strong) NSString *value;
-
-- (id)initWithTag:(NSString *)tag value:(NSString *)value;
-
-@end
-
-@implementation ChannelInfo
-
-- (id)initWithTag:(NSString *)tag value:(NSString *)value
-{
-    if (self = [self init]) {
-        _tag = tag;
-        _value = value;
-    }
-    return self;
-}
-
-@end
 
 @implementation ChannelHtml
 
 + (NSString *)descriptionHtml:(Channel *)channel
 {
-    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
-
     if (channel == nil) {
         return nil;
     }
 
-    NSMutableArray *channelInfo = [[NSMutableArray alloc] init];
+    TempleteInfo *templeteInfo = [[TempleteInfo alloc] init];
+    templeteInfo.title = channel.serverName;
+    if ([channel.genre length] > 0) {
+        templeteInfo.subTitle = [[NSLocalizedString(@"Genre", @"ジャンル")
+                                  stringByAppendingString:@": "]
+                                  stringByAppendingString:channel.genre];
+    }
+
+    NSMutableArray *info = [[NSMutableArray alloc] init];
 
     NSString *tag;
     NSString *value;
 
-    // Server Name
-    value = channel.serverName;
-    if (!([value length] == 0)) {
-        tag = NSLocalizedString(@"Title", @"タイトル");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-    }
-    // Genre
-    value = channel.genre;
-    if (!([value length] == 0)) {
-        tag = NSLocalizedString(@"Genre", @"ジャンル");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
-    }
     // Current Song
     value = channel.currentSong;
     if (!([value length] == 0)) {
         tag = NSLocalizedString(@"Song", @"曲");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // ビットレート
     if (channel.bitrate != 0) {
         tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
         value = [NSString stringWithFormat:@"%dkbps", channel.bitrate];
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 種類
     value = channel.serverType;
     if (!([value length] == 0)) {
         tag =  NSLocalizedString(@"Format", @"フォーマット");
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
+
+    templeteInfo.info = [NSArray arrayWithArray:info];
+
 #if DEBUG
+    NSMutableArray *debugInfo = [[NSMutableArray alloc] init];
+
     // fid
     value = [[NSString alloc] initWithFormat:@"%d", channel.fid];
     if (!([value length] == 0)) {
-        NSString *tag = @"- fid";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        NSString *tag = @"fid";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // Listen URL
     value = [channel.listenUrl absoluteString];
     if (!([value length] == 0)) {
-        NSString *tag = @"- listen_url";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        NSString *tag = @"listen_url";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // Channels
     value = [[NSString alloc] initWithFormat:@"%d", channel.channels];
     if (!([value length] == 0)) {
-        NSString *tag = @"- channels";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        NSString *tag = @"channels";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // SampleRate
     value = [[NSString alloc] initWithFormat:@"%d", channel.sampleRate];
     if (!([value length] == 0)) {
-        NSString *tag = @"- samplerate";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        NSString *tag = @"samplerate";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // お気に入り
     value = (channel.favorite ? @"YES" : @"NO");
     if (!([value length] == 0)) {
-        NSString *tag = @"- Favorite";
-        [channelInfo addObject:[[ChannelInfo alloc] initWithTag:tag value:value]];
+        NSString *tag = @"Favorite";
+        [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
+
+    templeteInfo.debugInfo = [NSArray arrayWithArray:debugInfo];
 #endif /* #if DEBUG */
 
-    NSDictionary *data = @{@"channels": channelInfo};
+    NSDictionary *data = @{@"templete_info": templeteInfo};
 
-    NSError *error = nil;
-    if (channelPageHtmlTemplate == nil) {
-        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"ChannelPageHtml"
-                                                                    bundle:nil
+    static GRMustacheTemplate *channelPageHtmlTemplate = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        NSError *error = nil;
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Resources" ofType:@"bundle"];
+        channelPageHtmlTemplate = [GRMustacheTemplate templateFromResource:@"templete/ChannelPageHtml"
+                                                                    bundle:[NSBundle bundleWithPath:bundlePath]
                                                                      error:&error];
         if (error != nil) {
             NSLog(@"GRMustacheTemplate parse error. Error: %@", [error localizedDescription]);
         }
-    }
+    });
 
-    error = nil;
+    NSError *error = nil;
     NSString *result = [channelPageHtmlTemplate renderObject:data error:&error];
     if (error != nil) {
         NSLog(@"GRMustacheTemplate render error. Error: %@", [error localizedDescription]);
