@@ -555,17 +555,17 @@ typedef enum {
 - (void)updateHeadlineTable
 {
     if (SEARCH_EACH_CHAR == NO) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // 検索バーの入力を受け付けない
             _headlineSearchBar.userInteractionEnabled = NO;
-        }];
+        });
     }
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:searchWord_];
 
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -584,35 +584,19 @@ typedef enum {
             // 検索バーのインジケーターを消す
             [_headlineSearchBarIndicator stopAnimating];
         }
-    }];
+    });
 }
 
 - (void)updatePlayingButton
 {
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
         } else {
             self.navigationItem.rightBarButtonItem = nil;
         }
-    }];
-}
-
-/**
- * メインスレッドで処理を実行する
- *
- * @params メインスレッドで実行する処理
- */
-- (void)execMainThread:(void (^)(void))exec
-{
-    if ([NSThread isMainThread]) {
-        exec();
-    } else {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            exec();
-        }];
-    }
+    });
 }
 
 #pragma mark - Actions
@@ -1203,10 +1187,10 @@ didChangeSwipeEnable:(BOOL)enable
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        });
     }
 }
 
@@ -1217,10 +1201,10 @@ didChangeSwipeEnable:(BOOL)enable
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        });
     }
 }
 
@@ -1239,12 +1223,12 @@ didChangeSwipeEnable:(BOOL)enable
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
                 [self scrollToTopAtPlayingCell];
             }
-        }];
+        });
     }
 }
 
