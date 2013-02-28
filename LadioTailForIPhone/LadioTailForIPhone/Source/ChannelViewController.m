@@ -60,9 +60,9 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([_channel favorite]) {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow"]];
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white"]];
     }
 }
 
@@ -80,7 +80,7 @@
     Player *player = [Player sharedInstance];
     // 再生中
     if ([player isPlaying:url]) {
-        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop"] forState:UIControlStateNormal];
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare) {
@@ -91,7 +91,7 @@
     }
     // 再生中以外
     else {
-        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_play"] forState:UIControlStateNormal];
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare || [_channel isPlaySupported] == NO) {

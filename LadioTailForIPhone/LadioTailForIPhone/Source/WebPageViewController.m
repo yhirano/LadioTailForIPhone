@@ -46,9 +46,9 @@
     _backButton.enabled = _pageWebView.canGoBack;
     _forwardButton.enabled = _pageWebView.canGoForward;
     if (isPageLoading_) {
-        [_reloadButton setImage:[UIImage imageNamed:@"button_reload_stop.png"] forState:UIControlStateNormal];
+        [_reloadButton setImage:[UIImage imageNamed:@"button_reload_stop"] forState:UIControlStateNormal];
     } else {
-        [_reloadButton setImage:[UIImage imageNamed:@"button_reload.png"] forState:UIControlStateNormal];
+        [_reloadButton setImage:[UIImage imageNamed:@"button_reload"] forState:UIControlStateNormal];
     }
 }
 

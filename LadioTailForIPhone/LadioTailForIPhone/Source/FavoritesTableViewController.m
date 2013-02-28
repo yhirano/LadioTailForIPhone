@@ -249,14 +249,14 @@
         // 再生中
         if ([[player playingChannel] isSameMount:channel]) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
         }
         // 配信中
         else if ([headline channelFromMount:channel.mnt] != nil) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black"]];
         }
         // 配信されていない
         else {
@@ -335,14 +335,14 @@
         // 再生中
         if ([[player playingChannel] isSameListenUrl:channel]) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
         }
         // 配信中
         else if ([headline channelFromListenUrl:channel.listenUrl] != nil) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black"]];
         }
         // 配信されていない
         else {
