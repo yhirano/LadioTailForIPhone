@@ -748,6 +748,10 @@ typedef enum {
             refreshHeaderView_ = view;
         }
     }
+
+    adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
+    adViewCell_.rootViewController = self;
+    [adViewCell_ load];
 }
 
 - (void)viewDidUnload
@@ -955,12 +959,8 @@ typedef enum {
 {
     // 広告View
     if (IS_SHOW_AD && indexPath.row == 0) {
-        NSString *cellIdentifier = @"ChannelCell_Ad";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChannelCell_Ad"];
         if (cell == nil) {
-            adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            adViewCell_.rootViewController = self;
-            [adViewCell_ load];
             cell = adViewCell_;
         }
         return cell;
@@ -1013,7 +1013,8 @@ typedef enum {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
-            ;
+            // 選択解除
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         } else {
             [self performSegueWithIdentifier:@"SelectChannel" sender:self];
         }

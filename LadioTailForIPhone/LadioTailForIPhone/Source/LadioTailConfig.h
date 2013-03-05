@@ -248,5 +248,8 @@ FOUNDATION_EXPORT NSString * const NEND_ID;
 /// nend Spot ID
 FOUNDATION_EXPORT NSString * const NEND_SPOT_ID;
 
+/// AdLantis ID
+FOUNDATION_EXPORT NSString * const ADLANTIS_ID;
+
 /// AdMob Publisher ID
 FOUNDATION_EXPORT NSString * const ADMOB_PUBLISHER_ID;

@@ -282,5 +282,8 @@ NSString * const NEND_ID = nil;
 /// nend Spot ID
 NSString * const NEND_SPOT_ID = nil;
 
+/// AdLantis ID
+NSString * const ADLANTIS_ID = nil;
+
 /// AdMob Publisher ID
 NSString * const ADMOB_PUBLISHER_ID = nil;

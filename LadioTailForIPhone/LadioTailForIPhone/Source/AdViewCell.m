@@ -8,12 +8,15 @@
 
 #import "AdViewCell.h"
 #import "NendAd/NADView.h"
+#import "AdLantis/AdlantisAdManager.h"
+#import "AdLantis/AdlantisView.h"
 #import "GoogleAdMobAds/GADBannerView.h"
 #import "LadioTailConfig.h"
 
 typedef enum : NSUInteger {
     AdModeTypeNone,
     AdModeTypeNend,
+    AdModeTypeAdLantis,
     AdModeTypeAdMob,
 } AdModeType;
 
@@ -29,11 +32,16 @@ typedef enum : NSUInteger {
     /// Nend Ad View
     __weak NADView *nadView_;
 
+    __weak AdlantisView *adlantisView_;
+
     /// AdMob View
     __weak GADBannerView *adMobView_;
     
     /// root view controller
     __weak UIViewController *rootViewController_;
+    
+    /// 広告はポーズ中か
+    BOOL isPaused_;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -49,26 +57,33 @@ typedef enum : NSUInteger {
             lang = [languages objectAtIndex:0];
         }
 
+        // AdLantis Publiser IDを設定する
+        if (ADLANTIS_ID) {
+            AdlantisAdManager.sharedManager.publisherID = ADLANTIS_ID;
+        }
+
         // iPadの場合
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && ADMOB_PUBLISHER_ID) {
             [self addAdMobView];
         }
-        // Nendのみが設定されている場合
-        else if ((NEND_ID && NEND_SPOT_ID) && !ADMOB_PUBLISHER_ID) {
+        // 日本語でない場合
+        else if ((![lang isEqualToString:@"ja"]) && ADMOB_PUBLISHER_ID) {
+            [self addAdMobView];
+        }
+        // Nendが設定されている場合
+        else if (NEND_ID && NEND_SPOT_ID) {
             [self addNendView];
         }
-        // AdMobのみが設定されている場合
-        else if ((!NEND_ID || !NEND_SPOT_ID) && ADMOB_PUBLISHER_ID) {
+        // AdLantisが設定されている場合
+        else if (ADLANTIS_ID) {
+            [self addAdLantisView];
+        }
+        // AdMobが設定されている場合
+        else if (ADMOB_PUBLISHER_ID) {
             [self addAdMobView];
         }
-        // 日本語の場合
-        else if ([lang isEqualToString:@"ja"]) {
-            [self addNendView];
-        }
-        // 日本語以外の場合
-        else {
-            [self addAdMobView];
-        }
+
+        isPaused_ = NO;
     }
     return self;
 }
@@ -78,6 +93,8 @@ typedef enum : NSUInteger {
     nadView_.delegate = nil;
     [nadView_ removeFromSuperview];
     nadView_ = nil;
+    [adlantisView_ removeFromSuperview];
+    adlantisView_ = nil;
     adMobView_.delegate = nil;
     [adMobView_ removeFromSuperview];
     adMobView_ = nil;
@@ -107,6 +124,8 @@ typedef enum : NSUInteger {
         return;
     }
     
+    [adlantisView_ removeFromSuperview];
+    adlantisView_ = nil;
     [adMobView_ removeFromSuperview];
     adMobView_.delegate = nil;
     adMobView_ = nil;
@@ -119,11 +138,32 @@ typedef enum : NSUInteger {
                                                                  NAD_ADVIEW_SIZE_320x50.height)];
     nadView_ = nadView;
     [nadView_ setNendID:NEND_ID spotID:NEND_SPOT_ID];
-    CGSize cellSize = [self cellSize];
-    nadView_.frame = CGRectMake(0, 0, cellSize.width, cellSize.height);
     nadView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     nadView_.delegate = self;
     [self.contentView addSubview:nadView_];
+    [self setRootViewController:rootViewController_];
+}
+
+- (void)addAdLantisView
+{
+    if (adModeType_ == AdModeTypeAdLantis) {
+        return;
+    }
+
+    [nadView_ removeFromSuperview];
+    nadView_.delegate = nil;
+    nadView_ = nil;
+    [adMobView_ removeFromSuperview];
+    adMobView_.delegate = nil;
+    adMobView_ = nil;
+
+    adModeType_ = AdModeTypeAdLantis;
+    // 広告Viewを生成
+    CGSize size = [AdlantisView sizeForOrientation:UIInterfaceOrientationPortrait];
+    AdlantisView *adlantisView = [[AdlantisView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    adlantisView_ = adlantisView;
+//    adlantisView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+    [self.contentView addSubview:adlantisView_];
     [self setRootViewController:rootViewController_];
 }
 
@@ -136,6 +176,8 @@ typedef enum : NSUInteger {
     [nadView_ removeFromSuperview];
     nadView_.delegate = nil;
     nadView_ = nil;
+    [adlantisView_ removeFromSuperview];
+    adlantisView_ = nil;
 
     adModeType_ = AdModeTypeAdMob;
     GADBannerView *adMobView = nil;
@@ -147,8 +189,8 @@ typedef enum : NSUInteger {
     }
     adMobView_ = adMobView;
     adMobView_.adUnitID = ADMOB_PUBLISHER_ID;
-    CGSize cellSize = [self cellSize];
-    adMobView_.frame = CGRectMake(0, 0, cellSize.width, cellSize.height);
+    CGSize size = [self cellSize];
+    adMobView_.frame = CGRectMake(0, 0, size.width, size.height);
     adMobView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     adMobView_.delegate = self;
     [self.contentView addSubview:adMobView_];
@@ -158,13 +200,18 @@ typedef enum : NSUInteger {
 - (CGSize)cellSize
 {
     CGSize result = CGSizeZero;
-
+    
     switch (adModeType_) {
         case AdModeTypeNend:
         {
             CGFloat width = NAD_ADVIEW_SIZE_320x50.width;
             CGFloat height = NAD_ADVIEW_SIZE_320x50.height;
             result = CGSizeMake(width, height);
+            break;
+        }
+        case AdModeTypeAdLantis:
+        {
+            result = [AdlantisView sizeForOrientation:UIInterfaceOrientationPortrait];
             break;
         }
         case AdModeTypeAdMob:
@@ -184,7 +231,7 @@ typedef enum : NSUInteger {
         default:
             break;
     }
-
+    
     return result;
 }
 
@@ -193,6 +240,8 @@ typedef enum : NSUInteger {
     switch (adModeType_) {
         case AdModeTypeNend:
             [nadView_ load];
+            break;
+        case AdModeTypeAdLantis:
             break;
         case AdModeTypeAdMob:
             [adMobView_ loadRequest:[GADRequest request]];
@@ -208,18 +257,28 @@ typedef enum : NSUInteger {
         case AdModeTypeNend:
             [nadView_ pause];
             break;
+        case AdModeTypeAdLantis:
+            break;
         case AdModeTypeAdMob:
             break;
         default:
             break;
     }
+
+    isPaused_ = YES;
 }
 
 - (void)resume
 {
+    if (!isPaused_) {
+        return;
+    }
+
     switch (adModeType_) {
         case AdModeTypeNend:
             [nadView_ resume];
+            break;
+        case AdModeTypeAdLantis:
             break;
         case AdModeTypeAdMob:
             break;
@@ -239,6 +298,8 @@ typedef enum : NSUInteger {
     switch (adModeType_) {
         case AdModeTypeNend:
             nadView_.rootViewController = rootViewController;
+            break;
+        case AdModeTypeAdLantis:
             break;
         case AdModeTypeAdMob:
             adMobView_.rootViewController = rootViewController;
@@ -273,10 +334,17 @@ typedef enum : NSUInteger {
     NSLog(@"nadView failed loading.");
 #endif // #if DEBUG
 
-    // AdMobの表示に切り替える
-    [self addAdMobView];
-    [self setNeedsLayout];
-    [self load];
+    if (ADLANTIS_ID) {
+        // AdLantisの表示に切り替える
+        [self addAdLantisView];
+        [self setNeedsLayout];
+        [self load];
+    } else if (ADMOB_PUBLISHER_ID) {
+        // AdMobの表示に切り替える
+        [self addAdMobView];
+        [self setNeedsLayout];
+        [self load];
+    }
 }
 
 #pragma mark - GADBannerViewDelegate method
