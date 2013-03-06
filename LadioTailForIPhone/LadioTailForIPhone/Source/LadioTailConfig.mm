@@ -44,8 +44,11 @@ UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅
-const CGFloat SIDEMENU_LEFT_LEDGE = 74.0f;
+/// サイドメニューを開いた際の残り幅（iPhone）
+const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPHONE = 74.0f;
+
+/// サイドメニューを開いた際の残り幅（iPad）
+const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPAD = 518.0f;
 
 /// テーブルの背景の色
 UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)

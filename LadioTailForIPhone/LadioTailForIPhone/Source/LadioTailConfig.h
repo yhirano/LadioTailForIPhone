@@ -38,8 +38,11 @@ FOUNDATION_EXPORT UIColor * const PLAYING_BUTTON_COLOR;
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅
-FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE;
+/// サイドメニューを開いた際の残り幅（iPhone）
+FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
+
+/// サイドメニューを開いた際の残り幅（iPad）
+FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPAD;
 
 /// テーブルの背景の色
 FOUNDATION_EXPORT UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;
