@@ -27,7 +27,7 @@
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ChannelViewController.h"
-#import "AdViewCell.h"
+#import "Views/AdViewCell/AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -959,11 +959,7 @@ typedef enum {
 {
     // 広告View
     if (IS_SHOW_AD && indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChannelCell_Ad"];
-        if (cell == nil) {
-            cell = adViewCell_;
-        }
-        return cell;
+        return adViewCell_;
     }
     // 広告View以外のView
     else {
@@ -1013,7 +1009,7 @@ typedef enum {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
-            // 選択解除
+            // 選択解除（選択時ハイライトなしにしているが、タップ後スクロールするとハイライトするため解除する）
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         } else {
             [self performSegueWithIdentifier:@"SelectChannel" sender:self];

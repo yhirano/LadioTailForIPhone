@@ -7,10 +7,10 @@
 //
 
 #import "AdViewCell.h"
-#import "NendAd/NADView.h"
-#import "AdLantis/AdlantisAdManager.h"
-#import "AdLantis/AdlantisView.h"
-#import "GoogleAdMobAds/GADBannerView.h"
+#import "../../NendAd/NADView.h"
+#import "../../AdLantis/AdlantisAdManager.h"
+#import "../../AdLantis/AdlantisView.h"
+#import "../../GoogleAdMobAds/GADBannerView.h"
 #import "LadioTailConfig.h"
 
 typedef enum : NSUInteger {
@@ -48,42 +48,15 @@ typedef enum : NSUInteger {
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        adModeType_ = AdModeTypeNone;
-        
-        // 端末の言語設定を取得
-        NSArray *languages = [NSLocale preferredLanguages];
-        NSString *lang = @"";
-        if (languages != nil && [languages count] > 0) {
-            lang = [languages objectAtIndex:0];
-        }
+        // 選択時ハイライトなし
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
 
         // AdLantis Publiser IDを設定する
         if (ADLANTIS_ID) {
             AdlantisAdManager.sharedManager.publisherID = ADLANTIS_ID;
         }
-
-        // iPadの場合
-        if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && ADMOB_PUBLISHER_ID) {
-            [self addAdMobView];
-        }
-        // 日本語でない場合
-        else if ((![lang isEqualToString:@"ja"]) && ADMOB_PUBLISHER_ID) {
-            [self addAdMobView];
-        }
-        // Nendが設定されている場合
-        else if (NEND_ID && NEND_SPOT_ID) {
-            [self addNendView];
-        }
-        // AdLantisが設定されている場合
-        else if (ADLANTIS_ID) {
-            [self addAdLantisView];
-        }
-        // AdMobが設定されている場合
-        else if (ADMOB_PUBLISHER_ID) {
-            [self addAdMobView];
-        }
-
-        isPaused_ = NO;
+        
+        [self setup];
     }
     return self;
 }
@@ -114,6 +87,51 @@ typedef enum : NSUInteger {
         default:
             break;
     }
+}
+
+#pragma mark - Private methods
+
+- (void)setup
+{
+    adModeType_ = AdModeTypeNone;
+    
+    [nadView_ removeFromSuperview];
+    nadView_.delegate = nil;
+    nadView_ = nil;
+    [adlantisView_ removeFromSuperview];
+    adlantisView_ = nil;
+    [adlantisView_ removeFromSuperview];
+    adlantisView_ = nil;
+    
+    // 端末の言語設定を取得
+    NSArray *languages = [NSLocale preferredLanguages];
+    NSString *lang = @"";
+    if (languages != nil && [languages count] > 0) {
+        lang = [languages objectAtIndex:0];
+    }
+    
+    // iPadの場合
+    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && ADMOB_PUBLISHER_ID) {
+        [self addAdMobView];
+    }
+    // 日本語でない場合
+    else if ((![lang isEqualToString:@"ja"]) && ADMOB_PUBLISHER_ID) {
+        [self addAdMobView];
+    }
+    // Nendが設定されている場合
+    else if (NEND_ID && NEND_SPOT_ID) {
+        [self addNendView];
+    }
+    // AdLantisが設定されている場合
+    else if (ADLANTIS_ID) {
+        [self addAdLantisView];
+    }
+    // AdMobが設定されている場合
+    else if (ADMOB_PUBLISHER_ID) {
+        [self addAdMobView];
+    }
+    
+    isPaused_ = NO;
 }
 
 #pragma mark - Instance methods
@@ -307,6 +325,15 @@ typedef enum : NSUInteger {
         default:
             break;
     }
+}
+
+#pragma mark - UITableViewCell methods
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+
+    [self setup];
 }
 
 #pragma mark - NADViewDelegate methods
