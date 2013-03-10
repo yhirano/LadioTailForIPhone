@@ -150,13 +150,29 @@
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
 
 #if defined(LADIO_TAIL)
-    NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
-                           _channel.nam, [_channel.surl absoluteString]];
+    NSString *tweetText;
+    if ([_channel.nam length] > 0) {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
+                     _channel.nam, [_channel.surl absoluteString]];
+    } else {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForLadioTail",
+                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                     [_channel.surl absoluteString]];
+    }
 #elif defined(RADIO_EDGE)
-    NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
-                           _channel.serverName, [_channel.listenUrl absoluteString]];
+    NSString *tweetText;
+    if ([_channel.serverName length] > 0) {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
+                     _channel.serverName, [_channel.listenUrl absoluteString]];
+    } else {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForRadioEdge",
+                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                     [_channel.listenUrl absoluteString]];
+    }
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
