@@ -60,9 +60,9 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([_channel favorite]) {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow"]];
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white.png"]];
+        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white"]];
     }
 }
 
@@ -80,7 +80,7 @@
     Player *player = [Player sharedInstance];
     // 再生中
     if ([player isPlaying:url]) {
-        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_stop"] forState:UIControlStateNormal];
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare) {
@@ -91,7 +91,7 @@
     }
     // 再生中以外
     else {
-        [_playButton setImage:[UIImage imageNamed:@"button_playback_play.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"button_playback_play"] forState:UIControlStateNormal];
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare || [_channel isPlaySupported] == NO) {
@@ -150,13 +150,29 @@
     TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
 
 #if defined(LADIO_TAIL)
-    NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
-                           _channel.nam, [_channel.surl absoluteString]];
+    NSString *tweetText;
+    if ([_channel.nam length] > 0) {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
+                     _channel.nam, [_channel.surl absoluteString]];
+    } else {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForLadioTail",
+                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                     [_channel.surl absoluteString]];
+    }
 #elif defined(RADIO_EDGE)
-    NSString *tweetText = [[NSString alloc]
-                           initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
-                           _channel.serverName, [_channel.listenUrl absoluteString]];
+    NSString *tweetText;
+    if ([_channel.serverName length] > 0) {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
+                     _channel.serverName, [_channel.listenUrl absoluteString]];
+    } else {
+        tweetText = [[NSString alloc]
+                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForRadioEdge",
+                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                     [_channel.listenUrl absoluteString]];
+    }
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
@@ -195,22 +211,22 @@
     NSString *titleString;
 #if defined(LADIO_TAIL)
     // タイトルが存在する場合はタイトルを表示する
-    if (!([_channel.nam length] == 0)) {
+    if ([_channel.nam length] > 0) {
         titleString = _channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if (!([_channel.dj length] == 0)) {
+    else if ([_channel.dj length] > 0) {
         titleString = _channel.dj;
     } else {
         titleString = @"";
     }
 #elif defined(RADIO_EDGE)
     // Server Nameが存在する場合はServer Nameを表示する
-    if (!([_channel.serverName length] == 0)) {
+    if ([_channel.serverName length] > 0) {
         titleString = _channel.serverName;
     }
     // Genreが存在する場合はGenreを表示する
-    else if (!([_channel.genre length] == 0)) {
+    else if ([_channel.genre length] > 0) {
         titleString = _channel.genre;
     } else {
         titleString = @"";

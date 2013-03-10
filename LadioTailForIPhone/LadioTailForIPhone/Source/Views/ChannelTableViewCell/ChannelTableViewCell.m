@@ -257,10 +257,13 @@
         }
     }
 }
+
 #pragma mark - UITableViewCell methods
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
+
     [self revertSwipeWithAnimated:NO];
 }
 

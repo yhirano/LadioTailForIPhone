@@ -47,7 +47,7 @@
 
     // Current Song
     value = channel.currentSong;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag = NSLocalizedString(@"Song", @"曲");
         [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
@@ -59,7 +59,7 @@
     }
     // 種類
     value = channel.serverType;
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         tag =  NSLocalizedString(@"Format", @"フォーマット");
         [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
@@ -71,31 +71,31 @@
 
     // fid
     value = [[NSString alloc] initWithFormat:@"%d", channel.fid];
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"fid";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // Listen URL
     value = [channel.listenUrl absoluteString];
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"listen_url";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // Channels
     value = [[NSString alloc] initWithFormat:@"%d", channel.channels];
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"channels";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // SampleRate
     value = [[NSString alloc] initWithFormat:@"%d", channel.sampleRate];
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"samplerate";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // お気に入り
     value = (channel.favorite ? @"YES" : @"NO");
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"Favorite";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }

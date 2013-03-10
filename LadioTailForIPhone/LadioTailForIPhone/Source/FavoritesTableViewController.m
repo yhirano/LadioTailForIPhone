@@ -212,7 +212,7 @@
         NSString *cellIdentifier;
         
         // タイトルかDJが存在する場合
-        if (!([channel.nam length] == 0) || !([channel.dj length] == 0)) {
+        if (([channel.nam length] > 0) || ([channel.dj length] > 0)) {
             cellIdentifier = @"FavoriteCell";
         } else {
             cellIdentifier = @"FavoriteMountOnlyCell";
@@ -230,18 +230,18 @@
         UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
         UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
         
-        if (!([channel.nam length] == 0)) {
+        if ([channel.nam length] > 0) {
             titleLabel.text = channel.nam;
         } else {
             titleLabel.text = @"";
         }
-        if (!([channel.dj length] == 0)) {
+        if ([channel.dj length] > 0) {
             djLabel.text = channel.dj;
         } else {
             djLabel.text = @"";
         }
         mountTagLabel.text = NSLocalizedString(@"Mount", @"マウント");
-        if (!([channel.mnt length] == 0)) {
+        if ([channel.mnt length] > 0) {
             mountLabel.text = channel.mnt;
         } else {
             mountLabel.text = @"";
@@ -249,14 +249,14 @@
         // 再生中
         if ([[player playingChannel] isSameMount:channel]) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
         }
         // 配信中
         else if ([headline channelFromMount:channel.mnt] != nil) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black"]];
         }
         // 配信されていない
         else {
@@ -322,12 +322,12 @@
         UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
         UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
         
-        if (!([channel.serverName length] == 0)) {
+        if ([channel.serverName length] > 0) {
             serverNameLabel.text = channel.serverName;
         } else {
             serverNameLabel.text = @"";
         }
-        if (!([channel.genre length] == 0)) {
+        if ([channel.genre length] > 0) {
             genreLabel.text = channel.genre;
         } else {
             genreLabel.text = @"";
@@ -335,14 +335,14 @@
         // 再生中
         if ([[player playingChannel] isSameListenUrl:channel]) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_play_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
         }
         // 配信中
         else if ([headline channelFromListenUrl:channel.listenUrl] != nil) {
             broadcastImageView.hidden = NO;
-            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white.png"]];
-            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black.png"]];
+            [broadcastImageView setImage:[UIImage imageNamed:@"tablecell_broadcast_white"]];
+            [broadcastImageView setHighlightedImage:[UIImage imageNamed:@"tablecell_broadcast_black"]];
         }
         // 配信されていない
         else {

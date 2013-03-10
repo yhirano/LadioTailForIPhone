@@ -78,7 +78,11 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE_FOR_IPAD;
+    } else {
+        viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
+    }
 
     [self.view addSubview:viewDeckController_.view];
 }
@@ -296,22 +300,6 @@
     return result;
 }
 
-/**
- * メインスレッドで処理を実行する
- *
- * @params メインスレッドで処理を実行する
- */
-- (void)execMainThread:(void (^)(void))exec
-{
-    if ([NSThread isMainThread]) {
-        exec();
-    } else {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            exec();
-        }];
-    }
-}
-
 #pragma mark - UIResponder methods
 
 - (BOOL)canBecomeFirstResponder
@@ -374,10 +362,10 @@
     NSLog(@"%@ received headline update started notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // 進捗ウィンドウを表示する
         [SVProgressHUD show];
-    }];
+    });
 }
 
 - (void)headlineDidFinishLoad:(NSNotification *)notification
@@ -386,10 +374,10 @@
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // 進捗ウィンドウを消す
         [SVProgressHUD dismiss];
-    }];
+    });
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -398,11 +386,11 @@
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // 進捗ウィンドウにエラー表示
         NSString *errorStr = NSLocalizedString(@"Channel information could not be obtained.", @"番組表の取得に失敗");
         [SVProgressHUD showErrorWithStatus:errorStr];
-    }];
+    });
 }
 
 @end

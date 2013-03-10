@@ -540,23 +540,23 @@ static NSCache *matchCache = nil;
     // 辞書は Key:検索単語 Value:マッチしたか
     NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
     for (NSString *word in searchWords) {
-        if (!([word length] == 0)) {
+        if ([word length] > 0) {
             searchDictionary[word] = @NO;
         }
     }
 
     // 検索対象文字列を配列にする
     NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:4];
-    if (!([nam_ length] == 0)) {
+    if ([nam_ length] > 0) {
         [searchedWords addObject:nam_];
     }
-    if (!([gnl_ length] == 0)) {
+    if ([gnl_ length] > 0) {
         [searchedWords addObject:gnl_];
     }
-    if (!([desc_ length] == 0)) {
+    if ([desc_ length] > 0) {
         [searchedWords addObject:desc_];
     }
-    if (!([dj_ length] == 0)) {
+    if ([dj_ length] > 0) {
         [searchedWords addObject:dj_];
     }
 
@@ -727,9 +727,9 @@ static NSCache *matchCache = nil;
 {
     // 文字列で比較する。
     // 文字列が空の場合は後ろに来る。
-    if (!([str1 length] == 0) && ([str2 length] == 0)) {
+    if (([str1 length] > 0) && ([str2 length] == 0)) {
         return NSOrderedAscending;
-    } else if (([str1 length] == 0) && !([str2 length] == 0)) {
+    } else if (([str1 length] == 0) && ([str2 length] > 0)) {
         return NSOrderedDescending;
     } else if (([str1 length] == 0) && ([str2 length] == 0)) {
         return NSOrderedSame;

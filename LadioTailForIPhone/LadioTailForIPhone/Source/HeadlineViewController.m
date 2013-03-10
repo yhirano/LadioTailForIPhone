@@ -27,7 +27,7 @@
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ChannelViewController.h"
-#import "AdViewCell.h"
+#import "Views/AdViewCell/AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -170,12 +170,12 @@ typedef enum {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
     }
 
-    if (!([channel.nam length] == 0)) {
+    if ([channel.nam length] > 0) {
         titleLabel.text = channel.nam;
     } else {
         titleLabel.text = @"";
     }
-    if (!([channel.dj length] == 0)) {
+    if ([channel.dj length] > 0) {
         djLabel.text = channel.dj;
     } else {
         djLabel.text = @"";
@@ -280,12 +280,12 @@ typedef enum {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
     }
 
-    if (!([channel.serverName length] == 0)) {
+    if ([channel.serverName length] > 0) {
         serverNameLabel.text = channel.serverName;
     } else {
         serverNameLabel.text = @"";
     }
-    if (!([channel.genre length] == 0)) {
+    if ([channel.genre length] > 0) {
         genreLabel.text = channel.genre;
     } else {
         genreLabel.text = @"";
@@ -555,17 +555,17 @@ typedef enum {
 - (void)updateHeadlineTable
 {
     if (SEARCH_EACH_CHAR == NO) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // 検索バーの入力を受け付けない
             _headlineSearchBar.userInteractionEnabled = NO;
-        }];
+        });
     }
 
     Headline *headline = [Headline sharedInstance];
     _showedChannels = [headline channels:_channelSortType
                               searchWord:searchWord_];
 
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -584,35 +584,19 @@ typedef enum {
             // 検索バーのインジケーターを消す
             [_headlineSearchBarIndicator stopAnimating];
         }
-    }];
+    });
 }
 
 - (void)updatePlayingButton
 {
-    [self execMainThread:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
         } else {
             self.navigationItem.rightBarButtonItem = nil;
         }
-    }];
-}
-
-/**
- * メインスレッドで処理を実行する
- *
- * @params メインスレッドで実行する処理
- */
-- (void)execMainThread:(void (^)(void))exec
-{
-    if ([NSThread isMainThread]) {
-        exec();
-    } else {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            exec();
-        }];
-    }
+    });
 }
 
 #pragma mark - Actions
@@ -764,6 +748,10 @@ typedef enum {
             refreshHeaderView_ = view;
         }
     }
+
+    adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
+    adViewCell_.rootViewController = self;
+    [adViewCell_ load];
 }
 
 - (void)viewDidUnload
@@ -971,15 +959,7 @@ typedef enum {
 {
     // 広告View
     if (IS_SHOW_AD && indexPath.row == 0) {
-        NSString *cellIdentifier = @"ChannelCell_Ad";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            adViewCell_.rootViewController = self;
-            [adViewCell_ load];
-            cell = adViewCell_;
-        }
-        return cell;
+        return adViewCell_;
     }
     // 広告View以外のView
     else {
@@ -1029,7 +1009,8 @@ typedef enum {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
-            ;
+            // 選択解除（選択時ハイライトなしにしているが、タップ後スクロールするとハイライトするため解除する）
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         } else {
             [self performSegueWithIdentifier:@"SelectChannel" sender:self];
         }
@@ -1203,10 +1184,10 @@ didChangeSwipeEnable:(BOOL)enable
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        });
     }
 }
 
@@ -1217,10 +1198,10 @@ didChangeSwipeEnable:(BOOL)enable
 #endif /* #ifdef DEBUG */
 
     if (PULL_REFRESH_HEADLINE) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // Pull refreshを終了する
             [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        }];
+        });
     }
 }
 
@@ -1239,12 +1220,12 @@ didChangeSwipeEnable:(BOOL)enable
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
-        [self execMainThread:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
                 [self scrollToTopAtPlayingCell];
             }
-        }];
+        });
     }
 }
 

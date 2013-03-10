@@ -285,17 +285,17 @@ static NSCache *matchCache = nil;
     // 辞書は Key:検索単語 Value:マッチしたか
     NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
     for (NSString *word in searchWords) {
-        if (!([word length] == 0)) {
+        if ([word length] > 0) {
             searchDictionary[word] = @NO;
         }
     }
 
     // 検索対象文字列を配列にする
     NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:2];
-    if (!([serverName_ length] == 0)) {
+    if ([serverName_ length] > 0) {
         [searchedWords addObject:serverName_];
     }
-    if (!([genre_ length] == 0)) {
+    if ([genre_ length] > 0) {
         [searchedWords addObject:genre_];
     }
 
@@ -482,9 +482,9 @@ static NSCache *matchCache = nil;
 {
     // 文字列で比較する。
     // 文字列が空の場合は後ろに来る。
-    if (!([str1 length] == 0) && ([str2 length] == 0)) {
+    if (([str1 length] > 0) && ([str2 length] == 0)) {
         return NSOrderedAscending;
-    } else if (([str1 length] == 0) && !([str2 length] == 0)) {
+    } else if (([str1 length] == 0) && ([str2 length] > 0)) {
         return NSOrderedDescending;
     } else if (([str1 length] == 0) && ([str2 length] == 0)) {
         return NSOrderedSame;
