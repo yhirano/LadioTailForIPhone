@@ -39,7 +39,7 @@
 - (void)updateViews
 {
     NSString* title = [_pageWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    if (!([title length] == 0)) {
+    if ([title length] > 0) {
         _topNavigationItem.title = title;
     }
 

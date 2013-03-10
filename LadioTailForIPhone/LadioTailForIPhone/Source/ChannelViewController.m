@@ -195,22 +195,22 @@
     NSString *titleString;
 #if defined(LADIO_TAIL)
     // タイトルが存在する場合はタイトルを表示する
-    if (!([_channel.nam length] == 0)) {
+    if ([_channel.nam length] > 0) {
         titleString = _channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if (!([_channel.dj length] == 0)) {
+    else if ([_channel.dj length] > 0) {
         titleString = _channel.dj;
     } else {
         titleString = @"";
     }
 #elif defined(RADIO_EDGE)
     // Server Nameが存在する場合はServer Nameを表示する
-    if (!([_channel.serverName length] == 0)) {
+    if ([_channel.serverName length] > 0) {
         titleString = _channel.serverName;
     }
     // Genreが存在する場合はGenreを表示する
-    else if (!([_channel.genre length] == 0)) {
+    else if ([_channel.genre length] > 0) {
         titleString = _channel.genre;
     } else {
         titleString = @"";

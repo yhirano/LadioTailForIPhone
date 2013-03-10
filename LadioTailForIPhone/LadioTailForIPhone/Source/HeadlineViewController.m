@@ -170,12 +170,12 @@ typedef enum {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
     }
 
-    if (!([channel.nam length] == 0)) {
+    if ([channel.nam length] > 0) {
         titleLabel.text = channel.nam;
     } else {
         titleLabel.text = @"";
     }
-    if (!([channel.dj length] == 0)) {
+    if ([channel.dj length] > 0) {
         djLabel.text = channel.dj;
     } else {
         djLabel.text = @"";
@@ -280,12 +280,12 @@ typedef enum {
         [headphoneImageView setImage:[UIImage imageNamed:@"tablecell_headphones_white"]];
     }
 
-    if (!([channel.serverName length] == 0)) {
+    if ([channel.serverName length] > 0) {
         serverNameLabel.text = channel.serverName;
     } else {
         serverNameLabel.text = @"";
     }
-    if (!([channel.genre length] == 0)) {
+    if ([channel.genre length] > 0) {
         genreLabel.text = channel.genre;
     } else {
         genreLabel.text = @"";

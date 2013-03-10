@@ -202,7 +202,7 @@
     }
 
     // フィルタリング
-    if (!([searchWord length] == 0)) {
+    if ([searchWord length] > 0) {
         NSArray *words = [[self class] splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
 

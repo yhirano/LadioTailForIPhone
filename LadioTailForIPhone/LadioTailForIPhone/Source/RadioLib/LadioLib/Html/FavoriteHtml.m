@@ -201,7 +201,7 @@
     }
     // お気に入り
     value = (channel.favorite ? @"YES" : @"NO");
-    if (!([value length] == 0)) {
+    if ([value length] > 0) {
         NSString *tag = @"Favorite";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
