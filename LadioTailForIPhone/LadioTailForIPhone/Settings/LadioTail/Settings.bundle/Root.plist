@@ -102,7 +102,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>1.5.5</string>
+			<string>shake_do_nothing</string>
 			<key>Key</key>
 			<string>operation_shake</string>
 			<key>Title</key>
@@ -130,7 +130,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>1.5.3</string>
+			<string>1.5.5</string>
 			<key>Key</key>
 			<string>app_version</string>
 			<key>Title</key>
