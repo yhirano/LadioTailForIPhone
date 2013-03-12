@@ -2127,7 +2127,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:9:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/LadioTail/Settings.bundle/Root.plist";
+			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:11:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/LadioTail/Settings.bundle/Root.plist";
 		};
 		8E31758616A098A500F0C6BA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
