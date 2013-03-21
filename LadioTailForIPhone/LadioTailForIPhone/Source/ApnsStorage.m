@@ -46,7 +46,7 @@
 {
     if (self = [super init]) {
         const char *sendFavoritesDispatchQueueName = [[[[NSBundle mainBundle] bundleIdentifier]
-                                                         stringByAppendingString:@".SendFavoritesDispatchQueue"]
+                                                         stringByAppendingString:@".SendFavoritesToProviderDispatchQueue"]
                                                              UTF8String];
         sendFavoritesDispatchQueue_ = dispatch_queue_create(sendFavoritesDispatchQueueName, NULL);
     }
@@ -110,13 +110,6 @@
 
     // お気に入り送信
     dispatch_async(sendFavoritesDispatchQueue_, ^ {
-        if (PROVIDER_URL == nil) {
-            return;
-        }
-        if (deviceToken == nil) {
-            return;
-        }
-        
         NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
         NSLog(@"Send %d favorite(s) to the provider.", [favorites count]);
         
