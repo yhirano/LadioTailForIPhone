@@ -562,10 +562,12 @@ typedef enum {
     }
 
     Headline *headline = [Headline sharedInstance];
-    _showedChannels = [headline channels:_channelSortType
-                              searchWord:searchWord_];
+    // このメソッドはメインスレッド以外からも呼ばれることがあるので、検索ワードはコピーしておく
+    NSArray *channels = [headline channels:_channelSortType searchWord:[searchWord_ copy]];
 
     dispatch_async(dispatch_get_main_queue(), ^{
+        _showedChannels = channels;
+
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -767,7 +769,7 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // 表示後とにヘッドラインテーブルを更新する
+    // 表示後にヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
