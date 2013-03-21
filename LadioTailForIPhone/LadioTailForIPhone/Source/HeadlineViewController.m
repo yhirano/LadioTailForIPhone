@@ -908,6 +908,18 @@ typedef enum {
 
 #pragma mark - UISearchBarDelegate methods
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // スクロール中はキーボードを閉じる処理が入っているため、サーチバーを表示時にはスクロールを止める。
+    CGPoint contentOffset = _headlineTableView.contentOffset;
+    if (_headlineTableView.contentOffset.y < 0) {
+        contentOffset.y = 0;
+    }
+    [_headlineTableView setContentOffset:contentOffset animated:NO];
+
+    return YES;
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
@@ -1023,6 +1035,9 @@ typedef enum {
 {
     // EGOTableViewPullRefreshに必要
     [refreshHeaderView_ egoRefreshScrollViewDidScroll:scrollView];
+    
+    // キーボードを閉じる
+    [_headlineSearchBar resignFirstResponder];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
