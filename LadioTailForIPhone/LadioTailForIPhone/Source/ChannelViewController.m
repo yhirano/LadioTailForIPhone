@@ -118,6 +118,39 @@
     [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
+- (NSString *)postText
+{
+    NSString *result;
+
+#if defined(LADIO_TAIL)
+    if ([_channel.nam length] > 0) {
+        result = [[NSString alloc]
+                  initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
+                  _channel.nam, [_channel.surl absoluteString]];
+    } else {
+        result = [[NSString alloc]
+                  initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForLadioTail",
+                                                   @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                  [_channel.surl absoluteString]];
+    }
+#elif defined(RADIO_EDGE)
+    if ([_channel.serverName length] > 0) {
+        result = [[NSString alloc]
+                  initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
+                  _channel.serverName, [_channel.listenUrl absoluteString]];
+    } else {
+        result = [[NSString alloc]
+                  initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForRadioEdge",
+                                                   @"Twitterデフォルト投稿文（タイトルが無い場合）"),
+                  [_channel.listenUrl absoluteString]];
+    }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
+    return result;
+}
+
 #pragma mark - Actions
 
 - (IBAction)play:(id)sender
@@ -146,39 +179,40 @@
     [self updateFavoriteButton];
 }
 
-- (IBAction)tweet:(id)sender {
-    TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
-
-#if defined(LADIO_TAIL)
-    NSString *tweetText;
-    if ([_channel.nam length] > 0) {
-        tweetText = [[NSString alloc]
-                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForLadioTail", @"Twitterデフォルト投稿文"),
-                     _channel.nam, [_channel.surl absoluteString]];
-    } else {
-        tweetText = [[NSString alloc]
-                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForLadioTail",
-                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
-                     [_channel.surl absoluteString]];
+- (IBAction)postFacebook:(id)sender {
+    // iOS6未満
+    if (!NSClassFromString(@"SLComposeViewController")) {
+        ;
     }
-#elif defined(RADIO_EDGE)
-    NSString *tweetText;
-    if ([_channel.serverName length] > 0) {
-        tweetText = [[NSString alloc]
-                     initWithFormat:NSLocalizedString(@"TweetDefaultTextForRadioEdge", @"Twitterデフォルト投稿文"),
-                     _channel.serverName, [_channel.listenUrl absoluteString]];
-    } else {
-        tweetText = [[NSString alloc]
-                     initWithFormat:NSLocalizedString(@"TweetNoTitleDefaultTextForRadioEdge",
-                                                      @"Twitterデフォルト投稿文（タイトルが無い場合）"),
-                     [_channel.listenUrl absoluteString]];
+    // iOS6以上
+    else {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+            SLComposeViewController *composeViewController =
+                [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            [composeViewController setInitialText:[self postText]];
+            [composeViewController setCompletionHandler:nil];
+            [self presentViewController:composeViewController animated:YES completion:nil];
+        }
     }
-#else
-    #error "Not defined LADIO_TAIL or RADIO_EDGE"
-#endif
+}
 
-    [tweetView setInitialText:tweetText];
-    [self presentModalViewController:tweetView animated:YES];
+- (IBAction)postTwitter:(id)sender {
+    // iOS6未満
+    if (!NSClassFromString(@"SLComposeViewController")) {
+        TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
+        [tweetView setInitialText:[self postText]];
+        [self presentModalViewController:tweetView animated:YES];
+    }
+    // iOS6以上
+    else {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+            SLComposeViewController *composeViewController =
+                [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+            [composeViewController setInitialText:[self postText]];
+            [composeViewController setCompletionHandler:nil];
+            [self presentViewController:composeViewController animated:YES completion:nil];
+        }
+    }
 }
 
 #pragma mark - UIViewController methods
@@ -240,6 +274,11 @@
     // お気に入りボタンの色を変える
     _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
 
+    // iOS6未満の場合はFacebookボタンを隠す
+    if (!NSClassFromString(@"SLComposeViewController")) {
+        _facebookButton.hidden = YES;
+    }
+
     // Web画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = titleString;
     if ([backButtonString length] == 0) {
@@ -270,6 +309,8 @@
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
     [self setFavoriteBarButtonItem:nil];
+    [self setFacebookButton:nil];
+    [self setTwitterButton:nil];
     [super viewDidUnload];
 }
 

@@ -477,6 +477,12 @@
 		8EF24FA815C4C90500F18C3F /* button_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA615C4C90500F18C3F /* button_twitter.png */; };
 		8EF24FA915C4C90500F18C3F /* button_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */; };
 		8EF24FAC15C4C99E00F18C3F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF24FAB15C4C99E00F18C3F /* Twitter.framework */; };
+		8EFA757717083ABA002B445A /* button_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA757517083ABA002B445A /* button_facebook.png */; };
+		8EFA757817083ABA002B445A /* button_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA757517083ABA002B445A /* button_facebook.png */; };
+		8EFA757917083ABA002B445A /* button_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA757617083ABA002B445A /* button_facebook@2x.png */; };
+		8EFA757A17083ABA002B445A /* button_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA757617083ABA002B445A /* button_facebook@2x.png */; };
+		8EFA757C17083E16002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8EFA757D17083E21002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8EFAD3751542D1D300DA316F /* tablecell_indicator_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD3731542D1D300DA316F /* tablecell_indicator_black.png */; };
 		8EFAD3761542D1D300DA316F /* tablecell_indicator_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD3741542D1D300DA316F /* tablecell_indicator_white.png */; };
 		8EFAD3B615432EC500DA316F /* button_allow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EFAD39215432EC400DA316F /* button_allow_left.png */; };
@@ -884,6 +890,9 @@
 		8EF24FA615C4C90500F18C3F /* button_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_twitter.png; sourceTree = "<group>"; };
 		8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_twitter@2x.png"; sourceTree = "<group>"; };
 		8EF24FAB15C4C99E00F18C3F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		8EFA757517083ABA002B445A /* button_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_facebook.png; sourceTree = "<group>"; };
+		8EFA757617083ABA002B445A /* button_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_facebook@2x.png"; sourceTree = "<group>"; };
+		8EFA757B17083E16002B445A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8EFAD3731542D1D300DA316F /* tablecell_indicator_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_indicator_black.png; sourceTree = "<group>"; };
 		8EFAD3741542D1D300DA316F /* tablecell_indicator_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_indicator_white.png; sourceTree = "<group>"; };
 		8EFAD39215432EC400DA316F /* button_allow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_allow_left.png; sourceTree = "<group>"; };
@@ -958,6 +967,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
 				8EFE80ED16E65FCC00C8575B /* CoreTelephony.framework in Frameworks */,
 				8E4B62EA16C8ED3800218055 /* Security.framework in Frameworks */,
 				8EAC42611632F331009C2871 /* AdSupport.framework in Frameworks */,
@@ -984,6 +994,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
 				8EFE80EE16E65FD500C8575B /* CoreTelephony.framework in Frameworks */,
 				8E4B62EB16C8ED4200218055 /* Security.framework in Frameworks */,
 				8ED117DB16588DCB001BD731 /* AdSupport.framework in Frameworks */,
@@ -1226,6 +1237,8 @@
 				8EFAD39315432EC400DA316F /* button_allow_left@2x.png */,
 				8EFAD39415432EC400DA316F /* button_allow_right.png */,
 				8EFAD39515432EC400DA316F /* button_allow_right@2x.png */,
+				8EFA757517083ABA002B445A /* button_facebook.png */,
+				8EFA757617083ABA002B445A /* button_facebook@2x.png */,
 				8EFAD39615432EC400DA316F /* button_goto_bottom.png */,
 				8EFAD39715432EC400DA316F /* button_goto_bottom@2x.png */,
 				8EFAD39815432EC400DA316F /* button_playback_play.png */,
@@ -1483,6 +1496,7 @@
 				8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */,
 				8E16282215383107007A2DBE /* QuartzCore.framework */,
 				8E4B62E916C8ED3800218055 /* Security.framework */,
+				8EFA757B17083E16002B445A /* Social.framework */,
 				8EAC42571632F193009C2871 /* StoreKit.framework */,
 				8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */,
 				8EF24FAB15C4C99E00F18C3F /* Twitter.framework */,
@@ -1925,6 +1939,8 @@
 				8EB398B716CEA01C00763AEF /* Resources.bundle in Resources */,
 				8EFE80E316E6595D00C8575B /* CHANGELOG.md in Resources */,
 				8EFE80E716E6595D00C8575B /* README.md in Resources */,
+				8EFA757717083ABA002B445A /* button_facebook.png in Resources */,
+				8EFA757917083ABA002B445A /* button_facebook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2110,6 +2126,8 @@
 				8EB398B816CEA01C00763AEF /* Resources.bundle in Resources */,
 				8EFE80E416E6595D00C8575B /* CHANGELOG.md in Resources */,
 				8EFE80E816E6595D00C8575B /* README.md in Resources */,
+				8EFA757817083ABA002B445A /* button_facebook.png in Resources */,
+				8EFA757A17083ABA002B445A /* button_facebook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
