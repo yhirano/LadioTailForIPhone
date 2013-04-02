@@ -125,20 +125,24 @@
 
     NSURL *url = [NSURL URLWithString:ICECAST_HEADLINE_XML_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    __weak id weakSelf = self;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:fetchQueue_
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               id strongSelf = weakSelf;
                                if ([data length] > 0 && error == nil) {
                                    NSLog(@"Icecaset fetch headline received. %d bytes received.", [data length]);
 
                                    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-                                   [parser setDelegate:self];
+                                   [parser setDelegate:strongSelf];
                                    [parser parse];
 
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:RadioLibHeadlineDidFinishLoadNotification object:self];
+                                           postNotificationName:RadioLibHeadlineDidFinishLoadNotification
+                                                         object:strongSelf];
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:RadioLibHeadlineChannelChangedNotification object:self];
+                                           postNotificationName:RadioLibHeadlineChannelChangedNotification
+                                                         object:strongSelf];
                                } else if ([data length] == 0 && error == nil) {
                                    NSLog(@"Nothing was downloaded.");
 
@@ -148,7 +152,8 @@
                                    }
                                    
                                    [[NSNotificationCenter defaultCenter]
-                                           postNotificationName:RadioLibHeadlineFailLoadNotification object:self];
+                                           postNotificationName:RadioLibHeadlineFailLoadNotification
+                                                         object:strongSelf];
                                } else if (error != nil) {
                                    NSLog(@"Icecast fetch headline connection failed! Error: %@ / %@",
                                          [error localizedDescription],
@@ -160,7 +165,7 @@
                                    }
 
                                    [[NSNotificationCenter defaultCenter]
-                                          postNotificationName:RadioLibHeadlineFailLoadNotification object:self];
+                                          postNotificationName:RadioLibHeadlineFailLoadNotification object:strongSelf];
                                }
                            }];
 }

@@ -578,7 +578,7 @@ typedef enum {
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
         
         // ヘッドラインテーブルを更新
-        [self.headlineTableView reloadData];
+        [_headlineTableView reloadData];
         
         if (SEARCH_EACH_CHAR == NO) {
             // 検索バーの入力を受け付ける
@@ -601,12 +601,14 @@ typedef enum {
             self.navigationItem.rightBarButtonItem = nil;
         }
     } else {
+        __weak id weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
+            HeadlineViewController *strongSelf = weakSelf;
             // 再生状態に逢わせて再生ボタンの表示を切り替える
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
-                self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+                strongSelf.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
             } else {
-                self.navigationItem.rightBarButtonItem = nil;
+                strongSelf.navigationItem.rightBarButtonItem = nil;
             }
         });
     }
@@ -947,8 +949,10 @@ typedef enum {
 {
     if (SEARCH_EACH_CHAR == NO) {
         [_headlineSearchBarIndicator startAnimating];
+        __weak id weakSelf = self;
         [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
-            [self updateHeadlineTable];
+            id strongSelf = weakSelf;
+            [strongSelf updateHeadlineTable];
         }];
     }
     // キーボードを閉じる
@@ -1248,10 +1252,12 @@ didChangeSwipeEnable:(BOOL)enable
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
+        __weak id weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
+            id strongSelf = weakSelf;
             // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
-                [self scrollToTopAtPlayingCell];
+                [strongSelf scrollToTopAtPlayingCell];
             }
         });
     }
