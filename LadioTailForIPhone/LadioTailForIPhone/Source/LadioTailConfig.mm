@@ -106,6 +106,9 @@ UIColor * const SEARCH_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
                                                     blue:(10.0f / 255)
                                                    alpha:1.0f];
 
+/// リフレッシュコントロールの色
+UIColor * const HEADLINE_PULL_REFRESH_COLOR = [UIColor colorWithWhite:0.6 alpha:1.0];;
+
 /// テーブルの背景の色
 UIColor * const HEADLINE_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
                                                                   green:(40.0f / 255)
@@ -203,9 +206,6 @@ UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR = [UIColor lightGrayColor];
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
-
-/// Pull refreshでヘッドラインを有効にするか
-const BOOL PULL_REFRESH_HEADLINE = YES;
 
 /// 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールするか
 const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;

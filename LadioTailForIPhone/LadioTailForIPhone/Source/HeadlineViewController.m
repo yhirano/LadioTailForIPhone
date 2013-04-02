@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
+#import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
@@ -40,8 +40,8 @@ typedef enum {
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
 
-@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate,
-                                      IIViewDeckControllerDelegate, ChannelTableViewDelegate>
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, IIViewDeckControllerDelegate,
+                                      ChannelTableViewDelegate>
 
 @end
 
@@ -56,8 +56,8 @@ typedef enum {
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
-    /// PullRefreshView
-    EGORefreshTableHeaderView *refreshHeaderView_;
+    /// RefreshControll
+    CKRefreshControl *refreshControl_;
 
     /// ViewDeckController
     IIViewDeckController *viewDeckController_;
@@ -743,27 +743,16 @@ typedef enum {
 
     // ヘッドライン表示方式を設定
     headlineViewDisplayType_ = [[self class] headlineViewDisplayType];
-    
-    if (PULL_REFRESH_HEADLINE) {
-        // PullRefreshViewの生成
-        if (refreshHeaderView_ == nil) {
-            CGRect pullRefreshViewRect = CGRectMake(
-                                                    0.0f,
-                                                    0.0f - _headlineTableView.bounds.size.height,
-                                                    self.view.frame.size.width,
-                                                    _headlineTableView.bounds.size.height);
-            EGORefreshTableHeaderView *view =
-            [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
-                                              arrowImageName:PULL_REFRESH_ARROW_IMAGE
-                                                   textColor:PULL_REFRESH_TEXT_COLOR];
-            view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
-            
-            view.delegate = self;
-            [_headlineTableView addSubview:view];
-            refreshHeaderView_ = view;
-        }
+
+    // RefreshControllの生成
+    if (refreshControl_ == nil) {
+        refreshControl_ = [[CKRefreshControl alloc] init];
+        refreshControl_.tintColor = HEADLINE_PULL_REFRESH_COLOR;
+        [refreshControl_ addTarget:self action:@selector(refreshOccured:) forControlEvents:UIControlEventValueChanged];
+        [_headlineTableView addSubview:refreshControl_];
     }
 
+    // 広告Viewを生成
     adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
     adViewCell_.rootViewController = self;
     [adViewCell_ load];
@@ -1050,35 +1039,8 @@ typedef enum {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // EGOTableViewPullRefreshに必要
-    [refreshHeaderView_ egoRefreshScrollViewDidScroll:scrollView];
-    
     // キーボードを閉じる
     [_headlineSearchBar resignFirstResponder];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // EGOTableViewPullRefreshに必要
-    [refreshHeaderView_ egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
-#pragma mark - EGORefreshTableHeaderDelegate Methods
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
-{
-    [self fetchHeadline];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
-{
-    // should return if data source model is reloading
-    return [[Headline sharedInstance] isFetchingHeadline];
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
-{
-    return [NSDate date]; // should return date data source was last changed
 }
 
 #pragma mark - IIViewDeckControllerDelegate methods
@@ -1188,6 +1150,13 @@ didChangeSwipeEnable:(BOOL)enable
     anchorLabel.text = @"";
 }
 
+#pragma mark - RefreshControll actions
+
+- (void)refreshOccured:(id)sender
+{
+    [self fetchHeadline];
+}
+
 #pragma mark - NSUserDefaults notifications
 
 - (void)defaultsChanged:(NSNotification *)notification
@@ -1215,12 +1184,10 @@ didChangeSwipeEnable:(BOOL)enable
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    if (PULL_REFRESH_HEADLINE) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Pull refreshを終了する
-            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // refreshを終了する
+        [refreshControl_ endRefreshing];
+    });
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -1229,12 +1196,10 @@ didChangeSwipeEnable:(BOOL)enable
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    if (PULL_REFRESH_HEADLINE) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Pull refreshを終了する
-            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // refreshを終了する
+        [refreshControl_ endRefreshing];
+    });
 }
 
 - (void)headlineChannelChanged:(NSNotification *)notification
