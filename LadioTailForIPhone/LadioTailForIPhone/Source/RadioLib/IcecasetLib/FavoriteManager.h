@@ -31,9 +31,7 @@
 
 /// お気に入りリスト
 /// Channel.mntがキー、FavoriteがオブジェクトのNSDictionary
-///
-/// 直接いじらないこと Don't edit directly.
-@property (nonatomic, strong, readonly) NSMutableDictionary *favorites;
+@property (nonatomic, strong, readonly) NSDictionary *favorites;
 
 /**
  * FavoriteManagerを取得する

@@ -29,6 +29,9 @@
 #define FAVORITES_KEY_V2 @"FAVORITES_V2"
 
 @implementation FavoriteManager
+{
+    NSMutableDictionary *_favorites;
+}
 
 + (FavoriteManager *)sharedInstance
 {
@@ -59,6 +62,13 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
+}
+
+- (NSDictionary *)favorites
+{
+    @synchronized(self) {
+        return _favorites;
+    }
 }
 
 - (void)addFavorite:(Channel *)channel

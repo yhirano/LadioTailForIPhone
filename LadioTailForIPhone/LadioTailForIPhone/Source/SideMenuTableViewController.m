@@ -430,27 +430,31 @@
                     // サイドメニューを閉じ、閉じ終わった後に更新
                     if ([self isCenterControllerClass:[HeadlineNaviViewController class]
                                  andTopViewController:[HeadlineViewController class]]) {
+                        __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewAnimated:YES
                                                             completion:^(IIViewDeckController *controller) {
-                            [[self headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
+                            id strongSelf = weakSelf;
+                            [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
                         }];
                     }
                     // CenterControllerがHeadlineNaviViewControllerでない、またはHeadlineViewControllerが表示中でない場合は
                     // サイドメニューをバウンドしセンターを変更しつつ、閉じ終わった後に更新
                     else {
-                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
-                        {
+                        __weak id weakSelf = self;
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+                            SideMenuTableViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
-                            self.viewDeckController.centerController = headlineNaviViewController;
+                            strongSelf.viewDeckController.centerController = headlineNaviViewController;
 
                             // チェックマーク位置変更のためテーブルを更新
                             [tableView reloadData];
                         }
                                                             completion:^(IIViewDeckController *controller)
                         {
-                            [[self headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
+                            id strongSelf = weakSelf;
+                            [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
                         }];
                     }
                     break;
@@ -517,12 +521,13 @@
             // CenterControllerがHeadlineNaviViewControllerでない、またはHeadlineViewControllerが表示中でない場合は
             // サイドメニューをバウンドしセンターを変更しつつ、番組の並び順を変更
             else {
-                [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
-                {
+                __weak id weakSelf = self;
+                [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+                    SideMenuTableViewController *strongSelf = weakSelf;
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                         [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
-                    self.viewDeckController.centerController = headlineNaviViewController;
+                    strongSelf.viewDeckController.centerController = headlineNaviViewController;
 
                     ChannelSortType channelSortType = ChannelSortTypeNone;
 #if defined(LADIO_TAIL)
@@ -563,7 +568,7 @@
 #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
                     
-                    [[self headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
+                    [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
 
                     // チェックマーク位置変更のためテーブルを更新
                     [tableView reloadData];
@@ -584,12 +589,13 @@
                     // CenterControllerがFavoriteNaviViewControllerでない、またはFavoritesTableViewControllerが表示中でない
                     // 場合、サイドメニューをバウンドしセンターを変更
                     else {
-                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller)
-                        {
+                        __weak id weakSelf = self;
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+                            SideMenuTableViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             FavoriteNaviViewController *favoriteNaviViewController = (FavoriteNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];
-                            self.viewDeckController.centerController = favoriteNaviViewController;
+                            strongSelf.viewDeckController.centerController = favoriteNaviViewController;
 
                             // チェックマーク位置変更のためテーブルを更新
                             [tableView reloadData];

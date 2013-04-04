@@ -74,7 +74,9 @@
     if (animated) {
         panGesture_.enabled = NO;
         NSTimeInterval duration = 0.24;
-        [UIView animateWithDuration:duration delay:0.0
+        __weak id weakSelf = self;
+        [UIView animateWithDuration:duration
+                              delay:0.0
                             options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
                          animations:^{
                              CGRect frame = swipeView_.frame;
@@ -82,15 +84,16 @@
                              swipeView_.frame = frame;
                          }
                          completion:^(BOOL finished) {
-                             [self setSwipeState:ChannelTableViewCellSwipeStateNormal];
+                             id strongSelf = weakSelf;
+                             [strongSelf setSwipeState:ChannelTableViewCellSwipeStateNormal];
 
                              if ([tableViewDelegate_
                                     respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
-                                 NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                                 NSIndexPath* indexPath = [tableView_ indexPathForCell:strongSelf];
                                  if (indexPath) {
                                      [tableViewDelegate_ tableView:tableView_
                                               didChangeSwipeEnable:NO
-                                                           forCell:self
+                                                           forCell:strongSelf
                                                  forRowAtIndexPath:indexPath];
                                  }
                              }
@@ -163,7 +166,9 @@
                 ;
             } else if (frame.origin.x + diff <= firstPocition_.x) {
                 frame.origin.x = firstPocition_.x;
+                __weak id weakSelf = self;
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    id strongSelf = weakSelf;
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];
@@ -171,11 +176,11 @@
                     if (befoure != after) {
                         if([tableViewDelegate_
                             respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
-                            NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                            NSIndexPath* indexPath = [tableView_ indexPathForCell:strongSelf];
                             if (indexPath) {
                                 [tableViewDelegate_ tableView:tableView_
                                          didChangeSwipeEnable:after
-                                                      forCell:self
+                                                      forCell:strongSelf
                                             forRowAtIndexPath:indexPath];
                             }
                         }
@@ -183,7 +188,10 @@
                 });
             } else if (frame.origin.x + diff <= firstPocition_.x + limitSize_.width) {
                 frame.origin.x += diff;
+                __weak id weakSelf = self;
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    id strongSelf = weakSelf;
+
                     BOOL befoure = [self isEnableSwipe];
                     swipeView_.frame = frame;
                     BOOL after = [self isEnableSwipe];
@@ -191,11 +199,11 @@
                     if (befoure != after) {
                         if([tableViewDelegate_
                             respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
-                            NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
+                            NSIndexPath* indexPath = [tableView_ indexPathForCell:strongSelf];
                             if (indexPath) {
                                 [tableViewDelegate_ tableView:tableView_
                                          didChangeSwipeEnable:after
-                                                      forCell:self
+                                                      forCell:strongSelf
                                             forRowAtIndexPath:indexPath];
                             }
                         }

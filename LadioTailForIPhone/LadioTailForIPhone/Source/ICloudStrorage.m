@@ -30,6 +30,8 @@
 {
     /// お気に入りを同期するか
     BOOL syncFavorites_;
+
+    dispatch_queue_t sendFavoritesDispatchQueue_;
 }
 
 + (ICloudStrorage *)sharedInstance
@@ -49,8 +51,18 @@
     if (self = [super init]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         syncFavorites_ = [defaults boolForKey:@"favorites_icloud_sync"];
+
+        const char *sendFavoritesDispatchQueueName = [[[[NSBundle mainBundle] bundleIdentifier]
+                                                       stringByAppendingString:@".SendFavoritesToICloudDispatchQueue"]
+                                                      UTF8String];
+        sendFavoritesDispatchQueue_ = dispatch_queue_create(sendFavoritesDispatchQueueName, NULL);
     }
     return self;
+}
+
+- (void)dealloc
+{
+    dispatch_release(sendFavoritesDispatchQueue_);
 }
 
 - (void)registICloudNotification
@@ -162,15 +174,17 @@
 {
     // お気に入りをiCloudに送信
     if (syncFavorites_) {
-        NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
-        NSLog(@"Send %d favorite to iCloud.", [favorites count]);
-        NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:favorites];
-        NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
-        [icStore setObject:archive forKey:FAVORITES_V1];
-        BOOL result = [icStore synchronize];
-        if (result == NO) {
-            NSLog(@"Sending favorite to iCloud error occurred.");
-        }
+        dispatch_async(sendFavoritesDispatchQueue_, ^ {
+            NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
+            NSLog(@"Send %d favorite to iCloud.", [favorites count]);
+            NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:favorites];
+            NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
+            [icStore setObject:archive forKey:FAVORITES_V1];
+            BOOL result = [icStore synchronize];
+            if (result == NO) {
+                NSLog(@"Sending favorite to iCloud error occurred.");
+            }
+        });
     }
 }
 

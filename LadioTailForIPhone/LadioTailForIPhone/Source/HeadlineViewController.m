@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
+#import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
@@ -40,8 +40,8 @@ typedef enum {
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
 
-@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate,
-                                      IIViewDeckControllerDelegate, ChannelTableViewDelegate>
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, IIViewDeckControllerDelegate,
+                                      ChannelTableViewDelegate>
 
 @end
 
@@ -56,8 +56,8 @@ typedef enum {
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
-    /// PullRefreshView
-    EGORefreshTableHeaderView *refreshHeaderView_;
+    /// RefreshControll
+    CKRefreshControl *refreshControl_;
 
     /// ViewDeckController
     IIViewDeckController *viewDeckController_;
@@ -562,10 +562,12 @@ typedef enum {
     }
 
     Headline *headline = [Headline sharedInstance];
-    _showedChannels = [headline channels:_channelSortType
-                              searchWord:searchWord_];
+    // このメソッドはメインスレッド以外からも呼ばれることがあるので、検索ワードはコピーしておく
+    NSArray *channels = [headline channels:_channelSortType searchWord:[searchWord_ copy]];
 
     dispatch_async(dispatch_get_main_queue(), ^{
+        _showedChannels = channels;
+
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
         if ([_showedChannels count] == 0) {
@@ -576,7 +578,7 @@ typedef enum {
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
         
         // ヘッドラインテーブルを更新
-        [self.headlineTableView reloadData];
+        [_headlineTableView reloadData];
         
         if (SEARCH_EACH_CHAR == NO) {
             // 検索バーの入力を受け付ける
@@ -589,14 +591,27 @@ typedef enum {
 
 - (void)updatePlayingButton
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    // このメソッドがメインキューで呼ばれた場合は即座に実行する。
+    // 遅いiPodなどでは、dispatch_asyncを使用すると起動時に一瞬再生中ボタンが見えるため。
+    if (dispatch_get_current_queue() == dispatch_get_main_queue()) {
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
         } else {
             self.navigationItem.rightBarButtonItem = nil;
         }
-    });
+    } else {
+        __weak id weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HeadlineViewController *strongSelf = weakSelf;
+            // 再生状態に逢わせて再生ボタンの表示を切り替える
+            if ([[Player sharedInstance] state] == PlayerStatePlay) {
+                strongSelf.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
+            } else {
+                strongSelf.navigationItem.rightBarButtonItem = nil;
+            }
+        });
+    }
 }
 
 #pragma mark - Actions
@@ -728,27 +743,16 @@ typedef enum {
 
     // ヘッドライン表示方式を設定
     headlineViewDisplayType_ = [[self class] headlineViewDisplayType];
-    
-    if (PULL_REFRESH_HEADLINE) {
-        // PullRefreshViewの生成
-        if (refreshHeaderView_ == nil) {
-            CGRect pullRefreshViewRect = CGRectMake(
-                                                    0.0f,
-                                                    0.0f - _headlineTableView.bounds.size.height,
-                                                    self.view.frame.size.width,
-                                                    _headlineTableView.bounds.size.height);
-            EGORefreshTableHeaderView *view =
-            [[EGORefreshTableHeaderView alloc] initWithFrame:pullRefreshViewRect
-                                              arrowImageName:PULL_REFRESH_ARROW_IMAGE
-                                                   textColor:PULL_REFRESH_TEXT_COLOR];
-            view.backgroundColor = PULL_REFRESH_TEXT_BACKGROUND_COLOR;
-            
-            view.delegate = self;
-            [_headlineTableView addSubview:view];
-            refreshHeaderView_ = view;
-        }
+
+    // RefreshControllの生成
+    if (refreshControl_ == nil) {
+        refreshControl_ = [[CKRefreshControl alloc] init];
+        refreshControl_.tintColor = HEADLINE_PULL_REFRESH_COLOR;
+        [refreshControl_ addTarget:self action:@selector(refreshOccured:) forControlEvents:UIControlEventValueChanged];
+        [_headlineTableView addSubview:refreshControl_];
     }
 
+    // 広告Viewを生成
     adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
     adViewCell_.rootViewController = self;
     [adViewCell_ load];
@@ -767,7 +771,7 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // 表示後とにヘッドラインテーブルを更新する
+    // 表示後にヘッドラインテーブルを更新する
     [self updateHeadlineTable];
 
     // 再生状態に逢わせて再生ボタンの表示を切り替える
@@ -908,6 +912,18 @@ typedef enum {
 
 #pragma mark - UISearchBarDelegate methods
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // スクロール中はキーボードを閉じる処理が入っているため、サーチバーを表示時にはスクロールを止める。
+    CGPoint contentOffset = _headlineTableView.contentOffset;
+    if (_headlineTableView.contentOffset.y < 0) {
+        contentOffset.y = 0;
+    }
+    [_headlineTableView setContentOffset:contentOffset animated:NO];
+
+    return YES;
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
@@ -922,8 +938,10 @@ typedef enum {
 {
     if (SEARCH_EACH_CHAR == NO) {
         [_headlineSearchBarIndicator startAnimating];
+        __weak id weakSelf = self;
         [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
-            [self updateHeadlineTable];
+            id strongSelf = weakSelf;
+            [strongSelf updateHeadlineTable];
         }];
     }
     // キーボードを閉じる
@@ -1021,32 +1039,8 @@ typedef enum {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // EGOTableViewPullRefreshに必要
-    [refreshHeaderView_ egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // EGOTableViewPullRefreshに必要
-    [refreshHeaderView_ egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
-#pragma mark - EGORefreshTableHeaderDelegate Methods
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
-{
-    [self fetchHeadline];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
-{
-    // should return if data source model is reloading
-    return [[Headline sharedInstance] isFetchingHeadline];
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView *)view
-{
-    return [NSDate date]; // should return date data source was last changed
+    // キーボードを閉じる
+    [_headlineSearchBar resignFirstResponder];
 }
 
 #pragma mark - IIViewDeckControllerDelegate methods
@@ -1156,6 +1150,13 @@ didChangeSwipeEnable:(BOOL)enable
     anchorLabel.text = @"";
 }
 
+#pragma mark - RefreshControll actions
+
+- (void)refreshOccured:(id)sender
+{
+    [self fetchHeadline];
+}
+
 #pragma mark - NSUserDefaults notifications
 
 - (void)defaultsChanged:(NSNotification *)notification
@@ -1183,12 +1184,10 @@ didChangeSwipeEnable:(BOOL)enable
     NSLog(@"%@ received headline update suceed notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    if (PULL_REFRESH_HEADLINE) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Pull refreshを終了する
-            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // refreshを終了する
+        [refreshControl_ endRefreshing];
+    });
 }
 
 - (void)headlineFailLoad:(NSNotification *)notification
@@ -1197,12 +1196,10 @@ didChangeSwipeEnable:(BOOL)enable
     NSLog(@"%@ received headline update faild notification.", NSStringFromClass([self class]));
 #endif /* #ifdef DEBUG */
 
-    if (PULL_REFRESH_HEADLINE) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Pull refreshを終了する
-            [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:_headlineTableView];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // refreshを終了する
+        [refreshControl_ endRefreshing];
+    });
 }
 
 - (void)headlineChannelChanged:(NSNotification *)notification
@@ -1220,10 +1217,12 @@ didChangeSwipeEnable:(BOOL)enable
     [self updateHeadlineTable];
 
     if (SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL) {
+        __weak id weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
+            id strongSelf = weakSelf;
             // 再生が開始した際に、再生している番組をテーブルの一番上になるようにスクロールする
             if ([[Player sharedInstance] state] == PlayerStatePlay) {
-                [self scrollToTopAtPlayingCell];
+                [strongSelf scrollToTopAtPlayingCell];
             }
         });
     }
