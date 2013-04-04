@@ -37,12 +37,12 @@
     if (PROVIDER_URL != nil) {
         // お気に入りの変化を監視し、変化時にはプロバイダにお気に入り情報を送信する
         [[ApnsStorage sharedInstance] registApnsService];
-    }
 
-    // Remote Notification を受信するためにデバイスを登録する
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
-                                                                           | UIRemoteNotificationTypeSound
-                                                                           | UIRemoteNotificationTypeAlert)];
+        // Remote Notification を受信するためにデバイスを登録する
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
+                                                                               | UIRemoteNotificationTypeSound
+                                                                               | UIRemoteNotificationTypeAlert)];
+    }
 
     return YES;
 }
