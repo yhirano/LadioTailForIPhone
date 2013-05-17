@@ -16,6 +16,8 @@ MIT License
 ## 外部リソース
 Ladio Tail for iPhoneには下記のリソースが含まれています。
 
+### ソースコード
+
 * [CKRefreshControl](https://github.com/instructure/CKRefreshControl) - MIT License
 * [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability) - MIT License
 * [GRMustache](https://github.com/groue/GRMustache) - MIT License
@@ -24,4 +26,7 @@ Ladio Tail for iPhoneには下記のリソースが含まれています。
 * [OpenInChrome](https://github.com/GoogleChrome/OpenInChrome) - Modified BSD License
 * [SVProgressHUD](https://github.com/samvermette/SVProgressHUD) - MIT License
 
+### アイコン
+
 * [Gentleface Toolbar Icon Set](http://www.gentleface.com/free_icon_set.html) - The Creative Commons Attribution-NonCommercial
+* [LINEActivity](https://github.com/nottihub/LINEActivity) - Apache License Version 2.0

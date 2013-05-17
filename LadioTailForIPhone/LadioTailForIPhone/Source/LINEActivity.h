@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2013 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "RadioLib/RadioLib.h"
 
-@interface ChannelViewController : UIViewController
-
-@property (nonatomic, strong) Channel *channel;
-
-@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
-
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-- (IBAction)play:(id)sender;
-
-- (IBAction)favorite:(id)sender;
-
-- (IBAction)shareChannel:(id)sender;
+@interface LINEActivity : UIActivity
 
 @end

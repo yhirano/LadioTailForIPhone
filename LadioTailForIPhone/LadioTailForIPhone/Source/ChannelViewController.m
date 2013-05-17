@@ -26,6 +26,7 @@
 #import "LadioTailConfig.h"
 #import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
+#import "LINEActivity.h"
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
@@ -118,7 +119,11 @@
     [_descriptionWebView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 
-- (NSString *)postText
+/** シェアするテキストの内容を取得する
+ 
+ @return シェアするテキストの内容
+ */
+- (NSString *)shareText
 {
     NSString *result;
 
@@ -179,39 +184,25 @@
     [self updateFavoriteButton];
 }
 
-- (IBAction)postFacebook:(id)sender {
+- (IBAction)shareChannel:(id)sender {
     // iOS6未満
-    if (!NSClassFromString(@"SLComposeViewController")) {
-        ;
-    }
-    // iOS6以上
-    else {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-            SLComposeViewController *composeViewController =
-                [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-            [composeViewController setInitialText:[self postText]];
-            [composeViewController setCompletionHandler:nil];
-            [self presentViewController:composeViewController animated:YES completion:nil];
-        }
-    }
-}
-
-- (IBAction)postTwitter:(id)sender {
-    // iOS6未満
-    if (!NSClassFromString(@"SLComposeViewController")) {
+    if (!NSClassFromString(@"UIActivityViewController")) {
         TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
-        [tweetView setInitialText:[self postText]];
+        [tweetView setInitialText:[self shareText]];
         [self presentModalViewController:tweetView animated:YES];
     }
     // iOS6以上
     else {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-            SLComposeViewController *composeViewController =
-                [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-            [composeViewController setInitialText:[self postText]];
-            [composeViewController setCompletionHandler:nil];
-            [self presentViewController:composeViewController animated:YES completion:nil];
-        }
+        NSArray *activityItems = @[[self shareText]];
+        NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
+
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
+                                                            initWithActivityItems:activityItems
+                                                            applicationActivities:applicationActivities];
+        activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
+                                                         UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
+                                                         UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+        [self presentViewController:activityViewController animated:YES completion:nil];
     }
 }
 
@@ -274,9 +265,9 @@
     // お気に入りボタンの色を変える
     _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
 
-    // iOS6未満の場合はFacebookボタンを隠す
-    if (!NSClassFromString(@"SLComposeViewController")) {
-        _facebookButton.hidden = YES;
+    // iOS6未満の場合はシェアボタンをのアイコンをTwitterにする
+    if (!NSClassFromString(@"UIActivityViewController")) {
+        [_shareButton setImage:[UIImage imageNamed:@"button_twitter"] forState:UIControlStateNormal];
     }
 
     // Web画面からの戻るボタンのテキストと色を書き換える
@@ -309,8 +300,7 @@
     [self setBottomView:nil];
     [self setDescriptionWebView:nil];
     [self setFavoriteBarButtonItem:nil];
-    [self setFacebookButton:nil];
-    [self setTwitterButton:nil];
+    [self setShareButton:nil];
     [super viewDidUnload];
 }
 
