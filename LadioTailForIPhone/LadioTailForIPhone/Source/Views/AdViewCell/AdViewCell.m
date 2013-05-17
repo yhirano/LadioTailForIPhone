@@ -75,8 +75,8 @@ typedef enum : NSUInteger {
 
 - (void)layoutSubviews
 {
-	[super layoutSubviews];
-    
+    [super layoutSubviews];
+
     switch (adModeType_) {
         case AdModeTypeNend:
             nadView_.center = self.contentView.center;
