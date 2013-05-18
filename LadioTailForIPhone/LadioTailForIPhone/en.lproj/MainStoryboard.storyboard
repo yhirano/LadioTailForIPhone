@@ -498,7 +498,7 @@
                                         <rect key="frame" x="266" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_twitter.png">
+                                        <state key="normal" image="button_share.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -506,22 +506,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="postTwitter:" destination="abJ-NL-ORS" eventType="touchUpInside" id="EFM-Th-Hvd"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nrR-0p-Xap">
-                                        <rect key="frame" x="221" y="6" width="37" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_facebook.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="postFacebook:" destination="abJ-NL-ORS" eventType="touchUpInside" id="bCW-GI-Xou"/>
+                                            <action selector="shareChannel:" destination="abJ-NL-ORS" eventType="touchUpInside" id="EkO-bq-cj7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -541,11 +526,10 @@
                     <connections>
                         <outlet property="bottomView" destination="dCA-ip-Jy9" id="Fbc-Ri-0rt"/>
                         <outlet property="descriptionWebView" destination="bLh-Zp-H9I" id="yDH-Wd-zQe"/>
-                        <outlet property="facebookButton" destination="nrR-0p-Xap" id="GkP-mA-dzG"/>
                         <outlet property="favoriteBarButtonItem" destination="gZN-oP-BxW" id="tD4-Vb-vSR"/>
                         <outlet property="playButton" destination="I9s-8g-ncC" id="Fb5-3i-LuA"/>
+                        <outlet property="shareButton" destination="G1v-RR-5Hf" id="Anu-78-6fj"/>
                         <outlet property="topNavigationItem" destination="4py-bV-tQ6" id="Fb9-RK-oLX"/>
-                        <outlet property="twitterButton" destination="G1v-RR-5Hf" id="c0t-n3-8ER"/>
                         <segue destination="Em6-UF-MX2" kind="push" identifier="OpenUrl" id="P2k-BP-J8U"/>
                     </connections>
                 </viewController>
@@ -1129,11 +1113,10 @@
     <resources>
         <image name="button_allow_left.png" width="37" height="37"/>
         <image name="button_allow_right.png" width="37" height="37"/>
-        <image name="button_facebook.png" width="37" height="37"/>
         <image name="button_goto_bottom.png" width="37" height="37"/>
         <image name="button_playback_play.png" width="37" height="37"/>
         <image name="button_reload.png" width="37" height="37"/>
-        <image name="button_twitter.png" width="37" height="37"/>
+        <image name="button_share.png" width="37" height="37"/>
         <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
         <image name="navbarbtn_menu.png" width="20" height="20"/>
         <image name="sidemenu_bitrate_black.png" width="28" height="28"/>
@@ -1168,86 +1151,28 @@
         <image name="tablecell_play_white.png" width="14" height="14"/>
     </resources>
     <classes>
-        <class className="BottomBarGradientView" superclassName="GradientView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BottomBarGradientView.h"/>
-        </class>
         <class className="ChannelTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelTableViewCell.h"/>
         </class>
-        <class className="ChannelViewController" superclassName="UIViewController">
+        <class className="ChannelViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
             <relationships>
                 <relationship kind="action" name="favorite:"/>
                 <relationship kind="action" name="play:"/>
                 <relationship kind="action" name="postFacebook:"/>
                 <relationship kind="action" name="postTwitter:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="action" name="shareChannel:"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="favoriteBarButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="FavoriteNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteNaviViewController.h"/>
-        </class>
-        <class className="FavoriteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="shareButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
             </relationships>
         </class>
         <class className="FavoritesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="openSideMenu:"/>
-                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="GradientView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GradientView.h"/>
-        </class>
-        <class className="HeadlineNaviViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineNaviViewController.h"/>
-        </class>
-        <class className="HeadlineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="openSideMenu:"/>
-                <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="headlineSearchBarIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="LadioTailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
-        </class>
-        <class className="PlaySwipeGradientView" superclassName="GradientView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaySwipeGradientView.h"/>
-        </class>
-        <class className="SideMenuTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SideMenuTableViewController.h"/>
-        </class>
-        <class className="WebPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="forward:"/>
-                <relationship kind="action" name="goToBottom:"/>
-                <relationship kind="action" name="reload:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
-            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

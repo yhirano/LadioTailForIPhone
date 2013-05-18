@@ -35,9 +35,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
@@ -45,8 +43,6 @@
 
 - (IBAction)favorite:(id)sender;
 
-- (IBAction)postFacebook:(id)sender;
-
-- (IBAction)postTwitter:(id)sender;
+- (IBAction)shareChannel:(id)sender;
 
 @end

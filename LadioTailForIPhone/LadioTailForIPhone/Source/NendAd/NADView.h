@@ -2,7 +2,7 @@
 //  NADView.h
 //  NendAd
 //
-//  Ver 1.3.2
+//  Ver 2.0.2
 //
 //  広告枠ベースビュークラス
 
@@ -35,7 +35,11 @@
 @property (nonatomic, assign) id <NADViewDelegate> delegate;
 
 #pragma mark - モーダルビューを表示元のビューコントローラを指定
+// ※現在では利用されないpropertyのため、次回versionでの削除を予定しています。
 @property (nonatomic, assign) UIViewController *rootViewController;
+
+#pragma mark - Log出力設定
+@property (nonatomic) BOOL isOutputLog;
 
 #pragma mark - 広告枠のapiKeyとspotIDをセット
 - (void)setNendID:(NSString *)apiKey spotID:(NSString *)spotID;
