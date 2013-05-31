@@ -535,7 +535,7 @@ typedef enum {
 /// 指定されたTableViewのIndexPathから何番目の番組かを取得する
 + (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
 {
-    if (!IS_SHOW_AD) {
+    if ([LadioTaifConfig admobUnitId] == nil) {
         return indexPath.row;
     } else {
         return indexPath.row - 1;
@@ -545,7 +545,7 @@ typedef enum {
 /// 指定された何番目の番組からTableViewのIndexPathを取得する
 + (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
 {
-    if (!IS_SHOW_AD) {
+    if ([LadioTaifConfig admobUnitId] == nil) {
         return [NSIndexPath indexPathForRow:channelIndex inSection:0];
     } else {
         return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
@@ -777,21 +777,10 @@ typedef enum {
     // 再生状態に逢わせて再生ボタンの表示を切り替える
     [self updatePlayingButton];
 
-    // 広告の定期ロード再開
-    [adViewCell_ resume];
-
     // viewWillAppear:animated はsuperを呼び出す必要有り
     // テーブルの更新前に呼ぶらしい
     // http://d.hatena.ne.jp/kimada/20090917/1253187128
     [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    // 広告の定期ロード中断
-    [adViewCell_ pause];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -957,7 +946,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (!IS_SHOW_AD) {
+    if ([LadioTaifConfig admobUnitId] == nil) {
         return [_showedChannels count];
     } else {
         NSInteger result = [_showedChannels count];
@@ -976,7 +965,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 広告View
-    if (IS_SHOW_AD && indexPath.row == 0) {
+    if ([LadioTaifConfig admobUnitId] != nil && indexPath.row == 0) {
         return adViewCell_;
     }
     // 広告View以外のView
@@ -1006,7 +995,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!IS_SHOW_AD) {
+    if ([LadioTaifConfig admobUnitId] == nil) {
         return 54;
     } else {
         if (indexPath.row == 0) {
@@ -1023,7 +1012,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!IS_SHOW_AD) {
+    if ([LadioTaifConfig admobUnitId] == nil) {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {

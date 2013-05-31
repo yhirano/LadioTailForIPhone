@@ -274,19 +274,16 @@ const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
 /// お気に入りをプロバイダに送信しない場合はnil
 NSString * const PROVIDER_URL = nil;
 
-#pragma mark - Ad config
 
-/// 広告を表示するか
-const BOOL IS_SHOW_AD = NO;
+#pragma mark - LadioTaifConfig class
 
-/// nend ID
-NSString * const NEND_ID = nil;
+@implementation LadioTaifConfig
 
-/// nend Spot ID
-NSString * const NEND_SPOT_ID = nil;
+#pragma mark - AdMob config
 
-/// AdLantis ID
-NSString * const ADLANTIS_ID = nil;
++ (NSString *)admobUnitId
+{
+    return nil;
+}
 
-/// AdMob Publisher ID
-NSString * const ADMOB_PUBLISHER_ID = nil;
+@end

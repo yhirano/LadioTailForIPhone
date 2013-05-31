@@ -2,7 +2,7 @@
 //  NADView.h
 //  NendAd
 //
-//  Ver 2.0.2
+//  Ver 2.1.0
 //
 //  広告枠ベースビュークラス
 
@@ -25,6 +25,9 @@
 #pragma mark - 広告受信に失敗した際に通知されます
 - (void)nadViewDidFailToReceiveAd:(NADView *)adView;
 
+#pragma mark - 広告バナークリック時に通知されます
+- (void)nadViewDidClickAd:(NADView *)adView;
+
 @end
 
 @interface NADView : UIView {
@@ -35,7 +38,7 @@
 @property (nonatomic, assign) id <NADViewDelegate> delegate;
 
 #pragma mark - モーダルビューを表示元のビューコントローラを指定
-// ※現在では利用されないpropertyのため、次回versionでの削除を予定しています。
+// ※現在では利用されないpropertyのため、今後は削除を予定しています。
 @property (nonatomic, assign) UIViewController *rootViewController;
 
 #pragma mark - Log出力設定
