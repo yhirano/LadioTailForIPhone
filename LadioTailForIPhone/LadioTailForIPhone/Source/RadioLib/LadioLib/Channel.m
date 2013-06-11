@@ -267,7 +267,7 @@ static NSCache *matchCache = nil;
     dispatch_once(&onceToken, ^{
         setTimsFromStringDateFormatter = [[NSDateFormatter alloc] init];
         [setTimsFromStringDateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]]; // 番組表は日本時間
-        [setTimsFromStringDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        [setTimsFromStringDateFormatter setDateFormat:@"yy/MM/dd HH:mm:ss"];
     });
     tims_ = [setTimsFromStringDateFormatter dateFromString:tims];
 }
