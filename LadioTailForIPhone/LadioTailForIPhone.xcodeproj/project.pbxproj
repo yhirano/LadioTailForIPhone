@@ -266,6 +266,12 @@
 		8E749E70165DC622003FE515 /* tablecell_stop_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E749E6C165DC622003FE515 /* tablecell_stop_black@2x.png */; };
 		8E7913F916E79FD900B5E731 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7913F816E79FD900B5E731 /* AdViewCell.m */; };
 		8E7913FA16E79FD900B5E731 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7913F816E79FD900B5E731 /* AdViewCell.m */; };
+		8E7E9C131775B9DC0015339F /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C0E1775B9DC0015339F /* IISideController.m */; };
+		8E7E9C141775B9DC0015339F /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C0E1775B9DC0015339F /* IISideController.m */; };
+		8E7E9C151775B9DC0015339F /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C101775B9DC0015339F /* IIViewDeckController.m */; };
+		8E7E9C161775B9DC0015339F /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C101775B9DC0015339F /* IIViewDeckController.m */; };
+		8E7E9C171775B9DC0015339F /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C121775B9DC0015339F /* IIWrapController.m */; };
+		8E7E9C181775B9DC0015339F /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C121775B9DC0015339F /* IIWrapController.m */; };
 		8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8E9BE9ED1543B36D0029DB70 /* tablecell_favorite_black_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */; };
@@ -321,8 +327,6 @@
 		8EB7A0FE165BD8270061FCA0 /* sidemenu_none_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB7A0E7165BD8250061FCA0 /* sidemenu_none_white.png */; };
 		8EB7A0FF165BD8270061FCA0 /* sidemenu_none_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB7A0E8165BD8260061FCA0 /* sidemenu_none_white@2x.png */; };
 		8EB7A100165BD8270061FCA0 /* sidemenu_none_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB7A0E8165BD8260061FCA0 /* sidemenu_none_white@2x.png */; };
-		8EB905C415E9B7AF00C27CA1 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */; };
-		8EB905C515E9B7AF00C27CA1 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C315E9B7AF00C27CA1 /* WrapController.m */; };
 		8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
 		8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
 		8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
@@ -366,8 +370,6 @@
 		8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
 		8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
 		8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
-		8ED117B416588DCB001BD731 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */; };
-		8ED117B516588DCB001BD731 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB905C315E9B7AF00C27CA1 /* WrapController.m */; };
 		8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */; };
 		8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
 		8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
@@ -759,6 +761,12 @@
 		8E749E6C165DC622003FE515 /* tablecell_stop_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_stop_black@2x.png"; sourceTree = "<group>"; };
 		8E7913F716E79FD900B5E731 /* AdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdViewCell.h; sourceTree = "<group>"; };
 		8E7913F816E79FD900B5E731 /* AdViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdViewCell.m; sourceTree = "<group>"; };
+		8E7E9C0D1775B9DC0015339F /* IISideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IISideController.h; sourceTree = "<group>"; };
+		8E7E9C0E1775B9DC0015339F /* IISideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IISideController.m; sourceTree = "<group>"; };
+		8E7E9C0F1775B9DC0015339F /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
+		8E7E9C101775B9DC0015339F /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
+		8E7E9C111775B9DC0015339F /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
+		8E7E9C121775B9DC0015339F /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
 		8E9928D115490D230015CA5D /* ICloudStrorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStrorage.h; sourceTree = "<group>"; };
 		8E9928D215490D230015CA5D /* ICloudStrorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStrorage.m; sourceTree = "<group>"; };
 		8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApnsStorage.h; sourceTree = "<group>"; };
@@ -813,10 +821,6 @@
 		8EB7A0E6165BD8240061FCA0 /* sidemenu_none_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_none_black@2x.png"; sourceTree = "<group>"; };
 		8EB7A0E7165BD8250061FCA0 /* sidemenu_none_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_none_white.png; sourceTree = "<group>"; };
 		8EB7A0E8165BD8260061FCA0 /* sidemenu_none_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_none_white@2x.png"; sourceTree = "<group>"; };
-		8EB905C015E9B7AF00C27CA1 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
-		8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
-		8EB905C215E9B7AF00C27CA1 /* WrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapController.h; sourceTree = "<group>"; };
-		8EB905C315E9B7AF00C27CA1 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
 		8EC23B47153712BB007352FD /* Ladio Tail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ladio Tail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC23B4B153712BB007352FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8EC23B4D153712BB007352FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1438,10 +1442,12 @@
 		8EB905BF15E9B7AF00C27CA1 /* ViewDeck */ = {
 			isa = PBXGroup;
 			children = (
-				8EB905C015E9B7AF00C27CA1 /* IIViewDeckController.h */,
-				8EB905C115E9B7AF00C27CA1 /* IIViewDeckController.m */,
-				8EB905C215E9B7AF00C27CA1 /* WrapController.h */,
-				8EB905C315E9B7AF00C27CA1 /* WrapController.m */,
+				8E7E9C0D1775B9DC0015339F /* IISideController.h */,
+				8E7E9C0E1775B9DC0015339F /* IISideController.m */,
+				8E7E9C0F1775B9DC0015339F /* IIViewDeckController.h */,
+				8E7E9C101775B9DC0015339F /* IIViewDeckController.m */,
+				8E7E9C111775B9DC0015339F /* IIWrapController.h */,
+				8E7E9C121775B9DC0015339F /* IIWrapController.m */,
 			);
 			path = ViewDeck;
 			sourceTree = "<group>";
@@ -2120,8 +2126,6 @@
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
 				8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
-				8EB905C415E9B7AF00C27CA1 /* IIViewDeckController.m in Sources */,
-				8EB905C515E9B7AF00C27CA1 /* WrapController.m in Sources */,
 				8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */,
 				8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */,
 				8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */,
@@ -2168,6 +2172,9 @@
 				8EB17AF8170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */,
 				8EB17AFA170B1E9600B5CB1F /* CKRefreshControl.m in Sources */,
 				8EF5F2AE174696A000DA1C5A /* LINEActivity.m in Sources */,
+				8E7E9C131775B9DC0015339F /* IISideController.m in Sources */,
+				8E7E9C151775B9DC0015339F /* IIViewDeckController.m in Sources */,
+				8E7E9C171775B9DC0015339F /* IIWrapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2190,8 +2197,6 @@
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
 				8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
-				8ED117B416588DCB001BD731 /* IIViewDeckController.m in Sources */,
-				8ED117B516588DCB001BD731 /* WrapController.m in Sources */,
 				8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */,
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
 				8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */,
@@ -2238,6 +2243,9 @@
 				8EB17AF9170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */,
 				8EB17AFB170B1E9600B5CB1F /* CKRefreshControl.m in Sources */,
 				8EF5F2AF174696A000DA1C5A /* LINEActivity.m in Sources */,
+				8E7E9C141775B9DC0015339F /* IISideController.m in Sources */,
+				8E7E9C161775B9DC0015339F /* IIViewDeckController.m in Sources */,
+				8E7E9C181775B9DC0015339F /* IIWrapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

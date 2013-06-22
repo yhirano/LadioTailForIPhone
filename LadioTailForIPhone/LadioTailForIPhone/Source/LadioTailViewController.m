@@ -79,9 +79,9 @@
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE_FOR_IPAD;
+        viewDeckController_.leftSize = SIDEMENU_LEFT_LEDGE_FOR_IPAD;
     } else {
-        viewDeckController_.leftLedge = SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
+        viewDeckController_.leftSize = SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
     }
 
     [self.view addSubview:viewDeckController_.view];

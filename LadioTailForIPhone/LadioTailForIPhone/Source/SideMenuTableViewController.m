@@ -432,7 +432,7 @@
                                  andTopViewController:[HeadlineViewController class]]) {
                         __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewAnimated:YES
-                                                            completion:^(IIViewDeckController *controller) {
+                                                            completion:^(IIViewDeckController *controller, BOOL success) {
                             id strongSelf = weakSelf;
                             [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
                         }];
@@ -451,8 +451,7 @@
                             // チェックマーク位置変更のためテーブルを更新
                             [tableView reloadData];
                         }
-                                                            completion:^(IIViewDeckController *controller)
-                        {
+                                                            completion:^(IIViewDeckController *controller, BOOL success) {
                             id strongSelf = weakSelf;
                             [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] fetchHeadline];
                         }];
