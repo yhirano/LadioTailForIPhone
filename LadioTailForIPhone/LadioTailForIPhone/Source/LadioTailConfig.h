@@ -240,19 +240,14 @@ FOUNDATION_EXPORT const NSTimeInterval PLAY_TIMEOUT_SEC;
 /// お気に入り送信先のプロバイダ
 FOUNDATION_EXPORT NSString * const PROVIDER_URL;
 
+
+#pragma mark - LadioTaifConfig class
+
+@interface LadioTaifConfig : NSObject
+
 #pragma mark - AdMob config
 
-/// 広告を表示するか
-FOUNDATION_EXPORT const BOOL IS_SHOW_AD;
-
-/// nend ID
-FOUNDATION_EXPORT NSString * const NEND_ID;
-
-/// nend Spot ID
-FOUNDATION_EXPORT NSString * const NEND_SPOT_ID;
-
-/// AdLantis ID
-FOUNDATION_EXPORT NSString * const ADLANTIS_ID;
-
 /// AdMob Publisher ID
-FOUNDATION_EXPORT NSString * const ADMOB_PUBLISHER_ID;
++ (NSString *)admobUnitId;
+
+@end
