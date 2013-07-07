@@ -22,6 +22,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
+#import "GoogleAdMobAds/GADBannerView.h"
 #import "OpenInChrome/OpenInChromeController.h"
 #import "LadioTailConfig.h"
 #import "RadioLib/ReplaceUrlUtil.h"
@@ -30,12 +31,15 @@
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
-@interface ChannelViewController () <UIWebViewDelegate>
+@interface ChannelViewController () <UIWebViewDelegate, GADBannerViewDelegate>
 
 @end
 
 @implementation ChannelViewController
 {
+    /// AdMob View
+    __weak GADBannerView *adMobView_;
+
     /// 開くURL
     NSURL *openUrl_;
 }
@@ -43,6 +47,11 @@
 - (void)dealloc
 {
     openUrl_ = nil;
+    
+    adMobView_.rootViewController = nil;
+    adMobView_.delegate = nil;
+    [adMobView_ removeFromSuperview];
+    adMobView_ = nil;
 
     // 再生状況変化の通知を受け取らなくする
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerPrepareNotification object:nil];
@@ -260,6 +269,35 @@
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
 
+    // 広告を表示
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        CGRect descriptionWebViewFrame = _descriptionWebView.frame;
+        descriptionWebViewFrame.size.height -= kGADAdSizeLeaderboard.size.height;
+        _descriptionWebView.frame = descriptionWebViewFrame;
+        GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeLeaderboard];
+        adMobView_ = adMobView;
+        CGRect adMobViewFrame = adMobView_.frame;
+        adMobViewFrame.origin.x = (self.view.frame.size.width - adMobView_.frame.size.width) / 2;
+        adMobViewFrame.origin.y = CGRectGetMaxY(_descriptionWebView.frame);
+        adMobView_.frame = adMobViewFrame;
+    } else {
+        CGRect descriptionWebViewFrame = _descriptionWebView.frame;
+        descriptionWebViewFrame.size.height -= kGADAdSizeBanner.size.height;
+        _descriptionWebView.frame = descriptionWebViewFrame;
+        GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+        adMobView_ = adMobView;
+        CGRect adMobViewFrame = adMobView_.frame;
+        adMobViewFrame.origin.x = (self.view.frame.size.width - adMobView_.frame.size.width) / 2;
+        adMobViewFrame.origin.y = CGRectGetMaxY(_descriptionWebView.frame);
+        adMobView_.frame = adMobViewFrame;
+        NSLog(@"%@", NSStringFromCGRect(descriptionWebViewFrame));
+    }
+    adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
+    adMobView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+    adMobView_.delegate = self;
+    adMobView_.rootViewController = self;
+    [self.view addSubview:adMobView_];
+    
     _topNavigationItem.title = titleString;
 
     // お気に入りボタンの色を変える
@@ -313,6 +351,9 @@
     
     // お気に入りボタンを更新
     [self updateFavoriteButton];
+    
+    // 広告のロード
+    [adMobView_ loadRequest:[GADRequest request]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -419,6 +460,22 @@
         }
     }
     return YES;
+}
+
+#pragma mark - GADBannerViewDelegate method
+
+- (void)adViewDidReceiveAd:(GADBannerView *)view
+{
+#if DEBUG
+    NSLog(@"adMobView succeed loading.");
+#endif // #if DEBUG
+}
+
+- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
+{
+#if DEBUG
+    NSLog(@"adMobView failed loading. error:%@", [error localizedDescription]);
+#endif // #if DEBUG
 }
 
 #pragma mark - Favorites notification
