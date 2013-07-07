@@ -1481,7 +1481,6 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8E9EAAF81758D8B800F276E5 /* iAd.framework */,
 				8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */,
 				8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */,
 				8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */,
@@ -1494,6 +1493,7 @@
 				8EC23B4F153712BB007352FD /* CoreGraphics.framework */,
 				8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */,
 				8EC23B4D153712BB007352FD /* Foundation.framework */,
+				8E9EAAF81758D8B800F276E5 /* iAd.framework */,
 				8EAC425E1632F2BD009C2871 /* MessageUI.framework */,
 				8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */,
 				8E16282215383107007A2DBE /* QuartzCore.framework */,
