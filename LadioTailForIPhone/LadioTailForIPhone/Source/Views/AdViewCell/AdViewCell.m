@@ -39,8 +39,6 @@
         }
         adMobView_ = adMobView;
         adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
-        CGSize size = [self cellSize];
-        adMobView_.frame = CGRectMake(0, 0, size.width, size.height);
         adMobView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
         adMobView_.delegate = self;
         [self.contentView addSubview:adMobView_];
