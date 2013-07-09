@@ -270,33 +270,41 @@
 #endif
 
     // 広告を表示
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if ([LadioTaifConfig admobUnitId] != nil) {
+        // 広告のサイズを決める
+        GADAdSize adMobViewSize;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            adMobViewSize = kGADAdSizeLeaderboard;
+        } else {
+            adMobViewSize = kGADAdSizeBanner;
+        }
+        
+        // WebView部分を縮める
         CGRect descriptionWebViewFrame = _descriptionWebView.frame;
-        descriptionWebViewFrame.size.height -= kGADAdSizeLeaderboard.size.height;
+        descriptionWebViewFrame.size.height -= adMobViewSize.size.height;
         _descriptionWebView.frame = descriptionWebViewFrame;
-        GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeLeaderboard];
+        
+        // 広告の下敷きとなるViewを生成する
+        CGRect adBackgroundViewFrame = CGRectMake(0,
+                                                  CGRectGetMaxY(_descriptionWebView.frame),
+                                                  self.view.frame.size.width,
+                                                  adMobViewSize.size.height);
+        UIView *adBackgroundView = [[UIView alloc] initWithFrame:adBackgroundViewFrame];
+        adBackgroundView.backgroundColor = AD_VIRE_BACKGROUND_COLOR;
+        adBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+        [self.view addSubview:adBackgroundView];
+
+        // 広告Viewを生成する
+        GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:adMobViewSize];
         adMobView_ = adMobView;
         CGRect adMobViewFrame = adMobView_.frame;
-        adMobViewFrame.origin.x = (self.view.frame.size.width - adMobView_.frame.size.width) / 2;
-        adMobViewFrame.origin.y = CGRectGetMaxY(_descriptionWebView.frame);
+        adMobViewFrame.origin.x = (adBackgroundView.frame.size.width - adMobView_.frame.size.width) / 2;
         adMobView_.frame = adMobViewFrame;
-    } else {
-        CGRect descriptionWebViewFrame = _descriptionWebView.frame;
-        descriptionWebViewFrame.size.height -= kGADAdSizeBanner.size.height;
-        _descriptionWebView.frame = descriptionWebViewFrame;
-        GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-        adMobView_ = adMobView;
-        CGRect adMobViewFrame = adMobView_.frame;
-        adMobViewFrame.origin.x = (self.view.frame.size.width - adMobView_.frame.size.width) / 2;
-        adMobViewFrame.origin.y = CGRectGetMaxY(_descriptionWebView.frame);
-        adMobView_.frame = adMobViewFrame;
-        NSLog(@"%@", NSStringFromCGRect(descriptionWebViewFrame));
+        adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
+        adMobView_.delegate = self;
+        adMobView_.rootViewController = self;
+        [adBackgroundView addSubview:adMobView_];
     }
-    adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
-    adMobView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-    adMobView_.delegate = self;
-    adMobView_.rootViewController = self;
-    [self.view addSubview:adMobView_];
     
     _topNavigationItem.title = titleString;
 

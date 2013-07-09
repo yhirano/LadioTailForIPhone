@@ -215,6 +215,9 @@ const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;
 /// お気に入りボタンの色
 UIColor * const FAVORITE_BUTTON_COLOR = [UIColor darkGrayColor];
 
+/// 広告VBiewの背景色
+UIColor * const AD_VIRE_BACKGROUND_COLOR = [UIColor blackColor];
+
 /// 下部Viewの上部の色
 UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)
                                                        green:(28.0f / 255)
