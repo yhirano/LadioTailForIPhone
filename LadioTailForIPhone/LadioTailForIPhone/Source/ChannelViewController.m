@@ -71,8 +71,12 @@
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([_channel favorite]) {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow"]];
+        favoriteButton.accessibilityLabel = NSLocalizedString(@"Remove Favorite", @"お気に入り削除");
+        favoriteButton.accessibilityHint = NSLocalizedString(@"Remove from favorite this channel", @"この番組をお気に入りから削除");
     } else {
         [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white"]];
+        favoriteButton.accessibilityLabel = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
+        favoriteButton.accessibilityHint = NSLocalizedString(@"Add to favorite this channel", @"この番組をお気に入りに追加");
     }
 }
 
@@ -91,6 +95,8 @@
     // 再生中
     if ([player isPlaying:url]) {
         [_playButton setImage:[UIImage imageNamed:@"button_playback_stop"] forState:UIControlStateNormal];
+        _playButton.accessibilityLabel = NSLocalizedString(@"Stop", @"停止");
+        _playButton.accessibilityHint = NSLocalizedString(@"Stop this channel", @"この番組を停止");
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare) {
@@ -102,6 +108,8 @@
     // 再生中以外
     else {
         [_playButton setImage:[UIImage imageNamed:@"button_playback_play"] forState:UIControlStateNormal];
+        _playButton.accessibilityLabel = NSLocalizedString(@"Play", @"再生");
+        _playButton.accessibilityHint = NSLocalizedString(@"Play this channel", @"この番組を再生");
 
         // 再生ボタンの有効無効を切り替える
         if ([player state] == PlayerStatePrepare || [_channel isPlaySupported] == NO) {
@@ -314,6 +322,9 @@
     // iOS6未満の場合はシェアボタンをのアイコンをTwitterにする
     if (!NSClassFromString(@"UIActivityViewController")) {
         [_shareButton setImage:[UIImage imageNamed:@"button_twitter"] forState:UIControlStateNormal];
+        _shareButton.accessibilityLabel = NSLocalizedString(@"Twitter", @"Twitter");
+    } else {
+        _shareButton.accessibilityLabel = NSLocalizedString(@"Share", @"共有");
     }
 
     // Web画面からの戻るボタンのテキストと色を書き換える
