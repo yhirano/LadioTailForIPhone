@@ -74,6 +74,8 @@
 
     // メニューボタンの色を変更する
     _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
+    _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
+    _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");
 
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;

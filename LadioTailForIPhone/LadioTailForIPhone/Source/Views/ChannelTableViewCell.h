@@ -31,6 +31,10 @@ typedef enum
 
 @interface ChannelTableViewCell : UITableViewCell
 
+@property (nonatomic) NSString *accessibilityLabel;
+
+@property (nonatomic) NSString *accessibilityHint;
+
 /// スワイプで移動するビュー
 @property(strong) UIView *swipeView;
 

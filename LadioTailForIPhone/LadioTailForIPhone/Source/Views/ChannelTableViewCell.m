@@ -308,4 +308,14 @@
     return YES;
 }
 
+- (NSString*)accessibilityLabel
+{
+    return _accessibilityLabel;
+}
+
+- (NSString*)accessibilityHint
+{
+    return _accessibilityHint;
+}
+
 @end

@@ -145,6 +145,8 @@ typedef enum {
             break;
     }
     
+    NSMutableString *accessibilityLabel = [NSMutableString string];
+
     ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
@@ -172,24 +174,30 @@ typedef enum {
 
     if ([channel.nam length] > 0) {
         titleLabel.text = channel.nam;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.nam];
     } else {
         titleLabel.text = @"";
     }
     if ([channel.dj length] > 0) {
         djLabel.text = channel.dj;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"DJ", @"DJ"), channel.dj];
     } else {
         djLabel.text = @"";
     }
     if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
         listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
+        [accessibilityLabel appendFormat:@" %@ %d", NSLocalizedString(@"Listeners", @"リスナー数"), channel.cln];
     } else {
         listenersLabel.text = @"";
     }
     if (dateLabel != nil && !dateLabel.hidden) {
         dateLabel.text = [[self class] dateText:channel.tims];
+        [accessibilityLabel appendString:@" "];
+        [accessibilityLabel appendFormat:NSLocalizedString(@"%@ ago", @"xx前"), dateLabel.text];
     }
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
         bitrateLabel.text = [[self class] bitrateText:channel.bit];
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Bitrate", @"ビットレート"), bitrateLabel.text];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -229,6 +237,9 @@ typedef enum {
     }
     
     favoriteImageView.hidden = !channel.favorite;
+    if (channel.favorite) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Favorite", @"お気に入り 単数")];
+    }
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
     channelCell.swipeView = swipeView;
@@ -248,6 +259,13 @@ typedef enum {
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
     }
 
+    if (playing) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Playing", @"再生中")];
+    }
+
+    cell.accessibilityLabel = accessibilityLabel;
+    cell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel", @"この番組の番組詳細画面を開く");
+    
     return cell;
 }
 #elif defined(RADIO_EDGE)
@@ -257,6 +275,8 @@ typedef enum {
     
     NSString *cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
     
+    NSMutableString *accessibilityLabel = [NSMutableString string];
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
@@ -282,16 +302,19 @@ typedef enum {
 
     if ([channel.serverName length] > 0) {
         serverNameLabel.text = channel.serverName;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.serverName];
     } else {
         serverNameLabel.text = @"";
     }
     if ([channel.genre length] > 0) {
         genreLabel.text = channel.genre;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Genre", @"ジャンル"), channel.genre];
     } else {
         genreLabel.text = @"";
     }
     if (bitrateLabel != nil) {
         bitrateLabel.text = [[self class] bitrateText:channel.bitrate];
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Bitrate", @"ビットレート"), bitrateLabel.text];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -322,6 +345,9 @@ typedef enum {
     }
 
     favoriteImageView.hidden = !channel.favorite;
+    if (channel.favorite) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Favorite", @"お気に入り 単数")];
+    }
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
     channelCell.swipeView = swipeView;
@@ -340,6 +366,13 @@ typedef enum {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
     }
+
+    if (playing) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Playing", @"再生中")];
+    }
+
+    cell.accessibilityLabel = accessibilityLabel;
+    cell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel", @"この番組の番組詳細画面を開く");
 
     return cell;
 }
@@ -714,10 +747,17 @@ typedef enum {
 
     // メニューボタンの色を変更する
     _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
+    // Accessibility
+    _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
+    _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");
 
     // 再生中ボタンの装飾を変更する
     _playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
     _playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
+    // Accessibility
+    _playingBarButtonItem.accessibilityLabel = NSLocalizedString(@"Playing", @"再生中ボタン");
+    _playingBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the description view of the playing channel",
+                                                                @"再生中の番組の番組詳細画面を開く");
     // 再生中ボタンを保持する
     tempPlayingBarButtonItem_ = _playingBarButtonItem;
 
