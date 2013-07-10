@@ -630,6 +630,7 @@
                         <outlet property="backButton" destination="GOI-Jv-dM3" id="ygt-P2-gus"/>
                         <outlet property="bottomView" destination="XNu-Tt-9CH" id="5N5-lV-fuh"/>
                         <outlet property="forwardButton" destination="Cs4-o8-XUG" id="Bk0-SF-mlm"/>
+                        <outlet property="gotoBottomButton" destination="r39-Nc-6SC" id="EJD-ro-wvo"/>
                         <outlet property="pageWebView" destination="R8j-hH-AEk" id="Tcz-ZZ-QLU"/>
                         <outlet property="reloadButton" destination="JJF-0o-27b" id="hfc-mt-KK4"/>
                         <outlet property="topNavigationItem" destination="kF6-5h-S41" id="5v8-mv-zCg"/>
@@ -1231,6 +1232,7 @@
                 <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="gotoBottomButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>

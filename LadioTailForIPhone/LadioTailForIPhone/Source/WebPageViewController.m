@@ -47,8 +47,10 @@
     _forwardButton.enabled = _pageWebView.canGoForward;
     if (isPageLoading_) {
         [_reloadButton setImage:[UIImage imageNamed:@"button_reload_stop"] forState:UIControlStateNormal];
+        _reloadButton.accessibilityLabel = NSLocalizedString(@"Stop", @"停止");
     } else {
         [_reloadButton setImage:[UIImage imageNamed:@"button_reload"] forState:UIControlStateNormal];
+        _reloadButton.accessibilityLabel = NSLocalizedString(@"Reload", @"更新");
     }
 }
 
@@ -102,6 +104,12 @@
     [super viewDidLoad];
 
     [_pageWebView loadRequest:[NSURLRequest requestWithURL:_url]];
+    
+    _backButton.accessibilityLabel = NSLocalizedString(@"Back", @"戻る");
+    _forwardButton.accessibilityLabel = NSLocalizedString(@"Forward", @"次へ");
+    _gotoBottomButton.accessibilityLabel = NSLocalizedString(@"Go to bottom", @"一番下に移動");
+    _gotoBottomButton.accessibilityHint = NSLocalizedString(@"Go to the bottom of this Web page",
+                                                            @"このWebページの一番下に移動");
 }
 
 - (void)viewDidUnload
@@ -112,6 +120,7 @@
     [self setReloadButton:nil];
     [self setTopNavigationItem:nil];
     [self setBottomView:nil];
+    [self setGotoBottomButton:nil];
     [super viewDidUnload];
 }
 
