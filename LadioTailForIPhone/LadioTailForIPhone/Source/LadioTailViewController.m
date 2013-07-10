@@ -364,7 +364,11 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
         // 進捗ウィンドウを表示する
-        [SVProgressHUD show];
+        if (!UIAccessibilityIsVoiceOverRunning()) {
+            [SVProgressHUD show];
+        } else {
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Updating", @"更新中")];
+        }
     });
 }
 
