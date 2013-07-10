@@ -22,6 +22,7 @@
 
 #import "ViewDeck/IIViewDeckController.h"
 #import "RadioLib/RadioLib.h"
+#import "Views/FavoriteTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ICloudStrorage.h"
@@ -211,6 +212,8 @@
         Player *player = [Player sharedInstance];
         Channel *channel = favorite.channel;
         
+        NSMutableString *accessibilityLabel = [NSMutableString string];
+
         NSString *cellIdentifier;
         
         // タイトルかDJが存在する場合
@@ -220,31 +223,36 @@
             cellIdentifier = @"FavoriteMountOnlyCell";
         }
         
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        FavoriteTableViewCell *favoriteCell =
+            (FavoriteTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        if (favoriteCell == nil) {
+            favoriteCell = [[FavoriteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                        reuseIdentifier:cellIdentifier];
         }
         
-        UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-        UILabel *djLabel = (UILabel *) [cell viewWithTag:2];
-        UILabel *mountTagLabel = (UILabel *) [cell viewWithTag:3];
-        UILabel *mountLabel = (UILabel *) [cell viewWithTag:4];
-        UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
+        UILabel *titleLabel = (UILabel *) [favoriteCell viewWithTag:1];
+        UILabel *djLabel = (UILabel *) [favoriteCell viewWithTag:2];
+        UILabel *mountTagLabel = (UILabel *) [favoriteCell viewWithTag:3];
+        UILabel *mountLabel = (UILabel *) [favoriteCell viewWithTag:4];
+        UIImageView *broadcastImageView = (UIImageView *) [favoriteCell viewWithTag:5];
         
-        if ([channel.nam length] > 0) {
+        if (titleLabel != nil && [channel.nam length] > 0) {
             titleLabel.text = channel.nam;
+            [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.nam];
         } else {
             titleLabel.text = @"";
         }
-        if ([channel.dj length] > 0) {
+        if (djLabel != nil && [channel.dj length] > 0) {
             djLabel.text = channel.dj;
+            [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"DJ", @"DJ"), channel.dj];
         } else {
             djLabel.text = @"";
         }
         mountTagLabel.text = NSLocalizedString(@"Mount", @"マウント");
-        if ([channel.mnt length] > 0) {
+        if (mountLabel != nil && [channel.mnt length] > 0) {
             mountLabel.text = channel.mnt;
+            [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Mount", @"マウント"), channel.mnt];
         } else {
             mountLabel.text = @"";
         }
@@ -277,6 +285,12 @@
         
         mountLabel.textColor = FAVORITES_CELL_MAIN_TEXT_COLOR;
         mountLabel.highlightedTextColor = FAVORITES_CELL_MAIN_TEXT_SELECTED_COLOR;
+        
+        favoriteCell.accessibilityLabel = accessibilityLabel;
+        favoriteCell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel",
+                                                           @"この番組の番組詳細画面を開く");
+
+        cell = favoriteCell;
     }
     
     return cell;
@@ -312,25 +326,31 @@
         Player *player = [Player sharedInstance];
         Channel *channel = favorite.channel;
         
+        NSMutableString *accessibilityLabel = [NSMutableString string];
+
         NSString *cellIdentifier = @"FavoriteCell";
         
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        FavoriteTableViewCell *favoriteCell =
+            (FavoriteTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        if (favoriteCell == nil) {
+            favoriteCell = [[FavoriteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                        reuseIdentifier:cellIdentifier];
         }
         
-        UILabel *serverNameLabel = (UILabel *) [cell viewWithTag:1];
-        UILabel *genreLabel = (UILabel *) [cell viewWithTag:2];
-        UIImageView *broadcastImageView = (UIImageView *) [cell viewWithTag:5];
+        UILabel *serverNameLabel = (UILabel *) [favoriteCell viewWithTag:1];
+        UILabel *genreLabel = (UILabel *) [favoriteCell viewWithTag:2];
+        UIImageView *broadcastImageView = (UIImageView *) [favoriteCell viewWithTag:5];
         
         if ([channel.serverName length] > 0) {
             serverNameLabel.text = channel.serverName;
+            [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.serverName];
         } else {
             serverNameLabel.text = @"";
         }
         if ([channel.genre length] > 0) {
             genreLabel.text = channel.genre;
+            [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Genre", @"ジャンル"), channel.genre];
         } else {
             genreLabel.text = @"";
         }
@@ -357,6 +377,12 @@
         
         genreLabel.textColor = FAVORITES_CELL_SUB_TEXT_COLOR;
         genreLabel.highlightedTextColor = FAVORITES_CELL_SUB_TEXT_SELECTED_COLOR;
+
+        favoriteCell.accessibilityLabel = accessibilityLabel;
+        favoriteCell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel",
+                                                           @"この番組の番組詳細画面を開く");
+
+        cell = favoriteCell;
     }
 
     return cell;

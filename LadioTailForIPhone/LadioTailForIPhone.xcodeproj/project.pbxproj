@@ -67,6 +67,8 @@
 		8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
 		8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */; };
 		8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */; };
+		8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */; };
+		8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */; };
 		8E4982851579AA0200B43FB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */; };
 		8E4982871579AA1500B43FB8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982861579AA1400B43FB8 /* CFNetwork.framework */; };
 		8E4982891579AA3200B43FB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982881579AA3200B43FB8 /* libz.dylib */; };
@@ -622,6 +624,8 @@
 		8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelTableViewCell.m; path = Views/ChannelTableViewCell.m; sourceTree = "<group>"; };
 		8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewCell.h; path = Views/SideMenuTableViewCell.h; sourceTree = "<group>"; };
 		8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewCell.m; path = Views/SideMenuTableViewCell.m; sourceTree = "<group>"; };
+		8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteTableViewCell.h; path = Views/FavoriteTableViewCell.h; sourceTree = "<group>"; };
+		8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoriteTableViewCell.m; path = Views/FavoriteTableViewCell.m; sourceTree = "<group>"; };
 		8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E4982861579AA1400B43FB8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8E4982881579AA3200B43FB8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1391,6 +1395,8 @@
 				8E428CFE178DA1C7000A6684 /* AdViewCell.m */,
 				8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */,
 				8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */,
+				8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */,
+				8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */,
 				8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */,
 				8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */,
 			);
@@ -1655,7 +1661,6 @@
 			buildPhases = (
 				8ED117A116588DCB001BD731 /* Sources */,
 				8ED117DA16588DCB001BD731 /* Frameworks */,
-				8E31758616A098A500F0C6BA /* ShellScript */,
 				8ED117EA16588DCB001BD731 /* Resources */,
 			);
 			buildRules = (
@@ -2092,19 +2097,6 @@
 			shellPath = /bin/sh;
 			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/RadioEdgeForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:5:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/RadioEdge/Settings.bundle/Root.plist";
 		};
-		8EC1642815F2F04D00D64408 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./LadioTailForIPhone/Libraries/Crashlytics.framework/run 7ec8de8396fa2c05d99c91db2c63f3557228eca0";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2177,6 +2169,7 @@
 				8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */,
 				8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
+				8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2249,6 +2242,7 @@
 				8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */,
 				8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
+				8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
