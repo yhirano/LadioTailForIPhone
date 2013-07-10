@@ -23,11 +23,11 @@
 #import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
-#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
+#import "Views/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ChannelViewController.h"
-#import "Views/AdViewCell/AdViewCell.h"
+#import "Views/AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー

@@ -22,6 +22,7 @@
 
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
+#import "Views/SideMenuTableViewCell.h"
 #import "HeadlineNaviViewController.h"
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
@@ -33,13 +34,13 @@
 #pragma mark - Private methods
 
 /// CellIdentifireから該当のセルを取得する
-+ (UITableViewCell *)tableView:(UITableView *)tableView withCellWithIdentifier:(NSString *)cellIdentifier
++ (SideMenuTableViewCell *)tableView:(UITableView *)tableView withCellWithIdentifier:(NSString *)cellIdentifier
 {
-    UITableViewCell *cell = nil;
+    SideMenuTableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier];
+        cell = [[SideMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                            reuseIdentifier:cellIdentifier];
     }
     return cell;
 }
@@ -183,7 +184,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
+    SideMenuTableViewCell *cell = nil;
 
     ChannelSortType channelSortType = ChannelSortTypeNone;
     HeadlineViewController* headlineViewController = [self headlineViewControllerFromViewDeckCenterControllerTop];
@@ -204,6 +205,9 @@
                     // テーブルセルのテキスト等の色を変える
                     updateLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     updateLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Update", @"更新");
+                    cell.accessibilityHint = NSLocalizedString(@"Update the channel list", @"番組表を更新");
                     break;
                 }
                 default:
@@ -227,6 +231,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Newly", @"新規");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort in newly order the channel list", @"番組表を新しい順でソート");
                     break;
                 }
                 case 1: // Listeners
@@ -243,6 +250,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeListeners);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Listeners", @"リスナー数");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort in listeners order the channel list", @"番組表をリスナー数でソート");
                     break;
                 }
                 case 2: // Title
@@ -259,6 +269,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeTitle);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Title", @"タイトル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by title the channel list", @"番組表をタイトルでソート");
                     break;
                 }
                 case 3: // DJ
@@ -275,6 +288,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeDj);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"DJ", @"DJ");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by DJ the channel list", @"番組表をDJでソート");
                     break;
                 }
                 default:
@@ -297,6 +313,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"NoneSort", @"並べ替えない");
+                    cell.accessibilityHint = NSLocalizedString(@"Do not sort the channel list", @"並べ替えない");
                     break;
                 }
                 case 1: // Server Name
@@ -313,6 +332,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeServerName);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Title", @"タイトル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by title the channel list", @"番組表をタイトルでソート");
                     break;
                 }
                 case 2: // Genre
@@ -329,6 +351,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeGenre);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Genre", @"ジャンル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by genre the channel list", @"番組表をジャンルでソート");
                     break;
                 }
                 case 3: // Bitrate
@@ -345,6 +370,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeBitrate);
+                    
+                    cell.accessibilityLabel = NSLocalizedString(@"Bitrate", @"ビットレート");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by bitrate the channel list", @"番組表をビットレートでソート");
                     break;
                 }
                 default:
@@ -367,6 +395,8 @@
                     favoritesLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     favoritesLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
 
+                    cell.accessibilityLabel = NSLocalizedString(@"Favorites", @"お気に入り 複数");
+                    cell.accessibilityHint = NSLocalizedString(@"Open the favorites view", @"お気に入り画面を開く");
                     break;
                 }
                 default:

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -680,7 +680,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="UpdateCell" id="jfs-wr-h0q">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="UpdateCell" id="jfs-wr-h0q" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -703,7 +703,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NewlyCell" id="vVE-ZB-RUM">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NewlyCell" id="vVE-ZB-RUM" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -730,7 +730,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ListenersCell" id="58c-zQ-WNS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ListenersCell" id="58c-zQ-WNS" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="110" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -757,7 +757,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="TitleCell" id="lAi-0M-yWC">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="TitleCell" id="lAi-0M-yWC" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="154" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -784,7 +784,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="DjCell" id="fAk-Mx-9Fp">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="DjCell" id="fAk-Mx-9Fp" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="198" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -811,7 +811,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoneCell" id="JcV-oJ-lcX">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="NoneCell" id="JcV-oJ-lcX" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="242" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -838,7 +838,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="GenreCell" id="lSU-Fp-Eof">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="GenreCell" id="lSU-Fp-Eof" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="286" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -865,7 +865,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="BitrateCell" id="7mj-Kh-aaV">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="BitrateCell" id="7mj-Kh-aaV" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="330" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -892,7 +892,7 @@
                                 </view>
                                 <accessibility key="accessibilityConfiguration" hint="" label=""/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="FavoritesCell" id="6LG-8C-EiQ">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="FavoritesCell" id="6LG-8C-EiQ" customClass="SideMenuTableViewCell">
                                 <rect key="frame" x="0.0" y="374" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1151,17 +1151,17 @@
         <image name="tablecell_play_white.png" width="14" height="14"/>
     </resources>
     <classes>
+        <class className="BottomBarGradientView" superclassName="GradientView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BottomBarGradientView.h"/>
+        </class>
         <class className="ChannelTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelTableViewCell.h"/>
         </class>
-        <class className="ChannelViewController">
+        <class className="ChannelViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChannelViewController.h"/>
             <relationships>
                 <relationship kind="action" name="favorite:"/>
                 <relationship kind="action" name="play:"/>
-                <relationship kind="action" name="postFacebook:"/>
-                <relationship kind="action" name="postTwitter:"/>
-                <relationship kind="action" name="share:"/>
                 <relationship kind="action" name="shareChannel:"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
@@ -1171,8 +1171,67 @@
                 <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
             </relationships>
         </class>
+        <class className="FavoriteNaviViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteNaviViewController.h"/>
+        </class>
+        <class className="FavoriteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
         <class className="FavoritesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="openSideMenu:"/>
+                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="GradientView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GradientView.h"/>
+        </class>
+        <class className="HeadlineNaviViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineNaviViewController.h"/>
+        </class>
+        <class className="HeadlineViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeadlineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="openSideMenu:"/>
+                <relationship kind="outlet" name="headlineSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="headlineSearchBarIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="headlineTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigateionItem" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="playingBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="sideMenuBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="LadioTailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LadioTailViewController.h"/>
+        </class>
+        <class className="PlaySwipeGradientView" superclassName="GradientView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaySwipeGradientView.h"/>
+        </class>
+        <class className="SideMenuTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SideMenuTableViewCell.h"/>
+        </class>
+        <class className="SideMenuTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SideMenuTableViewController.h"/>
+        </class>
+        <class className="WebPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="forward:"/>
+                <relationship kind="action" name="goToBottom:"/>
+                <relationship kind="action" name="reload:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="bottomView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="pageWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="reloadButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="topNavigationItem" candidateClass="UINavigationItem"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

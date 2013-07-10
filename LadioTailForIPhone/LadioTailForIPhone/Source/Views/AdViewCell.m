@@ -7,7 +7,7 @@
 //
 
 #import "AdViewCell.h"
-#import "../../GoogleAdMobAds/GADBannerView.h"
+#import "../GoogleAdMobAds/GADBannerView.h"
 #import "LadioTailConfig.h"
 
 @interface AdViewCell () <GADBannerViewDelegate>
