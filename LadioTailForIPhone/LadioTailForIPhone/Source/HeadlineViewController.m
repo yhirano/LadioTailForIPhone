@@ -1074,11 +1074,12 @@ typedef enum {
 
 #pragma mark - IIViewDeckControllerDelegate methods
 
-- (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController
+          willOpenViewSide:(IIViewDeckSide)viewDeckSide
+                  animated:(BOOL)animated
 {
     // キーボードを閉じる
     [_headlineSearchBar resignFirstResponder];
-    return YES;
 }
 
 #pragma mark - ChannelTableViewDelegate methods
