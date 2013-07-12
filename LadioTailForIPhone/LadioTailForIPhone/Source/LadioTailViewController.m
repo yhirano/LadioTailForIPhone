@@ -80,6 +80,8 @@
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
     viewDeckController_.leftSize = [LadioTailConfig sideMenuLeftLedgeSize];
+    [viewDeckController_ setCenterTapperAccessibilityLabel:NSLocalizedString(@"Main menu", @"メインメニューボタン")];
+    [viewDeckController_ setCenterTapperAccessibilityHint:NSLocalizedString(@"Close the main menu", @"メインメニューを閉じる")];
 
     [self.view addSubview:viewDeckController_.view];
 }
