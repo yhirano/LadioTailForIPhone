@@ -38,12 +38,6 @@ FOUNDATION_EXPORT UIColor * const PLAYING_BUTTON_COLOR;
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅（iPhone）
-FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
-
-/// サイドメニューを開いた際の残り幅（iPad）
-FOUNDATION_EXPORT const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPAD;
-
 /// テーブルの背景の色
 FOUNDATION_EXPORT UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;
 
@@ -244,9 +238,14 @@ FOUNDATION_EXPORT const NSTimeInterval PLAY_TIMEOUT_SEC;
 FOUNDATION_EXPORT NSString * const PROVIDER_URL;
 
 
-#pragma mark - LadioTaifConfig class
+#pragma mark - LadioTailConfig class
 
-@interface LadioTaifConfig : NSObject
+@interface LadioTailConfig : NSObject
+
+#pragma mark - Side menu table view config
+
+/// サイドメニューを開いた際の残り幅
++ (CGFloat)sideMenuLeftLedgeSize;
 
 #pragma mark - AdMob config
 

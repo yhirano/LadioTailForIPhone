@@ -278,7 +278,7 @@
 #endif
 
     // 広告を表示
-    if ([LadioTaifConfig admobUnitId] != nil) {
+    if ([LadioTailConfig admobUnitId] != nil) {
         // 広告のサイズを決める
         GADAdSize adMobViewSize;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -308,7 +308,7 @@
         CGRect adMobViewFrame = adMobView_.frame;
         adMobViewFrame.origin.x = (adBackgroundView.frame.size.width - adMobView_.frame.size.width) / 2;
         adMobView_.frame = adMobViewFrame;
-        adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
+        adMobView_.adUnitID = [LadioTailConfig admobUnitId];
         adMobView_.delegate = self;
         adMobView_.rootViewController = self;
         [adBackgroundView addSubview:adMobView_];

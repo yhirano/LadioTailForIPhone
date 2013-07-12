@@ -38,7 +38,7 @@
             adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
         }
         adMobView_ = adMobView;
-        adMobView_.adUnitID = [LadioTaifConfig admobUnitId];
+        adMobView_.adUnitID = [LadioTailConfig admobUnitId];
         adMobView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
         adMobView_.delegate = self;
         [self.contentView addSubview:adMobView_];

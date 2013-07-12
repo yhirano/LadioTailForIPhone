@@ -24,6 +24,7 @@
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
 #import "RadioLib/RadioLib.h"
+#import "LadioTailConfig.h"
 #import "Player.h"
 #import "HeadlineNaviViewController.h"
 #import "SideMenuTableViewController.h"
@@ -78,11 +79,7 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        viewDeckController_.leftSize = SIDEMENU_LEFT_LEDGE_FOR_IPAD;
-    } else {
-        viewDeckController_.leftSize = SIDEMENU_LEFT_LEDGE_FOR_IPHONE;
-    }
+    viewDeckController_.leftSize = [LadioTailConfig sideMenuLeftLedgeSize];
 
     [self.view addSubview:viewDeckController_.view];
 }

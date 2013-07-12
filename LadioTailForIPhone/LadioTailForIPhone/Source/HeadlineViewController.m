@@ -568,7 +568,7 @@ typedef enum {
 /// 指定されたTableViewのIndexPathから何番目の番組かを取得する
 + (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return indexPath.row;
     } else {
         return indexPath.row - 1;
@@ -578,7 +578,7 @@ typedef enum {
 /// 指定された何番目の番組からTableViewのIndexPathを取得する
 + (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return [NSIndexPath indexPathForRow:channelIndex inSection:0];
     } else {
         return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
@@ -986,7 +986,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return [_showedChannels count];
     } else {
         NSInteger result = [_showedChannels count];
@@ -1005,7 +1005,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 広告View
-    if ([LadioTaifConfig admobUnitId] != nil && indexPath.row == 0) {
+    if ([LadioTailConfig admobUnitId] != nil && indexPath.row == 0) {
         return adViewCell_;
     }
     // 広告View以外のView
@@ -1035,7 +1035,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return 54;
     } else {
         if (indexPath.row == 0) {
@@ -1052,7 +1052,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
