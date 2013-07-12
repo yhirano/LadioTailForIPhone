@@ -641,7 +641,7 @@ typedef enum {
                     sortTypeString = @"";
                     break;
                 case ChannelSortTypeServerName:
-                    sortTypeString = NSLocalizedString("Title", @"タイトル");
+                    sortTypeString = NSLocalizedString(@"Title", @"タイトル");
                     break;
                 case ChannelSortTypeGenre:
                     sortTypeString = NSLocalizedString(@"Genre", @"ジャンル");
