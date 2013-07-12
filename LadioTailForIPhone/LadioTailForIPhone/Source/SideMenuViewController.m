@@ -23,13 +23,14 @@
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
 #import "Views/SideMenuTableViewCell.h"
+#import "Views/SideMenuTableViewSectionLabel.h"
 #import "HeadlineNaviViewController.h"
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
 #import "FavoritesTableViewController.h"
-#import "SideMenuTableViewController.h"
+#import "SideMenuViewController.h"
 
-@implementation SideMenuTableViewController
+@implementation SideMenuViewController
 
 #pragma mark - Private methods
 
@@ -83,9 +84,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = YES;
-
     // テーブルの背景の色を変える
     self.tableView.backgroundColor = SIDEMENU_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
@@ -104,11 +102,15 @@
 - (void)viewDidUnload
 {
     [self setTableView:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 選択を解除する
+    [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:animated];
+    
     [super viewWillAppear:animated];
 }
 
@@ -415,16 +417,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // セクションの色を変える
-    const CGFloat sectionHeight = [self tableView:tableView heightForHeaderInSection:section];
+    const CGFloat sectionHeight = UITableViewAutomaticDimension;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, sectionHeight)];
     headerView.backgroundColor = SIDEMENU_TABLE_SECTION_BACKGROUND_COLOR;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, headerView.frame.size.width - 20, 22)];
+    SideMenuTableViewSectionLabel *label =
+        [[SideMenuTableViewSectionLabel alloc] initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 22)];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
     label.font = [UIFont boldSystemFontOfSize:16.0];
     label.shadowOffset = CGSizeMake(0.0, 1.0);
     label.shadowColor = SIDEMENU_TABLE_SECTION_TEXT_SHADOW_COLOR;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = SIDEMENU_TABLE_SECTION_TEXT_COLOR;
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     [headerView addSubview:label];
     return headerView;
@@ -472,7 +476,7 @@
                     else {
                         __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                            SideMenuTableViewController *strongSelf = weakSelf;
+                            SideMenuViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
@@ -552,7 +556,7 @@
             else {
                 __weak id weakSelf = self;
                 [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                    SideMenuTableViewController *strongSelf = weakSelf;
+                    SideMenuViewController *strongSelf = weakSelf;
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                         [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
@@ -620,7 +624,7 @@
                     else {
                         __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                            SideMenuTableViewController *strongSelf = weakSelf;
+                            SideMenuViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             FavoriteNaviViewController *favoriteNaviViewController = (FavoriteNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];

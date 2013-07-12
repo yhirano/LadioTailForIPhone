@@ -40,8 +40,7 @@ typedef enum {
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
 
-@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, IIViewDeckControllerDelegate,
-                                      ChannelTableViewDelegate>
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, ChannelTableViewDelegate>
 
 @end
 
@@ -59,9 +58,6 @@ typedef enum {
     /// RefreshControll
     CKRefreshControl *refreshControl_;
 
-    /// ViewDeckController
-    IIViewDeckController *viewDeckController_;
-
     /// 広告セル
     AdViewCell *adViewCell_;
 }
@@ -69,9 +65,6 @@ typedef enum {
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
-
-    viewDeckController_.delegate = nil;
-    viewDeckController_ = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
@@ -731,11 +724,6 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
-    // dealloc時にself.viewDeckControllerでviewDeckControllerが取得できないようであるため
-    // ここでviewDeckController_にself.viewDeckControllerを保持する
-    viewDeckController_ = self.viewDeckController;
-    viewDeckController_.delegate = self;
-
     // 番組画面からの戻るボタンのテキストと色を書き換える
     NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
@@ -1067,16 +1055,6 @@ typedef enum {
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // キーボードを閉じる
-    [_headlineSearchBar resignFirstResponder];
-}
-
-#pragma mark - IIViewDeckControllerDelegate methods
-
-- (void)viewDeckController:(IIViewDeckController*)viewDeckController
-          willOpenViewSide:(IIViewDeckSide)viewDeckSide
-                  animated:(BOOL)animated
 {
     // キーボードを閉じる
     [_headlineSearchBar resignFirstResponder];

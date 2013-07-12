@@ -18,7 +18,7 @@
 		8E0B836E1543DC770097984D /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
 		8E0B836F1543DC770097984D /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
-		8E0B83771543DC770097984D /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuTableViewController.m */; };
+		8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuViewController.m */; };
 		8E0B83781543DC770097984D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
 		8E0B837A1543DC770097984D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E0B835C1543DC770097984D /* SVProgressHUD.bundle */; };
 		8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
@@ -342,6 +342,8 @@
 		8EC23B58153712BB007352FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B57153712BB007352FD /* main.m */; };
 		8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+		8EC9F3AD17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
+		8EC9F3AE17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
 		8ED117401658779F001BD731 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED117381658779F001BD731 /* Channel.m */; };
 		8ED117411658779F001BD731 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173A1658779F001BD731 /* Favorite.m */; };
 		8ED117421658779F001BD731 /* FavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173C1658779F001BD731 /* FavoriteManager.m */; };
@@ -372,7 +374,7 @@
 		8ED117AA16588DCB001BD731 /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
 		8ED117AB16588DCB001BD731 /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
-		8ED117AD16588DCB001BD731 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuTableViewController.m */; };
+		8ED117AD16588DCB001BD731 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuViewController.m */; };
 		8ED117AE16588DCB001BD731 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
 		8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
 		8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
@@ -572,8 +574,8 @@
 		8E0B83441543DC770097984D /* HeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineViewController.m; sourceTree = "<group>"; };
 		8E0B834F1543DC770097984D /* LadioTailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailViewController.h; sourceTree = "<group>"; };
 		8E0B83501543DC770097984D /* LadioTailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadioTailViewController.m; sourceTree = "<group>"; };
-		8E0B83551543DC770097984D /* SideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuTableViewController.h; sourceTree = "<group>"; };
-		8E0B83561543DC770097984D /* SideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuTableViewController.m; sourceTree = "<group>"; };
+		8E0B83551543DC770097984D /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuViewController.h; sourceTree = "<group>"; };
+		8E0B83561543DC770097984D /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
 		8E0B83571543DC770097984D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		8E0B83581543DC770097984D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		8E0B835C1543DC770097984D /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
@@ -845,6 +847,8 @@
 		8EC23B59153712BB007352FD /* LadioTailForIPhone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LadioTailForIPhone-Prefix.pch"; sourceTree = "<group>"; };
 		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewSectionLabel.h; path = Views/SideMenuTableViewSectionLabel.h; sourceTree = "<group>"; };
+		8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewSectionLabel.m; path = Views/SideMenuTableViewSectionLabel.m; sourceTree = "<group>"; };
 		8ED117371658779F001BD731 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.h; sourceTree = SOURCE_ROOT; };
 		8ED117381658779F001BD731 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Channel.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.m; sourceTree = SOURCE_ROOT; };
 		8ED117391658779F001BD731 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Favorite.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Favorite.h; sourceTree = SOURCE_ROOT; };
@@ -1063,8 +1067,8 @@
 				8E0B83811543DEC80097984D /* AppDelegate.m */,
 				8E0B834F1543DC770097984D /* LadioTailViewController.h */,
 				8E0B83501543DC770097984D /* LadioTailViewController.m */,
-				8E0B83551543DC770097984D /* SideMenuTableViewController.h */,
-				8E0B83561543DC770097984D /* SideMenuTableViewController.m */,
+				8E0B83551543DC770097984D /* SideMenuViewController.h */,
+				8E0B83561543DC770097984D /* SideMenuViewController.m */,
 				8E0B83411543DC770097984D /* HeadlineNaviViewController.h */,
 				8E0B83421543DC770097984D /* HeadlineNaviViewController.m */,
 				8E0B83431543DC770097984D /* HeadlineViewController.h */,
@@ -1399,6 +1403,8 @@
 				8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */,
 				8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */,
 				8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */,
+				8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */,
+				8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2113,7 +2119,7 @@
 				8E0B836E1543DC770097984D /* HeadlineNaviViewController.m in Sources */,
 				8E0B836F1543DC770097984D /* HeadlineViewController.m in Sources */,
 				8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */,
-				8E0B83771543DC770097984D /* SideMenuTableViewController.m in Sources */,
+				8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */,
 				8E0B83781543DC770097984D /* Player.m in Sources */,
 				8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
@@ -2170,6 +2176,7 @@
 				8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
+				8EC9F3AD17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2186,7 +2193,7 @@
 				8ED117AA16588DCB001BD731 /* HeadlineNaviViewController.m in Sources */,
 				8ED117AB16588DCB001BD731 /* HeadlineViewController.m in Sources */,
 				8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */,
-				8ED117AD16588DCB001BD731 /* SideMenuTableViewController.m in Sources */,
+				8ED117AD16588DCB001BD731 /* SideMenuViewController.m in Sources */,
 				8ED117AE16588DCB001BD731 /* Player.m in Sources */,
 				8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
@@ -2243,6 +2250,7 @@
 				8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
+				8EC9F3AE17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

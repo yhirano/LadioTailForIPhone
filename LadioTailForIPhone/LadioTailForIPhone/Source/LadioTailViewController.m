@@ -27,9 +27,13 @@
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "HeadlineNaviViewController.h"
-#import "SideMenuTableViewController.h"
+#import "SideMenuViewController.h"
 #import "HeadlineViewController.h"
 #import "LadioTailViewController.h"
+
+@interface LadioTailViewController () <IIViewDeckControllerDelegate>
+
+@end
 
 @implementation LadioTailViewController
 {
@@ -38,6 +42,8 @@
 
 -(void)dealloc
 {
+    viewDeckController_.delegate = nil;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidStartLoadNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineDidFinishLoadNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineFailLoadNotification object:nil];
@@ -73,8 +79,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     HeadlineNaviViewController* headlineNaviViewController =
         (HeadlineNaviViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
-    SideMenuTableViewController *sideMenuTableViewController =
-        (SideMenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"SideMenuTableViewController"];
+    SideMenuViewController *sideMenuTableViewController =
+        (SideMenuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"SideMenuViewController"];
     viewDeckController_ = [[IIViewDeckController alloc] initWithCenterViewController:headlineNaviViewController
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
@@ -84,6 +90,8 @@
     [viewDeckController_ setCenterTapperAccessibilityHint:NSLocalizedString(@"Close the main menu", @"メインメニューを閉じる")];
 
     [self.view addSubview:viewDeckController_.view];
+    
+    viewDeckController_.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -351,6 +359,64 @@
             }
         }
     }
+}
+
+#pragma mark - IIViewDeckControllerDelegate methods
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController
+          willOpenViewSide:(IIViewDeckSide)viewDeckSide
+                  animated:(BOOL)animated
+{
+    HeadlineViewController *headlineViewController = nil;
+    
+    // HeadlineNaviViewControllerを取得する
+    HeadlineNaviViewController *headlineNaviViewController = nil;
+    UIViewController *centerController = viewDeckController_.centerController;
+    if ([centerController isKindOfClass:[HeadlineNaviViewController class]]) {
+        headlineNaviViewController = (HeadlineNaviViewController*)centerController;
+
+        // HeadlineNaviViewControllerの中からHeadlineViewControllerを探し出す
+        for (UIViewController *viewcon in headlineNaviViewController.viewControllers) {
+            if ([viewcon isKindOfClass:[HeadlineViewController class]]) {
+                headlineViewController = (HeadlineViewController *)viewcon;
+                break;
+            }
+        }
+    }
+    
+    if (headlineViewController != nil) {
+        // キーボードを閉じる
+        [headlineViewController.headlineSearchBar resignFirstResponder];
+    }
+
+    // 左側のメニューが開く
+    if (viewDeckSide == IIViewDeckLeftSide) {
+        // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
+        UIViewController *leftController = viewDeckController_.leftController;
+        if ([leftController isKindOfClass:[SideMenuViewController class]]) {
+            SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
+            CGRect frame = sideMenuTableViewController.tableView.frame;
+            frame.size.width = self.view.frame.size.width - [LadioTailConfig sideMenuLeftLedgeSize];
+            sideMenuTableViewController.tableView.frame = frame;
+        }
+    }
+}
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController willCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    // 左側のメニューが閉じる
+    if (viewDeckSide == IIViewDeckLeftSide) {
+        // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
+        // 画面がバウンスする際に端までテーブルビューがないと見栄えが悪いので、サイドメニューが閉じる直前にテーブルビューを引き延ばす
+        UIViewController *leftController = viewDeckController_.leftController;
+        if ([leftController isKindOfClass:[SideMenuViewController class]]) {
+            SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
+            CGRect frame = sideMenuTableViewController.tableView.frame;
+            frame.size.width = self.view.frame.size.width;
+            sideMenuTableViewController.tableView.frame = frame;
+        }
+    }
+
 }
 
 #pragma mark - Headline notifications
