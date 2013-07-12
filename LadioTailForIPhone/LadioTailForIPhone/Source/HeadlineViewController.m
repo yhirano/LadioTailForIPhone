@@ -596,13 +596,71 @@ typedef enum {
 
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
-        if ([_showedChannels count] == 0) {
-            navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+        if (!UIAccessibilityIsVoiceOverRunning()) {
+            if ([_showedChannels count] == 0) {
+                navigationTitleStr = NSLocalizedString(@"ON AIR",
+                                                       @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+            } else {
+                navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+            }
         } else {
-            navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+            if ([_showedChannels count] == 0) {
+                navigationTitleStr = NSLocalizedString(@"Channel list",
+                                                       @"番組表/VoiceOver時に番組一覧にトップに表示される");
+            } else {
+                navigationTitleStr = NSLocalizedString(@"Channel list %dch",
+                                                       @"番組表/VoiceOver時に番組一覧にトップに表示される 番組がある場合");
+            }
         }
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
         
+        if (UIAccessibilityIsVoiceOverRunning()) {
+            NSString *sortTypeString = nil;
+#if defined(LADIO_TAIL)
+            switch (_channelSortType) {
+                case ChannelSortTypeNewly:
+                    sortTypeString = NSLocalizedString(@"Newly", @"新規");
+                    break;
+                case ChannelSortTypeListeners:
+                    sortTypeString = NSLocalizedString(@"Listeners", @"リスナー数");
+                    break;
+                case ChannelSortTypeTitle:
+                    sortTypeString = NSLocalizedString(@"Title", @"タイトル");
+                    break;
+                case ChannelSortTypeDj:
+                    sortTypeString = NSLocalizedString(@"DJ", @"DJ");
+                    break;
+                case ChannelSortTypeNone:
+                default:
+                    sortTypeString = NSLocalizedString(@"Newly", @"新規");
+                    break;
+            }
+#elif defined(RADIO_EDGE)
+            switch (_channelSortType) {
+                case ChannelSortTypeNewly:
+                    sortTypeString = @"";
+                    break;
+                case ChannelSortTypeServerName:
+                    sortTypeString = NSLocalizedString("Title", @"タイトル");
+                    break;
+                case ChannelSortTypeGenre:
+                    sortTypeString = NSLocalizedString(@"Genre", @"ジャンル");
+                    break;
+                case ChannelSortTypeBitrate:
+                    sortTypeString = NSLocalizedString(@"Bitrate", @"ビットレート");
+                    break;
+                case ChannelSortTypeNone:
+                default:
+                    sortTypeString =  @"";
+                    break;
+            }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+            NSString *sortBy = [NSString stringWithFormat:NSLocalizedString(@"Sort by %@", @"X順でソート"), sortTypeString];
+            _navigateionItem.accessibilityLabel = [NSString stringWithFormat:@"%@ %@", _navigateionItem.title, sortBy];
+        }
+            
         // ヘッドラインテーブルを更新
         [_headlineTableView reloadData];
         
@@ -725,7 +783,13 @@ typedef enum {
                                                object:nil];
 
     // 番組画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    NSString *backButtonString = nil;
+    if (!UIAccessibilityIsVoiceOverRunning()) {
+        backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    } else {
+        backButtonString = NSLocalizedString(@"Channel list", @"番組表/VoiceOver時に番組一覧にトップに表示される");
+    }
+    
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
