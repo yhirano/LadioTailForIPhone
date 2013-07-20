@@ -40,7 +40,7 @@ typedef enum {
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
 
-@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, ChannelTableViewDelegate>
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, SwipableTableViewDelegate>
 
 @end
 
@@ -1124,7 +1124,7 @@ typedef enum {
     [_headlineSearchBar resignFirstResponder];
 }
 
-#pragma mark - ChannelTableViewDelegate methods
+#pragma mark - SwipableTableViewDelegate methods
 
 - (BOOL)tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -1148,7 +1148,7 @@ typedef enum {
 
 - (void)   tableView:(UITableView *)tableView
 didChangeSwipeEnable:(BOOL)enable
-             forCell:(ChannelTableViewCell *)cell
+             forCell:(SwipableTableViewCell *)cell
    forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
@@ -1196,7 +1196,7 @@ didChangeSwipeEnable:(BOOL)enable
 }
 
 - (void)tableViewDidSwipeEnable:(UITableView *)tableView
-                        forCell:(ChannelTableViewCell *)cell
+                        forCell:(SwipableTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger channelIndex = [[self class] channelIndexFromIndexPath:indexPath];

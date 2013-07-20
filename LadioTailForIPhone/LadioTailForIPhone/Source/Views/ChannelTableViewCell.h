@@ -21,50 +21,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "SwipableTableViewCell/SwipableTableViewCell.h"
 
-// スワイプの状態
-typedef enum
-{
-    ChannelTableViewCellSwipeStateNormal,
-    ChannelTableViewCellSwipeStateSwiping,
-} ChannelTableViewCellSwipeState;
-
-@interface ChannelTableViewCell : UITableViewCell
+@interface ChannelTableViewCell : SwipableTableViewCell
 
 @property (nonatomic) NSString *accessibilityLabel;
 
 @property (nonatomic) NSString *accessibilityHint;
-
-/// スワイプで移動するビュー
-@property(strong) UIView *swipeView;
-
-/// スワイプの状態
-@property(readonly) ChannelTableViewCellSwipeState swipeState;
-
-- (void)revertSwipeWithAnimated:(BOOL)animated;
-
-@end
-
-@protocol ChannelTableViewDelegate < UITableViewDelegate >
-@optional
-
-- (BOOL) tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath;
-
-- (CGFloat)tableView:(UITableView *)tableView sizeForRowAtIndexPath:(NSIndexPath *)indexPath;
-
-- (CGFloat)tableView:(UITableView *)tableView swipeEnableSizeForRowAtIndexPath:(NSIndexPath *)indexPath;
-
-- (void)  tableView:(UITableView *)tableView
-didChangeSwipeState:(ChannelTableViewCellSwipeState)state
-  forRowAtIndexPath:(NSIndexPath *)indexPath;
-
-- (void)   tableView:(UITableView *)tableView
-didChangeSwipeEnable:(BOOL)enable
-             forCell:(ChannelTableViewCell *)cell
-   forRowAtIndexPath:(NSIndexPath *)indexPath;
-
-- (void)tableViewDidSwipeEnable:(UITableView *)tableView
-                         forCell:(ChannelTableViewCell *)cell
-               forRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

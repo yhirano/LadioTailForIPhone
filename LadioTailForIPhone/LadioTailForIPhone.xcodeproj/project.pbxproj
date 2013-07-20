@@ -25,6 +25,8 @@
 		8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
 		8E0B83821543DFD20097984D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83811543DEC80097984D /* AppDelegate.m */; };
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
+		8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
+		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E273B41166674C200298B91 /* tablecell_headphones_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E273B3D166674C200298B91 /* tablecell_headphones_gray.png */; };
 		8E273B42166674C200298B91 /* tablecell_headphones_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E273B3D166674C200298B91 /* tablecell_headphones_gray.png */; };
@@ -586,6 +588,8 @@
 		8E0B83801543DEC80097984D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8E0B83811543DEC80097984D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
+		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
 		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
 		8E273B3D166674C200298B91 /* tablecell_headphones_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_headphones_gray.png; sourceTree = "<group>"; };
@@ -1363,6 +1367,16 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		8E17581D179A85870098F07F /* SwipableTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8E17581E179A85870098F07F /* SwipableTableViewCell.h */,
+				8E17581F179A85870098F07F /* SwipableTableViewCell.m */,
+			);
+			name = SwipableTableViewCell;
+			path = Views/SwipableTableViewCell;
+			sourceTree = "<group>";
+		};
 		8E4B62E416C8E9C000218055 /* NendAd */ = {
 			isa = PBXGroup;
 			children = (
@@ -1395,6 +1409,7 @@
 			isa = PBXGroup;
 			children = (
 				8ED1174516587BA4001BD731 /* GradientView */,
+				8E17581D179A85870098F07F /* SwipableTableViewCell */,
 				8E428CFD178DA1C7000A6684 /* AdViewCell.h */,
 				8E428CFE178DA1C7000A6684 /* AdViewCell.m */,
 				8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */,
@@ -2177,6 +2192,7 @@
 				8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
 				8EC9F3AD17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */,
+				8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2251,6 +2267,7 @@
 				8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
 				8EC9F3AE17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */,
+				8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
