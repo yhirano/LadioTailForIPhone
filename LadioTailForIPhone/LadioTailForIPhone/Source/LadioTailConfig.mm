@@ -278,13 +278,12 @@ NSString * const PROVIDER_URL = nil;
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅
-+ (CGFloat)sideMenuLeftLedgeSize
++ (CGFloat)sideMenuLeftSize
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return 518.0f;
+        return 250.0f;
     } else {
-        return 74.0f;
+        return 246.0f;
     }
 }
 

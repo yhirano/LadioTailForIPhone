@@ -244,8 +244,8 @@ FOUNDATION_EXPORT NSString * const PROVIDER_URL;
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅
-+ (CGFloat)sideMenuLeftLedgeSize;
+/// サイドメニューの幅
++ (CGFloat)sideMenuLeftSize;
 
 #pragma mark - AdMob config
 

@@ -85,7 +85,8 @@
                                                                  leftViewController:sideMenuTableViewController];
     viewDeckController_.view.frame = self.view.bounds;
     viewDeckController_.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    viewDeckController_.leftSize = [LadioTailConfig sideMenuLeftLedgeSize];
+    viewDeckController_.sizeMode = IIViewDeckViewSizeMode;
+    viewDeckController_.leftSize = [LadioTailConfig sideMenuLeftSize];
     [viewDeckController_ setCenterTapperAccessibilityLabel:NSLocalizedString(@"Main menu", @"メインメニューボタン")];
     [viewDeckController_ setCenterTapperAccessibilityHint:NSLocalizedString(@"Close the main menu", @"メインメニューを閉じる")];
 
@@ -396,7 +397,7 @@
         if ([leftController isKindOfClass:[SideMenuViewController class]]) {
             SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
             CGRect frame = sideMenuTableViewController.tableView.frame;
-            frame.size.width = self.view.frame.size.width - [LadioTailConfig sideMenuLeftLedgeSize];
+            frame.size.width = [LadioTailConfig sideMenuLeftSize];
             sideMenuTableViewController.tableView.frame = frame;
         }
     }
