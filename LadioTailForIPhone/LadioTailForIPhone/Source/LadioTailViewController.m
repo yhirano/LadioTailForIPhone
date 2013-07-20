@@ -111,6 +111,35 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
+    // 画面が回転する際に端までテーブルビューがないと見栄えが悪いので、サイドメニューが閉じる直前にテーブルビューを引き延ばす
+    UIViewController *leftController = self.leftController;
+    if ([leftController isKindOfClass:[SideMenuViewController class]]) {
+        SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
+        CGRect frame = sideMenuTableViewController.tableView.frame;
+        frame.size.width = self.view.frame.size.width;
+        sideMenuTableViewController.tableView.frame = frame;
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation];
+
+    // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
+    UIViewController *leftController = self.leftController;
+    if ([leftController isKindOfClass:[SideMenuViewController class]]) {
+        SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
+        CGRect frame = sideMenuTableViewController.tableView.frame;
+        frame.size.width = [LadioTailConfig sideMenuLeftSize];
+        sideMenuTableViewController.tableView.frame = frame;
+    }
+}
+
 #pragma mark - Private Methods
 
 /**
