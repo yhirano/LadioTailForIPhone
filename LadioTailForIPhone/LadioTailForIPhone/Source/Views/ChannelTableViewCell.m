@@ -20,9 +20,18 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
+#import "ChannelTableViewCell.h"
 
-@interface LadioTailViewController : IIViewDeckController
+@implementation ChannelTableViewCell
+
+- (NSString*)accessibilityLabel
+{
+    return _accessibilityLabel;
+}
+
+- (NSString*)accessibilityHint
+{
+    return _accessibilityHint;
+}
 
 @end

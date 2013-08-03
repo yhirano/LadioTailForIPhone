@@ -20,9 +20,9 @@
  * THE SOFTWARE.
  */
 
-#import "ChannelTableViewCell.h"
+#import "SwipableTableViewCell.h"
 
-@implementation ChannelTableViewCell
+@implementation SwipableTableViewCell
 {
     // スワイプで移動するビュー
     UIView *swipeView_;
@@ -40,7 +40,7 @@
     CGSize enableSize_;
 
     __weak UITableView *tableView_;
-    __weak id<ChannelTableViewDelegate> tableViewDelegate_;
+    __weak id<SwipableTableViewDelegate> tableViewDelegate_;
 }
 
 - (void)dealloc
@@ -85,7 +85,7 @@
                          }
                          completion:^(BOOL finished) {
                              id strongSelf = weakSelf;
-                             [strongSelf setSwipeState:ChannelTableViewCellSwipeStateNormal];
+                             [strongSelf setSwipeState:SwipableTableViewCellSwipeStateNormal];
 
                              if ([tableViewDelegate_
                                     respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]){
@@ -104,7 +104,7 @@
         CGRect frame = swipeView_.frame;
         frame.origin.x = newPositionX;
         swipeView_.frame = frame;
-        [self setSwipeState:ChannelTableViewCellSwipeStateNormal];
+        [self setSwipeState:SwipableTableViewCellSwipeStateNormal];
 
         if ([tableViewDelegate_
                 respondsToSelector:@selector(tableView:didChangeSwipeEnable:forCell:forRowAtIndexPath:)]) {
@@ -130,7 +130,7 @@
     }
 }
 
-- (void)setSwipeState:(ChannelTableViewCellSwipeState)state
+- (void)setSwipeState:(SwipableTableViewCellSwipeState)state
 {
     if (_swipeState == state) {
         return;
@@ -211,14 +211,14 @@
                 });
             }
 
-            [self setSwipeState:ChannelTableViewCellSwipeStateSwiping];
+            [self setSwipeState:SwipableTableViewCellSwipeStateSwiping];
 
             lastPosition_ = position;
             break;
         }
         default:
         {
-            if (_swipeState == ChannelTableViewCellSwipeStateSwiping) {
+            if (_swipeState == SwipableTableViewCellSwipeStateSwiping) {
                 if ([self isEnableSwipe]) {
                     if([tableViewDelegate_
                         respondsToSelector:@selector(tableViewDidSwipeEnable:forCell:forRowAtIndexPath:)]){
@@ -248,7 +248,7 @@
     }
     
     tableView_ = (UITableView*)newSuperview;
-    tableViewDelegate_ = (id<ChannelTableViewDelegate>)tableView_.delegate;
+    tableViewDelegate_ = (id<SwipableTableViewDelegate>)tableView_.delegate;
 }
 
 - (void)didMoveToSuperview

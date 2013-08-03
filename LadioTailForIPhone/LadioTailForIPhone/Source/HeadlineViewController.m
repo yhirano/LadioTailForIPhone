@@ -23,11 +23,11 @@
 #import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
-#import "Views/ChannelTableViewCell/ChannelTableViewCell.h"
+#import "Views/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ChannelViewController.h"
-#import "Views/AdViewCell/AdViewCell.h"
+#import "Views/AdViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -40,8 +40,7 @@ typedef enum {
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
 } HeadlineViewDisplayType;
 
-@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, IIViewDeckControllerDelegate,
-                                      ChannelTableViewDelegate>
+@interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, SwipableTableViewDelegate>
 
 @end
 
@@ -59,9 +58,6 @@ typedef enum {
     /// RefreshControll
     CKRefreshControl *refreshControl_;
 
-    /// ViewDeckController
-    IIViewDeckController *viewDeckController_;
-
     /// 広告セル
     AdViewCell *adViewCell_;
 }
@@ -69,9 +65,6 @@ typedef enum {
 - (void)dealloc
 {
     tempPlayingBarButtonItem_ = nil;
-
-    viewDeckController_.delegate = nil;
-    viewDeckController_ = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
@@ -145,6 +138,8 @@ typedef enum {
             break;
     }
     
+    NSMutableString *accessibilityLabel = [NSMutableString string];
+
     ChannelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
@@ -172,24 +167,30 @@ typedef enum {
 
     if ([channel.nam length] > 0) {
         titleLabel.text = channel.nam;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.nam];
     } else {
         titleLabel.text = @"";
     }
     if ([channel.dj length] > 0) {
         djLabel.text = channel.dj;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"DJ", @"DJ"), channel.dj];
     } else {
         djLabel.text = @"";
     }
     if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
         listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
+        [accessibilityLabel appendFormat:@" %@ %d", NSLocalizedString(@"Listeners", @"リスナー数"), channel.cln];
     } else {
         listenersLabel.text = @"";
     }
     if (dateLabel != nil && !dateLabel.hidden) {
         dateLabel.text = [[self class] dateText:channel.tims];
+        [accessibilityLabel appendString:@" "];
+        [accessibilityLabel appendFormat:NSLocalizedString(@"%@ ago", @"xx前"), dateLabel.text];
     }
     if (bitrateLabel != nil && !bitrateLabel.hidden) {
         bitrateLabel.text = [[self class] bitrateText:channel.bit];
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Bitrate", @"ビットレート"), bitrateLabel.text];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -229,6 +230,9 @@ typedef enum {
     }
     
     favoriteImageView.hidden = !channel.favorite;
+    if (channel.favorite) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Favorite", @"お気に入り 単数")];
+    }
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
     channelCell.swipeView = swipeView;
@@ -248,6 +252,13 @@ typedef enum {
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
     }
 
+    if (playing) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Playing", @"再生中")];
+    }
+
+    cell.accessibilityLabel = accessibilityLabel;
+    cell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel", @"この番組の番組詳細画面を開く");
+    
     return cell;
 }
 #elif defined(RADIO_EDGE)
@@ -257,6 +268,8 @@ typedef enum {
     
     NSString *cellIdentifier = @"ChannelCell_ServerNameAndGenre_Bitrate";
     
+    NSMutableString *accessibilityLabel = [NSMutableString string];
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
@@ -282,16 +295,19 @@ typedef enum {
 
     if ([channel.serverName length] > 0) {
         serverNameLabel.text = channel.serverName;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Title", @"タイトル"), channel.serverName];
     } else {
         serverNameLabel.text = @"";
     }
     if ([channel.genre length] > 0) {
         genreLabel.text = channel.genre;
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Genre", @"ジャンル"), channel.genre];
     } else {
         genreLabel.text = @"";
     }
     if (bitrateLabel != nil) {
         bitrateLabel.text = [[self class] bitrateText:channel.bitrate];
+        [accessibilityLabel appendFormat:@" %@ %@", NSLocalizedString(@"Bitrate", @"ビットレート"), bitrateLabel.text];
     }
     
     // テーブルセルのテキスト等の色を変える
@@ -322,6 +338,9 @@ typedef enum {
     }
 
     favoriteImageView.hidden = !channel.favorite;
+    if (channel.favorite) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Favorite", @"お気に入り 単数")];
+    }
 
     ChannelTableViewCell *channelCell = (ChannelTableViewCell *)cell;
     channelCell.swipeView = swipeView;
@@ -340,6 +359,13 @@ typedef enum {
         [anchorImage setImage:[UIImage imageNamed:@"tablecell_play_black"]];
         [anchorImage setHighlightedImage:[UIImage imageNamed:@"tablecell_play_black"]];
     }
+
+    if (playing) {
+        [accessibilityLabel appendFormat:@" %@", NSLocalizedString(@"Playing", @"再生中")];
+    }
+
+    cell.accessibilityLabel = accessibilityLabel;
+    cell.accessibilityHint = NSLocalizedString(@"Open the description view of this channel", @"この番組の番組詳細画面を開く");
 
     return cell;
 }
@@ -535,7 +561,7 @@ typedef enum {
 /// 指定されたTableViewのIndexPathから何番目の番組かを取得する
 + (NSInteger)channelIndexFromIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return indexPath.row;
     } else {
         return indexPath.row - 1;
@@ -545,7 +571,7 @@ typedef enum {
 /// 指定された何番目の番組からTableViewのIndexPathを取得する
 + (NSIndexPath *)indexPathFromChannelIndex:(NSInteger)channelIndex
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return [NSIndexPath indexPathForRow:channelIndex inSection:0];
     } else {
         return [NSIndexPath indexPathForRow:(channelIndex + 1) inSection:0];
@@ -570,13 +596,71 @@ typedef enum {
 
         // ナビゲーションタイトルを更新
         NSString *navigationTitleStr = @"";
-        if ([_showedChannels count] == 0) {
-            navigationTitleStr = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+        if (!UIAccessibilityIsVoiceOverRunning()) {
+            if ([_showedChannels count] == 0) {
+                navigationTitleStr = NSLocalizedString(@"ON AIR",
+                                                       @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+            } else {
+                navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+            }
         } else {
-            navigationTitleStr = NSLocalizedString(@"ON AIR %dch", @"番組一覧にトップに表示されるONAIR 番組がある場合");
+            if ([_showedChannels count] == 0) {
+                navigationTitleStr = NSLocalizedString(@"Channel list",
+                                                       @"番組表/VoiceOver時に番組一覧にトップに表示される");
+            } else {
+                navigationTitleStr = NSLocalizedString(@"Channel list %dch",
+                                                       @"番組表/VoiceOver時に番組一覧にトップに表示される 番組がある場合");
+            }
         }
         _navigateionItem.title = [[NSString alloc] initWithFormat:navigationTitleStr, [_showedChannels count]];
         
+        if (UIAccessibilityIsVoiceOverRunning()) {
+            NSString *sortTypeString = nil;
+#if defined(LADIO_TAIL)
+            switch (_channelSortType) {
+                case ChannelSortTypeNewly:
+                    sortTypeString = NSLocalizedString(@"Newly", @"新規");
+                    break;
+                case ChannelSortTypeListeners:
+                    sortTypeString = NSLocalizedString(@"Listeners", @"リスナー数");
+                    break;
+                case ChannelSortTypeTitle:
+                    sortTypeString = NSLocalizedString(@"Title", @"タイトル");
+                    break;
+                case ChannelSortTypeDj:
+                    sortTypeString = NSLocalizedString(@"DJ", @"DJ");
+                    break;
+                case ChannelSortTypeNone:
+                default:
+                    sortTypeString = NSLocalizedString(@"Newly", @"新規");
+                    break;
+            }
+#elif defined(RADIO_EDGE)
+            switch (_channelSortType) {
+                case ChannelSortTypeNewly:
+                    sortTypeString = @"";
+                    break;
+                case ChannelSortTypeServerName:
+                    sortTypeString = NSLocalizedString(@"Title", @"タイトル");
+                    break;
+                case ChannelSortTypeGenre:
+                    sortTypeString = NSLocalizedString(@"Genre", @"ジャンル");
+                    break;
+                case ChannelSortTypeBitrate:
+                    sortTypeString = NSLocalizedString(@"Bitrate", @"ビットレート");
+                    break;
+                case ChannelSortTypeNone:
+                default:
+                    sortTypeString =  @"";
+                    break;
+            }
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+            NSString *sortBy = [NSString stringWithFormat:NSLocalizedString(@"Sort by %@", @"X順でソート"), sortTypeString];
+            _navigateionItem.accessibilityLabel = [NSString stringWithFormat:@"%@ %@", _navigateionItem.title, sortBy];
+        }
+            
         // ヘッドラインテーブルを更新
         [_headlineTableView reloadData];
         
@@ -698,13 +782,14 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
-    // dealloc時にself.viewDeckControllerでviewDeckControllerが取得できないようであるため
-    // ここでviewDeckController_にself.viewDeckControllerを保持する
-    viewDeckController_ = self.viewDeckController;
-    viewDeckController_.delegate = self;
-
     // 番組画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    NSString *backButtonString = nil;
+    if (!UIAccessibilityIsVoiceOverRunning()) {
+        backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
+    } else {
+        backButtonString = NSLocalizedString(@"Channel list", @"番組表/VoiceOver時に番組一覧にトップに表示される");
+    }
+    
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
@@ -714,10 +799,17 @@ typedef enum {
 
     // メニューボタンの色を変更する
     _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
+    // Accessibility
+    _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
+    _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");
 
     // 再生中ボタンの装飾を変更する
     _playingBarButtonItem.title = NSLocalizedString(@"Playing", @"再生中ボタン");
     _playingBarButtonItem.tintColor = PLAYING_BUTTON_COLOR;
+    // Accessibility
+    _playingBarButtonItem.accessibilityLabel = NSLocalizedString(@"Playing", @"再生中ボタン");
+    _playingBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the description view of the playing channel",
+                                                                @"再生中の番組の番組詳細画面を開く");
     // 再生中ボタンを保持する
     tempPlayingBarButtonItem_ = _playingBarButtonItem;
 
@@ -946,7 +1038,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return [_showedChannels count];
     } else {
         NSInteger result = [_showedChannels count];
@@ -965,7 +1057,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 広告View
-    if ([LadioTaifConfig admobUnitId] != nil && indexPath.row == 0) {
+    if ([LadioTailConfig admobUnitId] != nil && indexPath.row == 0) {
         return adViewCell_;
     }
     // 広告View以外のView
@@ -995,7 +1087,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         return 54;
     } else {
         if (indexPath.row == 0) {
@@ -1012,7 +1104,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([LadioTaifConfig admobUnitId] == nil) {
+    if ([LadioTailConfig admobUnitId] == nil) {
         [self performSegueWithIdentifier:@"SelectChannel" sender:self];
     } else {
         if (indexPath.row == 0) {
@@ -1032,16 +1124,7 @@ typedef enum {
     [_headlineSearchBar resignFirstResponder];
 }
 
-#pragma mark - IIViewDeckControllerDelegate methods
-
-- (BOOL)viewDeckControllerWillOpenLeftView:(IIViewDeckController*)viewDeckController animated:(BOOL)animated
-{
-    // キーボードを閉じる
-    [_headlineSearchBar resignFirstResponder];
-    return YES;
-}
-
-#pragma mark - ChannelTableViewDelegate methods
+#pragma mark - SwipableTableViewDelegate methods
 
 - (BOOL)tableView:(UITableView*)tableView shouldAllowSwipingForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -1065,7 +1148,7 @@ typedef enum {
 
 - (void)   tableView:(UITableView *)tableView
 didChangeSwipeEnable:(BOOL)enable
-             forCell:(ChannelTableViewCell *)cell
+             forCell:(SwipableTableViewCell *)cell
    forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UILabel *anchorLabel = (UILabel *) [cell viewWithTag:10];
@@ -1113,7 +1196,7 @@ didChangeSwipeEnable:(BOOL)enable
 }
 
 - (void)tableViewDidSwipeEnable:(UITableView *)tableView
-                        forCell:(ChannelTableViewCell *)cell
+                        forCell:(SwipableTableViewCell *)cell
               forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger channelIndex = [[self class] channelIndexFromIndexPath:indexPath];

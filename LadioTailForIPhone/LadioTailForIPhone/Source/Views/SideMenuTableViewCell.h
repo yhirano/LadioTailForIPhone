@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2013 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
 
-@interface LadioTailViewController : IIViewDeckController
+@interface SideMenuTableViewCell : UITableViewCell
+
+@property (nonatomic) NSString *accessibilityLabel;
+
+@property (nonatomic) NSString *accessibilityHint;
 
 @end

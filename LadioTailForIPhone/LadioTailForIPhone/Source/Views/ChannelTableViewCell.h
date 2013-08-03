@@ -21,8 +21,12 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
+#import "SwipableTableViewCell/SwipableTableViewCell.h"
 
-@interface LadioTailViewController : IIViewDeckController
+@interface ChannelTableViewCell : SwipableTableViewCell
+
+@property (nonatomic) NSString *accessibilityLabel;
+
+@property (nonatomic) NSString *accessibilityHint;
 
 @end

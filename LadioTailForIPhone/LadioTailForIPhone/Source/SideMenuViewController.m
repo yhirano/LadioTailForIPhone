@@ -22,24 +22,26 @@
 
 #import "ViewDeck/IIViewDeckController.h"
 #import "LadioTailConfig.h"
+#import "Views/SideMenuTableViewCell.h"
+#import "Views/SideMenuTableViewSectionLabel.h"
 #import "HeadlineNaviViewController.h"
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
 #import "FavoritesTableViewController.h"
-#import "SideMenuTableViewController.h"
+#import "SideMenuViewController.h"
 
-@implementation SideMenuTableViewController
+@implementation SideMenuViewController
 
 #pragma mark - Private methods
 
 /// CellIdentifireから該当のセルを取得する
-+ (UITableViewCell *)tableView:(UITableView *)tableView withCellWithIdentifier:(NSString *)cellIdentifier
++ (SideMenuTableViewCell *)tableView:(UITableView *)tableView withCellWithIdentifier:(NSString *)cellIdentifier
 {
-    UITableViewCell *cell = nil;
+    SideMenuTableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier];
+        cell = [[SideMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                            reuseIdentifier:cellIdentifier];
     }
     return cell;
 }
@@ -82,9 +84,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = YES;
-
     // テーブルの背景の色を変える
     self.tableView.backgroundColor = SIDEMENU_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
@@ -103,11 +102,15 @@
 - (void)viewDidUnload
 {
     [self setTableView:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 選択を解除する
+    [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:animated];
+    
     [super viewWillAppear:animated];
 }
 
@@ -183,7 +186,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
+    SideMenuTableViewCell *cell = nil;
 
     ChannelSortType channelSortType = ChannelSortTypeNone;
     HeadlineViewController* headlineViewController = [self headlineViewControllerFromViewDeckCenterControllerTop];
@@ -204,6 +207,9 @@
                     // テーブルセルのテキスト等の色を変える
                     updateLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     updateLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Update", @"更新");
+                    cell.accessibilityHint = NSLocalizedString(@"Update the channel list", @"番組表を更新");
                     break;
                 }
                 default:
@@ -227,6 +233,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Newly", @"新規");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort in newly order the channel list", @"番組表を新しい順でソート");
                     break;
                 }
                 case 1: // Listeners
@@ -243,6 +252,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeListeners);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Listeners", @"リスナー数");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort in listeners order the channel list", @"番組表をリスナー数でソート");
                     break;
                 }
                 case 2: // Title
@@ -259,6 +271,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeTitle);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Title", @"タイトル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by title the channel list", @"番組表をタイトルでソート");
                     break;
                 }
                 case 3: // DJ
@@ -275,6 +290,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeDj);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"DJ", @"DJ");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by DJ the channel list", @"番組表をDJでソート");
                     break;
                 }
                 default:
@@ -297,6 +315,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeNewly);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"NoneSort", @"並べ替えない");
+                    cell.accessibilityHint = NSLocalizedString(@"Do not sort the channel list", @"並べ替えない");
                     break;
                 }
                 case 1: // Server Name
@@ -313,6 +334,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeServerName);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Title", @"タイトル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by title the channel list", @"番組表をタイトルでソート");
                     break;
                 }
                 case 2: // Genre
@@ -329,6 +353,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeGenre);
+
+                    cell.accessibilityLabel = NSLocalizedString(@"Genre", @"ジャンル");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by genre the channel list", @"番組表をジャンルでソート");
                     break;
                 }
                 case 3: // Bitrate
@@ -345,6 +372,9 @@
                     // チェックマークの表示
                     UIImageView *checkImage = (UIImageView *) [cell viewWithTag:3];
                     checkImage.hidden = (channelSortType != ChannelSortTypeBitrate);
+                    
+                    cell.accessibilityLabel = NSLocalizedString(@"Bitrate", @"ビットレート");
+                    cell.accessibilityHint = NSLocalizedString(@"Sort by bitrate the channel list", @"番組表をビットレートでソート");
                     break;
                 }
                 default:
@@ -367,6 +397,8 @@
                     favoritesLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
                     favoritesLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
 
+                    cell.accessibilityLabel = NSLocalizedString(@"Favorites", @"お気に入り 複数");
+                    cell.accessibilityHint = NSLocalizedString(@"Open the favorites view", @"お気に入り画面を開く");
                     break;
                 }
                 default:
@@ -385,16 +417,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // セクションの色を変える
-    const CGFloat sectionHeight = [self tableView:tableView heightForHeaderInSection:section];
+    const CGFloat sectionHeight = UITableViewAutomaticDimension;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, sectionHeight)];
     headerView.backgroundColor = SIDEMENU_TABLE_SECTION_BACKGROUND_COLOR;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, headerView.frame.size.width - 20, 22)];
+    SideMenuTableViewSectionLabel *label =
+        [[SideMenuTableViewSectionLabel alloc] initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 22)];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
     label.font = [UIFont boldSystemFontOfSize:16.0];
     label.shadowOffset = CGSizeMake(0.0, 1.0);
     label.shadowColor = SIDEMENU_TABLE_SECTION_TEXT_SHADOW_COLOR;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = SIDEMENU_TABLE_SECTION_TEXT_COLOR;
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     [headerView addSubview:label];
     return headerView;
@@ -442,7 +476,7 @@
                     else {
                         __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                            SideMenuTableViewController *strongSelf = weakSelf;
+                            SideMenuViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
@@ -522,7 +556,7 @@
             else {
                 __weak id weakSelf = self;
                 [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                    SideMenuTableViewController *strongSelf = weakSelf;
+                    SideMenuViewController *strongSelf = weakSelf;
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     HeadlineNaviViewController *headlineNaviViewController = (HeadlineNaviViewController *)
                         [storyboard instantiateViewControllerWithIdentifier:@"HeadlineNaviViewController"];
@@ -590,7 +624,7 @@
                     else {
                         __weak id weakSelf = self;
                         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                            SideMenuTableViewController *strongSelf = weakSelf;
+                            SideMenuViewController *strongSelf = weakSelf;
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                             FavoriteNaviViewController *favoriteNaviViewController = (FavoriteNaviViewController *)
                                 [storyboard instantiateViewControllerWithIdentifier:@"FavoriteNaviViewController"];

@@ -44,12 +44,6 @@ UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
 
 #pragma mark - Side menu table view config
 
-/// サイドメニューを開いた際の残り幅（iPhone）
-const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPHONE = 74.0f;
-
-/// サイドメニューを開いた際の残り幅（iPad）
-const CGFloat SIDEMENU_LEFT_LEDGE_FOR_IPAD = 518.0f;
-
 /// テーブルの背景の色
 UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
                                                                   green:(40.0f / 255)
@@ -278,9 +272,20 @@ const NSTimeInterval PLAY_TIMEOUT_SEC = 15.0;
 NSString * const PROVIDER_URL = nil;
 
 
-#pragma mark - LadioTaifConfig class
+#pragma mark - LadioTailConfig class
 
-@implementation LadioTaifConfig
+@implementation LadioTailConfig
+
+#pragma mark - Side menu table view config
+
++ (CGFloat)sideMenuLeftSize
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 250.0f;
+    } else {
+        return 246.0f;
+    }
+}
 
 #pragma mark - AdMob config
 

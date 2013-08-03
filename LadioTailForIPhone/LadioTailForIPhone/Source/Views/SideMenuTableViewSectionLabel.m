@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2013 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +20,14 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
+#import "SideMenuTableViewSectionLabel.h"
 
-@interface LadioTailViewController : IIViewDeckController
+@implementation SideMenuTableViewSectionLabel
+
+-(void)drawTextInRect:(CGRect)rect
+{
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 20, 0, 0);
+    return [super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
+}
 
 @end

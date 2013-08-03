@@ -21,8 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
 
-@interface LadioTailViewController : IIViewDeckController
+@interface SideMenuViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

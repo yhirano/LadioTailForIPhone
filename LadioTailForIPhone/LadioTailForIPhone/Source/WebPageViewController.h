@@ -34,6 +34,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *gotoBottomButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *reloadButton;
 
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
