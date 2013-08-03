@@ -1682,6 +1682,7 @@
 			buildPhases = (
 				8ED117A116588DCB001BD731 /* Sources */,
 				8ED117DA16588DCB001BD731 /* Frameworks */,
+				8E4C7BBE17AD3C010024FCFC /* ShellScript */,
 				8ED117EA16588DCB001BD731 /* Resources */,
 			);
 			buildRules = (
@@ -2106,6 +2107,19 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		8E31758516A0967100F0C6BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/LadioTailForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:11:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/LadioTail/Settings.bundle/Root.plist";
+		};
+		8E4C7BBE17AD3C010024FCFC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
