@@ -85,7 +85,6 @@
 
     self.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
     self.sizeMode = IIViewDeckViewSizeMode;
-    self.leftSize = [LadioTailConfig sideMenuLeftSize];
     [self setCenterTapperAccessibilityLabel:NSLocalizedString(@"Main menu", @"メインメニューボタン")];
     [self setCenterTapperAccessibilityHint:NSLocalizedString(@"Close the main menu", @"メインメニューを閉じる")];
 
@@ -95,6 +94,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // leftSizeはviewDidAppear以前に設定するとLandscapeでアプリを起動したときにメニューのサイズがおかしくなる
+    self.leftSize = [LadioTailConfig sideMenuLeftSize];
 
     // リモコン対応
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
