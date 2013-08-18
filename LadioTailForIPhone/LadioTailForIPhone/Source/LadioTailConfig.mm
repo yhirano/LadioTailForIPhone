@@ -44,6 +44,12 @@ UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
 
 #pragma mark - Side menu table view config
 
+/// 背景の色
+UIColor * const SIDEMENU_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
+                                                            green:(40.0f / 255)
+                                                             blue:(40.0f / 255.0)
+                                                            alpha:1.0f];
+
 /// テーブルの背景の色
 UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR = [UIColor colorWithRed:(40.0f / 255)
                                                                   green:(40.0f / 255)

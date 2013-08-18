@@ -84,6 +84,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // 背景色の色を変える（この背景は見えないはずだが一応色を塗っておく）
+    self.view.backgroundColor = SIDEMENU_BACKGROUND_COLOR;
+
     // テーブルの背景の色を変える
     self.tableView.backgroundColor = SIDEMENU_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
@@ -598,7 +602,7 @@
                             break;
                     }
 #else
-#error "Not defined LADIO_TAIL or RADIO_EDGE"
+                    #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
                     
                     [[strongSelf headlineViewControllerFromViewDeckCenterControllerTop] setChannelSortType:channelSortType];
