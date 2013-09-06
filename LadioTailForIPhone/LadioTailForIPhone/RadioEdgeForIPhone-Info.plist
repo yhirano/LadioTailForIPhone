@@ -22,8 +22,12 @@
 				<string>Icon-Small-50@2x.png</string>
 				<string>Icon-Small.png</string>
 				<string>Icon-Small@2x.png</string>
-				<string>Default.png</string>
-				<string>Default@2x.png</string>
+				<string>Icon-40.png</string>
+				<string>Icon-40@2x.png</string>
+				<string>Icon-60.png</string>
+				<string>Icon-60@2x.png</string>
+				<string>Icon-76.png</string>
+				<string>Icon-76@2x.png</string>
 			</array>
 		</dict>
 	</dict>
