@@ -198,7 +198,7 @@
                     found = YES; // 見つかったことを示す
                 }
 #else
-#error "Not defined LADIO_TAIL or RADIO_EDGE"
+                #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
             }
         });
@@ -317,6 +317,21 @@
 
 #pragma mark - IIViewDeckControllerDelegate methods
 
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didChangeOffset:(CGFloat)offset orientation:(IIViewDeckOffsetOrientation)orientation panning:(BOOL)panning
+{
+    // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
+    // 画面がバウンスする際に端までテーブルビューがないと見栄えが悪いので、サイドメニューが閉じる直前にテーブルビューを引き延ばす
+    UIViewController *leftController = self.leftController;
+    if ([leftController isKindOfClass:[SideMenuViewController class]]) {
+        SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
+        if (offset >= [LadioTailConfig sideMenuLeftSize]) {
+            CGRect frame = sideMenuTableViewController.tableView.frame;
+            frame.size.width = offset;
+            sideMenuTableViewController.tableView.frame = frame;
+        }
+    }
+}
+
 - (void)viewDeckController:(IIViewDeckController*)viewDeckController
           willOpenViewSide:(IIViewDeckSide)viewDeckSide
                   animated:(BOOL)animated
@@ -354,23 +369,6 @@
             sideMenuTableViewController.tableView.frame = frame;
         }
     }
-}
-
-- (void)viewDeckController:(IIViewDeckController*)viewDeckController willCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
-{
-    // 左側のメニューが閉じる
-    if (viewDeckSide == IIViewDeckLeftSide) {
-        // サイドメニューのテーブルの幅を変更する（VoiceOver対応）
-        // 画面がバウンスする際に端までテーブルビューがないと見栄えが悪いので、サイドメニューが閉じる直前にテーブルビューを引き延ばす
-        UIViewController *leftController = self.leftController;
-        if ([leftController isKindOfClass:[SideMenuViewController class]]) {
-            SideMenuViewController *sideMenuTableViewController = (SideMenuViewController *)leftController;
-            CGRect frame = sideMenuTableViewController.tableView.frame;
-            frame.size.width = self.view.frame.size.width;
-            sideMenuTableViewController.tableView.frame = frame;
-        }
-    }
-
 }
 
 #pragma mark - Headline notifications

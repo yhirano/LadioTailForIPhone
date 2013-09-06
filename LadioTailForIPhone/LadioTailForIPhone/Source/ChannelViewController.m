@@ -37,6 +37,9 @@
 
 @implementation ChannelViewController
 {
+    /// 広告の背景
+    __weak UIView *adBackgroundView_;
+    
     /// AdMob View
     __weak GADBannerView *adMobView_;
 
@@ -298,15 +301,16 @@
                                                   self.view.frame.size.width,
                                                   adMobViewSize.size.height);
         UIView *adBackgroundView = [[UIView alloc] initWithFrame:adBackgroundViewFrame];
-        adBackgroundView.backgroundColor = AD_VIRE_BACKGROUND_COLOR;
-        adBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self.view addSubview:adBackgroundView];
+        adBackgroundView_ = adBackgroundView;
+        adBackgroundView_.backgroundColor = AD_VIRE_BACKGROUND_COLOR;
+        adBackgroundView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+        [self.view addSubview:adBackgroundView_];
 
         // 広告Viewを生成する
         GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:adMobViewSize];
         adMobView_ = adMobView;
         CGRect adMobViewFrame = adMobView_.frame;
-        adMobViewFrame.origin.x = (adBackgroundView.frame.size.width - adMobView_.frame.size.width) / 2;
+        adMobViewFrame.origin.x = (adBackgroundView_.frame.size.width - adMobView_.frame.size.width) / 2;
         adMobView_.frame = adMobViewFrame;
         adMobView_.adUnitID = [LadioTailConfig admobUnitId];
         adMobView_.delegate = self;
@@ -367,10 +371,21 @@
 
     // 再生状況に合わせて再生ボタンの内容を切り替える
     [self updatePlayButton];
-    
+
     // お気に入りボタンを更新
     [self updateFavoriteButton];
-    
+
+    // 広告背景の位置と大きさを調整
+    CGRect frame = adBackgroundView_.frame;
+    frame.origin.x = 0;
+    frame.size.width = self.view.frame.size.width;
+    adBackgroundView_.frame = frame;
+
+    // 広告の位置を調整
+    CGRect adMobViewFrame = adMobView_.frame;
+    adMobViewFrame.origin.x = (adBackgroundView_.frame.size.width - adMobView_.frame.size.width) / 2;
+    adMobView_.frame = adMobViewFrame;
+
     // 広告のロード
     [adMobView_ loadRequest:[GADRequest request]];
 }

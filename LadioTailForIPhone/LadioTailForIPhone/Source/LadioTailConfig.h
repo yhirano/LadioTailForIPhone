@@ -24,6 +24,9 @@
 
 #pragma mark - Common config
 
+/// 背景の色
+FOUNDATION_EXPORT UIColor * const SIDEMENU_BACKGROUND_COLOR;
+
 /// ナビゲーションバーの色
 FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_COLOR;
 
