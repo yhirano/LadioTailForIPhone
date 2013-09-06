@@ -130,7 +130,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>1.6.0</string>
+			<string>1.6.1</string>
 			<key>Key</key>
 			<string>app_version</string>
 			<key>Title</key>
