@@ -844,10 +844,12 @@ typedef enum {
         [_headlineTableView addSubview:refreshControl_];
     }
 
-    // 広告Viewを生成
-    adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
-    adViewCell_.rootViewController = self;
-    [adViewCell_ load];
+    if ([LadioTailConfig admobUnitId] != nil) {
+        // 広告Viewを生成
+        adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
+        adViewCell_.rootViewController = self;
+        [adViewCell_ load];
+    }
 }
 
 - (void)viewDidUnload
