@@ -213,7 +213,10 @@
                                                         applicationActivities:applicationActivities];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
                                                      UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
-                                                     UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+                                                     UIActivityTypePrint, UIActivityTypeSaveToCameraRoll,
+                                                     UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+                                                     UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo,
+                                                     UIActivityTypeAirDrop];
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
