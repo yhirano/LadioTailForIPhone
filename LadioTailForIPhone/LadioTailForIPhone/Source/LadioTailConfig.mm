@@ -210,7 +210,10 @@ const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;
 #pragma mark - Channel view config
 
 /// お気に入りボタンの色
-UIColor * const FAVORITE_BUTTON_COLOR = [UIColor darkGrayColor];
+UIColor * const FAVORITE_BUTTON_COLOR = [UIColor whiteColor];
+
+/// お気に入りボタンの有効色
+UIColor * const FAVORITE_BUTTON_ENABLE_COLOR = [UIColor yellowColor];
 
 /// 広告VBiewの背景色
 UIColor * const AD_VIRE_BACKGROUND_COLOR = [UIColor blackColor];

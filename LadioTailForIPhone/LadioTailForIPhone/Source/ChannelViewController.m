@@ -73,11 +73,11 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([_channel favorite]) {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow"]];
+        favoriteButton.tintColor = FAVORITE_BUTTON_ENABLE_COLOR;
         favoriteButton.accessibilityLabel = NSLocalizedString(@"Remove Favorite", @"お気に入り削除");
         favoriteButton.accessibilityHint = NSLocalizedString(@"Remove from favorite this channel", @"この番組をお気に入りから削除");
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white"]];
+        favoriteButton.tintColor = FAVORITE_BUTTON_COLOR;
         favoriteButton.accessibilityLabel = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
         favoriteButton.accessibilityHint = NSLocalizedString(@"Add to favorite this channel", @"この番組をお気に入りに追加");
     }
