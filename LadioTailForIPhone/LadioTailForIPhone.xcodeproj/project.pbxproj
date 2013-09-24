@@ -313,12 +313,6 @@
 		8EAC425F1632F2BD009C2871 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
 		8EAC42611632F331009C2871 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
-		8EB17AF6170B1E9600B5CB1F /* CKParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF0170B1E9600B5CB1F /* CKParagraphStyle.m */; };
-		8EB17AF7170B1E9600B5CB1F /* CKParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF0170B1E9600B5CB1F /* CKParagraphStyle.m */; };
-		8EB17AF8170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF2170B1E9600B5CB1F /* CKRefreshArrowView.m */; };
-		8EB17AF9170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF2170B1E9600B5CB1F /* CKRefreshArrowView.m */; };
-		8EB17AFA170B1E9600B5CB1F /* CKRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF5170B1E9600B5CB1F /* CKRefreshControl.m */; };
-		8EB17AFB170B1E9600B5CB1F /* CKRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB17AF5170B1E9600B5CB1F /* CKRefreshControl.m */; };
 		8EB398B716CEA01C00763AEF /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB398B616CEA01C00763AEF /* Resources.bundle */; };
 		8EB398B816CEA01C00763AEF /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB398B616CEA01C00763AEF /* Resources.bundle */; };
 		8EB7A0E9165BD8270061FCA0 /* sidemenu_bitrate_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB7A0DD165BD8140061FCA0 /* sidemenu_bitrate_black.png */; };
@@ -843,13 +837,6 @@
 		8EAFBF611537C2EA00DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8EAFBF631537C8E000DDBB6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8EAFBF651537C90700DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8EB17AEF170B1E9600B5CB1F /* CKParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKParagraphStyle.h; sourceTree = "<group>"; };
-		8EB17AF0170B1E9600B5CB1F /* CKParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKParagraphStyle.m; sourceTree = "<group>"; };
-		8EB17AF1170B1E9600B5CB1F /* CKRefreshArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKRefreshArrowView.h; sourceTree = "<group>"; };
-		8EB17AF2170B1E9600B5CB1F /* CKRefreshArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKRefreshArrowView.m; sourceTree = "<group>"; };
-		8EB17AF3170B1E9600B5CB1F /* CKRefreshControl-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CKRefreshControl-Prefix.pch"; sourceTree = "<group>"; };
-		8EB17AF4170B1E9600B5CB1F /* CKRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKRefreshControl.h; sourceTree = "<group>"; };
-		8EB17AF5170B1E9600B5CB1F /* CKRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKRefreshControl.m; sourceTree = "<group>"; };
 		8EB398B616CEA01C00763AEF /* Resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Resources.bundle; path = Bundles/Resources.bundle; sourceTree = "<group>"; };
 		8EB7A0DD165BD8140061FCA0 /* sidemenu_bitrate_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_bitrate_black.png; sourceTree = "<group>"; };
 		8EB7A0DE165BD8160061FCA0 /* sidemenu_bitrate_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_bitrate_black@2x.png"; sourceTree = "<group>"; };
@@ -1078,7 +1065,6 @@
 		8E0B831D1543DC770097984D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8EB17AEE170B1E9600B5CB1F /* CKRefreshControl */,
 				8EAC424B1632EB1C009C2871 /* GoogleAdMobAds */,
 				8E0B83331543DC770097984D /* GRMustache */,
 				8E0B83301543DC770097984D /* FBNetworkReachability */,
@@ -1462,20 +1448,6 @@
 				8EAC42541632EB1C009C2871 /* GADRequestError.h */,
 			);
 			path = GoogleAdMobAds;
-			sourceTree = "<group>";
-		};
-		8EB17AEE170B1E9600B5CB1F /* CKRefreshControl */ = {
-			isa = PBXGroup;
-			children = (
-				8EB17AEF170B1E9600B5CB1F /* CKParagraphStyle.h */,
-				8EB17AF0170B1E9600B5CB1F /* CKParagraphStyle.m */,
-				8EB17AF1170B1E9600B5CB1F /* CKRefreshArrowView.h */,
-				8EB17AF2170B1E9600B5CB1F /* CKRefreshArrowView.m */,
-				8EB17AF3170B1E9600B5CB1F /* CKRefreshControl-Prefix.pch */,
-				8EB17AF4170B1E9600B5CB1F /* CKRefreshControl.h */,
-				8EB17AF5170B1E9600B5CB1F /* CKRefreshControl.m */,
-			);
-			path = CKRefreshControl;
 			sourceTree = "<group>";
 		};
 		8EB398B516CE9EFD00763AEF /* Resources */ = {
@@ -2242,9 +2214,6 @@
 				8E5ECD8C16CAA64900D20F16 /* ChannelHtml.m in Sources */,
 				8E5ECD8D16CAA64900D20F16 /* FavoriteHtml.m in Sources */,
 				8E09EDFD16CF394D00A60E19 /* TempleteInfo.m in Sources */,
-				8EB17AF6170B1E9600B5CB1F /* CKParagraphStyle.m in Sources */,
-				8EB17AF8170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */,
-				8EB17AFA170B1E9600B5CB1F /* CKRefreshControl.m in Sources */,
 				8EF5F2AE174696A000DA1C5A /* LINEActivity.m in Sources */,
 				8E7E9C131775B9DC0015339F /* IISideController.m in Sources */,
 				8E7E9C151775B9DC0015339F /* IIViewDeckController.m in Sources */,
@@ -2317,9 +2286,6 @@
 				8E09EDF616CF38A900A60E19 /* ChannelHtml.m in Sources */,
 				8E09EDF716CF38A900A60E19 /* FavoriteHtml.m in Sources */,
 				8E09EDFE16CF394D00A60E19 /* TempleteInfo.m in Sources */,
-				8EB17AF7170B1E9600B5CB1F /* CKParagraphStyle.m in Sources */,
-				8EB17AF9170B1E9600B5CB1F /* CKRefreshArrowView.m in Sources */,
-				8EB17AFB170B1E9600B5CB1F /* CKRefreshControl.m in Sources */,
 				8EF5F2AF174696A000DA1C5A /* LINEActivity.m in Sources */,
 				8E7E9C141775B9DC0015339F /* IISideController.m in Sources */,
 				8E7E9C161775B9DC0015339F /* IIViewDeckController.m in Sources */,

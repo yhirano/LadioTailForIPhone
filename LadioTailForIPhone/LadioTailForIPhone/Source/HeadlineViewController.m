@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "Views/ChannelTableViewCell.h"
@@ -56,7 +55,7 @@ typedef enum {
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
     /// RefreshControll
-    CKRefreshControl *refreshControl_;
+    UIRefreshControl *refreshControl_;
 
     /// 広告セル
     AdViewCell *adViewCell_;
@@ -838,7 +837,7 @@ typedef enum {
 
     // RefreshControllの生成
     if (refreshControl_ == nil) {
-        refreshControl_ = [[CKRefreshControl alloc] init];
+        refreshControl_ = [[UIRefreshControl alloc] init];
         refreshControl_.tintColor = HEADLINE_PULL_REFRESH_COLOR;
         [refreshControl_ addTarget:self action:@selector(refreshOccured:) forControlEvents:UIControlEventValueChanged];
         [_headlineTableView addSubview:refreshControl_];
