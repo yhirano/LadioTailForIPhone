@@ -205,25 +205,16 @@
 }
 
 - (IBAction)shareChannel:(id)sender {
-    // iOS6未満
-    if (!NSClassFromString(@"UIActivityViewController")) {
-        TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
-        [tweetView setInitialText:[self shareText]];
-        [self presentModalViewController:tweetView animated:YES];
-    }
-    // iOS6以上
-    else {
-        NSArray *activityItems = @[[self shareText]];
-        NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
+    NSArray *activityItems = @[[self shareText]];
+    NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
 
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
-                                                            initWithActivityItems:activityItems
-                                                            applicationActivities:applicationActivities];
-        activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
-                                                         UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
-                                                         UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
-        [self presentViewController:activityViewController animated:YES completion:nil];
-    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
+                                                        initWithActivityItems:activityItems
+                                                        applicationActivities:applicationActivities];
+    activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
+                                                     UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
+                                                     UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - UIViewController methods
