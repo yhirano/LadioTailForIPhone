@@ -46,7 +46,8 @@
     }
 
     // ナビゲーションバーの色を変える
-    [UINavigationBar appearance].barTintColor = NAVIGATION_BAR_COLOR;
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] initWithColor:NAVIGATION_BAR_COLOR]
+                                       forBarMetrics:UIBarMetricsDefault];
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR};
     [UINavigationBar appearance].tintColor = NAVIGATION_BAR_BUTTON_COLOR;
     // 検索バーの色を変える

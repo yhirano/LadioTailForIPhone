@@ -25,7 +25,10 @@
 #pragma mark - Common view config
 
 /// ナビゲーションバーの色
-UIColor * const NAVIGATION_BAR_COLOR = [UIColor blackColor];
+UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
+                                                       green:(10.0f / 255)
+                                                        blue:(10.0f / 255)
+                                                       alpha:1.0f];
 
 /// ナビゲーションバーのテキスト色
 UIColor * const NAVIGATION_BAR_TEXT_COLOR = [UIColor whiteColor];
