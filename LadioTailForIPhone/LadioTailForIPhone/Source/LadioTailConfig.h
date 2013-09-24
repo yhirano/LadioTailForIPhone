@@ -24,22 +24,22 @@
 
 #pragma mark - Common config
 
-/// 背景の色
-FOUNDATION_EXPORT UIColor * const SIDEMENU_BACKGROUND_COLOR;
-
 /// ナビゲーションバーの色
 FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_COLOR;
 
-/// サイドメニューボタンの色
-FOUNDATION_EXPORT UIColor * const SIDEMENU_BUTTON_COLOR;
+/// ナビゲーションバーのテキスト色
+FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_TEXT_COLOR;
 
-/// 戻るボタンの色
-FOUNDATION_EXPORT UIColor * const BACK_BUTTON_COLOR;
+/// ナビゲーションバーのボタンの色
+FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_BUTTON_COLOR;
 
 /// 再生中ボタンの色
 FOUNDATION_EXPORT UIColor * const PLAYING_BUTTON_COLOR;
 
 #pragma mark - Side menu table view config
+
+/// 背景の色
+FOUNDATION_EXPORT UIColor * const SIDEMENU_BACKGROUND_COLOR;
 
 /// テーブルの背景の色
 FOUNDATION_EXPORT UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;

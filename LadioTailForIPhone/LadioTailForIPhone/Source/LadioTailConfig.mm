@@ -25,16 +25,13 @@
 #pragma mark - Common view config
 
 /// ナビゲーションバーの色
-UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
-                                                       green:(10.0f / 255)
-                                                        blue:(10.0f / 255)
-                                                       alpha:1.0f];
+UIColor * const NAVIGATION_BAR_COLOR = [UIColor blackColor];
 
-/// サイドメニューボタンの色
-UIColor * const SIDEMENU_BUTTON_COLOR = [UIColor darkGrayColor];
+/// ナビゲーションバーのテキスト色
+UIColor * const NAVIGATION_BAR_TEXT_COLOR = [UIColor whiteColor];
 
-/// 戻るボタンの色
-UIColor * const BACK_BUTTON_COLOR = [UIColor darkGrayColor];
+/// ナビゲーションバーのボタンの色
+UIColor * const NAVIGATION_BAR_BUTTON_COLOR = [UIColor lightGrayColor];
 
 /// 再生中ボタンの色
 UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)

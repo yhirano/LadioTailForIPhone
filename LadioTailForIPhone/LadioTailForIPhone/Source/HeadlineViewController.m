@@ -793,11 +793,8 @@ typedef enum {
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
                                                                       action:nil];
-    backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
-    // メニューボタンの色を変更する
-    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
     // Accessibility
     _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
     _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");

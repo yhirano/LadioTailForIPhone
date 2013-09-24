@@ -44,6 +44,11 @@
                                                                                | UIRemoteNotificationTypeAlert)];
     }
 
+    // ナビゲーションバーの色を変える
+    [UINavigationBar appearance].barTintColor = NAVIGATION_BAR_COLOR;
+    [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR};
+    [UINavigationBar appearance].tintColor = NAVIGATION_BAR_BUTTON_COLOR;
+
     return YES;
 }
 
