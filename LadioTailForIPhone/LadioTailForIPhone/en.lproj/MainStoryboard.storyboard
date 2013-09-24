@@ -673,7 +673,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7fw-gX-UoJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1109,9 +1109,22 @@
         <image name="button_share.png" width="37" height="37"/>
         <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
         <image name="navbarbtn_menu.png" width="20" height="20"/>
+        <image name="navbarbtn_menu.png" width="20" height="20"/>
         <image name="sidemenu_bitrate_black.png" width="28" height="28"/>
         <image name="sidemenu_bitrate_white.png" width="28" height="28"/>
         <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
         <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
         <image name="sidemenu_dj_black.png" width="28" height="28"/>
         <image name="sidemenu_dj_white.png" width="28" height="28"/>
@@ -1130,14 +1143,58 @@
         <image name="sidemenu_update_black.png" width="28" height="28"/>
         <image name="sidemenu_update_white.png" width="28" height="28"/>
         <image name="tablecell_broadcast_black.png" width="14" height="14"/>
+        <image name="tablecell_broadcast_black.png" width="14" height="14"/>
+        <image name="tablecell_broadcast_white.png" width="14" height="14"/>
         <image name="tablecell_broadcast_white.png" width="14" height="14"/>
         <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
         <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
         <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_black.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
+        <image name="tablecell_headphones_white.png" width="28" height="28"/>
         <image name="tablecell_headphones_white.png" width="28" height="28"/>
         <image name="tablecell_indicator_black.png" width="16" height="16"/>
+        <image name="tablecell_indicator_black.png" width="16" height="16"/>
+        <image name="tablecell_indicator_white.png" width="16" height="16"/>
         <image name="tablecell_indicator_white.png" width="16" height="16"/>
         <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_black.png" width="14" height="14"/>
+        <image name="tablecell_play_white.png" width="14" height="14"/>
+        <image name="tablecell_play_white.png" width="14" height="14"/>
+        <image name="tablecell_play_white.png" width="14" height="14"/>
+        <image name="tablecell_play_white.png" width="14" height="14"/>
         <image name="tablecell_play_white.png" width="14" height="14"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
