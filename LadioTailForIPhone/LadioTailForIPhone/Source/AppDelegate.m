@@ -26,6 +26,7 @@
 #import "ICloudStrorage.h"
 #import "ApnsStorage.h"
 #import "AppDelegate.h"
+#import "UIImage+Util.h"
 
 @implementation AppDelegate
 
@@ -48,6 +49,8 @@
     [UINavigationBar appearance].barTintColor = NAVIGATION_BAR_COLOR;
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR};
     [UINavigationBar appearance].tintColor = NAVIGATION_BAR_BUTTON_COLOR;
+    // 検索バーの色を変える
+    [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] initWithColor:SEARCH_BAR_COLOR]];
 
     return YES;
 }

@@ -98,9 +98,9 @@ UIColor * const SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR = [UIColor blackColor];
 #pragma mark - Headline table view config
 
 /// 検索バーの色
-UIColor * const SEARCH_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
-                                                   green:(10.0f / 255)
-                                                    blue:(10.0f / 255)
+UIColor * const SEARCH_BAR_COLOR = [UIColor colorWithRed:(30.0f / 255)
+                                                   green:(30.0f / 255)
+                                                    blue:(30.0f / 255)
                                                    alpha:1.0f];
 
 /// リフレッシュコントロールの色
