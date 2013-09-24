@@ -60,11 +60,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    dispatch_release(sendFavoritesDispatchQueue_);
-}
-
 - (void)registICloudNotification
 {
      // is iCloud enabled

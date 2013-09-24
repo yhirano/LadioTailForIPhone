@@ -2437,7 +2437,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
@@ -2462,7 +2462,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = LADIO_TAIL;
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
@@ -2491,7 +2491,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
@@ -2516,7 +2516,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = RADIO_EDGE;
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
