@@ -91,7 +91,7 @@
     // テーブルの境界線の色を変える
     self.tableView.separatorColor = FAVORITES_TABLE_SEPARATOR_COLOR;
 
-    // 番組画面からの戻るボタンのテキストと色を書き換える
+    // 番組画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = NSLocalizedString(@"Favorites", @"お気に入り 複数");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered

@@ -325,7 +325,7 @@
         _shareButton.accessibilityLabel = NSLocalizedString(@"Share", @"共有");
     }
 
-    // Web画面からの戻るボタンのテキストと色を書き換える
+    // Web画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = titleString;
     if ([backButtonString length] == 0) {
         backButtonString = NSLocalizedString(@"Back", @"戻る");
