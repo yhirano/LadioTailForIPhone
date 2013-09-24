@@ -92,14 +92,6 @@
     self.tableView.backgroundColor = SIDEMENU_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
     self.tableView.separatorColor = SIDEMENU_TABLE_SEPARATOR_COLOR;
-
-    // お気に入り画面からの戻るボタンのテキストと色を書き換える
-    NSString *backButtonString = @"Others";
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:nil
-                                                                      action:nil];
-    self.navigationItem.backBarButtonItem = backButtonItem;
 }
 
 - (void)viewDidUnload
