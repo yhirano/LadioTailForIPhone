@@ -676,7 +676,7 @@ typedef enum {
 {
     // このメソッドがメインキューで呼ばれた場合は即座に実行する。
     // 遅いiPodなどでは、dispatch_asyncを使用すると起動時に一瞬再生中ボタンが見えるため。
-    if (dispatch_get_current_queue() == dispatch_get_main_queue()) {
+    if ([NSThread isMainThread]) {
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
