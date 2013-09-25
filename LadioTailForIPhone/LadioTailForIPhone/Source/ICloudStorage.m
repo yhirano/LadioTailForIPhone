@@ -21,12 +21,12 @@
  */
 
 #import "RadioLib/RadioLib.h"
-#import "ICloudStrorage.h"
+#import "ICloudStorage.h"
 
 /// お気に入りを保存のキー
 #define FAVORITES_V1 @"FAVORITES_V1"
 
-@implementation ICloudStrorage
+@implementation ICloudStorage
 {
     /// お気に入りを同期するか
     BOOL syncFavorites_;
@@ -34,12 +34,12 @@
     dispatch_queue_t sendFavoritesDispatchQueue_;
 }
 
-+ (ICloudStrorage *)sharedInstance
++ (ICloudStorage *)sharedInstance
 {
-    static ICloudStrorage *instance = nil;
+    static ICloudStorage *instance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
-        instance = [[ICloudStrorage alloc] init];
+        instance = [[ICloudStorage alloc] init];
     });
     return instance;
 }

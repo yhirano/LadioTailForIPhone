@@ -25,9 +25,9 @@
 /// iCloud同期でお気に入りが変更した際のNotification
 #define LadioTailICloudStorageChangedFavoritesNotification @"LadioTailICloudStorageChangedFavoritesNotification"
 
-@interface ICloudStrorage : NSObject
+@interface ICloudStorage : NSObject
 
-+ (ICloudStrorage *)sharedInstance;
++ (ICloudStorage *)sharedInstance;
 
 /// iCloudから通知を受ける
 - (void)registICloudNotification;

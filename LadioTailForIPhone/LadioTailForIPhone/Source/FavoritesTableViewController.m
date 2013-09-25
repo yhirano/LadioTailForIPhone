@@ -25,7 +25,7 @@
 #import "Views/FavoriteTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
-#import "ICloudStrorage.h"
+#import "ICloudStorage.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
 

@@ -23,7 +23,7 @@
 #import <AudioToolbox/AudioServices.h>
 #import "LadioTailConfig.h"
 #import "RadioLib/RadioLib.h"
-#import "ICloudStrorage.h"
+#import "ICloudStorage.h"
 #import "ApnsStorage.h"
 #import "AppDelegate.h"
 #import "UIImage+Util.h"
@@ -33,7 +33,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // iCloudから通知を受ける
-    [[ICloudStrorage sharedInstance] registICloudNotification];
+    [[ICloudStorage sharedInstance] registICloudNotification];
 
     if (PROVIDER_URL != nil) {
         // お気に入りの変化を監視し、変化時にはプロバイダにお気に入り情報を送信する
@@ -83,7 +83,7 @@
     [[ApnsStorage sharedInstance] unregistApnsService];
 
     // iCloudからの通知を受けなくする
-    [[ICloudStrorage sharedInstance] unregistICloudNotification];
+    [[ICloudStorage sharedInstance] unregistICloudNotification];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken

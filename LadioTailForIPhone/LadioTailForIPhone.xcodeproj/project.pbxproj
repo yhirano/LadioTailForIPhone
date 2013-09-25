@@ -292,7 +292,7 @@
 		8E7E9C161775B9DC0015339F /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C101775B9DC0015339F /* IIViewDeckController.m */; };
 		8E7E9C171775B9DC0015339F /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C121775B9DC0015339F /* IIWrapController.m */; };
 		8E7E9C181775B9DC0015339F /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9C121775B9DC0015339F /* IIWrapController.m */; };
-		8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
+		8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8E9BE9ED1543B36D0029DB70 /* tablecell_favorite_black_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */; };
 		8E9BE9EE1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BE9EC1543B36D0029DB70 /* tablecell_favorite_black_mini@2x.png */; };
@@ -386,7 +386,7 @@
 		8ED117AE16588DCB001BD731 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83581543DC770097984D /* Player.m */; };
 		8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B835E1543DC770097984D /* SVProgressHUD.m */; };
 		8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
-		8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStrorage.m */; };
+		8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
 		8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */; };
 		8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
@@ -803,8 +803,8 @@
 		8E7E9C101775B9DC0015339F /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
 		8E7E9C111775B9DC0015339F /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
 		8E7E9C121775B9DC0015339F /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
-		8E9928D115490D230015CA5D /* ICloudStrorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStrorage.h; sourceTree = "<group>"; };
-		8E9928D215490D230015CA5D /* ICloudStrorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStrorage.m; sourceTree = "<group>"; };
+		8E9928D115490D230015CA5D /* ICloudStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStorage.h; sourceTree = "<group>"; };
+		8E9928D215490D230015CA5D /* ICloudStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStorage.m; sourceTree = "<group>"; };
 		8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApnsStorage.h; sourceTree = "<group>"; };
 		8E9AFC8016317DFB0094C738 /* ApnsStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApnsStorage.m; sourceTree = "<group>"; };
 		8E9BE9EB1543B36D0029DB70 /* tablecell_favorite_black_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_favorite_black_mini.png; sourceTree = "<group>"; };
@@ -1095,8 +1095,8 @@
 				8E0B832D1543DC770097984D /* FavoritesTableViewController.m */,
 				8E0B832E1543DC770097984D /* FavoriteViewController.h */,
 				8E0B832F1543DC770097984D /* FavoriteViewController.m */,
-				8E9928D115490D230015CA5D /* ICloudStrorage.h */,
-				8E9928D215490D230015CA5D /* ICloudStrorage.m */,
+				8E9928D115490D230015CA5D /* ICloudStorage.h */,
+				8E9928D215490D230015CA5D /* ICloudStorage.m */,
 				8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */,
 				8E9AFC8016317DFB0094C738 /* ApnsStorage.m */,
 				8E0B83571543DC770097984D /* Player.h */,
@@ -2166,7 +2166,7 @@
 				8E0B83781543DC770097984D /* Player.m in Sources */,
 				8E0B837B1543DC770097984D /* SVProgressHUD.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
-				8E9928D315490D230015CA5D /* ICloudStrorage.m in Sources */,
+				8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
 				8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */,
 				8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */,
@@ -2239,7 +2239,7 @@
 				8ED117AE16588DCB001BD731 /* Player.m in Sources */,
 				8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
-				8ED117B216588DCB001BD731 /* ICloudStrorage.m in Sources */,
+				8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
 				8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */,
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
