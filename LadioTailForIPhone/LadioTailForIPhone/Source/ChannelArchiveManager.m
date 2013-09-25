@@ -21,6 +21,7 @@
  */
 
 #import "RadioLib/RadioLib.h"
+#import "AppDelegate.h"
 #import "ChannelArchiveManager.h"
 
 @interface ChannelArchiveManager () <NSURLSessionDataDelegate>
@@ -136,7 +137,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes
 #endif // #if DEBUG
 }
 
-#pragma mark - NSURLSessionDataDelegate methods
+#pragma mark - NSURLSessionTaskDelegate methods
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
@@ -148,6 +149,17 @@ expectedTotalBytes:(int64_t)expectedTotalBytes
     }
     
     [tasks_ removeObjectForKey:task];
+}
+
+#pragma mark - NSURLSessionDelegate methods
+
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.backgroundSessionCompletionHandler) {
+        void (^completionHandler)() = appDelegate.backgroundSessionCompletionHandler;
+        appDelegate.backgroundSessionCompletionHandler = nil;
+        completionHandler();
+    }
 }
 
 @end
