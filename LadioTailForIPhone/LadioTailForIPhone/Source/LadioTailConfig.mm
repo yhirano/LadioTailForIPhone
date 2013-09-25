@@ -218,8 +218,11 @@ UIColor * const FAVORITE_BUTTON_COLOR = [UIColor whiteColor];
 /// お気に入りボタンの有効色
 UIColor * const FAVORITE_BUTTON_ENABLE_COLOR = [UIColor yellowColor];
 
-/// 広告VBiewの背景色
+/// 広告Viewの背景色
 UIColor * const AD_VIRE_BACKGROUND_COLOR = [UIColor blackColor];
+
+/// 広告Viewの表示アニメーション時間
+const CGFloat AD_VIEW_ANIMATION_DURATION = 0.4f;
 
 /// 下部Viewの上部の色
 UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)

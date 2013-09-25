@@ -43,6 +43,9 @@
     /// AdMob View
     __weak GADBannerView *adMobView_;
 
+    /// 広告が表示されているか
+    BOOL isVisibleAdBanner_;
+
     /// 開くURL
     NSURL *openUrl_;
 }
@@ -284,11 +287,6 @@
             adMobViewSize = kGADAdSizeBanner;
         }
         
-        // WebView部分を縮める
-        CGRect descriptionWebViewFrame = _descriptionWebView.frame;
-        descriptionWebViewFrame.size.height -= adMobViewSize.size.height;
-        _descriptionWebView.frame = descriptionWebViewFrame;
-        
         // 広告の下敷きとなるViewを生成する
         CGRect adBackgroundViewFrame = CGRectMake(0,
                                                   CGRectGetMaxY(_descriptionWebView.frame),
@@ -298,7 +296,7 @@
         adBackgroundView_ = adBackgroundView;
         adBackgroundView_.backgroundColor = AD_VIRE_BACKGROUND_COLOR;
         adBackgroundView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self.view addSubview:adBackgroundView_];
+        [self.view insertSubview:adBackgroundView_ belowSubview:_bottomView];
 
         // 広告Viewを生成する
         GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:adMobViewSize];
@@ -496,6 +494,26 @@
 #if DEBUG
     NSLog(@"adMobView succeed loading.");
 #endif // #if DEBUG
+
+    if (isVisibleAdBanner_ == NO) {
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = adBackgroundView_.frame;
+                             frame.origin.y -= adBackgroundView_.frame.size.height;
+                             adBackgroundView_.frame = frame;
+                         }
+                         completion:^(BOOL finished) {
+                             if (finished) {
+                                 // WebView部分を縮める
+                                 CGRect frame = _descriptionWebView.frame;
+                                 frame.size.height -= adBackgroundView_.frame.size.height;
+                                 _descriptionWebView.frame = frame;
+                             }
+                         }];
+        isVisibleAdBanner_ = YES;
+    }
 }
 
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
@@ -503,6 +521,24 @@
 #if DEBUG
     NSLog(@"adMobView failed loading. error:%@", [error localizedDescription]);
 #endif // #if DEBUG
+
+    if (isVisibleAdBanner_) {
+        // WebView部分を伸ばす
+        CGRect frame = _descriptionWebView.frame;
+        frame.size.height += adBackgroundView_.frame.size.height;
+        _descriptionWebView.frame = frame;
+
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = adBackgroundView_.frame;
+                             frame.origin.y += adBackgroundView_.frame.size.height;
+                             adBackgroundView_.frame = frame;
+                         }
+                         completion:nil];
+        isVisibleAdBanner_ = NO;
+    }
 }
 
 #pragma mark - Favorites notification
