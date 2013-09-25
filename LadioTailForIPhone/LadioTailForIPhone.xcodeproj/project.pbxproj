@@ -499,6 +499,8 @@
 		8ED118AC16588FF5001BD731 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189D16588FF5001BD731 /* Icon-Small@2x.png */; };
 		8ED118AD16588FF5001BD731 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189E16588FF5001BD731 /* Icon.png */; };
 		8ED118AE16588FF5001BD731 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED1189F16588FF5001BD731 /* Icon@2x.png */; };
+		8EE158E317F29826005325C7 /* ChannelArchiveManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE158E217F29826005325C7 /* ChannelArchiveManager.m */; };
+		8EE158E417F29826005325C7 /* ChannelArchiveManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE158E217F29826005325C7 /* ChannelArchiveManager.m */; };
 		8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
 		8EF24FA815C4C90500F18C3F /* button_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA615C4C90500F18C3F /* button_twitter.png */; };
 		8EF24FA915C4C90500F18C3F /* button_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF24FA715C4C90500F18C3F /* button_twitter@2x.png */; };
@@ -917,6 +919,8 @@
 		8ED1189F16588FF5001BD731 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/RadioEdge/Icon@2x.png"; sourceTree = "<group>"; };
 		8ED118AF1658904D001BD731 /* Radio Edge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Radio Edge.entitlements"; path = "../Radio Edge.entitlements"; sourceTree = "<group>"; };
 		8ED118B01658911C001BD731 /* RadioLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioLib.h; path = RadioLib/RadioLib.h; sourceTree = "<group>"; };
+		8EE158E117F29826005325C7 /* ChannelArchiveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelArchiveManager.h; sourceTree = "<group>"; };
+		8EE158E217F29826005325C7 /* ChannelArchiveManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelArchiveManager.m; sourceTree = "<group>"; };
 		8EE8491216029F9F00ABE8B7 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		8EF24FA615C4C90500F18C3F /* button_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_twitter.png; sourceTree = "<group>"; };
@@ -1095,6 +1099,8 @@
 				8E0B832D1543DC770097984D /* FavoritesTableViewController.m */,
 				8E0B832E1543DC770097984D /* FavoriteViewController.h */,
 				8E0B832F1543DC770097984D /* FavoriteViewController.m */,
+				8EE158E117F29826005325C7 /* ChannelArchiveManager.h */,
+				8EE158E217F29826005325C7 /* ChannelArchiveManager.m */,
 				8E9928D115490D230015CA5D /* ICloudStorage.h */,
 				8E9928D215490D230015CA5D /* ICloudStorage.m */,
 				8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */,
@@ -2169,6 +2175,7 @@
 				8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
 				8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */,
+				8EE158E317F29826005325C7 /* ChannelArchiveManager.m in Sources */,
 				8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */,
 				8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */,
 				8ED117401658779F001BD731 /* Channel.m in Sources */,
@@ -2242,6 +2249,7 @@
 				8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
 				8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */,
+				8EE158E417F29826005325C7 /* ChannelArchiveManager.m in Sources */,
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
 				8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */,
 				8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */,

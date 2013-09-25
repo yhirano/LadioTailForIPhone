@@ -21,6 +21,7 @@
  */
 
 #import <AVFoundation/AVAsset.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "FavoriteManager.h"
 #import "Html/ChannelHtml.h"
 #import "Channel.h"
@@ -360,6 +361,33 @@ static NSCache *matchCache = nil;
     
     hasPlaySupportedCache_ = YES;
     playSupportedCache_ = result;
+    
+    return result;
+}
+
+- (NSString *)filenameExtensionFromMimeType
+{
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)type_, NULL);
+    NSString *result = (__bridge NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+    CFRelease(uti);
+    
+    if (!result) {
+        if ([type_ isEqualToString:@"audio/aac"]) {
+            result = @"aac";
+        } else if ([type_ isEqualToString:@"audio/aacp"]) {
+            result = @"aac";
+        } else if ([type_ isEqualToString:@"audio/3gpp"]) {
+            result = @"3gp";
+        } else if ([type_ isEqualToString:@"audio/3gpp2"]) {
+            result = @"3g2";
+        } else if ([type_ isEqualToString:@"audio/mp4"]) {
+            result = @"mp4";
+        } else if ([type_ isEqualToString:@"audio/MP4A-LATM"]) {
+            result = @"mp4";
+        } else if ([type_ isEqualToString:@"audio/mpeg4-generic"]) {
+            result = @"mp4";
+        }
+    }
     
     return result;
 }
