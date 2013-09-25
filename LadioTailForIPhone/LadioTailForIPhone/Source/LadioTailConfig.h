@@ -198,9 +198,6 @@ FOUNDATION_EXPORT UIColor * const BOTTOM_BAR_TOP_COLOR;
 /// 下部Viewの下部の色
 FOUNDATION_EXPORT UIColor * const BOTTOM_BAR_BOTTOM_COLOR;
 
-/// リンクをクリックするとSafariが開く
-FOUNDATION_EXPORT const BOOL OPEN_SAFARI_WHEN_CLICK_LINK;
-
 #pragma mark - Favorites table view config
 
 /// テーブルの背景の色
