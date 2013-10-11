@@ -23,16 +23,17 @@
 #import <AudioToolbox/AudioServices.h>
 #import "LadioTailConfig.h"
 #import "RadioLib/RadioLib.h"
-#import "ICloudStrorage.h"
+#import "ICloudStorage.h"
 #import "ApnsStorage.h"
 #import "AppDelegate.h"
+#import "UIImage+Util.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // iCloudから通知を受ける
-    [[ICloudStrorage sharedInstance] registICloudNotification];
+    [[ICloudStorage sharedInstance] registICloudNotification];
 
     if (PROVIDER_URL != nil) {
         // お気に入りの変化を監視し、変化時にはプロバイダにお気に入り情報を送信する
@@ -43,6 +44,14 @@
                                                                                | UIRemoteNotificationTypeSound
                                                                                | UIRemoteNotificationTypeAlert)];
     }
+
+    // ナビゲーションバーの色を変える
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] initWithColor:NAVIGATION_BAR_COLOR]
+                                       forBarMetrics:UIBarMetricsDefault];
+    [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR};
+    [UINavigationBar appearance].tintColor = NAVIGATION_BAR_BUTTON_COLOR;
+    // 検索バーの色を変える
+    [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] initWithColor:SEARCH_BAR_COLOR]];
 
     return YES;
 }
@@ -74,7 +83,7 @@
     [[ApnsStorage sharedInstance] unregistApnsService];
 
     // iCloudからの通知を受けなくする
-    [[ICloudStrorage sharedInstance] unregistICloudNotification];
+    [[ICloudStorage sharedInstance] unregistICloudNotification];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
@@ -134,6 +143,13 @@
         default:
             break;
     }
+}
+
+- (void)application:(UIApplication *)application
+handleEventsForBackgroundURLSession:(NSString *)identifier
+  completionHandler:(void (^)())completionHandler
+{
+    _backgroundSessionCompletionHandler = completionHandler;
 }
 
 @end

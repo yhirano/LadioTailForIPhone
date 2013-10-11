@@ -30,11 +30,11 @@ UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
                                                         blue:(10.0f / 255)
                                                        alpha:1.0f];
 
-/// サイドメニューボタンの色
-UIColor * const SIDEMENU_BUTTON_COLOR = [UIColor darkGrayColor];
+/// ナビゲーションバーのテキスト色
+UIColor * const NAVIGATION_BAR_TEXT_COLOR = [UIColor whiteColor];
 
-/// 戻るボタンの色
-UIColor * const BACK_BUTTON_COLOR = [UIColor darkGrayColor];
+/// ナビゲーションバーのボタンの色
+UIColor * const NAVIGATION_BAR_BUTTON_COLOR = [UIColor lightGrayColor];
 
 /// 再生中ボタンの色
 UIColor * const PLAYING_BUTTON_COLOR = [UIColor colorWithRed:(191.0f / 255)
@@ -101,9 +101,9 @@ UIColor * const SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR = [UIColor blackColor];
 #pragma mark - Headline table view config
 
 /// 検索バーの色
-UIColor * const SEARCH_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
-                                                   green:(10.0f / 255)
-                                                    blue:(10.0f / 255)
+UIColor * const SEARCH_BAR_COLOR = [UIColor colorWithRed:(30.0f / 255)
+                                                   green:(30.0f / 255)
+                                                    blue:(30.0f / 255)
                                                    alpha:1.0f];
 
 /// リフレッシュコントロールの色
@@ -213,10 +213,16 @@ const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL = YES;
 #pragma mark - Channel view config
 
 /// お気に入りボタンの色
-UIColor * const FAVORITE_BUTTON_COLOR = [UIColor darkGrayColor];
+UIColor * const FAVORITE_BUTTON_COLOR = [UIColor whiteColor];
 
-/// 広告VBiewの背景色
+/// お気に入りボタンの有効色
+UIColor * const FAVORITE_BUTTON_ENABLE_COLOR = [UIColor yellowColor];
+
+/// 広告Viewの背景色
 UIColor * const AD_VIRE_BACKGROUND_COLOR = [UIColor blackColor];
+
+/// 広告Viewの表示アニメーション時間
+const CGFloat AD_VIEW_ANIMATION_DURATION = 0.4f;
 
 /// 下部Viewの上部の色
 UIColor * const BOTTOM_BAR_TOP_COLOR = [UIColor colorWithRed:(28.0f / 255)

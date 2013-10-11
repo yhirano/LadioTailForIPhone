@@ -242,20 +242,26 @@
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
     [super willMoveToSuperview:newSuperview];
-    
-    if(![newSuperview isKindOfClass:[UITableView class]]) {
-        return;
+
+    // 〜 iOS 6.1
+    if ([newSuperview isKindOfClass:[UITableView class]]) {
+        tableView_ = (UITableView*)newSuperview;
+        tableViewDelegate_ = (id<SwipableTableViewDelegate>)tableView_.delegate;
     }
-    
-    tableView_ = (UITableView*)newSuperview;
-    tableViewDelegate_ = (id<SwipableTableViewDelegate>)tableView_.delegate;
+    // iOS 7.0 〜
+    else if ([newSuperview.superview isKindOfClass:[UITableView class]]) {
+        tableView_ = (UITableView*)newSuperview.superview;
+        tableViewDelegate_ = (id<SwipableTableViewDelegate>)tableView_.delegate;
+    }
 }
 
 - (void)didMoveToSuperview
 {
     [super didMoveToSuperview];
 
-    if ([self.superview isEqual:tableView_]) {
+    if ([self.superview isEqual:tableView_] || // 〜 iOS 6.1
+        [self.superview.superview isEqual:tableView_] // iOS 7.0 〜
+    ) {
         NSIndexPath* indexPath = [tableView_ indexPathForCell:self];
         if ([tableViewDelegate_ respondsToSelector:@selector(tableView:sizeForRowAtIndexPath:)]) {
             limitSize_.width = [tableViewDelegate_ tableView:tableView_ sizeForRowAtIndexPath:indexPath];

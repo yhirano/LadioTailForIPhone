@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import "CKRefreshControl/CKRefreshControl.h"
 #import "FBNetworkReachability/FBNetworkReachability.h"
 #import "ViewDeck/IIViewDeckController.h"
 #import "Views/ChannelTableViewCell.h"
@@ -56,7 +55,7 @@ typedef enum {
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
     /// RefreshControll
-    CKRefreshControl *refreshControl_;
+    UIRefreshControl *refreshControl_;
 
     /// 広告セル
     AdViewCell *adViewCell_;
@@ -677,7 +676,7 @@ typedef enum {
 {
     // このメソッドがメインキューで呼ばれた場合は即座に実行する。
     // 遅いiPodなどでは、dispatch_asyncを使用すると起動時に一瞬再生中ボタンが見えるため。
-    if (dispatch_get_current_queue() == dispatch_get_main_queue()) {
+    if ([NSThread isMainThread]) {
         // 再生状態に逢わせて再生ボタンの表示を切り替える
         if ([[Player sharedInstance] state] == PlayerStatePlay) {
             self.navigationItem.rightBarButtonItem = tempPlayingBarButtonItem_;
@@ -782,7 +781,7 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
-    // 番組画面からの戻るボタンのテキストと色を書き換える
+    // 番組画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = nil;
     if (!UIAccessibilityIsVoiceOverRunning()) {
         backButtonString = NSLocalizedString(@"ON AIR", @"番組一覧にトップに表示されるONAIR 番組が無い場合/番組画面から戻るボタン");
@@ -794,11 +793,8 @@ typedef enum {
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
                                                                       action:nil];
-    backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
-    // メニューボタンの色を変更する
-    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
     // Accessibility
     _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
     _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");
@@ -838,7 +834,7 @@ typedef enum {
 
     // RefreshControllの生成
     if (refreshControl_ == nil) {
-        refreshControl_ = [[CKRefreshControl alloc] init];
+        refreshControl_ = [[UIRefreshControl alloc] init];
         refreshControl_.tintColor = HEADLINE_PULL_REFRESH_COLOR;
         [refreshControl_ addTarget:self action:@selector(refreshOccured:) forControlEvents:UIControlEventValueChanged];
         [_headlineTableView addSubview:refreshControl_];
