@@ -20,11 +20,19 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+/// iCloud同期でお気に入りが変更した際のNotification
+#define LadioTailICloudStorageChangedFavoritesNotification @"LadioTailICloudStorageChangedFavoritesNotification"
 
-@property (strong, nonatomic) UIWindow *window;
-@property (copy) void (^backgroundSessionCompletionHandler)();
+@interface ICloudStorage : NSObject
+
++ (ICloudStorage *)sharedInstance;
+
+/// iCloudから通知を受ける
+- (void)registICloudNotification;
+
+/// iCloudからの通知を受けなくする
+- (void)unregistICloudNotification;
 
 @end

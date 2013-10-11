@@ -24,22 +24,22 @@
 
 #pragma mark - Common config
 
-/// 背景の色
-FOUNDATION_EXPORT UIColor * const SIDEMENU_BACKGROUND_COLOR;
-
 /// ナビゲーションバーの色
 FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_COLOR;
 
-/// サイドメニューボタンの色
-FOUNDATION_EXPORT UIColor * const SIDEMENU_BUTTON_COLOR;
+/// ナビゲーションバーのテキスト色
+FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_TEXT_COLOR;
 
-/// 戻るボタンの色
-FOUNDATION_EXPORT UIColor * const BACK_BUTTON_COLOR;
+/// ナビゲーションバーのボタンの色
+FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_BUTTON_COLOR;
 
 /// 再生中ボタンの色
 FOUNDATION_EXPORT UIColor * const PLAYING_BUTTON_COLOR;
 
 #pragma mark - Side menu table view config
+
+/// 背景の色
+FOUNDATION_EXPORT UIColor * const SIDEMENU_BACKGROUND_COLOR;
 
 /// テーブルの背景の色
 FOUNDATION_EXPORT UIColor * const SIDEMENU_TABLE_BACKGROUND_COLOR;
@@ -183,17 +183,20 @@ FOUNDATION_EXPORT const BOOL SCROLL_TO_TOP_AT_PLAYING_CHANNEL_CELL;
 /// お気に入りボタンの色
 FOUNDATION_EXPORT UIColor * const FAVORITE_BUTTON_COLOR;
 
-/// 広告VBiewの背景色
+/// お気に入りボタンの有効色
+FOUNDATION_EXPORT UIColor * const FAVORITE_BUTTON_ENABLE_COLOR;
+
+/// 広告Viewの背景色
 FOUNDATION_EXPORT UIColor * const AD_VIRE_BACKGROUND_COLOR;
+
+/// 広告Viewの表示アニメーション時間
+FOUNDATION_EXPORT const CGFloat AD_VIEW_ANIMATION_DURATION;
 
 /// 下部Viewの上部の色
 FOUNDATION_EXPORT UIColor * const BOTTOM_BAR_TOP_COLOR;
 
 /// 下部Viewの下部の色
 FOUNDATION_EXPORT UIColor * const BOTTOM_BAR_BOTTOM_COLOR;
-
-/// リンクをクリックするとSafariが開く
-FOUNDATION_EXPORT const BOOL OPEN_SAFARI_WHEN_CLICK_LINK;
 
 #pragma mark - Favorites table view config
 

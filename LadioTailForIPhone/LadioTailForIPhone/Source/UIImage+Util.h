@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2013 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,17 +22,8 @@
 
 #import <Foundation/Foundation.h>
 
-/// iCloud同期でお気に入りが変更した際のNotification
-#define LadioTailICloudStorageChangedFavoritesNotification @"LadioTailICloudStorageChangedFavoritesNotification"
+@interface UIImage (Util)
 
-@interface ICloudStrorage : NSObject
-
-+ (ICloudStrorage *)sharedInstance;
-
-/// iCloudから通知を受ける
-- (void)registICloudNotification;
-
-/// iCloudからの通知を受けなくする
-- (void)unregistICloudNotification;
+- (id)initWithColor:(UIColor *)color;
 
 @end

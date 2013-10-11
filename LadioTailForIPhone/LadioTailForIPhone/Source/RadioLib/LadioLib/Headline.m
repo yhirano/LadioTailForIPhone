@@ -341,7 +341,6 @@ static NSRegularExpression *chsExp = nil;
                 dispatch_semaphore_signal(semaphore);
             }
         });
-        dispatch_release(semaphore);
 
         [channels removeObjectsAtIndexes:removeItemIndexes];
     }

@@ -25,7 +25,7 @@
 #import "Views/FavoriteTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"
-#import "ICloudStrorage.h"
+#import "ICloudStorage.h"
 #import "FavoriteViewController.h"
 #import "FavoritesTableViewController.h"
 
@@ -73,8 +73,7 @@
 
     self.navigationItem.title = NSLocalizedString(@"Favorites", @"お気に入り 複数");
 
-    // メニューボタンの色を変更する
-    _sideMenuBarButtonItem.tintColor = SIDEMENU_BUTTON_COLOR;
+    // Accessibility
     _sideMenuBarButtonItem.accessibilityLabel = NSLocalizedString(@"Main menu", @"メインメニューボタン");
     _sideMenuBarButtonItem.accessibilityHint = NSLocalizedString(@"Open the main menu", @"メインメニューを開く");
 
@@ -92,13 +91,12 @@
     // テーブルの境界線の色を変える
     self.tableView.separatorColor = FAVORITES_TABLE_SEPARATOR_COLOR;
 
-    // 番組画面からの戻るボタンのテキストと色を書き換える
+    // 番組画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = NSLocalizedString(@"Favorites", @"お気に入り 複数");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
                                                                       action:nil];
-    backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 }
 

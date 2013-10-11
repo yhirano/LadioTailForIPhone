@@ -345,7 +345,7 @@ typedef enum
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
     [self acviveAudioSession];
     player_ = [AVPlayer playerWithURL:url];
-    player_.allowsAirPlayVideo = NO; // VideoをAirPlayしない場合はNOにしてしまった方がいいらしい
+    player_.allowsExternalPlayback = NO; // VideoをAirPlayしない場合はNOにしてしまった方がいいらしい
     [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
     [player_ play];
     

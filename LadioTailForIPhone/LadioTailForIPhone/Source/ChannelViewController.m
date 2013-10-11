@@ -43,6 +43,9 @@
     /// AdMob View
     __weak GADBannerView *adMobView_;
 
+    /// 広告が表示されているか
+    BOOL isVisibleAdBanner_;
+
     /// 開くURL
     NSURL *openUrl_;
 }
@@ -73,11 +76,11 @@
 {
     UIBarButtonItem *favoriteButton = self.navigationItem.rightBarButtonItem;
     if ([_channel favorite]) {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_yellow"]];
+        favoriteButton.tintColor = FAVORITE_BUTTON_ENABLE_COLOR;
         favoriteButton.accessibilityLabel = NSLocalizedString(@"Remove Favorite", @"お気に入り削除");
         favoriteButton.accessibilityHint = NSLocalizedString(@"Remove from favorite this channel", @"この番組をお気に入りから削除");
     } else {
-        [favoriteButton setImage:[UIImage imageNamed:@"navbarbtn_favorite_white"]];
+        favoriteButton.tintColor = FAVORITE_BUTTON_COLOR;
         favoriteButton.accessibilityLabel = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
         favoriteButton.accessibilityHint = NSLocalizedString(@"Add to favorite this channel", @"この番組をお気に入りに追加");
     }
@@ -205,25 +208,19 @@
 }
 
 - (IBAction)shareChannel:(id)sender {
-    // iOS6未満
-    if (!NSClassFromString(@"UIActivityViewController")) {
-        TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
-        [tweetView setInitialText:[self shareText]];
-        [self presentModalViewController:tweetView animated:YES];
-    }
-    // iOS6以上
-    else {
-        NSArray *activityItems = @[[self shareText]];
-        NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
+    NSArray *activityItems = @[[self shareText]];
+    NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
 
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
-                                                            initWithActivityItems:activityItems
-                                                            applicationActivities:applicationActivities];
-        activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
-                                                         UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
-                                                         UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
-        [self presentViewController:activityViewController animated:YES completion:nil];
-    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
+                                                        initWithActivityItems:activityItems
+                                                        applicationActivities:applicationActivities];
+    activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
+                                                     UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
+                                                     UIActivityTypePrint, UIActivityTypeSaveToCameraRoll,
+                                                     UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+                                                     UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo,
+                                                     UIActivityTypeAirDrop];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - UIViewController methods
@@ -290,11 +287,6 @@
             adMobViewSize = kGADAdSizeBanner;
         }
         
-        // WebView部分を縮める
-        CGRect descriptionWebViewFrame = _descriptionWebView.frame;
-        descriptionWebViewFrame.size.height -= adMobViewSize.size.height;
-        _descriptionWebView.frame = descriptionWebViewFrame;
-        
         // 広告の下敷きとなるViewを生成する
         CGRect adBackgroundViewFrame = CGRectMake(0,
                                                   CGRectGetMaxY(_descriptionWebView.frame),
@@ -304,7 +296,7 @@
         adBackgroundView_ = adBackgroundView;
         adBackgroundView_.backgroundColor = AD_VIRE_BACKGROUND_COLOR;
         adBackgroundView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self.view addSubview:adBackgroundView_];
+        [self.view insertSubview:adBackgroundView_ belowSubview:_bottomView];
 
         // 広告Viewを生成する
         GADBannerView *adMobView = [[GADBannerView alloc] initWithAdSize:adMobViewSize];
@@ -331,7 +323,7 @@
         _shareButton.accessibilityLabel = NSLocalizedString(@"Share", @"共有");
     }
 
-    // Web画面からの戻るボタンのテキストと色を書き換える
+    // Web画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = titleString;
     if ([backButtonString length] == 0) {
         backButtonString = NSLocalizedString(@"Back", @"戻る");
@@ -340,7 +332,6 @@
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil
                                                                       action:nil];
-    backButtonItem.tintColor = BACK_BUTTON_COLOR;
     self.navigationItem.backBarButtonItem = backButtonItem;
 
     // WebViewのスクロールの影を消す
@@ -503,6 +494,26 @@
 #if DEBUG
     NSLog(@"adMobView succeed loading.");
 #endif // #if DEBUG
+
+    if (isVisibleAdBanner_ == NO) {
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = adBackgroundView_.frame;
+                             frame.origin.y -= adBackgroundView_.frame.size.height;
+                             adBackgroundView_.frame = frame;
+                         }
+                         completion:^(BOOL finished) {
+                             if (finished) {
+                                 // WebView部分を縮める
+                                 CGRect frame = _descriptionWebView.frame;
+                                 frame.size.height -= adBackgroundView_.frame.size.height;
+                                 _descriptionWebView.frame = frame;
+                             }
+                         }];
+        isVisibleAdBanner_ = YES;
+    }
 }
 
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
@@ -510,6 +521,24 @@
 #if DEBUG
     NSLog(@"adMobView failed loading. error:%@", [error localizedDescription]);
 #endif // #if DEBUG
+
+    if (isVisibleAdBanner_) {
+        // WebView部分を伸ばす
+        CGRect frame = _descriptionWebView.frame;
+        frame.size.height += adBackgroundView_.frame.size.height;
+        _descriptionWebView.frame = frame;
+
+        [UIView animateWithDuration:AD_VIEW_ANIMATION_DURATION
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = adBackgroundView_.frame;
+                             frame.origin.y += adBackgroundView_.frame.size.height;
+                             adBackgroundView_.frame = frame;
+                         }
+                         completion:nil];
+        isVisibleAdBanner_ = NO;
+    }
 }
 
 #pragma mark - Favorites notification

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2013 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,18 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class Channel;
 
-@property (strong, nonatomic) UIWindow *window;
-@property (copy) void (^backgroundSessionCompletionHandler)();
+@interface ChannelArchiveManager : NSObject
+
++ (ChannelArchiveManager *)sharedInstance;
+
+/// 指定した番組のダウンロードを開始する
+///
+/// @param channel ダウンロードする番組
+/// @return ダウンロードタスク
+- (NSURLSessionDownloadTask *)recode:(Channel *)channel;
 
 @end

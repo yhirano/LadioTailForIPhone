@@ -29,7 +29,6 @@ Ladio Tail for iPhoneには下記のリソースが含まれています。
 
 ### ソースコード
 
-* [CKRefreshControl](https://github.com/instructure/CKRefreshControl) - MIT License
 * [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability) - MIT License
 * [GRMustache](https://github.com/groue/GRMustache) - MIT License
 * [IIViewDeckController](https://github.com/Inferis/ViewDeck) - MIT License

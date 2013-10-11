@@ -53,11 +53,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    dispatch_release(sendFavoritesDispatchQueue_);
-}
-
 - (void)registApnsService
 {
     // 番組のお気に入りの変化通知を受け取る

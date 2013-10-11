@@ -33,9 +33,6 @@
 {
     [super viewDidLoad];
 
-    // ナビゲーションバーの色を変える
-    self.navigationBar.tintColor = NAVIGATION_BAR_COLOR;
-
     // ナビゲーションバーのスライドでサイドメニューを開くことができる
     self.viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
 }
