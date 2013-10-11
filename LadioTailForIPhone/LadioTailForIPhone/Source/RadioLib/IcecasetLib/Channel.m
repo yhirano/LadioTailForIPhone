@@ -367,24 +367,25 @@ static NSCache *matchCache = nil;
 
 - (NSString *)filenameExtensionFromMimeType
 {
-    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)type_, NULL);
+    // MIME Typeから拡張子を取得
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)serverType_, NULL);
     NSString *result = (__bridge NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
     CFRelease(uti);
     
     if (!result) {
-        if ([type_ isEqualToString:@"audio/aac"]) {
+        if ([serverType_ isEqualToString:@"audio/aac"]) {
             result = @"aac";
-        } else if ([type_ isEqualToString:@"audio/aacp"]) {
+        } else if ([serverType_ isEqualToString:@"audio/aacp"]) {
             result = @"aac";
-        } else if ([type_ isEqualToString:@"audio/3gpp"]) {
+        } else if ([serverType_ isEqualToString:@"audio/3gpp"]) {
             result = @"3gp";
-        } else if ([type_ isEqualToString:@"audio/3gpp2"]) {
+        } else if ([serverType_ isEqualToString:@"audio/3gpp2"]) {
             result = @"3g2";
-        } else if ([type_ isEqualToString:@"audio/mp4"]) {
+        } else if ([serverType_ isEqualToString:@"audio/mp4"]) {
             result = @"mp4";
-        } else if ([type_ isEqualToString:@"audio/MP4A-LATM"]) {
+        } else if ([serverType_ isEqualToString:@"audio/MP4A-LATM"]) {
             result = @"mp4";
-        } else if ([type_ isEqualToString:@"audio/mpeg4-generic"]) {
+        } else if ([serverType_ isEqualToString:@"audio/mpeg4-generic"]) {
             result = @"mp4";
         }
     }

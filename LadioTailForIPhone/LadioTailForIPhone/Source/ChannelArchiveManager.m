@@ -57,19 +57,27 @@
         return nil;
     }
 
+#if defined(LADIO_TAIL)
+    NSURL *url = channel.playUrl;
+#elif defined(RADIO_EDGE)
+    NSURL *url = channel.listenUrl;
+#else
+    #error "Not defined LADIO_TAIL or RADIO_EDGE"
+#endif
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
     NSString *identifier = [NSString stringWithFormat:@"%@%@",
                             [dateFormatter stringFromDate:[NSDate date]],
-                            [channel.playUrl absoluteString]];
+                            [url absoluteString]];
 
     NSURLSessionConfiguration* sessionConfig =
         [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
     sessionConfig.allowsCellularAccess = YES;
 
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
-    NSURLRequest *request = [NSURLRequest requestWithURL:channel.playUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request];
     [tasks_ setObject:channel forKey:task];
     [task resume];
