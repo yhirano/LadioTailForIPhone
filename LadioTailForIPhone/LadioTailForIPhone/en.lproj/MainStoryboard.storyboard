@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -903,6 +903,35 @@
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" hint="" label=""/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SleepTimerCell" rowHeight="60" id="Ifb-9B-dbN" customClass="SideMenuTableViewCell">
+                                        <rect key="frame" x="0.0" y="418" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ifb-9B-dbN" id="7Ci-E4-If8">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_sleeptimer_white.png" highlightedImage="sidemenu_sleeptimer_black.png" id="Ypl-Sx-WRl">
+                                                    <rect key="frame" x="24" y="11" width="21" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Sleep TImer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="fSV-wR-7m8">
+                                                    <rect key="frame" x="56" y="11" width="236" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" text="xxxx/xx/xx xx:xx:xx" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="mb1-wj-0rq">
+                                                    <rect key="frame" x="56" y="33" width="236" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" hint="" label=""/>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="t1T-M7-iP6" id="KJz-vN-Hrm"/>
@@ -1125,6 +1154,8 @@
         <image name="sidemenu_newly_white.png" width="28" height="28"/>
         <image name="sidemenu_none_black.png" width="28" height="28"/>
         <image name="sidemenu_none_white.png" width="28" height="28"/>
+        <image name="sidemenu_sleeptimer_black.png" width="28" height="28"/>
+        <image name="sidemenu_sleeptimer_white.png" width="28" height="28"/>
         <image name="sidemenu_title_black.png" width="28" height="28"/>
         <image name="sidemenu_title_white.png" width="28" height="28"/>
         <image name="sidemenu_update_black.png" width="28" height="28"/>
