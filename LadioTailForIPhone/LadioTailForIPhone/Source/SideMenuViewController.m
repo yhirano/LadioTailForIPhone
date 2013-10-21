@@ -28,9 +28,17 @@
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
 #import "FavoritesTableViewController.h"
+#import "SleepTimer.h"
 #import "SideMenuViewController.h"
 
+static const NSInteger ALERT_SLEEP_TIMER = 1;
+
 @implementation SideMenuViewController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailSleepTimerUpdate object:nil];
+}
 
 #pragma mark - Private methods
 
@@ -79,6 +87,11 @@
     return NO;
 }
 
+- (void)sleepTimerUpdate:(NSNotification *)timer
+{
+    [self.tableView reloadData];
+}
+
 #pragma mark - UIView methods
 
 - (void)viewDidLoad
@@ -92,6 +105,11 @@
     self.tableView.backgroundColor = SIDEMENU_TABLE_BACKGROUND_COLOR;
     // テーブルの境界線の色を変える
     self.tableView.separatorColor = SIDEMENU_TABLE_SEPARATOR_COLOR;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sleepTimerUpdate:)
+                                                 name:LadioTailSleepTimerUpdate
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -159,7 +177,7 @@
         case 1: // Sort Section
             return 4;
         case 2: // Others Section
-            return 1;
+            return 2;
         default:
             return 0;
     }
@@ -396,6 +414,43 @@
                     cell.accessibilityHint = NSLocalizedString(@"Open the favorites view", @"お気に入り画面を開く");
                     break;
                 }
+                case 1: // Sleep timer
+                {
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"SleepTimerCell"];
+                    
+                    UILabel *sleepTimerTitleLabel = (UILabel *) [cell viewWithTag:2];
+                    sleepTimerTitleLabel.text = NSLocalizedString(@"Sleep Timer", @"スリープタイマー");
+                    
+                    UILabel *sleepTimerDateLabel = (UILabel *) [cell viewWithTag:3];
+                    NSDate *sleepTimerFireDate = [[SleepTimer sharedInstance] fireDate];
+                    // スリープタイマーの設定がある場合
+                    if (sleepTimerFireDate) {
+                        static NSDateFormatter *dateFormatter = nil;
+                        static dispatch_once_t onceToken = 0;
+                        dispatch_once(&onceToken, ^{
+                            dateFormatter = [[NSDateFormatter alloc] init];
+                            [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+                            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+                        });
+                        sleepTimerDateLabel.text = [dateFormatter stringFromDate:sleepTimerFireDate];
+                        
+                        sleepTimerDateLabel.hidden = NO;
+                    }
+                    // スリープタイマーの設定が無い場合
+                    else {
+                        sleepTimerDateLabel.hidden = YES;
+                    }
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    sleepTimerTitleLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    sleepTimerTitleLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    sleepTimerDateLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    sleepTimerDateLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    cell.accessibilityLabel = NSLocalizedString(@"Sleep Timer", @"スリープタイマー");
+                    cell.accessibilityHint = NSLocalizedString(@"Set the sleep timer", @"スリープタイマーを設定する");
+                    break;
+                }
                 default:
                     break;
             }
@@ -408,6 +463,18 @@
 }
 
 #pragma mark - UITableViewDelegate methods
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Others - Sleep Timer
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        // スリープタイマーの設定がある場合
+        if ([[SleepTimer sharedInstance] fireDate]) {
+            return 60;
+        }
+    }
+    return 44;
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -631,12 +698,59 @@
                     }
                     break;
                 }
+                case 1:
+                {/* 再生停止までの時間を選択してください */
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", @"キャンセル")
+                                                          otherButtonTitles:NSLocalizedString(@"Off", @"オフ"),
+                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 15],
+                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 30],
+                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 60],
+                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 120],
+                                                                            nil];
+                    alert.tag = ALERT_SLEEP_TIMER;
+                    [alert show];
+                    break;
+                }
                 default:
                     break;
             }
             break;
         default:
             break;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate methods
+
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == ALERT_SLEEP_TIMER) {
+        SleepTimer *sleepTimer = [SleepTimer sharedInstance];
+        switch (buttonIndex) {
+            case 1: // オフ
+                [sleepTimer stop];
+                break;
+            case 2: // 15分後
+                [sleepTimer setSleepTimerWithInterval:15 * 60];
+                break;
+            case 3: // 30分後
+                [sleepTimer setSleepTimerWithInterval:30 * 60];
+                break;
+            case 4: // 60分後
+                [sleepTimer setSleepTimerWithInterval:60 * 60];
+                break;
+            case 5: // 120分後
+                [sleepTimer setSleepTimerWithInterval:120 * 60];
+                break;
+            case 0: // キャンセル
+            default:
+                break;
+        }
+        
+        [self.viewDeckController closeLeftViewAnimated:YES];
     }
 }
 
