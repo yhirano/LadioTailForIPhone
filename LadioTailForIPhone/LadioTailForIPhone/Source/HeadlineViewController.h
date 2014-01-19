@@ -44,6 +44,13 @@
 
 - (void)fetchHeadline;
 
+/**
+ * 番組表の最終更新時間が指定の秒数より前の場合にのみ番組表を更新する
+ *
+ * @param intarval 番組表の最終更新時間がここに指定した秒数よりも前の場合に番組表を更新する
+ */
+- (void)fetchHeadlineIfLastUpdatePassedSince:(NSTimeInterval)intarval;
+
 - (void)scrollToTopAnimated:(BOOL)animated;
 
 - (IBAction)openSideMenu:(id)sender;

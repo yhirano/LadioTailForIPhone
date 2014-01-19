@@ -137,6 +137,9 @@
                                    [parser setDelegate:strongSelf];
                                    [parser parse];
 
+                                   // ヘッドラインの最終更新時間を更新
+                                   _lastUpdate = [NSDate date];
+
                                    [[NSNotificationCenter defaultCenter]
                                            postNotificationName:RadioLibHeadlineDidFinishLoadNotification
                                                          object:strongSelf];

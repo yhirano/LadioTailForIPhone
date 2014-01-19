@@ -77,6 +77,8 @@ typedef enum {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidPlayNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)setChannelSortType:(ChannelSortType)channelSortType
@@ -98,6 +100,14 @@ typedef enum {
 {
     Headline *headline = [Headline sharedInstance];
     [headline fetchHeadline];
+}
+
+- (void)fetchHeadlineIfLastUpdatePassedSince:(NSTimeInterval)intarval
+{
+    Headline *headline = [Headline sharedInstance];
+    if (headline.lastUpdate == nil || [[NSDate date] timeIntervalSinceDate:headline.lastUpdate] > intarval) {
+        [headline fetchHeadline];
+    }
 }
 
 - (void)scrollToTopAnimated:(BOOL)animated
@@ -781,6 +791,12 @@ typedef enum {
                                                  name:LadioTailPlayerDidStopNotification
                                                object:nil];
 
+    // アプリがフォアグラウンドに来たときに番組表を更新する
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+
     // 番組画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = nil;
     if (!UIAccessibilityIsVoiceOverRunning()) {
@@ -1236,6 +1252,20 @@ didChangeSwipeEnable:(BOOL)enable
     if (headlineViewDisplayType_ != currentHeadlineViewDisplayType) {
         headlineViewDisplayType_ = currentHeadlineViewDisplayType;
         [self updateHeadlineTable];
+    }
+}
+
+#pragma mark - Application notifications
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+#ifdef DEBUG
+    NSLog(@"%@ received did become active notification.", NSStringFromClass([self class]));
+#endif /* #ifdef DEBUG */
+
+    if (DID_BECOME_HEADLINE_UPDATE_SEC >= 0) {
+        // アプリがフォアグラウンドに戻ってきた際は番組表を更新する
+        [self fetchHeadlineIfLastUpdatePassedSince:DID_BECOME_HEADLINE_UPDATE_SEC];
     }
 }
 

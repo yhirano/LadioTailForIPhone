@@ -254,6 +254,9 @@ static NSRegularExpression *chsExp = nil;
                                        [self clearChannelsCache];
                                    }
 
+                                   // ヘッドラインの最終更新時間を更新
+                                   _lastUpdate = [NSDate date];
+
                                    // ヘッドライン取得中のフラグを下げる
                                    @synchronized (isFetchingLock_) {
                                        isFetching_ = NO;
