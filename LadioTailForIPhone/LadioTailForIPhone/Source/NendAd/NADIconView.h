@@ -2,7 +2,7 @@
 //  NADIconView.h
 //  NendAd
 //
-//  Ver 2.3.0
+//  Ver 2.3.1
 //
 //  アイコン型広告ビュークラス
 
@@ -19,6 +19,8 @@
 @property (nonatomic,assign) id delegate;
 #pragma mark - テキスト表示設定
 @property (nonatomic) BOOL textHidden;
+#pragma mark - 周囲の余白表示設定
+@property (nonatomic) BOOL iconSpaceEnabled;
 
 #pragma mark - テキストカラー設定
 -(void)setTextColor:(UIColor *)setColor;

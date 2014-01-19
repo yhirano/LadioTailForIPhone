@@ -43,6 +43,9 @@ typedef enum
  */
 + (Headline *)sharedInstance;
 
+/// ヘッドラインの最終更新時間。更新したことが無い場合はnil。
+@property (nonatomic, strong, readonly) NSDate* lastUpdate;
+
 /**
  * ヘッドラインをネット上から取得する
  */

@@ -24,6 +24,10 @@
 
 #pragma mark - Common view config
 
+/// アプリがフォアグラウンドに戻ってきた場合に、番組表の最終更新日がここで指定した秒数よりも前の場合は番組表を更新する。
+/// 0未満の場合は何もしない。
+const NSTimeInterval DID_BECOME_HEADLINE_UPDATE_SEC = 300;
+
 /// ナビゲーションバーの色
 UIColor * const NAVIGATION_BAR_COLOR = [UIColor colorWithRed:(10.0f / 255)
                                                        green:(10.0f / 255)

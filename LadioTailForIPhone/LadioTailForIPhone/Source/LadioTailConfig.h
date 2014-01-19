@@ -24,6 +24,10 @@
 
 #pragma mark - Common config
 
+/// アプリがフォアグラウンドに戻ってきた場合に、番組表の最終更新日がここで指定した秒数よりも前の場合は番組表を更新する。
+/// 0未満の場合は何もしない。
+FOUNDATION_EXPORT const NSTimeInterval DID_BECOME_HEADLINE_UPDATE_SEC;
+
 /// ナビゲーションバーの色
 FOUNDATION_EXPORT UIColor * const NAVIGATION_BAR_COLOR;
 
