@@ -315,14 +315,6 @@
     // お気に入りボタンの色を変える
     _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
 
-    // iOS6未満の場合はシェアボタンをのアイコンをTwitterにする
-    if (!NSClassFromString(@"UIActivityViewController")) {
-        [_shareButton setImage:[UIImage imageNamed:@"button_twitter"] forState:UIControlStateNormal];
-        _shareButton.accessibilityLabel = NSLocalizedString(@"Twitter", @"Twitter");
-    } else {
-        _shareButton.accessibilityLabel = NSLocalizedString(@"Share", @"共有");
-    }
-
     // Web画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = titleString;
     if ([backButtonString length] == 0) {
