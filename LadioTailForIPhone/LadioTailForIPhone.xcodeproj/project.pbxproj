@@ -1733,7 +1733,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = Y.Hirano;
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 8EC23B41153712BB007352FD /* Build configuration list for PBXProject "LadioTailForIPhone" */;
 			compatibilityVersion = "Xcode 3.2";
