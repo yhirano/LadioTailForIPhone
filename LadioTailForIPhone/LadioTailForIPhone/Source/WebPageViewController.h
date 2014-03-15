@@ -48,4 +48,6 @@
 
 - (IBAction)reload:(id)sender;
 
+- (IBAction)showMenu:(id)sender;
+
 @end

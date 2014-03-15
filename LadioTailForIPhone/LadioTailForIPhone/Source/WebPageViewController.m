@@ -21,10 +21,11 @@
  */
 
 #import <QuartzCore/QuartzCore.h>
+#import "OpenInChrome/OpenInChromeController.h"
 #import "LadioTailConfig.h"
 #import "WebPageViewController.h"
 
-@interface WebPageViewController () <UIWebViewDelegate>
+@interface WebPageViewController () <UIWebViewDelegate, UIActionSheetDelegate>
 
 @end
 
@@ -95,6 +96,36 @@
     } else {
         [_pageWebView reload];
     }
+}
+
+- (IBAction)showMenu:(id)sender
+{
+    NSString *url = _pageWebView.request.URL.absoluteString;
+    OpenInChromeController *openInChromeController = [[OpenInChromeController alloc] init];
+
+    // Chromeがインストール済み
+    if ([openInChromeController isChromeInstalled]) {
+        UIActionSheet *sheet =[[UIActionSheet alloc]
+                               initWithTitle:url
+                               delegate:self
+                               cancelButtonTitle:NSLocalizedString(@"Cancel", @"キャンセル")
+                               destructiveButtonTitle:nil
+                               otherButtonTitles:NSLocalizedString(@"Open in Safari", @"Safariで開く"),
+                                                 NSLocalizedString(@"Open in Google Chrome", @"Google Chromeで開く"),
+                                                 nil];
+        [sheet showInView:self.view];
+    }
+    // Chromeが未インストール
+    else {
+        UIActionSheet *sheet =[[UIActionSheet alloc]
+                               initWithTitle:url
+                               delegate:self
+                               cancelButtonTitle:NSLocalizedString(@"Cancel", @"キャンセル")
+                               destructiveButtonTitle:nil
+                               otherButtonTitles:NSLocalizedString(@"Open in Safari", @"Safariで開く"), nil];
+        [sheet showInView:self.view];
+    }
+
 }
 
 #pragma mark - UIViewController methods
@@ -227,6 +258,26 @@
 
     // ボタン類の表示を更新する
     [self updateViews];
+}
+
+#pragma mark - UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSURL *url = _pageWebView.request.URL;
+    switch (buttonIndex) {
+        case 0: // Open in Safari
+            [[UIApplication sharedApplication] openURL:url];
+            break;
+        case 1: // Open in Googhe Chrome
+        {
+            OpenInChromeController *openInChromeController = [[OpenInChromeController alloc] init];
+            [openInChromeController openInChrome:url withCallbackURL:nil createNewTab:YES];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end
