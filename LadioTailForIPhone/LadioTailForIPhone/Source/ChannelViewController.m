@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Yuichi Hirano
+ * Copyright (c) 2012-2014 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -314,14 +314,6 @@
 
     // お気に入りボタンの色を変える
     _favoriteBarButtonItem.tintColor = FAVORITE_BUTTON_COLOR;
-
-    // iOS6未満の場合はシェアボタンをのアイコンをTwitterにする
-    if (!NSClassFromString(@"UIActivityViewController")) {
-        [_shareButton setImage:[UIImage imageNamed:@"button_twitter"] forState:UIControlStateNormal];
-        _shareButton.accessibilityLabel = NSLocalizedString(@"Twitter", @"Twitter");
-    } else {
-        _shareButton.accessibilityLabel = NSLocalizedString(@"Share", @"共有");
-    }
 
     // Web画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = titleString;
