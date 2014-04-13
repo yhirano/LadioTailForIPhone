@@ -51,6 +51,9 @@ typedef enum {
     /// 検索ワード
     NSString *searchWord_;
 
+    /// searchWord_のロック
+    NSObject *searchWordLock_;
+
     /// 再生中ボタンのインスタンスを一時的に格納しておく領域
     UIBarButtonItem *tempPlayingBarButtonItem_;
 
@@ -59,6 +62,14 @@ typedef enum {
 
     /// 広告セル
     AdViewCell *adViewCell_;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        searchWordLock_ = [[NSObject alloc] init];
+    }
+    return self;
 }
 
 - (void)dealloc
@@ -596,9 +607,14 @@ typedef enum {
         });
     }
 
-    Headline *headline = [Headline sharedInstance];
     // このメソッドはメインスレッド以外からも呼ばれることがあるので、検索ワードはコピーしておく
-    NSArray *channels = [headline channels:_channelSortType searchWord:[searchWord_ copy]];
+    NSString *searchWord = nil;
+    @synchronized (searchWordLock_) {
+        searchWord = [searchWord_ copy];
+    }
+    
+    Headline *headline = [Headline sharedInstance];
+    NSArray *channels = [headline channels:_channelSortType searchWord:searchWord];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         _showedChannels = channels;
@@ -1022,7 +1038,9 @@ typedef enum {
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     // 検索バーに入力された文字列を保持
-    searchWord_ = searchText;
+    @synchronized(searchWordLock_) {
+        searchWord_ = searchText;
+    }
 
     if (SEARCH_EACH_CHAR) {
         [self updateHeadlineTable];
