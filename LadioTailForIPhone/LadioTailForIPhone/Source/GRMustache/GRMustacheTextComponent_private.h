@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros_private.h"
 #import "GRMustacheTemplateComponent_private.h"
 
@@ -27,7 +28,7 @@
  * A GRMustacheTextComponent is a template component that renders raw template
  * text.
  *
- * For instance, the template string "hello {{name}}!" would give two
+ * For example, the template string "hello {{name}}!" would give two
  * GRMustacheTextComponent instances:
  *
  * - a GRMustacheTextComponent that renders "hello ".
@@ -46,7 +47,7 @@
  * @param string  The string that should be rendered.
  * @return a GRMustacheTextComponent
  */
-+ (id)textComponentWithString:(NSString *)string GRMUSTACHE_API_INTERNAL;
++ (instancetype)textComponentWithString:(NSString *)string GRMUSTACHE_API_INTERNAL;
 
 @end
 

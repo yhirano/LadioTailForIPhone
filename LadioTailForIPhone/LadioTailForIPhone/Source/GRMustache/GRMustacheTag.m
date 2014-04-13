@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,13 @@
 #import "GRMustacheToken_private.h"
 #import "GRMustacheContext_private.h"
 #import "GRMustache_private.h"
-#import "GRMustacheRendering.h"
+#import "GRMustacheTranslateCharacters_private.h"
+#import "GRMustacheTagDelegate.h"
+#import "GRMustacheRendering_private.h"
 
 @implementation GRMustacheTag
+@synthesize type=_type;
 @synthesize expression=_expression;
-@synthesize templateRepository=_templateRepository;
 @synthesize contentType=_contentType;
 
 - (void)dealloc
@@ -39,11 +41,11 @@
     [super dealloc];
 }
 
-- (id)initWithTemplateRepository:(GRMustacheTemplateRepository *)templateRepository expression:(GRMustacheExpression *)expression contentType:(GRMustacheContentType)contentType
+- (id)initWithType:(GRMustacheTagType)type expression:(GRMustacheExpression *)expression contentType:(GRMustacheContentType)contentType
 {
     self = [super init];
     if (self) {
-        _templateRepository = templateRepository;   // do not retain, since templateRepository retains the template that retains self.
+        _type = type;
         _expression = [expression retain];
         _contentType = contentType;
     }
@@ -58,12 +60,6 @@
     } else {
         return [NSString stringWithFormat:@"<%@ `%@` at line %lu>", [self class], token.templateSubstring, (unsigned long)token.line];
     }
-}
-
-- (GRMustacheTagType)type
-{
-    NSAssert(NO, @"Subclasses must override");
-    return 0;
 }
 
 - (BOOL)escapesHTML
@@ -84,27 +80,32 @@
 
 - (NSString *)renderContentWithContext:(GRMustacheContext *)context HTMLSafe:(BOOL *)HTMLSafe error:(NSError **)error
 {
+    if (!context) {
+        // Consistency with GRMustacheSectionTag handling of nil context.
+        [NSException raise:NSInvalidArgumentException format:@"Invalid context:nil"];
+        return NO;
+    }
+    
     // Default empty string.
     // This method is overrided by GRMustacheSectionTag and
     // GRMustacheAccumulatorTag.
     if (HTMLSafe) {
-        *HTMLSafe = (self.contentType == GRMustacheContentTypeHTML);
+        *HTMLSafe = (_contentType == GRMustacheContentTypeHTML);
     }
-    return @"foo";
+    return @"";
 }
 
-- (GRMustacheTag *)tagWithOverridingTag:(GRMustacheTag *)overridingTag
+- (GRMustacheTemplateRepository *)templateRepository
 {
-    NSAssert(NO, @"Subclasses must override");
-    return nil;
+    return [GRMustacheRendering currentTemplateRepository];
 }
 
 
 #pragma mark - <GRMustacheTemplateComponent>
 
-- (BOOL)renderContentType:(GRMustacheContentType)requiredContentType inBuffer:(NSMutableString *)buffer withContext:(GRMustacheContext *)context error:(NSError **)error
+- (BOOL)renderContentType:(GRMustacheContentType)requiredContentType inBuffer:(GRMustacheBuffer *)buffer withContext:(GRMustacheContext *)context error:(NSError **)error
 {
-    NSAssert(requiredContentType == self.contentType, @"Not implemented");
+    NSAssert(requiredContentType == _contentType, @"Not implemented");
     
     BOOL success = YES;
     
@@ -163,35 +164,63 @@
                 //
                 // Of course this is not what we want. So `name` can not be
                 // protected. Since we don't want to let the user think he is data
-                // is protected when it is not, we prevent this whole pattern, and
+                // is given protected when it is not, we prevent this whole pattern, and
                 // forbid `{{#safe}}{{name}}{{/safe}}`.
                 context = [context contextByAddingHiddenObject:object];
             }
             
             
-            // Tag delegates pre-rendering callbacks
+            // Rendered value hooks
             
-            [context enumerateTagDelegatesUsingBlock:^(id<GRMustacheTagDelegate> tagDelegate) {
+            NSArray *tagDelegateStack = [context tagDelegateStack];
+            for (id<GRMustacheTagDelegate> tagDelegate in [tagDelegateStack reverseObjectEnumerator]) { // willRenderObject: from top to bottom
                 if ([tagDelegate respondsToSelector:@selector(mustacheTag:willRenderObject:)]) {
                     object = [tagDelegate mustacheTag:self willRenderObject:object];
                 }
-            }];
+            }
             
             
-            // 4. Render
+            // Render value
         
-            id<GRMustacheRendering> renderingObject = [GRMustache renderingObjectForObject:object];
             BOOL objectHTMLSafe = NO;
-            NSError *renderingError = nil;
-            NSString *rendering = [renderingObject renderForMustacheTag:self context:context HTMLSafe:&objectHTMLSafe error:&renderingError];
+            NSError *renderingError = nil;  // set it to nil, so that we can help lazy coders who return nil as a valid rendering.
+            NSString *rendering = [[GRMustacheRendering renderingObjectForObject:object] renderForMustacheTag:self context:context HTMLSafe:&objectHTMLSafe error:&renderingError];
             
-            // If rendering is nil, but rendering error is not set,
-            // assume lazy coder, and the intention to render nothing:
-            // fail if and only if rendering is nil and renderingError is
-            // explicitely set.
-            
-            if (!rendering && renderingError) {
+            if (rendering == nil && renderingError == nil)
+            {
+                // Rendering is nil, but rendering error is not set.
+                //
+                // Assume a rendering object coded by a lazy programmer, whose
+                // intention is to render nothing.
                 
+                rendering = @"";
+            }
+            
+            
+            // Finish
+            
+            if (rendering)
+            {
+                // render
+                
+                if (rendering.length > 0) {
+                    if ((requiredContentType == GRMustacheContentTypeHTML) && !objectHTMLSafe && self.escapesHTML) {
+                        rendering = GRMustacheTranslateHTMLCharacters(rendering);
+                    }
+                    GRMustacheBufferAppendString(buffer, rendering);
+                }
+                
+                
+                // Post-rendering hooks
+                
+                for (id<GRMustacheTagDelegate> tagDelegate in tagDelegateStack) { // didRenderObject: from bottom to top
+                    if ([tagDelegate respondsToSelector:@selector(mustacheTag:didRenderObject:as:)]) {
+                        [tagDelegate mustacheTag:self didRenderObject:object as:rendering];
+                    }
+                }
+            }
+            else
+            {
                 // Error
                 
                 if (error != NULL) {
@@ -201,33 +230,14 @@
                 }
                 success = NO;
                 
-                // Tag delegates post-rendering callbacks
-
-                [context enumerateTagDelegatesUsingBlock:^(id<GRMustacheTagDelegate> tagDelegate) {
+                
+                // Post-error hooks
+                
+                for (id<GRMustacheTagDelegate> tagDelegate in tagDelegateStack) { // didFailRenderingObject: from bottom to top
                     if ([tagDelegate respondsToSelector:@selector(mustacheTag:didFailRenderingObject:withError:)]) {
                         [tagDelegate mustacheTag:self didFailRenderingObject:object withError:renderingError];
                     }
-                }];
-                
-            } else {
-                
-                // Success
-                
-                if (rendering.length > 0) {
-                    if ((requiredContentType == GRMustacheContentTypeHTML) && !objectHTMLSafe && self.escapesHTML) {
-                        rendering = [GRMustache escapeHTML:rendering];
-                    }
-                    [buffer appendString:rendering];
                 }
-                
-                // Tag delegates post-rendering callbacks
-                
-                if (rendering == nil) { rendering = @""; }  // Don't expose nil as a success
-                [context enumerateTagDelegatesUsingBlock:^(id<GRMustacheTagDelegate> tagDelegate) {
-                    if ([tagDelegate respondsToSelector:@selector(mustacheTag:didRenderObject:as:)]) {
-                        [tagDelegate mustacheTag:self didRenderObject:object as:rendering];
-                    }
-                }];
             }
         }
     }
@@ -238,29 +248,8 @@
 
 - (id<GRMustacheTemplateComponent>)resolveTemplateComponent:(id<GRMustacheTemplateComponent>)component
 {
-    // Only overridable tags can override components
-    if (self.type != GRMustacheTagTypeOverridableSection) {
-        return component;
-    }
-    
-    // Tag can only override other tag
-    if (![component isKindOfClass:[GRMustacheTag class]]) {
-        return component;
-    }
-    GRMustacheTag *otherTag = (GRMustacheTag *)component;
-    
-    // Tag can only override other overridable tag
-    if (otherTag.type != GRMustacheTagTypeOverridableSection) {
-        return otherTag;
-    }
-    
-    // Tag can only override other tag with the same expression
-    if (![otherTag.expression isEqual:_expression]) {
-        return otherTag;
-    }
-    
-    // OK, override tag with self
-    return [otherTag tagWithOverridingTag:self];
+    // tags can not override any other component
+    return component;
 }
 
 @end

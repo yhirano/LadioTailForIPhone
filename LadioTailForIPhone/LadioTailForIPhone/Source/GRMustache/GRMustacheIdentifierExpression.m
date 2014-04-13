@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
 @implementation GRMustacheIdentifierExpression
 @synthesize identifier=_identifier;
 
-+ (id)expressionWithIdentifier:(NSString *)identifier
++ (instancetype)expressionWithIdentifier:(NSString *)identifier
 {
     return [[[self alloc] initWithIdentifier:identifier] autorelease];
 }
@@ -60,13 +60,18 @@
     return [_identifier isEqual:((GRMustacheIdentifierExpression *)expression).identifier];
 }
 
+- (NSUInteger)hash
+{
+    return [_identifier hash];
+}
+
 
 #pragma mark - GRMustacheExpression
 
 - (BOOL)hasValue:(id *)value withContext:(GRMustacheContext *)context protected:(BOOL *)protected error:(NSError **)error
 {
     if (value != NULL) {
-        *value = [context contextValueForKey:_identifier protected:protected];
+        *value = [context valueForMustacheKey:_identifier protected:protected];
     }
     return YES;
 }

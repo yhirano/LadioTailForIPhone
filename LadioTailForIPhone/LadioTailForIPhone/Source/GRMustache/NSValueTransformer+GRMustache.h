@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "GRMustacheAvailabilityMacros_private.h"
-#import "GRMustacheTag_private.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
+#import "GRMustacheFilter.h"
 
 /**
- * A tag that accumulates other tags in the context of overridable partials.
+ * A category on NSValueTransformer that allows them to be directly used as
+ * filters in GRMustache templates.
+ *
+ * @since v6.4
  */
-@interface GRMustacheAccumulatorTag : GRMustacheTag {
-@private
-    NSArray *_tags;
-}
-+ (id)accumulatorTagWithTag:(GRMustacheTag *)tag GRMUSTACHE_API_INTERNAL;
+@interface NSValueTransformer (GRMustache)<GRMustacheFilter>
 @end

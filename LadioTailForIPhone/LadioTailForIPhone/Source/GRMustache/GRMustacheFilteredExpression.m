@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <objc/runtime.h>
 #import "GRMustacheFilteredExpression_private.h"
 #import "GRMustacheFilter_private.h"
 #import "GRMustacheError.h"
-#import "GRMustacheTemplate_private.h"
 #import "GRMustacheContext_private.h"
 #import "GRMustacheToken_private.h"
 
@@ -37,12 +37,7 @@
 @synthesize filterExpression=_filterExpression;
 @synthesize argumentExpression=_argumentExpression;
 
-+ (id)expressionWithFilterExpression:(GRMustacheExpression *)filterExpression argumentExpression:(GRMustacheExpression *)argumentExpression
-{
-    return [[[self alloc] initWithFilterExpression:filterExpression argumentExpression:argumentExpression curry:NO] autorelease];
-}
-
-+ (id)expressionWithFilterExpression:(GRMustacheExpression *)filterExpression argumentExpression:(GRMustacheExpression *)argumentExpression curry:(BOOL)curry
++ (instancetype)expressionWithFilterExpression:(GRMustacheExpression *)filterExpression argumentExpression:(GRMustacheExpression *)argumentExpression curry:(BOOL)curry
 {
     return [[[self alloc] initWithFilterExpression:filterExpression argumentExpression:argumentExpression curry:curry] autorelease];
 }
@@ -83,6 +78,11 @@
     return [_argumentExpression isEqual:((GRMustacheFilteredExpression *)expression).argumentExpression];
 }
 
+- (NSUInteger)hash
+{
+    return [_filterExpression hash] ^ [_argumentExpression hash];
+}
+
 
 #pragma mark GRMustacheExpression
 
@@ -101,10 +101,14 @@
     if (filter == nil) {
         GRMustacheToken *token = self.token;
         NSString *renderingErrorDescription = nil;
-        if (token.templateID) {
-            renderingErrorDescription = [NSString stringWithFormat:@"Missing filter in tag `%@` at line %lu of template %@", token.templateSubstring, (unsigned long)token.line, token.templateID];
+        if (token) {
+            if (token.templateID) {
+                renderingErrorDescription = [NSString stringWithFormat:@"Missing filter in tag `%@` at line %lu of template %@", token.templateSubstring, (unsigned long)token.line, token.templateID];
+            } else {
+                renderingErrorDescription = [NSString stringWithFormat:@"Missing filter in tag `%@` at line %lu", token.templateSubstring, (unsigned long)token.line];
+            }
         } else {
-            renderingErrorDescription = [NSString stringWithFormat:@"Missing filter in tag `%@` at line %lu", token.templateSubstring, (unsigned long)token.line];
+            renderingErrorDescription = [NSString stringWithFormat:@"Missing filter"];
         }
         NSError *renderingError = [NSError errorWithDomain:GRMustacheErrorDomain code:GRMustacheErrorCodeRenderingError userInfo:[NSDictionary dictionaryWithObject:renderingErrorDescription forKey:NSLocalizedDescriptionKey]];
         if (error != NULL) {
@@ -115,13 +119,17 @@
         return NO;
     }
     
-    if (![filter conformsToProtocol:@protocol(GRMustacheFilter)]) {
+    if (![filter respondsToSelector:@selector(transformedValue:)]) {
         GRMustacheToken *token = self.token;
         NSString *renderingErrorDescription = nil;
-        if (token.templateID) {
-            renderingErrorDescription = [NSString stringWithFormat:@"Object does not conform to GRMustacheFilter protocol in tag `%@` at line %lu of template %@: %@", token.templateSubstring, (unsigned long)token.line, token.templateID, filter];
+        if (token) {
+            if (token.templateID) {
+                renderingErrorDescription = [NSString stringWithFormat:@"Object does not conform to %s protocol in tag `%@` at line %lu of template %@: %@", protocol_getName(@protocol(GRMustacheFilter)), token.templateSubstring, (unsigned long)token.line, token.templateID, filter];
+            } else {
+                renderingErrorDescription = [NSString stringWithFormat:@"Object does not conform to %s protocol in tag `%@` at line %lu: %@", protocol_getName(@protocol(GRMustacheFilter)), token.templateSubstring, (unsigned long)token.line, filter];
+            }
         } else {
-            renderingErrorDescription = [NSString stringWithFormat:@"Object does not conform to GRMustacheFilter protocol in tag `%@` at line %lu: %@", token.templateSubstring, (unsigned long)token.line, filter];
+            renderingErrorDescription = [NSString stringWithFormat:@"Object does not conform to %s protocol: %@", protocol_getName(@protocol(GRMustacheFilter)), filter];
         }
         NSError *renderingError = [NSError errorWithDomain:GRMustacheErrorDomain code:GRMustacheErrorCodeRenderingError userInfo:[NSDictionary dictionaryWithObject:renderingErrorDescription forKey:NSLocalizedDescriptionKey]];
         if (error != NULL) {
