@@ -24,14 +24,14 @@
 
 #import "Channel.h"
 
-typedef enum
+typedef NS_ENUM(NSInteger, ChannelSortType)
 {
     ChannelSortTypeNone,
     ChannelSortTypeNewly,
     ChannelSortTypeServerName,
     ChannelSortTypeGenre,
     ChannelSortTypeBitrate,
-} ChannelSortType;
+};
 
 /**
  * ヘッドライン

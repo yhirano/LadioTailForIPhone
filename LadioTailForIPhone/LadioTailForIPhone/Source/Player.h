@@ -31,12 +31,12 @@
 /// 再生停止のNotification
 #define LadioTailPlayerDidStopNotification @"LadioTailPlayerDidStopNotification"
 
-typedef enum
+typedef NS_ENUM(NSInteger, PlayerState)
 {
     PlayerStateIdle,
     PlayerStatePrepare,
     PlayerStatePlay,
-} PlayerState;
+};
 
 @interface Player : NSObject
 

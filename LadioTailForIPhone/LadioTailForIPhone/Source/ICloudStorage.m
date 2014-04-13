@@ -171,7 +171,7 @@
     if (syncFavorites_) {
         dispatch_async(sendFavoritesDispatchQueue_, ^ {
             NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
-            NSLog(@"Send %d favorite to iCloud.", [favorites count]);
+            NSLog(@"Send %lu favorite to iCloud.", (unsigned long)[favorites count]);
             NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:favorites];
             NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
             [icStore setObject:archive forKey:FAVORITES_V1];

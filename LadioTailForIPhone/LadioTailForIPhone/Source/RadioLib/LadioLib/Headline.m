@@ -234,7 +234,7 @@ static NSRegularExpression *chsExp = nil;
                                        queue:fetchQueue_
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if ([data length] > 0 && error == nil) {
-                                   NSLog(@"NetLadio fetch headline received. %d bytes received.", [data length]);
+                                   NSLog(@"NetLadio fetch headline received. %lu bytes received.", (unsigned long)[data length]);
 
                                    // 取得したデータをNSStringに変換し、1行ごとに分館してNSArrayに格納する
                                    NSString *str = [[NSString alloc] initWithData:data
@@ -247,8 +247,8 @@ static NSRegularExpression *chsExp = nil;
                                        channels_ = [[NSArray alloc] initWithArray:channels];
 #if DEBUG
                                        NSLog(@"%@'s channels updated by finished fetch headline."
-                                             " Headline has %d channels.",
-                                             NSStringFromClass([self class]), [channels count]);
+                                             " Headline has %lu channels.",
+                                             NSStringFromClass([self class]), (unsigned long)[channels count]);
 #endif /* #if DEBUG */
                                        // 番組表データを更新したのでキャッシュを削除
                                        [self clearChannelsCache];
@@ -323,8 +323,8 @@ static NSRegularExpression *chsExp = nil;
     @synchronized (channelsLock_) {
         channels = [channels_ mutableCopy];
 #if DEBUG
-        NSLog(@"%@'s copied channels for return channels. There are %d channels.",
-              NSStringFromClass([self class]), [channels count]);
+        NSLog(@"%@'s copied channels for return channels. There are %lu channels.",
+              NSStringFromClass([self class]), (unsigned long)[channels count]);
 #endif /* #if DEBUG */
     }
 
@@ -641,7 +641,7 @@ static NSRegularExpression *chsExp = nil;
 
 - (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
-    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
     NSArray *result = [channelsCache_ objectForKey:key];
 #if DEBUG
     if (result != nil) {
@@ -660,7 +660,7 @@ static NSRegularExpression *chsExp = nil;
         return;
     }
 
-    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
     [channelsCache_ setObject:channels forKey:key];
 #if DEBUG
     NSLog(@"%@ set channels cache. key:%@", NSStringFromClass([self class]), key);

@@ -54,7 +54,7 @@
     // ビットレート
     if (channel.bitrate != 0) {
         tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
-        value = [NSString stringWithFormat:@"%dkbps", channel.bitrate];
+        value = [NSString stringWithFormat:@"%ldkbps", (long)channel.bitrate];
         [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 種類
@@ -70,7 +70,7 @@
     NSMutableArray *debugInfo = [[NSMutableArray alloc] init];
 
     // fid
-    value = [[NSString alloc] initWithFormat:@"%d", channel.fid];
+    value = [[NSString alloc] initWithFormat:@"%ld", (long)channel.fid];
     if ([value length] > 0) {
         NSString *tag = @"fid";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
@@ -82,13 +82,13 @@
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // Channels
-    value = [[NSString alloc] initWithFormat:@"%d", channel.channels];
+    value = [[NSString alloc] initWithFormat:@"%ld", (long)channel.channels];
     if ([value length] > 0) {
         NSString *tag = @"channels";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // SampleRate
-    value = [[NSString alloc] initWithFormat:@"%d", channel.sampleRate];
+    value = [[NSString alloc] initWithFormat:@"%ld", (long)channel.sampleRate];
     if ([value length] > 0) {
         NSString *tag = @"samplerate";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];

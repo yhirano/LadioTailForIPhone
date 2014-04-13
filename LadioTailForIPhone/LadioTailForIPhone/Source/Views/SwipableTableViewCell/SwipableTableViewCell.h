@@ -23,11 +23,11 @@
 #import <UIKit/UIKit.h>
 
 // スワイプの状態
-typedef enum
+typedef NS_ENUM(NSInteger, SwipableTableViewCellSwipeState)
 {
     SwipableTableViewCellSwipeStateNormal,
     SwipableTableViewCellSwipeStateSwiping,
-} SwipableTableViewCellSwipeState;
+};
 
 @interface SwipableTableViewCell : UITableViewCell
 

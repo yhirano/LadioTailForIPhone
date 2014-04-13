@@ -56,7 +56,7 @@ enum {
     IIViewDeckTopSide = 3,
     IIViewDeckBottomSide = 4,
 };
-typedef UInt32 IIViewDeckSide;
+typedef NSInteger IIViewDeckSide;
 
 enum {
     IIViewDeckHorizontalOrientation = 1,

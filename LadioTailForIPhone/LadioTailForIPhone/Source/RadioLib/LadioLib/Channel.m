@@ -281,7 +281,7 @@ static NSCache *matchCache = nil;
 - (NSURL *)playUrl
 {
     if (playUrlCache_ == nil) {
-        NSString *url = [NSString stringWithFormat:@"http://%@:%d%@", srv_, prt_, mnt_];
+        NSString *url = [NSString stringWithFormat:@"http://%@:%ld%@", srv_, (long)prt_, mnt_];
         playUrlCache_ = [NSURL URLWithString:url];
     }
     return playUrlCache_;
@@ -529,7 +529,7 @@ static NSCache *matchCache = nil;
 
     // 結果がキャッシュにある場合はそれを返す
     NSString *cacheKey = [searchWords componentsJoinedByString:@"//"];
-    cacheKey = [[NSString alloc] initWithFormat:@"%d//%@", [self hash], cacheKey];
+    cacheKey = [[NSString alloc] initWithFormat:@"%lu//%@", (unsigned long)[self hash], cacheKey];
     NSNumber *cacheResult = [matchCache objectForKey:cacheKey];
     if (cacheResult != nil) {
         return [cacheResult boolValue];

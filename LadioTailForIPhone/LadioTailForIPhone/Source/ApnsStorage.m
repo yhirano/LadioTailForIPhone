@@ -106,7 +106,7 @@
     // お気に入り送信
     dispatch_async(sendFavoritesDispatchQueue_, ^ {
         NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
-        NSLog(@"Send %d favorite(s) to the provider.", [favorites count]);
+        NSLog(@"Send %lu favorite(s) to the provider.", (unsigned long)[favorites count]);
         
         // 端末の言語設定を取得
         NSArray *languages = [NSLocale preferredLanguages];
@@ -161,7 +161,7 @@
             if (statusCode == 200) {
                 NSLog(@"Succeed sending favorite(s) to the provider.");
             } else {
-                NSLog(@"Failed sending favorite(s) to the provider. HTTP Status code: %d", statusCode);
+                NSLog(@"Failed sending favorite(s) to the provider. HTTP Status code: %ld", (long)statusCode);
             }
         }
     });
