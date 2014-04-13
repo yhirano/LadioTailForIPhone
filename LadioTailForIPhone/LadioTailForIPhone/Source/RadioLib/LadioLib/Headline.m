@@ -641,7 +641,7 @@ static NSRegularExpression *chsExp = nil;
 
 - (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
-    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", (long)sortType, searchWord];
     NSArray *result = [channelsCache_ objectForKey:key];
 #if DEBUG
     if (result != nil) {
@@ -660,7 +660,7 @@ static NSRegularExpression *chsExp = nil;
         return;
     }
 
-    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", (long)sortType, searchWord];
     [channelsCache_ setObject:channels forKey:key];
 #if DEBUG
     NSLog(@"%@ set channels cache. key:%@", NSStringFromClass([self class]), key);
