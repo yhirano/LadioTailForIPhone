@@ -14,7 +14,7 @@
 		8E0B83661543DC770097984D /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83251543DC770097984D /* ChannelViewController.m */; };
 		8E0B836A1543DC770097984D /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832D1543DC770097984D /* FavoritesTableViewController.m */; };
 		8E0B836B1543DC770097984D /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832F1543DC770097984D /* FavoriteViewController.m */; };
-		8E0B836C1543DC770097984D /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8E0B836C1543DC770097984D /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; };
 		8E0B836E1543DC770097984D /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
 		8E0B836F1543DC770097984D /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
@@ -402,7 +402,7 @@
 		8ED117A516588DCB001BD731 /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83251543DC770097984D /* ChannelViewController.m */; };
 		8ED117A716588DCB001BD731 /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832D1543DC770097984D /* FavoritesTableViewController.m */; };
 		8ED117A816588DCB001BD731 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832F1543DC770097984D /* FavoriteViewController.m */; };
-		8ED117A916588DCB001BD731 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8ED117A916588DCB001BD731 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; };
 		8ED117AA16588DCB001BD731 /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
 		8ED117AB16588DCB001BD731 /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
