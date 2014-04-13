@@ -274,7 +274,7 @@ static NSCache *matchCache = nil;
 
     // 結果がキャッシュにある場合はそれを返す
     NSString *cacheKey = [searchWords componentsJoinedByString:@"//"];
-    cacheKey = [[NSString alloc] initWithFormat:@"%d//%@", [self hash], cacheKey];
+    cacheKey = [[NSString alloc] initWithFormat:@"%lu//%@", (unsigned long)[self hash], cacheKey];
     NSNumber *cacheResult = [matchCache objectForKey:cacheKey];
     if (cacheResult != nil) {
         return [cacheResult boolValue];

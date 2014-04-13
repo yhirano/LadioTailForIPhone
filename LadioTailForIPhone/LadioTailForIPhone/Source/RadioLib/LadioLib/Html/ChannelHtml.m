@@ -100,10 +100,10 @@
 
             // 最大リスナー数
             if (channel.max != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                value = [NSString stringWithFormat:@"%@%@ %d",
+                value = [NSString stringWithFormat:@"%@%@ %ld",
                          value,
                          NSLocalizedString(@"Max", @"最大"),
-                         channel.max];
+                         (long)channel.max];
                 if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
                     value = [NSString stringWithFormat:@"%@%@", value, @" / "];
                 }
@@ -111,10 +111,10 @@
             
             // 述べリスナー数
             if (channel.clns != CHANNEL_UNKNOWN_LISTENER_NUM) {
-                value = [NSString stringWithFormat:@"%@%@ %d",
+                value = [NSString stringWithFormat:@"%@%@ %ld",
                          value,
                          NSLocalizedString(@"Total", @"述べ"),
-                         channel.clns];
+                         (long)channel.clns];
             }
 
             [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
@@ -129,7 +129,7 @@
     // ビットレート
     if (channel.bit != CHANNEL_UNKNOWN_BITRATE_NUM) {
         tag =  NSLocalizedString(@"Bitrate", @"ビットレート");
-        value = [NSString stringWithFormat:@"%dkbps", channel.bit];
+        value = [NSString stringWithFormat:@"%ldkbps", (long)channel.bit];
         [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // チャンネル数
@@ -144,7 +144,7 @@
                 chsStr = NSLocalizedString(@"Stereo", @"ステレオ");
                 break;
             default:
-                chsStr = [NSString stringWithFormat:@"%dch", channel.chs];
+                chsStr = [NSString stringWithFormat:@"%ldch", (long)channel.chs];
                 break;
         }
         value = [NSString stringWithFormat:@"%@", chsStr];
@@ -153,7 +153,7 @@
     // サンプリングレート
     if (channel.smpl != CHANNEL_UNKNOWN_SAMPLING_RATE_NUM) {
         tag =  NSLocalizedString(@"Samplerate", @"サンプリングレート");
-        value = [NSString stringWithFormat:@"%dHz", channel.smpl];
+        value = [NSString stringWithFormat:@"%ldHz", (long)channel.smpl];
         [info addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // フォーマット
@@ -187,7 +187,7 @@
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];
     }
     // 配信サーバポート番号
-    value = [[NSNumber numberWithInt:channel.prt] stringValue];;
+    value = [[NSNumber numberWithInteger:channel.prt] stringValue];;
     if ([value length] > 0) {
         NSString *tag = @"PRT";
         [debugInfo addObject:[[TempleteSubInfo alloc] initWithTag:tag value:value]];

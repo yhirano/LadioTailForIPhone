@@ -24,7 +24,7 @@
 #import "Player.h"
 
 /// 停止する理由
-typedef enum
+typedef NS_ENUM(NSInteger, StopReason)
 {
     StopReasonUser,
     StopReasonAnotherUrlPlay,
@@ -33,7 +33,7 @@ typedef enum
     StopReasonFailedToPlayToEndTime,
     StopReasonStatusFailed,
     StopReasonInterruption,
-} StopReason;
+};
 
 @interface Player () <AVAudioSessionDelegate>
 
@@ -553,7 +553,7 @@ typedef enum
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags
 {
-	NSLog(@"audio settion end interruption with flags %d", flags);
+	NSLog(@"audio settion end interruption with flags %lu", (unsigned long)flags);
 }
 
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable

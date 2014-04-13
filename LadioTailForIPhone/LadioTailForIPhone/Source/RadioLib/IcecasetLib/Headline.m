@@ -131,7 +131,7 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                id strongSelf = weakSelf;
                                if ([data length] > 0 && error == nil) {
-                                   NSLog(@"Icecaset fetch headline received. %d bytes received.", [data length]);
+                                   NSLog(@"Icecaset fetch headline received. %lu bytes received.", (unsigned long)[data length]);
 
                                    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
                                    [parser setDelegate:strongSelf];
@@ -204,8 +204,8 @@
     @synchronized (channelsLock_) {
         channels = [channels_ mutableCopy];
 #if DEBUG
-        NSLog(@"%@'s copied channels for return channels. There are %d channels.",
-              NSStringFromClass([self class]), [channels count]);
+        NSLog(@"%@'s copied channels for return channels. There are %lu channels.",
+              NSStringFromClass([self class]), (unsigned long)[channels count]);
 #endif /* #if DEBUG */
     }
 
@@ -323,8 +323,8 @@
         channels_ = [[NSArray alloc] initWithArray:xmlParseChannels_];
         xmlParseChannels_ = nil;
 #if DEBUG
-        NSLog(@"%@'s channels updated by finished fetch headline. Headline has %d channels.",
-              NSStringFromClass([self class]), [channels_ count]);
+        NSLog(@"%@'s channels updated by finished fetch headline. Headline has %lu channels.",
+              NSStringFromClass([self class]), (unsigned long)[channels_ count]);
 #endif /* #if DEBUG */
         // 番組表データを更新したのでキャッシュを削除
         [self clearChannelsCache];
@@ -455,7 +455,7 @@ didStartElement:(NSString *)elementName
 
 - (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
-    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
     NSArray *result = [channelsCache_ objectForKey:key];
 #if DEBUG
     if (result != nil) {
@@ -474,7 +474,7 @@ didStartElement:(NSString *)elementName
         return;
     }
 
-    NSString *key = [[NSString alloc] initWithFormat:@"%d//%@", sortType, searchWord];
+    NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", sortType, searchWord];
     [channelsCache_ setObject:channels forKey:key];
 #if DEBUG
     NSLog(@"%@ set channels cache. key:%@", NSStringFromClass([self class]), key);

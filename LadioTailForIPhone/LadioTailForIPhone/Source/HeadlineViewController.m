@@ -32,12 +32,13 @@
 /// 選択されたソート種類を覚えておくためのキー
 #define SELECTED_CHANNEL_SORT_TYPE_INDEX @"SELECTED_CHANNEL_SORT_TYPE_INDEX"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
+{
     HeadlineViewDisplayTypeOnlyTitleAndDj,
     HeadlineViewDisplayTypeElapsedTime,
     HeadlineViewDisplayTypeBitrate,
     HeadlineViewDisplayTypeElapsedTimeAndBitrate
-} HeadlineViewDisplayType;
+};
 
 @interface HeadlineViewController () <UITableViewDelegate, UISearchBarDelegate, SwipableTableViewDelegate>
 
@@ -198,8 +199,8 @@ typedef enum {
         djLabel.text = @"";
     }
     if (channel.cln != CHANNEL_UNKNOWN_LISTENER_NUM) {
-        listenersLabel.text = [[NSString alloc] initWithFormat:@"%d", channel.cln];
-        [accessibilityLabel appendFormat:@" %@ %d", NSLocalizedString(@"Listeners", @"リスナー数"), channel.cln];
+        listenersLabel.text = [[NSString alloc] initWithFormat:@"%ld", (long)channel.cln];
+        [accessibilityLabel appendFormat:@" %@ %ld", NSLocalizedString(@"Listeners", @"リスナー数"), (long)channel.cln];
     } else {
         listenersLabel.text = @"";
     }
@@ -522,7 +523,7 @@ typedef enum {
     NSString *result;
 
     if (bitrate < 1000) {
-        result = [[NSString alloc] initWithFormat:@"%dkbps", bitrate];
+        result = [[NSString alloc] initWithFormat:@"%ldkbps", (long)bitrate];
     }
     // 1000 - 1024
     else if (bitrate <= 1024) {
