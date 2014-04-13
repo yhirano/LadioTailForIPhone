@@ -2,7 +2,7 @@
 //  NADIconLoader.h
 //  NendAd
 //
-//  Ver 2.3.1
+//  Ver 2.3.3
 //
 //  アイコン型広告ローダークラス
 

@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,12 +58,12 @@
 
 @implementation GRMustacheFilter
 
-+ (id)filterWithBlock:(id(^)(id value))block
++ (id<GRMustacheFilter>)filterWithBlock:(id(^)(id value))block
 {
     return [[[GRMustacheBlockFilter alloc] initWithBlock:block] autorelease];
 }
 
-+ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block
++ (id<GRMustacheFilter>)variadicFilterWithBlock:(id(^)(NSArray *arguments))block
 {
     return [[[GRMustacheBlockVariadicFilter alloc] initWithBlock:block arguments:[NSArray array]] autorelease];
 }
@@ -83,6 +83,10 @@
 
 - (id)initWithBlock:(id(^)(id value))block
 {
+    if (block == nil) {
+        [NSException raise:NSInvalidArgumentException format:@"Can't build a filter with a nil block."];
+    }
+    
     self = [self init];
     if (self) {
         _block = [block copy];
@@ -101,11 +105,7 @@
 
 - (id)transformedValue:(id)object
 {
-    if (_block) {
-        return _block(object);
-    }
-    
-    return nil;
+    return _block(object);
 }
 
 @end
@@ -118,6 +118,10 @@
 
 - (id)initWithBlock:(id(^)(NSArray *arguments))block arguments:(NSArray *)arguments
 {
+    if (block == nil) {
+        [NSException raise:NSInvalidArgumentException format:@"Can't build a filter with a nil block."];
+    }
+    
     self = [self init];
     if (self) {
         _block = [block copy];
@@ -138,11 +142,8 @@
 
 - (id)transformedValue:(id)object
 {
-    if (_block) {
-        NSArray *arguments = [_arguments arrayByAddingObject:(object ?: [NSNull null])];
-        return _block(arguments);
-    }
-    return nil;
+    NSArray *arguments = [_arguments arrayByAddingObject:(object ?: [NSNull null])];
+    return _block(arguments);
 }
 
 - (id<GRMustacheFilter>)filterByCurryingArgument:(id)object

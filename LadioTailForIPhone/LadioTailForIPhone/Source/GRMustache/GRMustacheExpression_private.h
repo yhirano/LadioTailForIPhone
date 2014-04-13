@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  * The GRMustacheExpression is the base class for objects that can provide
  * values out of a Mustache rendering context.
  *
- * GRMustacheExpression instances are built by GRMustacheParser. For instance,
+ * GRMustacheExpression instances are built by GRMustacheParser. For example,
  * the `{{ name }}` tag would yield a GRMustacheIdentifierExpression.
  *
  * @see GRMustacheFilteredExpression
@@ -60,7 +60,7 @@
  * @param error      If there is an error computing the value, upon return
  *                   contains an NSError object that describes the problem.
  *
- * @return YES if the value could bo computed
+ * @return YES if the value could be computed
  *
  * @see GRMustacheContext
  */
@@ -70,8 +70,9 @@
  * Returns a Boolean value that indicates whether the receiver and a given
  * object are equal.
  *
- * Expressions are equal if and only if the result of their `valueWithContext:`
- * implementation would return the same value in a given rendering context.
+ * Expressions are equal if and only if the result of their
+ * `hasValue:withContext:protected:error:` implementation would return the same
+ * value in a given rendering context.
  *
  * Default implementation is NSObject's one: subclasses must override.
  *

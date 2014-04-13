@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
 #import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros_private.h"
 
+// prevent GRMustacheFilter.h to load
+#define GRMUSTACHE_FILTER
 
 // Documented in GRMustacheFilter.h
 @protocol GRMustacheFilter <NSObject>
@@ -54,9 +56,9 @@
 @interface GRMustacheFilter : NSObject<GRMustacheFilter>
 
 // Documented in GRMustacheFilter.h
-+ (id)filterWithBlock:(id(^)(id value))block GRMUSTACHE_API_PUBLIC;
++ (id<GRMustacheFilter>)filterWithBlock:(id(^)(id value))block GRMUSTACHE_API_PUBLIC;
 
 // Documented in GRMustacheFilter.h
-+ (id)variadicFilterWithBlock:(id(^)(NSArray *arguments))block GRMUSTACHE_API_PUBLIC;
++ (id<GRMustacheFilter>)variadicFilterWithBlock:(id(^)(NSArray *arguments))block GRMUSTACHE_API_PUBLIC;
 
 @end

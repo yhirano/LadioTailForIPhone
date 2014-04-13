@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,17 @@
 
 #import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros_private.h"
+#import "GRMustacheContentType.h"
 
-// Documented in GRMustacheConfiguration.h
-typedef NS_ENUM(NSUInteger, GRMustacheContentType) {
-    // Documented in GRMustacheConfiguration.h
-    GRMustacheContentTypeHTML GRMUSTACHE_API_PUBLIC,
-    
-    // Documented in GRMustacheConfiguration.h
-    GRMustacheContentTypeText GRMUSTACHE_API_PUBLIC,
-} GRMUSTACHE_API_PUBLIC;
+@class GRMustacheContext;
+@protocol GRMustacheTagDelegate;
 
 // Documented in GRMustacheConfiguration.h
 @interface GRMustacheConfiguration : NSObject<NSCopying> {
     GRMustacheContentType _contentType;
+    NSString *_tagStartDelimiter;
+    NSString *_tagEndDelimiter;
+    GRMustacheContext *_baseContext;
     BOOL _locked;
 }
 
@@ -47,6 +45,24 @@ typedef NS_ENUM(NSUInteger, GRMustacheContentType) {
 
 // Documented in GRMustacheConfiguration.h
 @property (nonatomic) GRMustacheContentType contentType GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheConfiguration.h
+@property (nonatomic, copy) NSString *tagStartDelimiter GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheConfiguration.h
+@property (nonatomic, copy) NSString *tagEndDelimiter GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheConfiguration.h
+@property (nonatomic, retain) GRMustacheContext *baseContext;
+
+// Documented in GRMustacheConfiguration.h
+- (void)extendBaseContextWithObject:(id)object GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheConfiguration.h
+- (void)extendBaseContextWithProtectedObject:(id)object GRMUSTACHE_API_PUBLIC;
+
+// Documented in GRMustacheConfiguration.h
+- (void)extendBaseContextWithTagDelegate:(id<GRMustacheTagDelegate>)tagDelegate GRMUSTACHE_API_PUBLIC;
 
 /**
  * Whether the receiver is locked or not.
