@@ -621,7 +621,7 @@ static NSCache *matchCache = nil;
 {
     // MIME Typeから拡張子を取得
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)type_, NULL);
-    NSString *result = (__bridge NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+    NSString *result = (__bridge_transfer NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
     CFRelease(uti);
     
     if (!result) {
