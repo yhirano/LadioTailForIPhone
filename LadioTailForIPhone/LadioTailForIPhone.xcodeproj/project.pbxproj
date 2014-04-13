@@ -849,6 +849,7 @@
 		8E6CB58218FA3A3B00CBC550 /* NSFormatter+GRMustache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFormatter+GRMustache.m"; sourceTree = "<group>"; };
 		8E6CB58318FA3A3B00CBC550 /* NSValueTransformer+GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValueTransformer+GRMustache.h"; sourceTree = "<group>"; };
 		8E6CB58418FA3A3B00CBC550 /* NSValueTransformer+GRMustache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+GRMustache.m"; sourceTree = "<group>"; };
+		8E6CB5C918FA3F3D00CBC550 /* NADIconArrayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADIconArrayView.h; sourceTree = "<group>"; };
 		8E749E5A165DBCA0003FE515 /* BottomBarGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomBarGradientLayer.h; path = Views/GradientView/BottomBarGradientLayer.h; sourceTree = "<group>"; };
 		8E749E5B165DBCA0003FE515 /* BottomBarGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BottomBarGradientLayer.m; path = Views/GradientView/BottomBarGradientLayer.m; sourceTree = "<group>"; };
 		8E749E5C165DBCA0003FE515 /* BottomBarGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomBarGradientView.h; path = Views/GradientView/BottomBarGradientView.h; sourceTree = "<group>"; };
@@ -1490,6 +1491,7 @@
 		8E4B62E416C8E9C000218055 /* NendAd */ = {
 			isa = PBXGroup;
 			children = (
+				8E6CB5C918FA3F3D00CBC550 /* NADIconArrayView.h */,
 				8E4B62E516C8E9C000218055 /* NADView.h */,
 				8E632343183C5FEC00FB385A /* NADIconLoader.h */,
 				8E632344183C5FEC00FB385A /* NADIconView.h */,
