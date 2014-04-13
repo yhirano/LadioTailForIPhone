@@ -621,7 +621,7 @@ static NSCache *matchCache = nil;
 {
     // MIME Typeから拡張子を取得
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)type_, NULL);
-    NSString *result = (__bridge NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+    NSString *result = (__bridge_transfer NSString*)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
     CFRelease(uti);
     
     if (!result) {
@@ -701,19 +701,19 @@ static NSCache *matchCache = nil;
     NSComparisonResult result;
 
     // お気に入りで比較する
-    result = [[self class]compareFavorite:self compared:channel];
+    result = [[self class] compareFavorite:self compared:channel];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルで比較
-    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class] compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // タイトルおなじ場合はDJで比較
-    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class] compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
@@ -735,13 +735,13 @@ static NSCache *matchCache = nil;
     }
 
     // DJで比較
-    result = [[self class]compareString:self.trimedDj compared:channel.trimedDj];
+    result = [[self class] compareString:self.trimedDj compared:channel.trimedDj];
     if (result != NSOrderedSame) {
         return result;
     }
 
     // DJがおなじ場合はタイトルで比較
-    result = [[self class]compareString:self.trimedNam compared:channel.trimedNam];
+    result = [[self class] compareString:self.trimedNam compared:channel.trimedNam];
     if (result != NSOrderedSame) {
         return result;
     }
