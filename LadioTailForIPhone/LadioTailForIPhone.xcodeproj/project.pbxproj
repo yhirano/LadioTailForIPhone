@@ -15,7 +15,7 @@
 		8E0B836A1543DC770097984D /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832D1543DC770097984D /* FavoritesTableViewController.m */; };
 		8E0B836B1543DC770097984D /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832F1543DC770097984D /* FavoriteViewController.m */; };
 		8E0B836C1543DC770097984D /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; };
-		8E0B836E1543DC770097984D /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
+		8E0B836E1543DC770097984D /* BaseNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* BaseNaviViewController.m */; };
 		8E0B836F1543DC770097984D /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
 		8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuViewController.m */; };
@@ -36,7 +36,6 @@
 		8E273B46166674C200298B91 /* tablecell_notsupported_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E273B3F166674C200298B91 /* tablecell_notsupported_black.png */; };
 		8E273B47166674C200298B91 /* tablecell_notsupported_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E273B40166674C200298B91 /* tablecell_notsupported_black@2x.png */; };
 		8E273B48166674C200298B91 /* tablecell_notsupported_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E273B40166674C200298B91 /* tablecell_notsupported_black@2x.png */; };
-		8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */; };
 		8E34951815EA0FED0081A646 /* sidemenu_dj_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E34950415EA0FED0081A646 /* sidemenu_dj_black.png */; };
 		8E34951915EA0FED0081A646 /* sidemenu_dj_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E34950515EA0FED0081A646 /* sidemenu_dj_black@2x.png */; };
 		8E34951A15EA0FED0081A646 /* sidemenu_dj_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E34950615EA0FED0081A646 /* sidemenu_dj_white.png */; };
@@ -374,6 +373,34 @@
 		8EC23B58153712BB007352FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC23B57153712BB007352FD /* main.m */; };
 		8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
 		8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
+		8EC587E21969FD6B0056A592 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E11969FD6B0056A592 /* HistoryViewController.m */; };
+		8EC587E31969FD6B0056A592 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E11969FD6B0056A592 /* HistoryViewController.m */; };
+		8EC587E6196A01EF0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E5196A01EF0056A592 /* HistoryHtml.m */; };
+		8EC587EC196A0C3D0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587EB196A0C3D0056A592 /* HistoryHtml.m */; };
+		8EC75A791968BD77008BA30B /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A781968BD77008BA30B /* HistoryItem.m */; };
+		8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7B1968BFDF008BA30B /* HistoryManager.m */; };
+		8EC75A7F1968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */; };
+		8EC75A801968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */; };
+		8EC75A851968DA4B008BA30B /* sidemenu_history_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A811968DA4B008BA30B /* sidemenu_history_black.png */; };
+		8EC75A861968DA4B008BA30B /* sidemenu_history_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A811968DA4B008BA30B /* sidemenu_history_black.png */; };
+		8EC75A871968DA4B008BA30B /* sidemenu_history_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A821968DA4B008BA30B /* sidemenu_history_black@2x.png */; };
+		8EC75A881968DA4B008BA30B /* sidemenu_history_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A821968DA4B008BA30B /* sidemenu_history_black@2x.png */; };
+		8EC75A891968DA4B008BA30B /* sidemenu_history_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A831968DA4B008BA30B /* sidemenu_history_white.png */; };
+		8EC75A8A1968DA4B008BA30B /* sidemenu_history_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A831968DA4B008BA30B /* sidemenu_history_white.png */; };
+		8EC75A8B1968DA4B008BA30B /* sidemenu_history_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A841968DA4B008BA30B /* sidemenu_history_white@2x.png */; };
+		8EC75A8C1968DA4B008BA30B /* sidemenu_history_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EC75A841968DA4B008BA30B /* sidemenu_history_white@2x.png */; };
+		8EC75A8F1968DCB6008BA30B /* HistoryNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A8E1968DCB6008BA30B /* HistoryNaviViewController.m */; };
+		8EC75A901968DCB6008BA30B /* HistoryNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A8E1968DCB6008BA30B /* HistoryNaviViewController.m */; };
+		8EC75A971968E060008BA30B /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A961968E060008BA30B /* HeadlineNaviViewController.m */; };
+		8EC75A981968E060008BA30B /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A961968E060008BA30B /* HeadlineNaviViewController.m */; };
+		8EC75A9B1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A9A1968E08B008BA30B /* FavoriteNaviViewController.m */; };
+		8EC75A9C1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A9A1968E08B008BA30B /* FavoriteNaviViewController.m */; };
+		8EC75A9F1968E13C008BA30B /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A9E1968E13C008BA30B /* HistoryTableViewController.m */; };
+		8EC75AA01968E13C008BA30B /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A9E1968E13C008BA30B /* HistoryTableViewController.m */; };
+		8EC75AA31968E279008BA30B /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75AA21968E279008BA30B /* HistoryTableViewCell.m */; };
+		8EC75AA41968E279008BA30B /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75AA21968E279008BA30B /* HistoryTableViewCell.m */; };
+		8EC75AA71968E84D008BA30B /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75AA61968E84D008BA30B /* HistoryManager.m */; };
+		8EC75AAA1968E859008BA30B /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75AA91968E859008BA30B /* HistoryItem.m */; };
 		8EC9F3AD17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
 		8EC9F3AE17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
 		8ED117401658779F001BD731 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED117381658779F001BD731 /* Channel.m */; };
@@ -403,7 +430,7 @@
 		8ED117A716588DCB001BD731 /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832D1543DC770097984D /* FavoritesTableViewController.m */; };
 		8ED117A816588DCB001BD731 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B832F1543DC770097984D /* FavoriteViewController.m */; };
 		8ED117A916588DCB001BD731 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83321543DC770097984D /* FBNetworkReachability.m */; };
-		8ED117AA16588DCB001BD731 /* HeadlineNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* HeadlineNaviViewController.m */; };
+		8ED117AA16588DCB001BD731 /* BaseNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83421543DC770097984D /* BaseNaviViewController.m */; };
 		8ED117AB16588DCB001BD731 /* HeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83441543DC770097984D /* HeadlineViewController.m */; };
 		8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83501543DC770097984D /* LadioTailViewController.m */; };
 		8ED117AD16588DCB001BD731 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83561543DC770097984D /* SideMenuViewController.m */; };
@@ -412,7 +439,6 @@
 		8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B83621543DC770097984D /* WebPageViewController.m */; };
 		8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
 		8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
-		8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */; };
 		8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8491316029F9F00ABE8B7 /* JRSwizzle.m */; };
 		8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
@@ -606,8 +632,8 @@
 		8E0B832F1543DC770097984D /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		8E0B83311543DC770097984D /* FBNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBNetworkReachability.h; sourceTree = "<group>"; };
 		8E0B83321543DC770097984D /* FBNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBNetworkReachability.m; sourceTree = "<group>"; };
-		8E0B83411543DC770097984D /* HeadlineNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlineNaviViewController.h; sourceTree = "<group>"; };
-		8E0B83421543DC770097984D /* HeadlineNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineNaviViewController.m; sourceTree = "<group>"; };
+		8E0B83411543DC770097984D /* BaseNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNaviViewController.h; sourceTree = "<group>"; };
+		8E0B83421543DC770097984D /* BaseNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNaviViewController.m; sourceTree = "<group>"; };
 		8E0B83431543DC770097984D /* HeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlineViewController.h; sourceTree = "<group>"; };
 		8E0B83441543DC770097984D /* HeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineViewController.m; sourceTree = "<group>"; };
 		8E0B834F1543DC770097984D /* LadioTailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailViewController.h; sourceTree = "<group>"; };
@@ -632,8 +658,6 @@
 		8E273B3E166674C200298B91 /* tablecell_headphones_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_headphones_gray@2x.png"; sourceTree = "<group>"; };
 		8E273B3F166674C200298B91 /* tablecell_notsupported_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell_notsupported_black.png; sourceTree = "<group>"; };
 		8E273B40166674C200298B91 /* tablecell_notsupported_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_notsupported_black@2x.png"; sourceTree = "<group>"; };
-		8E34950115E9FD050081A646 /* FavoriteNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteNaviViewController.h; sourceTree = "<group>"; };
-		8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteNaviViewController.m; sourceTree = "<group>"; };
 		8E34950415EA0FED0081A646 /* sidemenu_dj_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_dj_black.png; sourceTree = "<group>"; };
 		8E34950515EA0FED0081A646 /* sidemenu_dj_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_dj_black@2x.png"; sourceTree = "<group>"; };
 		8E34950615EA0FED0081A646 /* sidemenu_dj_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_dj_white.png; sourceTree = "<group>"; };
@@ -923,6 +947,36 @@
 		8EC23B59153712BB007352FD /* LadioTailForIPhone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LadioTailForIPhone-Prefix.pch"; sourceTree = "<group>"; };
 		8EC23B8A15371433007352FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8EC23B901537147B007352FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8EC587E01969FD6B0056A592 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		8EC587E11969FD6B0056A592 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		8EC587E4196A01EF0056A592 /* HistoryHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/HistoryHtml.h; sourceTree = SOURCE_ROOT; };
+		8EC587E5196A01EF0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/HistoryHtml.m; sourceTree = SOURCE_ROOT; };
+		8EC587EA196A0C3D0056A592 /* HistoryHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryHtml.h; path = RadioLib/IcecasetLib/Html/HistoryHtml.h; sourceTree = "<group>"; };
+		8EC587EB196A0C3D0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = RadioLib/IcecasetLib/Html/HistoryHtml.m; sourceTree = "<group>"; };
+		8EC75A771968BD77008BA30B /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryItem.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.h; sourceTree = SOURCE_ROOT; };
+		8EC75A781968BD77008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.m; sourceTree = SOURCE_ROOT; };
+		8EC75A7A1968BFDF008BA30B /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryManager.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryManager.h; sourceTree = SOURCE_ROOT; };
+		8EC75A7B1968BFDF008BA30B /* HistoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryManager.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryManager.m; sourceTree = SOURCE_ROOT; };
+		8EC75A7D1968CC96008BA30B /* PlayerDidStopNotificationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDidStopNotificationObject.h; sourceTree = "<group>"; };
+		8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDidStopNotificationObject.m; sourceTree = "<group>"; };
+		8EC75A811968DA4B008BA30B /* sidemenu_history_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_history_black.png; sourceTree = "<group>"; };
+		8EC75A821968DA4B008BA30B /* sidemenu_history_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_history_black@2x.png"; sourceTree = "<group>"; };
+		8EC75A831968DA4B008BA30B /* sidemenu_history_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidemenu_history_white.png; sourceTree = "<group>"; };
+		8EC75A841968DA4B008BA30B /* sidemenu_history_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_history_white@2x.png"; sourceTree = "<group>"; };
+		8EC75A8D1968DCB6008BA30B /* HistoryNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryNaviViewController.h; sourceTree = "<group>"; };
+		8EC75A8E1968DCB6008BA30B /* HistoryNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryNaviViewController.m; sourceTree = "<group>"; };
+		8EC75A951968E060008BA30B /* HeadlineNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlineNaviViewController.h; sourceTree = "<group>"; };
+		8EC75A961968E060008BA30B /* HeadlineNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlineNaviViewController.m; sourceTree = "<group>"; };
+		8EC75A991968E08B008BA30B /* FavoriteNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteNaviViewController.h; sourceTree = "<group>"; };
+		8EC75A9A1968E08B008BA30B /* FavoriteNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteNaviViewController.m; sourceTree = "<group>"; };
+		8EC75A9D1968E13C008BA30B /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
+		8EC75A9E1968E13C008BA30B /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		8EC75AA11968E279008BA30B /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		8EC75AA21968E279008BA30B /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
+		8EC75AA51968E84D008BA30B /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryManager.h; path = RadioLib/IcecasetLib/HistoryManager.h; sourceTree = "<group>"; };
+		8EC75AA61968E84D008BA30B /* HistoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryManager.m; path = RadioLib/IcecasetLib/HistoryManager.m; sourceTree = "<group>"; };
+		8EC75AA81968E859008BA30B /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryItem.h; path = RadioLib/IcecasetLib/HistoryItem.h; sourceTree = "<group>"; };
+		8EC75AA91968E859008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = RadioLib/IcecasetLib/HistoryItem.m; sourceTree = "<group>"; };
 		8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewSectionLabel.h; path = Views/SideMenuTableViewSectionLabel.h; sourceTree = "<group>"; };
 		8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewSectionLabel.m; path = Views/SideMenuTableViewSectionLabel.m; sourceTree = "<group>"; };
 		8ED117371658779F001BD731 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.h; sourceTree = SOURCE_ROOT; };
@@ -1108,6 +1162,8 @@
 				8E09EDF116CF38A900A60E19 /* ChannelHtml.m */,
 				8E09EDF216CF38A900A60E19 /* FavoriteHtml.h */,
 				8E09EDF316CF38A900A60E19 /* FavoriteHtml.m */,
+				8EC587EA196A0C3D0056A592 /* HistoryHtml.h */,
+				8EC587EB196A0C3D0056A592 /* HistoryHtml.m */,
 			);
 			name = Html;
 			sourceTree = "<group>";
@@ -1150,20 +1206,28 @@
 				8E0B83501543DC770097984D /* LadioTailViewController.m */,
 				8E0B83551543DC770097984D /* SideMenuViewController.h */,
 				8E0B83561543DC770097984D /* SideMenuViewController.m */,
-				8E0B83411543DC770097984D /* HeadlineNaviViewController.h */,
-				8E0B83421543DC770097984D /* HeadlineNaviViewController.m */,
+				8E0B83411543DC770097984D /* BaseNaviViewController.h */,
+				8E0B83421543DC770097984D /* BaseNaviViewController.m */,
+				8EC75A951968E060008BA30B /* HeadlineNaviViewController.h */,
+				8EC75A961968E060008BA30B /* HeadlineNaviViewController.m */,
 				8E0B83431543DC770097984D /* HeadlineViewController.h */,
 				8E0B83441543DC770097984D /* HeadlineViewController.m */,
 				8E0B83241543DC770097984D /* ChannelViewController.h */,
 				8E0B83251543DC770097984D /* ChannelViewController.m */,
 				8E0B83611543DC770097984D /* WebPageViewController.h */,
 				8E0B83621543DC770097984D /* WebPageViewController.m */,
-				8E34950115E9FD050081A646 /* FavoriteNaviViewController.h */,
-				8E34950215E9FD060081A646 /* FavoriteNaviViewController.m */,
+				8EC75A991968E08B008BA30B /* FavoriteNaviViewController.h */,
+				8EC75A9A1968E08B008BA30B /* FavoriteNaviViewController.m */,
 				8E0B832C1543DC770097984D /* FavoritesTableViewController.h */,
 				8E0B832D1543DC770097984D /* FavoritesTableViewController.m */,
 				8E0B832E1543DC770097984D /* FavoriteViewController.h */,
 				8E0B832F1543DC770097984D /* FavoriteViewController.m */,
+				8EC75A8D1968DCB6008BA30B /* HistoryNaviViewController.h */,
+				8EC75A8E1968DCB6008BA30B /* HistoryNaviViewController.m */,
+				8EC75A9D1968E13C008BA30B /* HistoryTableViewController.h */,
+				8EC75A9E1968E13C008BA30B /* HistoryTableViewController.m */,
+				8EC587E01969FD6B0056A592 /* HistoryViewController.h */,
+				8EC587E11969FD6B0056A592 /* HistoryViewController.m */,
 				8EE158E117F29826005325C7 /* ChannelArchiveManager.h */,
 				8EE158E217F29826005325C7 /* ChannelArchiveManager.m */,
 				8E9928D115490D230015CA5D /* ICloudStorage.h */,
@@ -1172,6 +1236,8 @@
 				8E9AFC8016317DFB0094C738 /* ApnsStorage.m */,
 				8E0B83571543DC770097984D /* Player.h */,
 				8E0B83581543DC770097984D /* Player.m */,
+				8EC75A7D1968CC96008BA30B /* PlayerDidStopNotificationObject.h */,
+				8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */,
 				8EDED1C718143A1B003F9C75 /* SleepTimer.h */,
 				8EDED1C818143A1B003F9C75 /* SleepTimer.m */,
 				8EF5F2AC174696A000DA1C5A /* LINEActivity.h */,
@@ -1285,6 +1351,7 @@
 		8E0B83451543DC770097984D /* LadioLib */ = {
 			isa = PBXGroup;
 			children = (
+				8E5ECD8716CAA62500D20F16 /* Html */,
 				8ED1173D1658779F001BD731 /* Headline.h */,
 				8ED1173E1658779F001BD731 /* Headline.m */,
 				8ED117371658779F001BD731 /* Channel.h */,
@@ -1293,7 +1360,10 @@
 				8ED1173C1658779F001BD731 /* FavoriteManager.m */,
 				8ED117391658779F001BD731 /* Favorite.h */,
 				8ED1173A1658779F001BD731 /* Favorite.m */,
-				8E5ECD8716CAA62500D20F16 /* Html */,
+				8EC75A7A1968BFDF008BA30B /* HistoryManager.h */,
+				8EC75A7B1968BFDF008BA30B /* HistoryManager.m */,
+				8EC75A771968BD77008BA30B /* HistoryItem.h */,
+				8EC75A781968BD77008BA30B /* HistoryItem.m */,
 			);
 			path = LadioLib;
 			sourceTree = "<group>";
@@ -1424,6 +1494,10 @@
 				8EB7A0E2165BD81D0061FCA0 /* sidemenu_genre_black@2x.png */,
 				8EB7A0E3165BD81E0061FCA0 /* sidemenu_genre_white.png */,
 				8EB7A0E4165BD81F0061FCA0 /* sidemenu_genre_white@2x.png */,
+				8EC75A811968DA4B008BA30B /* sidemenu_history_black.png */,
+				8EC75A821968DA4B008BA30B /* sidemenu_history_black@2x.png */,
+				8EC75A831968DA4B008BA30B /* sidemenu_history_white.png */,
+				8EC75A841968DA4B008BA30B /* sidemenu_history_white@2x.png */,
 				8E34950815EA0FED0081A646 /* sidemenu_listeners_black.png */,
 				8E34950915EA0FED0081A646 /* sidemenu_listeners_black@2x.png */,
 				8E34950A15EA0FED0081A646 /* sidemenu_listeners_white.png */,
@@ -1515,6 +1589,8 @@
 				8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */,
 				8E5ECD8A16CAA64900D20F16 /* FavoriteHtml.h */,
 				8E5ECD8B16CAA64900D20F16 /* FavoriteHtml.m */,
+				8EC587E4196A01EF0056A592 /* HistoryHtml.h */,
+				8EC587E5196A01EF0056A592 /* HistoryHtml.m */,
 			);
 			name = Html;
 			sourceTree = "<group>";
@@ -1530,6 +1606,8 @@
 				8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */,
 				8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */,
 				8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */,
+				8EC75AA11968E279008BA30B /* HistoryTableViewCell.h */,
+				8EC75AA21968E279008BA30B /* HistoryTableViewCell.m */,
 				8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */,
 				8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */,
 				8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */,
@@ -1654,6 +1732,7 @@
 		8ED11728165875C9001BD731 /* IcecasetLib */ = {
 			isa = PBXGroup;
 			children = (
+				8E09EDEF16CF37F100A60E19 /* Html */,
 				8ED1186016588DF1001BD731 /* Headline.h */,
 				8ED1186116588DF1001BD731 /* Headline.m */,
 				8ED1185616588DF1001BD731 /* Channel.h */,
@@ -1662,7 +1741,10 @@
 				8ED1185F16588DF1001BD731 /* FavoriteManager.m */,
 				8ED1185A16588DF1001BD731 /* Favorite.h */,
 				8ED1185B16588DF1001BD731 /* Favorite.m */,
-				8E09EDEF16CF37F100A60E19 /* Html */,
+				8EC75AA51968E84D008BA30B /* HistoryManager.h */,
+				8EC75AA61968E84D008BA30B /* HistoryManager.m */,
+				8EC75AA81968E859008BA30B /* HistoryItem.h */,
+				8EC75AA91968E859008BA30B /* HistoryItem.m */,
 			);
 			name = IcecasetLib;
 			sourceTree = "<group>";
@@ -1842,6 +1924,7 @@
 				8EC23B56153712BB007352FD /* InfoPlist.strings in Resources */,
 				8EC23B8B15371433007352FD /* MainStoryboard.storyboard in Resources */,
 				8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */,
+				8EC75A871968DA4B008BA30B /* sidemenu_history_black@2x.png in Resources */,
 				8EFAD3751542D1D300DA316F /* tablecell_indicator_black.png in Resources */,
 				8EFAD3761542D1D300DA316F /* tablecell_indicator_white.png in Resources */,
 				8EFAD3B615432EC500DA316F /* button_allow_left.png in Resources */,
@@ -1885,6 +1968,7 @@
 				8E62BA211544F3B400E77F3B /* tablecell_broadcast_white@2x.png in Resources */,
 				8E34951815EA0FED0081A646 /* sidemenu_dj_black.png in Resources */,
 				8E34951915EA0FED0081A646 /* sidemenu_dj_black@2x.png in Resources */,
+				8EC75A851968DA4B008BA30B /* sidemenu_history_black.png in Resources */,
 				8E34951A15EA0FED0081A646 /* sidemenu_dj_white.png in Resources */,
 				8E34951B15EA0FED0081A646 /* sidemenu_dj_white@2x.png in Resources */,
 				8E34951C15EA0FED0081A646 /* sidemenu_listeners_black.png in Resources */,
@@ -1925,6 +2009,7 @@
 				8ED1179B165887AD001BD731 /* Icon.png in Resources */,
 				8ED1179C165887AD001BD731 /* Icon@2x.png in Resources */,
 				8ED1179F165888EA001BD731 /* Settings.bundle in Resources */,
+				8EC75A891968DA4B008BA30B /* sidemenu_history_white.png in Resources */,
 				8EB7A0E9165BD8270061FCA0 /* sidemenu_bitrate_black.png in Resources */,
 				8EB7A0EB165BD8270061FCA0 /* sidemenu_bitrate_black@2x.png in Resources */,
 				8EB7A0ED165BD8270061FCA0 /* sidemenu_bitrate_white.png in Resources */,
@@ -2006,6 +2091,7 @@
 				8E4F38C816AB02F400466B02 /* date_label_background_16@2x.png in Resources */,
 				8E4F38CA16AB02F400466B02 /* date_label_background_17.png in Resources */,
 				8E4F38CC16AB02F400466B02 /* date_label_background_17@2x.png in Resources */,
+				8EC75A8B1968DA4B008BA30B /* sidemenu_history_white@2x.png in Resources */,
 				8E4F38CE16AB02F400466B02 /* date_label_background_18.png in Resources */,
 				8E4F38D016AB02F400466B02 /* date_label_background_18@2x.png in Resources */,
 				8E4F38D216AB02F400466B02 /* date_label_background_19.png in Resources */,
@@ -2038,6 +2124,7 @@
 				8ED117EB16588DCB001BD731 /* InfoPlist.strings in Resources */,
 				8ED117EC16588DCB001BD731 /* MainStoryboard.storyboard in Resources */,
 				8ED117ED16588DCB001BD731 /* Localizable.strings in Resources */,
+				8EC75A881968DA4B008BA30B /* sidemenu_history_black@2x.png in Resources */,
 				8ED117F016588DCB001BD731 /* tablecell_indicator_black.png in Resources */,
 				8ED117F116588DCB001BD731 /* tablecell_indicator_white.png in Resources */,
 				8ED117F216588DCB001BD731 /* button_allow_left.png in Resources */,
@@ -2081,6 +2168,7 @@
 				8ED1181F16588DCB001BD731 /* tablecell_broadcast_white@2x.png in Resources */,
 				8ED1182316588DCB001BD731 /* sidemenu_dj_black.png in Resources */,
 				8ED1182416588DCB001BD731 /* sidemenu_dj_black@2x.png in Resources */,
+				8EC75A861968DA4B008BA30B /* sidemenu_history_black.png in Resources */,
 				8ED1182516588DCB001BD731 /* sidemenu_dj_white.png in Resources */,
 				8ED1182616588DCB001BD731 /* sidemenu_dj_white@2x.png in Resources */,
 				8ED1182716588DCB001BD731 /* sidemenu_listeners_black.png in Resources */,
@@ -2121,6 +2209,7 @@
 				8ED118AC16588FF5001BD731 /* Icon-Small@2x.png in Resources */,
 				8ED118AD16588FF5001BD731 /* Icon.png in Resources */,
 				8ED118AE16588FF5001BD731 /* Icon@2x.png in Resources */,
+				8EC75A8A1968DA4B008BA30B /* sidemenu_history_white.png in Resources */,
 				8EB7A0EA165BD8270061FCA0 /* sidemenu_bitrate_black.png in Resources */,
 				8EB7A0EC165BD8270061FCA0 /* sidemenu_bitrate_black@2x.png in Resources */,
 				8EB7A0EE165BD8270061FCA0 /* sidemenu_bitrate_white.png in Resources */,
@@ -2202,6 +2291,7 @@
 				8E4F38C916AB02F400466B02 /* date_label_background_16@2x.png in Resources */,
 				8E4F38CB16AB02F400466B02 /* date_label_background_17.png in Resources */,
 				8E4F38CD16AB02F400466B02 /* date_label_background_17@2x.png in Resources */,
+				8EC75A8C1968DA4B008BA30B /* sidemenu_history_white@2x.png in Resources */,
 				8E4F38CF16AB02F400466B02 /* date_label_background_18.png in Resources */,
 				8E4F38D116AB02F400466B02 /* date_label_background_18@2x.png in Resources */,
 				8E4F38D316AB02F400466B02 /* date_label_background_19.png in Resources */,
@@ -2263,22 +2353,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC587E6196A01EF0056A592 /* HistoryHtml.m in Sources */,
 				8E6CB5C518FA3A3B00CBC550 /* NSFormatter+GRMustache.m in Sources */,
 				8EC23B58153712BB007352FD /* main.m in Sources */,
 				8E6CB5BB18FA3A3B00CBC550 /* GRMustacheTextComponent.m in Sources */,
 				8E0B83821543DFD20097984D /* AppDelegate.m in Sources */,
 				8E0B83661543DC770097984D /* ChannelViewController.m in Sources */,
+				8EC75AA31968E279008BA30B /* HistoryTableViewCell.m in Sources */,
+				8EC75A8F1968DCB6008BA30B /* HistoryNaviViewController.m in Sources */,
 				8E6CB59D18FA3A3B00CBC550 /* GRMustacheImplicitIteratorExpression.m in Sources */,
 				8E0B836A1543DC770097984D /* FavoritesTableViewController.m in Sources */,
 				8E6CB5B518FA3A3B00CBC550 /* GRMustacheTag.m in Sources */,
 				8E0B836B1543DC770097984D /* FavoriteViewController.m in Sources */,
+				8EC75A9F1968E13C008BA30B /* HistoryTableViewController.m in Sources */,
 				8E6CB58F18FA3A3B00CBC550 /* GRMustacheError.m in Sources */,
 				8E6CB5B918FA3A3B00CBC550 /* GRMustacheTemplateRepository.m in Sources */,
 				8E0B836C1543DC770097984D /* FBNetworkReachability.m in Sources */,
-				8E0B836E1543DC770097984D /* HeadlineNaviViewController.m in Sources */,
+				8E0B836E1543DC770097984D /* BaseNaviViewController.m in Sources */,
 				8E0B836F1543DC770097984D /* HeadlineViewController.m in Sources */,
 				8E0B83741543DC770097984D /* LadioTailViewController.m in Sources */,
 				8E6CB59B18FA3A3B00CBC550 /* GRMustacheIdentifierExpression.m in Sources */,
+				8EC75A7F1968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */,
 				8E6CB5A918FA3A3B00CBC550 /* GRMustacheParser.m in Sources */,
 				8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */,
 				8E0B83781543DC770097984D /* Player.m in Sources */,
@@ -2289,7 +2384,6 @@
 				8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */,
 				8E6CB5A318FA3A3B00CBC550 /* GRMustacheJavascriptLibrary.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
-				8E34950315E9FD060081A646 /* FavoriteNaviViewController.m in Sources */,
 				8E6CB59718FA3A3B00CBC550 /* GRMustacheFilteredExpression.m in Sources */,
 				8EE158E317F29826005325C7 /* ChannelArchiveManager.m in Sources */,
 				8EE8491416029F9F00ABE8B7 /* JRSwizzle.m in Sources */,
@@ -2304,9 +2398,11 @@
 				8E6CB58B18FA3A3B00CBC550 /* GRMustacheConfiguration.m in Sources */,
 				8E6CB59918FA3A3B00CBC550 /* GRMustacheHTMLLibrary.m in Sources */,
 				8E6CB5BF18FA3A3B00CBC550 /* GRMustacheTranslateCharacters.m in Sources */,
+				8EC75A971968E060008BA30B /* HeadlineNaviViewController.m in Sources */,
 				8ED117431658779F001BD731 /* Headline.m in Sources */,
 				8E6CB5B718FA3A3B00CBC550 /* GRMustacheTemplate.m in Sources */,
 				8ED1175416587F8E001BD731 /* ReplaceUrlUtil.m in Sources */,
+				8EC75A791968BD77008BA30B /* HistoryItem.m in Sources */,
 				8EF9890917F1E9FE0060005A /* UIImage+Util.m in Sources */,
 				8E9EC6E9165D0F3A00FE5369 /* GradientLayer.m in Sources */,
 				8E9EC6EB165D0F3A00FE5369 /* GradientView.m in Sources */,
@@ -2317,8 +2413,10 @@
 				8E749E67165DBDD6003FE515 /* PlaySwipeGradientView.m in Sources */,
 				8E749E69165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */,
 				8E6CB59318FA3A3B00CBC550 /* GRMustacheExpressionParser.m in Sources */,
+				8EC587E21969FD6B0056A592 /* HistoryViewController.m in Sources */,
 				8E5ECD8516CA9A5D00D20F16 /* OpenInChromeController.m in Sources */,
 				8E5ECD8C16CAA64900D20F16 /* ChannelHtml.m in Sources */,
+				8EC75A9B1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */,
 				8E6CB59F18FA3A3B00CBC550 /* GRMustacheInheritablePartial.m in Sources */,
 				8E6CB5C718FA3A3B00CBC550 /* NSValueTransformer+GRMustache.m in Sources */,
 				8E6CB5AB18FA3A3B00CBC550 /* GRMustachePartial.m in Sources */,
@@ -2330,6 +2428,7 @@
 				8E6CB58718FA3A3B00CBC550 /* GRMustacheAST.m in Sources */,
 				8E6CB5C318FA3A3B00CBC550 /* GRMustacheVariableTag.m in Sources */,
 				8EF5F2AE174696A000DA1C5A /* LINEActivity.m in Sources */,
+				8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */,
 				8E7E9C131775B9DC0015339F /* IISideController.m in Sources */,
 				8E7E9C151775B9DC0015339F /* IIViewDeckController.m in Sources */,
 				8E7E9C171775B9DC0015339F /* IIWrapController.m in Sources */,
@@ -2350,11 +2449,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC587EC196A0C3D0056A592 /* HistoryHtml.m in Sources */,
 				8E6CB5C618FA3A3B00CBC550 /* NSFormatter+GRMustache.m in Sources */,
+				8EC75A801968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */,
 				8ED117A216588DCB001BD731 /* main.m in Sources */,
 				8E6CB5BC18FA3A3B00CBC550 /* GRMustacheTextComponent.m in Sources */,
 				8ED117A316588DCB001BD731 /* AppDelegate.m in Sources */,
 				8ED117A516588DCB001BD731 /* ChannelViewController.m in Sources */,
+				8EC75A981968E060008BA30B /* HeadlineNaviViewController.m in Sources */,
 				8E6CB59E18FA3A3B00CBC550 /* GRMustacheImplicitIteratorExpression.m in Sources */,
 				8ED117A716588DCB001BD731 /* FavoritesTableViewController.m in Sources */,
 				8E6CB5B618FA3A3B00CBC550 /* GRMustacheTag.m in Sources */,
@@ -2362,7 +2464,8 @@
 				8E6CB59018FA3A3B00CBC550 /* GRMustacheError.m in Sources */,
 				8E6CB5BA18FA3A3B00CBC550 /* GRMustacheTemplateRepository.m in Sources */,
 				8ED117A916588DCB001BD731 /* FBNetworkReachability.m in Sources */,
-				8ED117AA16588DCB001BD731 /* HeadlineNaviViewController.m in Sources */,
+				8ED117AA16588DCB001BD731 /* BaseNaviViewController.m in Sources */,
+				8EC75AAA1968E859008BA30B /* HistoryItem.m in Sources */,
 				8ED117AB16588DCB001BD731 /* HeadlineViewController.m in Sources */,
 				8ED117AC16588DCB001BD731 /* LadioTailViewController.m in Sources */,
 				8E6CB59C18FA3A3B00CBC550 /* GRMustacheIdentifierExpression.m in Sources */,
@@ -2372,11 +2475,11 @@
 				8ED117B016588DCB001BD731 /* SVProgressHUD.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
 				8E6CB59218FA3A3B00CBC550 /* GRMustacheExpression.m in Sources */,
+				8EC75A901968DCB6008BA30B /* HistoryNaviViewController.m in Sources */,
 				8EDED1CA18143A1B003F9C75 /* SleepTimer.m in Sources */,
 				8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */,
 				8E6CB5A418FA3A3B00CBC550 /* GRMustacheJavascriptLibrary.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
-				8ED117B616588DCB001BD731 /* FavoriteNaviViewController.m in Sources */,
 				8E6CB59818FA3A3B00CBC550 /* GRMustacheFilteredExpression.m in Sources */,
 				8EE158E417F29826005325C7 /* ChannelArchiveManager.m in Sources */,
 				8ED117CE16588DCB001BD731 /* JRSwizzle.m in Sources */,
@@ -2402,8 +2505,11 @@
 				8E749E61165DBCA0003FE515 /* BottomBarGradientView.m in Sources */,
 				8E6CB5A818FA3A3B00CBC550 /* GRMustacheLocalizer.m in Sources */,
 				8E749E68165DBDD6003FE515 /* PlaySwipeGradientView.m in Sources */,
+				8EC75AA71968E84D008BA30B /* HistoryManager.m in Sources */,
 				8E749E6A165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */,
+				8EC75AA41968E279008BA30B /* HistoryTableViewCell.m in Sources */,
 				8E6CB59418FA3A3B00CBC550 /* GRMustacheExpressionParser.m in Sources */,
+				8EC587E31969FD6B0056A592 /* HistoryViewController.m in Sources */,
 				8E5ECD8616CA9A5D00D20F16 /* OpenInChromeController.m in Sources */,
 				8E09EDF616CF38A900A60E19 /* ChannelHtml.m in Sources */,
 				8E6CB5A018FA3A3B00CBC550 /* GRMustacheInheritablePartial.m in Sources */,
@@ -2419,6 +2525,8 @@
 				8EF5F2AF174696A000DA1C5A /* LINEActivity.m in Sources */,
 				8E7E9C141775B9DC0015339F /* IISideController.m in Sources */,
 				8E7E9C161775B9DC0015339F /* IIViewDeckController.m in Sources */,
+				8EC75A9C1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */,
+				8EC75AA01968E13C008BA30B /* HistoryTableViewController.m in Sources */,
 				8E7E9C181775B9DC0015339F /* IIWrapController.m in Sources */,
 				8E6CB5AE18FA3A3B00CBC550 /* GRMustacheRendering.m in Sources */,
 				8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */,

@@ -20,24 +20,27 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
+#ifdef LADIO_TAIL
 
 #import "Channel.h"
 
 /**
- * お気に入り
+ * 履歴アイテム
  */
-@interface Favorite : NSObject<NSCoding>
+@interface HistoryItem : NSObject<NSCoding>
 
-/// お気に入りの番組
+/// 履歴の番組
 @property (nonatomic, strong) Channel *channel;
 
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
+/// 視聴開始時刻
+@property (nonatomic, strong) NSDate *listeningStartDate;
 
-/// お気に入り画面用のHTMLを取得する
+/// 視聴終了時刻
+@property (nonatomic, strong) NSDate *listeningEndDate;
+
+/// 履歴画面用のHTMLを取得する
 - (NSString *)descriptionHtml;
 
 @end
 
-#endif // #ifdef RADIO_EDGE
+#endif // #ifdef LADIO_TAIL

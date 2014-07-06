@@ -24,6 +24,9 @@
 
 #import "Channel.h"
 
+/**
+ * お気に入り
+ */
 @interface Favorite : NSObject<NSCoding>
 
 /// お気に入りの番組

@@ -22,6 +22,7 @@
 
 #ifdef LADIO_TAIL
 
+#import <Foundation/Foundation.h>
 #import "Channel.h"
 
 /**

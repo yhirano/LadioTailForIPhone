@@ -20,24 +20,12 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
+#import <UIKit/UIKit.h>
 
-#import "Channel.h"
+@interface HistoryTableViewController : UITableViewController
 
-/**
- * お気に入り
- */
-@interface Favorite : NSObject<NSCoding>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideMenuBarButtonItem;
 
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
-
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
-
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
+- (IBAction)openSideMenu:(id)sender;
 
 @end
-
-#endif // #ifdef RADIO_EDGE

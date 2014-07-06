@@ -20,71 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "ViewDeck/IIViewDeckController.h"
-#import "LadioTailConfig.h"
-#import "HeadlineViewController.h"
 #import "HeadlineNaviViewController.h"
 
 @implementation HeadlineNaviViewController
-
-#pragma mark - UIView methods
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // ナビゲーションバーのスライドでサイドメニューを開くことができる
-    self.viewDeckController.panningMode = IIViewDeckNavigationBarPanning;
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        switch (interfaceOrientation) {
-            case UIInterfaceOrientationPortrait:
-            case UIInterfaceOrientationLandscapeLeft:
-            case UIInterfaceOrientationLandscapeRight:
-                return YES;
-            case UIInterfaceOrientationPortraitUpsideDown:
-            default:
-                return NO;
-        }
-    } else {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    }
-}
-
-- (BOOL)shouldAutorotate
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    } else {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-}
 
 @end

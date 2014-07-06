@@ -22,21 +22,23 @@
 
 #ifdef RADIO_EDGE
 
+#import <Foundation/Foundation.h>
 #import "Channel.h"
 
 /**
- * お気に入り
+ * 履歴を管理するシングルトンクラス
  */
-@interface Favorite : NSObject<NSCoding>
+@interface HistoryManager : NSObject
 
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
+/// 履歴のリスト
+@property (nonatomic, strong, readonly) NSArray *history;
 
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
-
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
+/**
+ * HistoryManagerを取得する
+ *
+ * @return HistoryManager
+ */
++ (HistoryManager *)sharedInstance;
 
 @end
 

@@ -237,6 +237,41 @@ FOUNDATION_EXPORT UIColor * const FAVORITES_CELL_TAG_TEXT_COLOR;
 /// テーブルセルのタグのテキスト選択時カラー
 FOUNDATION_EXPORT UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR;
 
+#pragma mark - History table view config
+
+/// テーブルの背景の色
+FOUNDATION_EXPORT UIColor * const HISTORY_TABLE_BACKGROUND_COLOR;
+
+/// テーブルの境界線の色
+FOUNDATION_EXPORT UIColor * const HISTORY_TABLE_SEPARATOR_COLOR;
+
+/// テーブルセルの暗い側の色
+FOUNDATION_EXPORT UIColor * const HISTORY_TABLE_CELL_BACKGROUND_COLOR_DARK;
+
+/// テーブルセルの明るい側の色
+FOUNDATION_EXPORT UIColor * const HISTORY_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
+
+/// テーブルセルの選択の色
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_SELECTED_BACKGROUND_COLOR;
+
+/// テーブルセルのメインのテキストカラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_MAIN_TEXT_COLOR;
+
+/// テーブルセルのメインのテキスト選択時カラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_MAIN_TEXT_SELECTED_COLOR;
+
+/// テーブルセルのサブのテキストカラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_SUB_TEXT_COLOR;
+
+/// テーブルセルのサブのテキスト選択時カラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_SUB_TEXT_SELECTED_COLOR;
+
+/// テーブルセルのタグのテキストカラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_TAG_TEXT_COLOR;
+
+/// テーブルセルのタグのテキスト選択時カラー
+FOUNDATION_EXPORT UIColor * const HISTORY_CELL_TAG_TEXT_SELECTED_COLOR;
+
 #pragma mark - Player config
 
 /// 再生開始後のタイムアウト処理までの時間

@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import "BaseNaviViewController.h"
 
-@interface HeadlineNaviViewController : UINavigationController
+@interface HeadlineNaviViewController : BaseNaviViewController
 
 @end

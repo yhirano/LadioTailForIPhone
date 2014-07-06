@@ -22,21 +22,11 @@
 
 #ifdef RADIO_EDGE
 
-#import "Channel.h"
+#import "../HistoryItem.h"
 
-/**
- * お気に入り
- */
-@interface Favorite : NSObject<NSCoding>
+@interface HistoryHtml : NSObject
 
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
-
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
-
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
++ (NSString *)descriptionHtml:(HistoryItem *)history;
 
 @end
 

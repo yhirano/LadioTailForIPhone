@@ -22,13 +22,13 @@
 
 #import "OpenInChrome/OpenInChromeController.h"
 #import "WebPageViewController.h"
-#import "FavoriteViewController.h"
+#import "HistoryViewController.h"
 
-@interface FavoriteViewController () <UIWebViewDelegate>
+@interface HistoryViewController () <UIWebViewDelegate>
 
 @end
 
-@implementation FavoriteViewController
+@implementation HistoryViewController
 {
     NSURL *openUrl_;
 }
@@ -42,11 +42,11 @@
 
 - (void)writeDescription
 {
-    if (_favorite == nil) {
+    if (_history == nil) {
         return;
     }
     
-    NSString *html = [_favorite descriptionHtml];
+    NSString *html = [_history descriptionHtml];
     
     // HTMLが取得できない場合（実装エラーと思われる）は何もしない
     if (html == nil) {
@@ -61,39 +61,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // ナビゲーションタイトルを表示する
     NSString *titleString;
 #if defined(LADIO_TAIL)
     // タイトルが存在する場合はタイトルを表示する
-    if ([_favorite.channel.nam length] > 0) {
-        titleString = _favorite.channel.nam;
+    if ([_history.channel.nam length] > 0) {
+        titleString = _history.channel.nam;
     }
     // DJが存在する場合はDJを表示する
-    else if ([_favorite.channel.dj length] > 0) {
-        titleString = _favorite.channel.dj;
+    else if ([_history.channel.dj length] > 0) {
+        titleString = _history.channel.dj;
     }
     // それ以外はマウントを表示
     else {
-        titleString = _favorite.channel.mnt;
+        titleString = _history.channel.mnt;
     }
 #elif defined(RADIO_EDGE)
     // Server Nameが存在する場合はタイトルを表示する
-    if ([_favorite.channel.serverName length] > 0) {
-        titleString = _favorite.channel.serverName;
+    if ([_history.channel.serverName length] > 0) {
+        titleString = _history.channel.serverName;
     }
     // Genreが存在する場合はGenreを表示する
-    else if ([_favorite.channel.genre length] > 0) {
-        titleString = _favorite.channel.genre;
+    else if ([_history.channel.genre length] > 0) {
+        titleString = _history.channel.genre;
     } else {
         titleString = @"";
     }
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
-
+    
     _topNavigationItem.title = titleString;
-
+    
     // Web画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = titleString;
     if ([backButtonString length] == 0) {
@@ -111,7 +111,7 @@
             view.hidden = YES;
         }
     }
-
+    
     // 表示情報を生成する
     [self writeDescription];
 }
@@ -126,7 +126,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
     // WebViewのデリゲートを設定する
     _descriptionWebView.delegate = self;
 }

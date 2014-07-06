@@ -20,24 +20,8 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
+#import "HistoryNaviViewController.h"
 
-#import "Channel.h"
-
-/**
- * お気に入り
- */
-@interface Favorite : NSObject<NSCoding>
-
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
-
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
-
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
+@implementation HistoryNaviViewController
 
 @end
-
-#endif // #ifdef RADIO_EDGE

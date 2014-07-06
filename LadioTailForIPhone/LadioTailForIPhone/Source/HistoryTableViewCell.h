@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Yuichi Hirano
+ * Copyright (c) 2013-2014 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,24 +20,12 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
+#import <UIKit/UIKit.h>
 
-#import "Channel.h"
+@interface HistoryTableViewCell : UITableViewCell
 
-/**
- * お気に入り
- */
-@interface Favorite : NSObject<NSCoding>
+@property (nonatomic) NSString *accessibilityLabel;
 
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
-
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
-
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
+@property (nonatomic) NSString *accessibilityHint;
 
 @end
-
-#endif // #ifdef RADIO_EDGE

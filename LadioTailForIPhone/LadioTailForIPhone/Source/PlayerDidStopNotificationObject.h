@@ -20,24 +20,18 @@
  * THE SOFTWARE.
  */
 
-#ifdef RADIO_EDGE
-
-#import "Channel.h"
+#import "Player.h"
+#import "RadioLib/RadioLib.h"
 
 /**
- * お気に入り
+ * LadioTailPlayerDidStopNotification 通知時のオブジェクト
  */
-@interface Favorite : NSObject<NSCoding>
+@interface PlayerDidStopNotificationObject : NSObject
 
-/// お気に入りの番組
-@property (nonatomic, strong) Channel *channel;
+@property (nonatomic, strong, readonly) Channel *channel;
 
-/// お気に入りに登録した時刻
-@property (nonatomic, strong) NSDate *registedDate;
+@property (nonatomic, assign, readonly) PlayerStopReason reason;
 
-/// お気に入り画面用のHTMLを取得する
-- (NSString *)descriptionHtml;
+- (id)initWithChannel:(Channel *)channel reason:(PlayerStopReason)reason;
 
 @end
-
-#endif // #ifdef RADIO_EDGE
