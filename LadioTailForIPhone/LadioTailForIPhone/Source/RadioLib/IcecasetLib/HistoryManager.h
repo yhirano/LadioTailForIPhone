@@ -20,8 +20,26 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#ifdef RADIO_EDGE
 
-@implementation HeadlineNaviViewController
+#import <Foundation/Foundation.h>
+#import "Channel.h"
+
+/**
+ * 履歴を管理するシングルトンクラス
+ */
+@interface HistoryManager : NSObject
+
+/// 履歴のリスト
+@property (nonatomic, strong, readonly) NSArray *history;
+
+/**
+ * HistoryManagerを取得する
+ *
+ * @return HistoryManager
+ */
++ (HistoryManager *)sharedInstance;
 
 @end
+
+#endif // #ifdef RADIO_EDGE

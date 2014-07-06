@@ -20,8 +20,14 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#ifdef LADIO_TAIL
 
-@implementation HeadlineNaviViewController
+#import "../HistoryItem.h"
+
+@interface HistoryHtml : NSObject
+
++ (NSString *)descriptionHtml:(HistoryItem *)history;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

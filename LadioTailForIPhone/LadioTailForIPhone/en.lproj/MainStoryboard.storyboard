@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -919,8 +919,30 @@
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" hint="" label=""/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="HistoryCell" id="csa-cq-Zds" customClass="SideMenuTableViewCell">
+                                        <rect key="frame" x="0.0" y="418" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="csa-cq-Zds" id="j9K-Zl-er2">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_history_white.png" highlightedImage="sidemenu_history_black.png" id="DNC-XJ-ljb">
+                                                    <rect key="frame" x="24" y="11" width="21" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="History" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RIj-bl-Hgj">
+                                                    <rect key="frame" x="56" y="11" width="236" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" hint="" label=""/>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SleepTimerCell" rowHeight="60" id="Ifb-9B-dbN" customClass="SideMenuTableViewCell">
-                                        <rect key="frame" x="0.0" y="418" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="462" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ifb-9B-dbN" id="7Ci-E4-If8">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -1108,7 +1130,7 @@
                             <webView opaque="NO" contentMode="scaleToFill" id="CEd-C8-daf">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
@@ -1144,6 +1166,112 @@
             </objects>
             <point key="canvasLocation" x="1034" y="1117"/>
         </scene>
+        <!--History Table View Controller - History-->
+        <scene sceneID="R3A-sD-18N">
+            <objects>
+                <tableViewController id="r5w-HY-Ohd" customClass="HistoryTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bVF-j5-7II">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="FavoriteCell" rowHeight="54" id="ZDG-aV-dqa" customClass="HistoryTableViewCell">
+                                <rect key="frame" x="0.0" y="86" width="320" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZDG-aV-dqa" id="dHq-0A-nIy">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RfO-Lh-VoL">
+                                            <rect key="frame" x="64" y="7" width="269" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="DJ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="MBv-jl-kqB">
+                                            <rect key="frame" x="64" y="31" width="269" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="1UQ-Wm-Cwj">
+                                            <rect key="frame" x="23" y="13" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white.png" highlightedImage="tablecell_indicator_black.png" id="vCv-Yg-Lrl">
+                                            <rect key="frame" x="294" y="19" width="16" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="r5w-HY-Ohd" id="1ZC-6n-lc6"/>
+                            <outlet property="delegate" destination="r5w-HY-Ohd" id="QK8-f4-FZn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="History" id="ZSX-VS-0Bo">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="gtU-DP-cAe">
+                            <connections>
+                                <action selector="openSideMenu:" destination="r5w-HY-Ohd" id="0Bp-hv-1Wd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="sideMenuBarButtonItem" destination="gtU-DP-cAe" id="CkB-vL-fvU"/>
+                        <segue destination="FnA-2e-Vzy" kind="push" identifier="SelectHistory" id="iym-Wr-hNE"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ruP-YZ-crV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1514" y="1789"/>
+        </scene>
+        <!--History View Controller-->
+        <scene sceneID="Qy1-hy-g9M">
+            <objects>
+                <viewController id="FnA-2e-Vzy" customClass="HistoryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PCK-od-HXk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView opaque="NO" contentMode="scaleToFill" id="oKX-g6-G3C">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VMn-UP-jUd"/>
+                    <connections>
+                        <outlet property="descriptionWebView" destination="oKX-g6-G3C" id="Vmz-Vf-kdz"/>
+                        <outlet property="topNavigationItem" destination="VMn-UP-jUd" id="1XV-1Q-7BU"/>
+                        <segue destination="Em6-UF-MX2" kind="push" identifier="OpenUrl" id="32q-pS-dLm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BK4-CU-Cjr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1997" y="1789"/>
+        </scene>
+        <!--History Navi View Controller-->
+        <scene sceneID="RE0-uy-xDv">
+            <objects>
+                <navigationController storyboardIdentifier="HistoryNaviViewController" definesPresentationContext="YES" id="U6w-VC-Lm5" customClass="HistoryNaviViewController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ecf-by-cNc">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="r5w-HY-Ohd" kind="relationship" relationship="rootViewController" id="BP5-4E-QlG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zdH-6g-mh7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1034" y="1789"/>
+        </scene>
     </scenes>
     <resources>
         <image name="button_action.png" width="37" height="37"/>
@@ -1164,6 +1292,8 @@
         <image name="sidemenu_favorite_yellow.png" width="28" height="28"/>
         <image name="sidemenu_genre_black.png" width="28" height="28"/>
         <image name="sidemenu_genre_white.png" width="28" height="28"/>
+        <image name="sidemenu_history_black.png" width="28" height="28"/>
+        <image name="sidemenu_history_white.png" width="28" height="28"/>
         <image name="sidemenu_listeners_black.png" width="28" height="28"/>
         <image name="sidemenu_listeners_white.png" width="28" height="28"/>
         <image name="sidemenu_newly_black.png" width="28" height="28"/>
@@ -1193,7 +1323,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="CF2-OT-Flv"/>
-        <segue reference="P2k-BP-J8U"/>
+        <segue reference="32q-pS-dLm"/>
+        <segue reference="rsj-fA-G3H"/>
     </inferredMetricsTieBreakers>
 </document>

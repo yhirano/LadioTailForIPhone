@@ -37,3 +37,5 @@
 /// お気に入り1つの変更に対し1回発行する
 #define RadioLibChannelChangedFavoriteNotification @"RadioLibChannelChangedFavoriteNotification"
 
+/// 履歴が変化した際のNotification
+#define RadioLibHistoryChangedNotification @"RadioLibHistoryChangedNotification"

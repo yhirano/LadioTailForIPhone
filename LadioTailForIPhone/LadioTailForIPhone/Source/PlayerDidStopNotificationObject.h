@@ -20,8 +20,18 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#import "Player.h"
+#import "RadioLib/RadioLib.h"
 
-@implementation HeadlineNaviViewController
+/**
+ * LadioTailPlayerDidStopNotification 通知時のオブジェクト
+ */
+@interface PlayerDidStopNotificationObject : NSObject
+
+@property (nonatomic, strong, readonly) Channel *channel;
+
+@property (nonatomic, assign, readonly) PlayerStopReason reason;
+
+- (id)initWithChannel:(Channel *)channel reason:(PlayerStopReason)reason;
 
 @end

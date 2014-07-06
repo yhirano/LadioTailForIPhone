@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#import "BaseNaviViewController.h"
 
-@implementation HeadlineNaviViewController
+@interface HistoryNaviViewController : BaseNaviViewController
 
 @end

@@ -20,8 +20,12 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#import <UIKit/UIKit.h>
 
-@implementation HeadlineNaviViewController
+@interface HistoryTableViewController : UITableViewController
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideMenuBarButtonItem;
+
+- (IBAction)openSideMenu:(id)sender;
 
 @end

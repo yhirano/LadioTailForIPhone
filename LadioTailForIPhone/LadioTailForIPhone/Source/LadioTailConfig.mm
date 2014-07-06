@@ -275,6 +275,44 @@ UIColor * const FAVORITES_CELL_TAG_TEXT_COLOR = [UIColor colorWithRed:(180.0f / 
 /// テーブルセルのタグのテキスト選択時カラー
 UIColor * const FAVORITES_CELL_TAG_TEXT_SELECTED_COLOR = [UIColor blackColor];
 
+#pragma mark - History table view config
+
+/// テーブルの背景の色
+UIColor * const HISTORY_TABLE_BACKGROUND_COLOR = HEADLINE_TABLE_BACKGROUND_COLOR;
+
+/// テーブルの境界線の色
+UIColor * const HISTORY_TABLE_SEPARATOR_COLOR = HEADLINE_TABLE_SEPARATOR_COLOR;
+
+/// テーブルセルの暗い側の色
+UIColor * const HISTORY_TABLE_CELL_BACKGROUND_COLOR_DARK = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_DARK;
+
+/// テーブルセルの明るい側の色
+UIColor * const HISTORY_TABLE_CELL_BACKGROUND_COLOR_LIGHT = HEADLINE_TABLE_CELL_BACKGROUND_COLOR_LIGHT;
+
+/// テーブルセルの選択の色
+UIColor * const HISTORY_CELL_SELECTED_BACKGROUND_COLOR = HEADLINE_CELL_SELECTED_BACKGROUND_COLOR;
+
+/// テーブルセルのメインのテキストカラー
+UIColor * const HISTORY_CELL_MAIN_TEXT_COLOR = HEADLINE_CELL_TITLE_TEXT_COLOR;
+
+/// テーブルセルのメインのテキスト選択時カラー
+UIColor * const HISTORY_CELL_MAIN_TEXT_SELECTED_COLOR = HEADLINE_CELL_TITLE_TEXT_SELECTED_COLOR;
+
+/// テーブルセルのサブのテキストカラー
+UIColor * const HISTORY_CELL_SUB_TEXT_COLOR = HEADLINE_CELL_DJ_TEXT_COLOR;
+
+/// テーブルセルのサブのテキスト選択時カラー
+UIColor * const HISTORY_CELL_SUB_TEXT_SELECTED_COLOR = HEADLINE_CELL_DJ_TEXT_SELECTED_COLOR;
+
+/// テーブルセルのタグのテキストカラー
+UIColor * const HISTORY_CELL_TAG_TEXT_COLOR = [UIColor colorWithRed:(180.0f / 255)
+                                                                green:(180.0f / 255)
+                                                                 blue:(180.0f / 255)
+                                                                alpha:1.0f];
+
+/// テーブルセルのタグのテキスト選択時カラー
+UIColor * const HISTORY_CELL_TAG_TEXT_SELECTED_COLOR = [UIColor blackColor];
+
 #pragma mark - Player config
 
 /// 再生開始後のタイムアウト処理までの時間

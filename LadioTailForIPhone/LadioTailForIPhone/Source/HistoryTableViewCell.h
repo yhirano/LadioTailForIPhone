@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Yuichi Hirano
+ * Copyright (c) 2013-2014 Yuichi Hirano
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,12 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#import <UIKit/UIKit.h>
 
-@implementation HeadlineNaviViewController
+@interface HistoryTableViewCell : UITableViewCell
+
+@property (nonatomic) NSString *accessibilityLabel;
+
+@property (nonatomic) NSString *accessibilityHint;
 
 @end

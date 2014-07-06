@@ -20,8 +20,27 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#ifdef LADIO_TAIL
 
-@implementation HeadlineNaviViewController
+#import "Channel.h"
+
+/**
+ * 履歴アイテム
+ */
+@interface HistoryItem : NSObject<NSCoding>
+
+/// 履歴の番組
+@property (nonatomic, strong) Channel *channel;
+
+/// 視聴開始時刻
+@property (nonatomic, strong) NSDate *listeningStartDate;
+
+/// 視聴終了時刻
+@property (nonatomic, strong) NSDate *listeningEndDate;
+
+/// 履歴画面用のHTMLを取得する
+- (NSString *)descriptionHtml;
 
 @end
+
+#endif // #ifdef LADIO_TAIL

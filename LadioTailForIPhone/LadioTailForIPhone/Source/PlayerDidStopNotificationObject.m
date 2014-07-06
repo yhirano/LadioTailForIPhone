@@ -20,8 +20,17 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
+#import "PlayerDidStopNotificationObject.h"
 
-@implementation HeadlineNaviViewController
+@implementation PlayerDidStopNotificationObject
+
+- (id)initWithChannel:(Channel *)channel reason:(PlayerStopReason)reason
+{
+    if (self = [super init]) {
+        _channel = channel;
+        _reason = reason;
+    }
+    return self;
+}
 
 @end

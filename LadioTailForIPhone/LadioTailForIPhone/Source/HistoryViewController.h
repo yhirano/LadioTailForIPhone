@@ -20,8 +20,16 @@
  * THE SOFTWARE.
  */
 
-#import "HeadlineNaviViewController.h"
 
-@implementation HeadlineNaviViewController
+#import <UIKit/UIKit.h>
+#import "RadioLib/RadioLib.h"
+
+@interface HistoryViewController : UIViewController
+
+@property (nonatomic, strong) HistoryItem *history;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *topNavigationItem;
+
+@property (weak, nonatomic) IBOutlet UIWebView *descriptionWebView;
 
 @end
