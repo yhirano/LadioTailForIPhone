@@ -102,7 +102,7 @@
     @synchronized(self) {
         item = [[HistoryItem alloc] init];
         item.channel = channel;
-        [_history addObject:item];
+        [_history insertObject:item atIndex:0];
     }
     
     // 履歴を保存する
@@ -128,7 +128,7 @@
     return result;
 }
 
-/// データベースからお気に入り情報を復元する
+/// データベースから履歴情報を復元する
 - (void)loadHistory
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
