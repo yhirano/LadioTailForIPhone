@@ -907,15 +907,6 @@
 		8E9EC6E8165D0F3A00FE5369 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = Views/GradientView/GradientView.m; sourceTree = "<group>"; };
 		8EAB5729155E42DB00F2202C /* LadioTailConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailConfig.h; sourceTree = "<group>"; };
 		8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LadioTailConfig.mm; sourceTree = "<group>"; };
-		8EAC424C1632EB1C009C2871 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
-		8EAC424D1632EB1C009C2871 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
-		8EAC424E1632EB1C009C2871 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
-		8EAC424F1632EB1C009C2871 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
-		8EAC42501632EB1C009C2871 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
-		8EAC42511632EB1C009C2871 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
-		8EAC42521632EB1C009C2871 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
-		8EAC42531632EB1C009C2871 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
-		8EAC42541632EB1C009C2871 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = LadioTailForIPhone/Libraries/libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		8EAC42571632F193009C2871 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8EAC425B1632F252009C2871 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -982,6 +973,18 @@
 		8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewSectionLabel.h; path = Views/SideMenuTableViewSectionLabel.h; sourceTree = "<group>"; };
 		8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewSectionLabel.m; path = Views/SideMenuTableViewSectionLabel.m; sourceTree = "<group>"; };
 		8ECB8F5B196AC69C0006D74F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		8ECB8F6A196AC7280006D74F /* GADAdMobExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
+		8ECB8F6B196AC7280006D74F /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
+		8ECB8F6C196AC7280006D74F /* GADAdSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
+		8ECB8F6D196AC7280006D74F /* GADBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		8ECB8F6E196AC7280006D74F /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		8ECB8F6F196AC7280006D74F /* GADInAppPurchase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
+		8ECB8F70196AC7280006D74F /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
+		8ECB8F71196AC7280006D74F /* GADInterstitial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		8ECB8F72196AC7280006D74F /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		8ECB8F73196AC7280006D74F /* GADModules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
+		8ECB8F74196AC7280006D74F /* GADRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		8ECB8F75196AC7280006D74F /* GADRequestError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		8ED117371658779F001BD731 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.h; sourceTree = SOURCE_ROOT; };
 		8ED117381658779F001BD731 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Channel.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.m; sourceTree = SOURCE_ROOT; };
 		8ED117391658779F001BD731 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Favorite.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Favorite.h; sourceTree = SOURCE_ROOT; };
@@ -1624,15 +1627,18 @@
 		8EAC424B1632EB1C009C2871 /* GoogleAdMobAds */ = {
 			isa = PBXGroup;
 			children = (
-				8EAC424C1632EB1C009C2871 /* GADAdMobExtras.h */,
-				8EAC424D1632EB1C009C2871 /* GADAdNetworkExtras.h */,
-				8EAC424E1632EB1C009C2871 /* GADAdSize.h */,
-				8EAC424F1632EB1C009C2871 /* GADBannerView.h */,
-				8EAC42501632EB1C009C2871 /* GADBannerViewDelegate.h */,
-				8EAC42511632EB1C009C2871 /* GADInterstitial.h */,
-				8EAC42521632EB1C009C2871 /* GADInterstitialDelegate.h */,
-				8EAC42531632EB1C009C2871 /* GADRequest.h */,
-				8EAC42541632EB1C009C2871 /* GADRequestError.h */,
+				8ECB8F6A196AC7280006D74F /* GADAdMobExtras.h */,
+				8ECB8F6B196AC7280006D74F /* GADAdNetworkExtras.h */,
+				8ECB8F6C196AC7280006D74F /* GADAdSize.h */,
+				8ECB8F6D196AC7280006D74F /* GADBannerView.h */,
+				8ECB8F6E196AC7280006D74F /* GADBannerViewDelegate.h */,
+				8ECB8F6F196AC7280006D74F /* GADInAppPurchase.h */,
+				8ECB8F70196AC7280006D74F /* GADInAppPurchaseDelegate.h */,
+				8ECB8F71196AC7280006D74F /* GADInterstitial.h */,
+				8ECB8F72196AC7280006D74F /* GADInterstitialDelegate.h */,
+				8ECB8F73196AC7280006D74F /* GADModules.h */,
+				8ECB8F74196AC7280006D74F /* GADRequest.h */,
+				8ECB8F75196AC7280006D74F /* GADRequestError.h */,
 			);
 			path = GoogleAdMobAds;
 			sourceTree = "<group>";
