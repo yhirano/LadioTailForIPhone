@@ -403,6 +403,8 @@
 		8EC75AAA1968E859008BA30B /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75AA91968E859008BA30B /* HistoryItem.m */; };
 		8EC9F3AD17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
 		8EC9F3AE17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */; };
+		8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECB8F5B196AC69C0006D74F /* ImageIO.framework */; };
+		8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECB8F5B196AC69C0006D74F /* ImageIO.framework */; };
 		8ED117401658779F001BD731 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED117381658779F001BD731 /* Channel.m */; };
 		8ED117411658779F001BD731 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173A1658779F001BD731 /* Favorite.m */; };
 		8ED117421658779F001BD731 /* FavoriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1173C1658779F001BD731 /* FavoriteManager.m */; };
@@ -979,6 +981,7 @@
 		8EC75AA91968E859008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = RadioLib/IcecasetLib/HistoryItem.m; sourceTree = "<group>"; };
 		8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewSectionLabel.h; path = Views/SideMenuTableViewSectionLabel.h; sourceTree = "<group>"; };
 		8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewSectionLabel.m; path = Views/SideMenuTableViewSectionLabel.m; sourceTree = "<group>"; };
+		8ECB8F5B196AC69C0006D74F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8ED117371658779F001BD731 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.h; sourceTree = SOURCE_ROOT; };
 		8ED117381658779F001BD731 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Channel.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.m; sourceTree = SOURCE_ROOT; };
 		8ED117391658779F001BD731 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Favorite.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Favorite.h; sourceTree = SOURCE_ROOT; };
@@ -1098,6 +1101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
 				8EFE80ED16E65FCC00C8575B /* CoreTelephony.framework in Frameworks */,
@@ -1127,6 +1131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
 				8EFE80EE16E65FD500C8575B /* CoreTelephony.framework in Frameworks */,
@@ -1675,6 +1680,7 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8ECB8F5B196AC69C0006D74F /* ImageIO.framework */,
 				8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */,
 				8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */,
 				8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */,

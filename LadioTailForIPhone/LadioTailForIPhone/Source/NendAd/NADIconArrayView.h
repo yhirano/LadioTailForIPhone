@@ -1,7 +1,7 @@
 //
 //  NADIconArrayView.h
 //
-//  Ver 2.3.3
+//  Ver 2.4.0
 //
 //  アイコン型広告ビュークラス(InterfaceBuilder用)
 //
