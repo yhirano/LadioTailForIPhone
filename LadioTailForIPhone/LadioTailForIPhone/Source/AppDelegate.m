@@ -53,6 +53,9 @@
     // 検索バーの色を変える
     [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] initWithColor:SEARCH_BAR_COLOR]];
 
+    // 履歴マネージャが番組の再生を受け取れるようにするため、履歴マネージャのインスタンスを生成する
+    [HistoryManager sharedInstance];
+
     return YES;
 }
 

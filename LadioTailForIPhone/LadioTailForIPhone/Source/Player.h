@@ -31,6 +31,7 @@
 /// 再生停止のNotification
 #define LadioTailPlayerDidStopNotification @"LadioTailPlayerDidStopNotification"
 
+/// プレイヤーの状態
 typedef NS_ENUM(NSInteger, PlayerState)
 {
     PlayerStateIdle,
@@ -38,6 +39,21 @@ typedef NS_ENUM(NSInteger, PlayerState)
     PlayerStatePlay,
 };
 
+/// プレイヤーが停止する理由
+typedef NS_ENUM(NSInteger, PlayerStopReason)
+{
+    PlayerStopReasonUser,
+    PlayerStopReasonAnotherUrlPlay,
+    PlayerStopReasonPlayTimeOut,
+    PlayerStopReasonDidPlayToEndTime,
+    PlayerStopReasonFailedToPlayToEndTime,
+    PlayerStopReasonStatusFailed,
+    PlayerStopReasonInterruption,
+};
+
+/**
+ * プレイヤー
+ */
 @interface Player : NSObject
 
 + (Player *)sharedInstance;

@@ -22,6 +22,7 @@
 
 #ifdef RADIO_EDGE
 
+#import <Foundation/Foundation.h>
 #import "Channel.h"
 
 /**

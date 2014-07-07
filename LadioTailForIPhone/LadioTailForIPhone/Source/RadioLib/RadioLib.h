@@ -28,11 +28,15 @@
     #import "LadioLib/Channel.h"
     #import "LadioLib/FavoriteManager.h"
     #import "LadioLib/Favorite.h"
+    #import "LadioLib/HistoryManager.h"
+    #import "LadioLib/HistoryItem.h"
 #elif defined(RADIO_EDGE)
     #import "IcecasetLib/Headline.h"
     #import "IcecasetLib/Channel.h"
     #import "IcecasetLib/FavoriteManager.h"
     #import "IcecasetLib/Favorite.h"
+    #import "IcecasetLib/HistoryManager.h"
+    #import "IcecasetLib/HistoryItem.h"
 #else
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif

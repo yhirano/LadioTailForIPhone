@@ -159,16 +159,11 @@
 {
     [super viewWillAppear:animated];
 
-    // ボタン類の表示を更新する
-    [self updateViews];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
     // WebViewのデリゲートを設定する
     _pageWebView.delegate = self;
+
+    // ボタン類の表示を更新する
+    [self updateViews];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

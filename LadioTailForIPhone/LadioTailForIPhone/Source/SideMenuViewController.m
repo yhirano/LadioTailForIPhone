@@ -28,6 +28,8 @@
 #import "HeadlineViewController.h"
 #import "FavoriteNaviViewController.h"
 #import "FavoritesTableViewController.h"
+#import "HistoryNaviViewController.h"
+#import "HistoryTableViewController.h"
 #import "SleepTimer.h"
 #import "SideMenuViewController.h"
 
@@ -177,7 +179,7 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
         case 1: // Sort Section
             return 4;
         case 2: // Others Section
-            return 2;
+            return 3;
         default:
             return 0;
     }
@@ -414,7 +416,22 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
                     cell.accessibilityHint = NSLocalizedString(@"Open the favorites view", @"お気に入り画面を開く");
                     break;
                 }
-                case 1: // Sleep timer
+                case 1: // History
+                {
+                    cell = [[self class] tableView:tableView withCellWithIdentifier:@"HistoryCell"];
+                    
+                    UILabel *historyLabel = (UILabel *) [cell viewWithTag:2];
+                    historyLabel.text = NSLocalizedString(@"History", @"履歴");
+                    
+                    // テーブルセルのテキスト等の色を変える
+                    historyLabel.textColor = SIDEMENU_CELL_MAIN_TEXT_COLOR;
+                    historyLabel.highlightedTextColor = SIDEMENU_CELL_MAIN_TEXT_SELECTED_COLOR;
+                    
+                    cell.accessibilityLabel = NSLocalizedString(@"History", @"履歴");
+                    cell.accessibilityHint = NSLocalizedString(@"Open the history view", @"履歴画面を開く");
+                    break;
+                }
+                case 2: // Sleep timer
                 {
                     cell = [[self class] tableView:tableView withCellWithIdentifier:@"SleepTimerCell"];
                     
@@ -698,8 +715,34 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
                     }
                     break;
                 }
-                case 1:
-                {/* 再生停止までの時間を選択してください */
+                case 1: // History
+                {
+                    // CenterControllerがHistoryNaviViewControllerで、かつHistoryTableViewControllerが表示中の場合
+                    // サイドメニューを閉じる
+                    if ([self isCenterControllerClass:[HistoryNaviViewController class]
+                                 andTopViewController:[HistoryTableViewController class]]) {
+                        [self.viewDeckController closeLeftViewAnimated:YES];
+                    }
+                    // CenterControllerがHistoryNaviViewControllerでない、またはHistoryTableViewControllerが表示中でない
+                    // 場合、サイドメニューをバウンドしセンターを変更
+                    else {
+                        __weak id weakSelf = self;
+                        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+                            SideMenuViewController *strongSelf = weakSelf;
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                            HistoryNaviViewController *historyNaviViewController = (HistoryNaviViewController *)
+                                [storyboard instantiateViewControllerWithIdentifier:@"HistoryNaviViewController"];
+                            strongSelf.viewDeckController.centerController = historyNaviViewController;
+                            
+                            // チェックマーク位置変更のためテーブルを更新
+                            [tableView reloadData];
+                        }];
+                    }
+                    break;
+                }
+                case 2: // Sleep timer
+                {
+                    // 再生停止までの時間を選択してくださいダイアログを表示
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                                     message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
                                                                    delegate:self

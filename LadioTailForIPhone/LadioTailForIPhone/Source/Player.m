@@ -21,19 +21,8 @@
  */
 
 #import "LadioTailConfig.h"
+#import "PlayerDidStopNotificationObject.h"
 #import "Player.h"
-
-/// 停止する理由
-typedef NS_ENUM(NSInteger, StopReason)
-{
-    StopReasonUser,
-    StopReasonAnotherUrlPlay,
-    StopReasonPlayTimeOut,
-    StopReasonDidPlayToEndTime,
-    StopReasonFailedToPlayToEndTime,
-    StopReasonStatusFailed,
-    StopReasonInterruption,
-};
 
 @interface Player () <AVAudioSessionDelegate>
 
@@ -133,7 +122,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProcWithReason:StopReasonAnotherUrlPlay];
+                [self stopProcWithReason:PlayerStopReasonAnotherUrlPlay];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
@@ -165,7 +154,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePlay:
                 // 再生中は停止
-                [self stopProcWithReason:StopReasonAnotherUrlPlay];
+                [self stopProcWithReason:PlayerStopReasonAnotherUrlPlay];
                 // 再生を開始するためここは下にスルー
             case PlayerStateIdle:
                 // 再生開始
@@ -184,7 +173,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithReason:StopReasonUser];
+                [self stopProcWithReason:PlayerStopReasonUser];
                 break;
             case PlayerStateIdle:
             default:
@@ -342,7 +331,7 @@ typedef NS_ENUM(NSInteger, StopReason)
     playUrl_ = url;
     playChannel_ = channel;
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:playChannel_];
     [self acviveAudioSession];
     player_ = [AVPlayer playerWithURL:url];
     player_.allowsExternalPlayback = NO; // VideoをAirPlayしない場合はNOにしてしまった方がいいらしい
@@ -383,41 +372,45 @@ typedef NS_ENUM(NSInteger, StopReason)
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
-                                                        object:self];
+                                                        object:playChannel_];
 }
 
 /// 停止処理
-- (void)stopProcWithReason:(StopReason)reason
+- (void)stopProcWithReason:(PlayerStopReason)reason
 {
+    // 通知のためローカルでいったん保持
+    Channel *playChannel = playChannel_;
+    
     [player_ pause];
     [player_ removeObserver:self forKeyPath:@"status"];
-    // ユーザーが停止した場合以外はURLと番組を残さない
-    if (reason != StopReasonUser) {
+    // ユーザーが停止した場合以外はURLと番組を残さない。
+    // ユーザーが停止した場合は、リモコンから再度再生できるようにする（switchPlayStop method）ためにこれらを残しておく
+    if (reason != PlayerStopReasonUser) {
         playUrl_ = nil;
         playChannel_ = nil;
     }
 
     state_ = PlayerStateIdle;
     switch (reason) {
-        case StopReasonUser:
+        case PlayerStopReasonUser:
             NSLog(@"Play stopped by user.");
             break;
-        case StopReasonAnotherUrlPlay:
+        case PlayerStopReasonAnotherUrlPlay:
             NSLog(@"Play stopped because another url playing.");
             break;
-        case StopReasonPlayTimeOut:
+        case PlayerStopReasonPlayTimeOut:
             NSLog(@"Play stopped because play timeout.");
             break;
-        case StopReasonDidPlayToEndTime:
+        case PlayerStopReasonDidPlayToEndTime:
             NSLog(@"Play stopped because play finished.");
             break;
-        case StopReasonFailedToPlayToEndTime:
+        case PlayerStopReasonFailedToPlayToEndTime:
             NSLog(@"Play stopped because failed play.");
             break;
-        case StopReasonStatusFailed:
+        case PlayerStopReasonStatusFailed:
             NSLog(@"Play stopped because status faild.");
             break;
-        case StopReasonInterruption:
+        case PlayerStopReasonInterruption:
             NSLog(@"Play stopped by interruption.");
             break;
         default:
@@ -425,14 +418,13 @@ typedef NS_ENUM(NSInteger, StopReason)
             break;
     }
 
-    // 他のURLを再生する場合には再生開始側で通知を出すため、ここでは通知を出さない
-    if (reason != StopReasonAnotherUrlPlay) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
-                                                            object:self];
-    }
+    PlayerDidStopNotificationObject *notificationObject = [[PlayerDidStopNotificationObject alloc]
+                                                           initWithChannel:playChannel reason:reason];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidStopNotification
+                                                        object:notificationObject];
 
     // 他のURLを再生する場合には、オーディオのセッションを無効化しない
-    if (reason != StopReasonAnotherUrlPlay) {
+    if (reason != PlayerStopReasonAnotherUrlPlay) {
         [self deacviveAudioSession];
     }
 
@@ -451,7 +443,7 @@ typedef NS_ENUM(NSInteger, StopReason)
     @synchronized (self) {
         switch (state_) {
             case PlayerStatePrepare:
-                [self stopProcWithReason:StopReasonPlayTimeOut];
+                [self stopProcWithReason:PlayerStopReasonPlayTimeOut];
                 NSLog(@"Player time outed.");
                 break;
             case PlayerStateIdle:
@@ -468,7 +460,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithReason:StopReasonDidPlayToEndTime];
+                [self stopProcWithReason:PlayerStopReasonDidPlayToEndTime];
                 break;
             case PlayerStateIdle:
             default:
@@ -483,7 +475,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithReason:StopReasonFailedToPlayToEndTime];
+                [self stopProcWithReason:PlayerStopReasonFailedToPlayToEndTime];
                 break;
             case PlayerStateIdle:
             default:
@@ -517,7 +509,7 @@ typedef NS_ENUM(NSInteger, StopReason)
                 switch (state_) {
                     case PlayerStatePrepare:
                     case PlayerStatePlay:
-                        [self stopProcWithReason:StopReasonStatusFailed];
+                        [self stopProcWithReason:PlayerStopReasonStatusFailed];
                         break;
                     case PlayerStateIdle:
                     default:
@@ -537,7 +529,7 @@ typedef NS_ENUM(NSInteger, StopReason)
         switch (state_) {
             case PlayerStatePrepare:
             case PlayerStatePlay:
-                [self stopProcWithReason:StopReasonInterruption];
+                [self stopProcWithReason:PlayerStopReasonInterruption];
                 break;
             case PlayerStateIdle:
             default:
