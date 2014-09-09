@@ -124,11 +124,13 @@
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             // アラートを表示
             if (alert != nil) {
-                UIAlertView *alertView = [[UIAlertView alloc] init];
-                alertView.message = alert;
-                NSString *buttonTitle = NSLocalizedString(@"OK", @"OK");
-                [alertView addButtonWithTitle:buttonTitle];
-                [alertView show];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                         message:alert
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
+                                                                    style:UIAlertActionStyleDefault
+                                                                  handler:nil]];
+                [_window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
             // アイコンバッジを消す
             application.applicationIconBadgeNumber = 0;
