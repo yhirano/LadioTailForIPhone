@@ -62,7 +62,8 @@
         // オーディオセッションを生成
         // バックグラウンド再生用
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [[AVAudioSession sharedInstance] setDelegate:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionDidInterrupt:) name:AVAudioSessionInterruptionNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRouteDidChange:) name:AVAudioSessionRouteChangeNotification object:nil];
         NSError *setCategoryError = nil;
         [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
         if (setCategoryError) {
@@ -520,38 +521,38 @@
     }
 }
 
-#pragma mark - AVAudioSessionDelegate methods
+#pragma mark - AVAudioSession notification
 
-- (void)beginInterruption
+- (void)sessionDidInterrupt:(NSNotification *)notification
 {
-	NSLog(@"audio settion begin interruption.");
-    @synchronized (self) {
-        switch (state_) {
-            case PlayerStatePrepare:
-            case PlayerStatePlay:
-                [self stopProcWithReason:PlayerStopReasonInterruption];
-                break;
-            case PlayerStateIdle:
-            default:
-                break;
-        }
+    switch ([notification.userInfo[AVAudioSessionInterruptionTypeKey] intValue]) {
+        case AVAudioSessionInterruptionTypeBegan:
+            NSLog(@"audio settion began interruption.");
+            @synchronized (self) {
+                switch (state_) {
+                    case PlayerStatePrepare:
+                    case PlayerStatePlay:
+                        [self stopProcWithReason:PlayerStopReasonInterruption];
+                        break;
+                    case PlayerStateIdle:
+                    default:
+                        break;
+                }
+            }
+            break;
+        case AVAudioSessionInterruptionTypeEnded:
+            NSLog(@"audio settion ended interruption.");
+            break;
+        default:
+            NSLog(@"audio settion interrupted.");
+            break;
     }
 }
 
-- (void)endInterruption
-{
-	NSLog(@"audio settion end interruption.");
-}
-
-- (void)endInterruptionWithFlags:(NSUInteger)flags
-{
-	NSLog(@"audio settion end interruption with flags %lu", (unsigned long)flags);
-}
-
-- (void)inputIsAvailableChanged:(BOOL)isInputAvailable
+- (void)sessionRouteDidChange:(NSNotification *)notification
 {
 #if DEBUG
-	NSLog(@"audio settion inputIsAvailableChanged %d", isInputAvailable);
+    NSLog(@"audio settion route did change.");
 #endif /* #if DEBUG */
 }
 
