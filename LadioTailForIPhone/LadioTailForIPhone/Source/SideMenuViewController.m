@@ -482,7 +482,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Others - Sleep Timer
-    if (indexPath.section == 2 && indexPath.row == 1) {
+    if (indexPath.section == 2 && indexPath.row == 2) {
         // スリープタイマーの設定がある場合
         if ([[SleepTimer sharedInstance] fireDate]) {
             return 60;
