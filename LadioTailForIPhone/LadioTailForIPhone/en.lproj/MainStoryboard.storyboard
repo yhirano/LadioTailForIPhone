@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gbi-ms-ce3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Headline View Controller - ON AIR-->
+        <!--ON AIR-->
         <scene sceneID="5">
             <objects>
                 <viewController id="2" customClass="HeadlineViewController" sceneMemberID="viewController">
@@ -49,15 +49,15 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="4Ns-42-dVY">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="4Ns-42-dVY">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="V5x-6F-Lpk">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white" highlightedImage="tablecell_play_black" id="V5x-6F-Lpk">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="jpt-35-IoY">
+                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="jpt-35-IoY">
                                                             <rect key="frame" x="298" y="8" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -79,7 +79,7 @@
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="mr1-Bh-Tmk">
+                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black" highlightedImage="tablecell_play_black" id="mr1-Bh-Tmk">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -135,15 +135,15 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="LJ5-7W-UEF">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="LJ5-7W-UEF">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="U2I-XX-ElE">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white" highlightedImage="tablecell_play_black" id="U2I-XX-ElE">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="4TD-xt-7Ms">
+                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="4TD-xt-7Ms">
                                                             <rect key="frame" x="298" y="8" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -151,7 +151,7 @@
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="Xzk-Jj-zWx">
+                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black" highlightedImage="tablecell_play_black" id="Xzk-Jj-zWx">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -207,15 +207,15 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="gX2-NX-hWP">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="gX2-NX-hWP">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="CIa-Cp-egq">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white" highlightedImage="tablecell_play_black" id="CIa-Cp-egq">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="6LT-4r-jRp">
+                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="6LT-4r-jRp">
                                                             <rect key="frame" x="298" y="8" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -230,7 +230,7 @@
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="Uk0-3k-BjS">
+                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black" highlightedImage="tablecell_play_black" id="Uk0-3k-BjS">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -286,15 +286,15 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="a3E-8v-lFa">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="a3E-8v-lFa">
                                                             <rect key="frame" x="23" y="7" width="28" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="dke-uJ-Pdc">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white" highlightedImage="tablecell_play_black" id="dke-uJ-Pdc">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="lBc-LE-o1O">
+                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="lBc-LE-o1O">
                                                             <rect key="frame" x="298" y="8" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -309,7 +309,7 @@
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="jYu-i1-gRJ">
+                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black" highlightedImage="tablecell_play_black" id="jYu-i1-gRJ">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -358,15 +358,15 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="EUV-TP-6ji">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="EUV-TP-6ji">
                                                             <rect key="frame" x="23" y="13" width="28" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white.png" highlightedImage="tablecell_play_black.png" id="uMa-0G-KF7">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_play_white" highlightedImage="tablecell_play_black" id="uMa-0G-KF7">
                                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="UrF-cb-oK4">
+                                                        <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="UrF-cb-oK4">
                                                             <rect key="frame" x="298" y="8" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -381,7 +381,7 @@
                                                             <rect key="frame" x="-50" y="0.0" width="50" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black.png" highlightedImage="tablecell_play_black.png" id="MfN-jB-6qA">
+                                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" image="tablecell_play_black" highlightedImage="tablecell_play_black" id="MfN-jB-6qA">
                                                                     <rect key="frame" x="18" y="12" width="14" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -428,7 +428,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="ON AIR" id="cIB-qf-6WW">
-                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="e20-Y9-DZQ">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu" id="e20-Y9-DZQ">
                             <connections>
                                 <action selector="openSideMenu:" destination="2" id="Br5-P7-GH2"/>
                             </connections>
@@ -475,7 +475,7 @@
                                         <rect key="frame" x="142" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_playback_play.png">
+                                        <state key="normal" image="button_playback_play">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -490,7 +490,7 @@
                                         <rect key="frame" x="266" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_action.png">
+                                        <state key="normal" image="button_action">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -508,7 +508,7 @@
                         <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="4py-bV-tQ6">
-                        <barButtonItem key="rightBarButtonItem" image="navbarbtn_favorite_white.png" id="gZN-oP-BxW">
+                        <barButtonItem key="rightBarButtonItem" image="navbarbtn_favorite_white" id="gZN-oP-BxW">
                             <connections>
                                 <action selector="favorite:" destination="abJ-NL-ORS" id="qtz-2H-Sie"/>
                             </connections>
@@ -551,7 +551,7 @@
                                         <rect key="frame" x="79" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_allow_right.png">
+                                        <state key="normal" image="button_allow_right">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -567,7 +567,7 @@
                                         <rect key="frame" x="142" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_goto_bottom.png">
+                                        <state key="normal" image="button_goto_bottom">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -583,7 +583,7 @@
                                         <rect key="frame" x="204" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_reload.png">
+                                        <state key="normal" image="button_reload">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -599,7 +599,7 @@
                                         <rect key="frame" x="20" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_allow_left.png">
+                                        <state key="normal" image="button_allow_left">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -615,7 +615,7 @@
                                         <rect key="frame" x="263" y="6" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="button_action.png">
+                                        <state key="normal" image="button_action">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -700,7 +700,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_update_white.png" highlightedImage="sidemenu_update_black.png" id="x4j-eo-qZ0">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_update_white" highlightedImage="sidemenu_update_black" id="x4j-eo-qZ0">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -722,7 +722,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_newly_white.png" highlightedImage="sidemenu_newly_black.png" id="55z-ev-NYM">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_newly_white" highlightedImage="sidemenu_newly_black" id="55z-ev-NYM">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -733,7 +733,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="DOU-6T-3kn">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="DOU-6T-3kn">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -748,7 +748,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_listeners_white.png" highlightedImage="sidemenu_listeners_black.png" id="4u9-6A-sPK">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_listeners_white" highlightedImage="sidemenu_listeners_black" id="4u9-6A-sPK">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -759,7 +759,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="NtL-s7-L7h">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="NtL-s7-L7h">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -774,7 +774,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_title_white.png" highlightedImage="sidemenu_title_black.png" id="2zZ-yK-Q1n">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_title_white" highlightedImage="sidemenu_title_black" id="2zZ-yK-Q1n">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -785,7 +785,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="U14-DX-ONz">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="U14-DX-ONz">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -800,7 +800,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_dj_white.png" highlightedImage="sidemenu_dj_black.png" id="hAg-TY-sEL">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_dj_white" highlightedImage="sidemenu_dj_black" id="hAg-TY-sEL">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -811,7 +811,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="Qv2-gx-PVD">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="Qv2-gx-PVD">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -826,7 +826,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_none_white.png" highlightedImage="sidemenu_none_black.png" id="Z1r-Mn-YPi">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_none_white" highlightedImage="sidemenu_none_black" id="Z1r-Mn-YPi">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -837,7 +837,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="05d-Zp-qGr">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="05d-Zp-qGr">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -852,7 +852,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_genre_white.png" highlightedImage="sidemenu_genre_black.png" id="fWO-mc-07p">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_genre_white" highlightedImage="sidemenu_genre_black" id="fWO-mc-07p">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -863,7 +863,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="tgJ-0g-3cE">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="tgJ-0g-3cE">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -878,7 +878,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_bitrate_white.png" highlightedImage="sidemenu_bitrate_black.png" id="TZ6-rv-RPM">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_bitrate_white" highlightedImage="sidemenu_bitrate_black" id="TZ6-rv-RPM">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -889,7 +889,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white.png" highlightedImage="sidemenu_checkmark_black.png" id="CW4-Jg-5CI">
+                                                <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" image="sidemenu_checkmark_white" highlightedImage="sidemenu_checkmark_black" id="CW4-Jg-5CI">
                                                     <rect key="frame" x="4" y="15" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -904,7 +904,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_favorite_yellow.png" highlightedImage="sidemenu_favorite_black.png" id="E3F-vB-bif">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_favorite_yellow" highlightedImage="sidemenu_favorite_black" id="E3F-vB-bif">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -926,7 +926,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_history_white.png" highlightedImage="sidemenu_history_black.png" id="DNC-XJ-ljb">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_history_white" highlightedImage="sidemenu_history_black" id="DNC-XJ-ljb">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -948,7 +948,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_sleeptimer_white.png" highlightedImage="sidemenu_sleeptimer_black.png" id="Ypl-Sx-WRl">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" image="sidemenu_sleeptimer_white" highlightedImage="sidemenu_sleeptimer_black" id="Ypl-Sx-WRl">
                                                     <rect key="frame" x="24" y="11" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -987,7 +987,7 @@
             </objects>
             <point key="canvasLocation" x="89" y="1037"/>
         </scene>
-        <!--Favorites Table View Controller - Favorites-->
+        <!--Favorites-->
         <scene sceneID="iLS-N8-SXA">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="u6o-bg-cRx" customClass="FavoritesTableViewController" sceneMemberID="viewController">
@@ -1017,15 +1017,15 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="HIs-Ns-CWh">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="HIs-Ns-CWh">
                                             <rect key="frame" x="23" y="13" width="28" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white.png" highlightedImage="tablecell_indicator_black.png" id="g8Q-mn-Wjn">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white" highlightedImage="tablecell_indicator_black" id="g8Q-mn-Wjn">
                                             <rect key="frame" x="294" y="19" width="16" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_broadcast_white.png" highlightedImage="tablecell_broadcast_black.png" id="FNM-f9-BOk">
+                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_broadcast_white" highlightedImage="tablecell_broadcast_black" id="FNM-f9-BOk">
                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1046,7 +1046,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="cOJ-df-n4X">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="cOJ-df-n4X">
                                             <rect key="frame" x="23" y="13" width="28" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1057,11 +1057,11 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white.png" highlightedImage="tablecell_indicator_black.png" id="Pyb-LG-lyu">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white" highlightedImage="tablecell_indicator_black" id="Pyb-LG-lyu">
                                             <rect key="frame" x="294" y="19" width="16" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_broadcast_white.png" highlightedImage="tablecell_broadcast_black.png" id="TPS-KN-8wB">
+                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" image="tablecell_broadcast_white" highlightedImage="tablecell_broadcast_black" id="TPS-KN-8wB">
                                             <rect key="frame" x="4" y="20" width="14" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1086,7 +1086,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini.png" highlightedImage="tablecell_favorite_black_mini.png" id="fZt-n7-sgh">
+                                                <imageView userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" image="tablecell_favorite_yellow_mini" highlightedImage="tablecell_favorite_black_mini" id="fZt-n7-sgh">
                                                     <rect key="frame" x="6" y="2" width="16" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1103,7 +1103,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorites" id="eJi-q8-NHa">
-                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="c2Z-Y2-0dN">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu" id="c2Z-Y2-0dN">
                             <connections>
                                 <action selector="openSideMenu:" destination="u6o-bg-cRx" id="epp-kE-qCa"/>
                             </connections>
@@ -1166,7 +1166,7 @@
             </objects>
             <point key="canvasLocation" x="1034" y="1117"/>
         </scene>
-        <!--History Table View Controller - History-->
+        <!--History-->
         <scene sceneID="R3A-sD-18N">
             <objects>
                 <tableViewController id="r5w-HY-Ohd" customClass="HistoryTableViewController" sceneMemberID="viewController">
@@ -1196,11 +1196,11 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white.png" highlightedImage="tablecell_headphones_black.png" id="1UQ-Wm-Cwj">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_headphones_white" highlightedImage="tablecell_headphones_black" id="1UQ-Wm-Cwj">
                                             <rect key="frame" x="23" y="13" width="28" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white.png" highlightedImage="tablecell_indicator_black.png" id="vCv-Yg-Lrl">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="tablecell_indicator_white" highlightedImage="tablecell_indicator_black" id="vCv-Yg-Lrl">
                                             <rect key="frame" x="294" y="19" width="16" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1214,7 +1214,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="ZSX-VS-0Bo">
-                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu.png" id="gtU-DP-cAe">
+                        <barButtonItem key="leftBarButtonItem" image="navbarbtn_menu" id="gtU-DP-cAe">
                             <connections>
                                 <action selector="openSideMenu:" destination="r5w-HY-Ohd" id="0Bp-hv-1Wd"/>
                             </connections>
@@ -1274,48 +1274,48 @@
         </scene>
     </scenes>
     <resources>
-        <image name="button_action.png" width="37" height="37"/>
-        <image name="button_allow_left.png" width="37" height="37"/>
-        <image name="button_allow_right.png" width="37" height="37"/>
-        <image name="button_goto_bottom.png" width="37" height="37"/>
-        <image name="button_playback_play.png" width="37" height="37"/>
-        <image name="button_reload.png" width="37" height="37"/>
-        <image name="navbarbtn_favorite_white.png" width="20" height="20"/>
-        <image name="navbarbtn_menu.png" width="20" height="20"/>
-        <image name="sidemenu_bitrate_black.png" width="28" height="28"/>
-        <image name="sidemenu_bitrate_white.png" width="28" height="28"/>
-        <image name="sidemenu_checkmark_black.png" width="14" height="14"/>
-        <image name="sidemenu_checkmark_white.png" width="14" height="14"/>
-        <image name="sidemenu_dj_black.png" width="28" height="28"/>
-        <image name="sidemenu_dj_white.png" width="28" height="28"/>
-        <image name="sidemenu_favorite_black.png" width="28" height="28"/>
-        <image name="sidemenu_favorite_yellow.png" width="28" height="28"/>
-        <image name="sidemenu_genre_black.png" width="28" height="28"/>
-        <image name="sidemenu_genre_white.png" width="28" height="28"/>
-        <image name="sidemenu_history_black.png" width="28" height="28"/>
-        <image name="sidemenu_history_white.png" width="28" height="28"/>
-        <image name="sidemenu_listeners_black.png" width="28" height="28"/>
-        <image name="sidemenu_listeners_white.png" width="28" height="28"/>
-        <image name="sidemenu_newly_black.png" width="28" height="28"/>
-        <image name="sidemenu_newly_white.png" width="28" height="28"/>
-        <image name="sidemenu_none_black.png" width="28" height="28"/>
-        <image name="sidemenu_none_white.png" width="28" height="28"/>
-        <image name="sidemenu_sleeptimer_black.png" width="28" height="28"/>
-        <image name="sidemenu_sleeptimer_white.png" width="28" height="28"/>
-        <image name="sidemenu_title_black.png" width="28" height="28"/>
-        <image name="sidemenu_title_white.png" width="28" height="28"/>
-        <image name="sidemenu_update_black.png" width="28" height="28"/>
-        <image name="sidemenu_update_white.png" width="28" height="28"/>
-        <image name="tablecell_broadcast_black.png" width="14" height="14"/>
-        <image name="tablecell_broadcast_white.png" width="14" height="14"/>
-        <image name="tablecell_favorite_black_mini.png" width="16" height="16"/>
-        <image name="tablecell_favorite_yellow_mini.png" width="16" height="16"/>
-        <image name="tablecell_headphones_black.png" width="28" height="28"/>
-        <image name="tablecell_headphones_white.png" width="28" height="28"/>
-        <image name="tablecell_indicator_black.png" width="16" height="16"/>
-        <image name="tablecell_indicator_white.png" width="16" height="16"/>
-        <image name="tablecell_play_black.png" width="14" height="14"/>
-        <image name="tablecell_play_white.png" width="14" height="14"/>
+        <image name="button_action" width="37" height="37"/>
+        <image name="button_allow_left" width="37" height="37"/>
+        <image name="button_allow_right" width="37" height="37"/>
+        <image name="button_goto_bottom" width="37" height="37"/>
+        <image name="button_playback_play" width="37" height="37"/>
+        <image name="button_reload" width="37" height="37"/>
+        <image name="navbarbtn_favorite_white" width="20" height="20"/>
+        <image name="navbarbtn_menu" width="20" height="20"/>
+        <image name="sidemenu_bitrate_black" width="28" height="28"/>
+        <image name="sidemenu_bitrate_white" width="28" height="28"/>
+        <image name="sidemenu_checkmark_black" width="14" height="14"/>
+        <image name="sidemenu_checkmark_white" width="14" height="14"/>
+        <image name="sidemenu_dj_black" width="28" height="28"/>
+        <image name="sidemenu_dj_white" width="28" height="28"/>
+        <image name="sidemenu_favorite_black" width="28" height="28"/>
+        <image name="sidemenu_favorite_yellow" width="28" height="28"/>
+        <image name="sidemenu_genre_black" width="28" height="28"/>
+        <image name="sidemenu_genre_white" width="28" height="28"/>
+        <image name="sidemenu_history_black" width="28" height="28"/>
+        <image name="sidemenu_history_white" width="28" height="28"/>
+        <image name="sidemenu_listeners_black" width="28" height="28"/>
+        <image name="sidemenu_listeners_white" width="28" height="28"/>
+        <image name="sidemenu_newly_black" width="28" height="28"/>
+        <image name="sidemenu_newly_white" width="28" height="28"/>
+        <image name="sidemenu_none_black" width="28" height="28"/>
+        <image name="sidemenu_none_white" width="28" height="28"/>
+        <image name="sidemenu_sleeptimer_black" width="28" height="28"/>
+        <image name="sidemenu_sleeptimer_white" width="28" height="28"/>
+        <image name="sidemenu_title_black" width="28" height="28"/>
+        <image name="sidemenu_title_white" width="28" height="28"/>
+        <image name="sidemenu_update_black" width="28" height="28"/>
+        <image name="sidemenu_update_white" width="28" height="28"/>
+        <image name="tablecell_broadcast_black" width="14" height="14"/>
+        <image name="tablecell_broadcast_white" width="14" height="14"/>
+        <image name="tablecell_favorite_black_mini" width="16" height="16"/>
+        <image name="tablecell_favorite_yellow_mini" width="16" height="16"/>
+        <image name="tablecell_headphones_black" width="28" height="28"/>
+        <image name="tablecell_headphones_white" width="28" height="28"/>
+        <image name="tablecell_indicator_black" width="16" height="16"/>
+        <image name="tablecell_indicator_white" width="16" height="16"/>
+        <image name="tablecell_play_black" width="14" height="14"/>
+        <image name="tablecell_play_white" width="14" height="14"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -1323,7 +1323,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="32q-pS-dLm"/>
-        <segue reference="rsj-fA-G3H"/>
+        <segue reference="CF2-OT-Flv"/>
+        <segue reference="P2k-BP-J8U"/>
     </inferredMetricsTieBreakers>
 </document>
