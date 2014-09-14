@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#import "FBNetworkReachability/FBNetworkReachability.h"
-#import "ViewDeck/IIViewDeckController.h"
+#import <FBNetworkReachability/FBNetworkReachability.h>
+#import <ViewDeck/IIViewDeckController.h>
 #import "Views/ChannelTableViewCell.h"
 #import "LadioTailConfig.h"
 #import "Player.h"

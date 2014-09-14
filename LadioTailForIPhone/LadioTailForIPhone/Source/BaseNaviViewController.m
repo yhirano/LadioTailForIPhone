@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "ViewDeck/IIViewDeckController.h"
+#import <ViewDeck/IIViewDeckController.h>
 #import "LadioTailConfig.h"
 #import "BaseNaviViewController.h"
 

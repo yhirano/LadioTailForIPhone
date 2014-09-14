@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "SVProgressHUD/SVProgressHUD.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "LadioTailConfig.h"
 #import "RadioLib/RadioLib.h"
 #import "LadioTailConfig.h"

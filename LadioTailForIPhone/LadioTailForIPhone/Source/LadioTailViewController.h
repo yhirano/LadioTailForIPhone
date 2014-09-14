@@ -21,7 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ViewDeck/IIViewDeckController.h"
+#import <ViewDeck/IIViewDeckController.h>
 
 @interface LadioTailViewController : IIViewDeckController
 

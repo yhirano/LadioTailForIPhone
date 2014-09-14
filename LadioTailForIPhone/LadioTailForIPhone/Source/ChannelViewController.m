@@ -22,12 +22,12 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
+#import <OpenInChrome/OpenInChromeController.h>
 #import "GoogleAdMobAds/GADBannerView.h"
-#import "OpenInChrome/OpenInChromeController.h"
 #import "LadioTailConfig.h"
 #import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
-#import "LINEActivity.h"
+#import <LINEActivity.h>
 #import "WebPageViewController.h"
 #import "ChannelViewController.h"
 
@@ -209,7 +209,7 @@
 
 - (IBAction)shareChannel:(id)sender {
     NSArray *activityItems = @[[self shareText]];
-    NSArray *applicationActivities = @[[[LINEActivity alloc] init]];
+    NSArray *applicationActivities = @[[[LINEActivity alloc] initWithPerformIfLineNotInstalled:NO]];
 
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
                                                         initWithActivityItems:activityItems

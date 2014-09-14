@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "ViewDeck/IIViewDeckController.h"
+#import <ViewDeck/IIViewDeckController.h>
 #import "RadioLib/RadioLib.h"
 #import "Views/FavoriteTableViewCell.h"
 #import "LadioTailConfig.h"
