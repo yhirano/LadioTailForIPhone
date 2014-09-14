@@ -12,7 +12,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "date_label_background_12@3x.png"
     }
   ],
   "info" : {
