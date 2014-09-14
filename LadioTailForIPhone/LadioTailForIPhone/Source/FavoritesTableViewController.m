@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "ViewDeck/IIViewDeckController.h"
+#import <ViewDeck/IIViewDeckController.h>
 #import "RadioLib/RadioLib.h"
 #import "Views/FavoriteTableViewCell.h"
 #import "LadioTailConfig.h"
@@ -32,6 +32,7 @@
 @implementation FavoritesTableViewController
 {
     NSMutableArray *favorites_;
+    UITextField *addFavoriteTextField_;
 }
 
 - (void)dealloc
@@ -452,21 +453,50 @@
 #if defined(LADIO_TAIL)
     // Add Favorite
     if (indexPath.row == [favorites_ count]) {
-        NSString* title = NSLocalizedString(@"Add Favorite", @"お気に入り追加");
-        NSString* message = NSLocalizedString(@"Please enter the mount name.", @"お気に入りに追加するマウントを入力してください");
-        NSString* cancel = NSLocalizedString(@"Cancel", @"キャンセル");
-        NSString* add = NSLocalizedString(@"Add", @"追加");
-        
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title
-                                                         message:message
-                                                        delegate:self
-                                               cancelButtonTitle:cancel
-                                               otherButtonTitles:add, nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        UITextField *alertTextField = [alert textFieldAtIndex:0];
-        alertTextField.keyboardType = UIKeyboardTypeASCIICapable;
-        alertTextField.placeholder = @"/mountname";
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Favorite", @"お気に入り追加")
+                                                                       message:NSLocalizedString(@"Please enter the mount name.", @"お気に入りに追加するマウントを入力してください")
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            addFavoriteTextField_ = textField;
+        }];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"キャンセル")
+                                                  style:UIAlertActionStyleCancel
+                                                 handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add", @"追加")
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action) {
+                                                    NSString *input = addFavoriteTextField_.text;
+                                                    if (input.length <= 0) {
+                                                        return;
+                                                    }
+                                                    
+                                                    NSError *error = nil;
+                                                    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"^(/*)(\\w*)"
+                                                                                                                                options:0
+                                                                                                                                  error:&error];
+                                                    if (error != nil) {
+                                                        NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
+                                                        return;
+                                                    }
+                                                    
+                                                    NSString *mount = nil;
+                                                    NSTextCheckingResult *match = [expression firstMatchInString:input
+                                                                                                         options:0
+                                                                                                           range:NSMakeRange(0, input.length)];
+                                                    if (match.numberOfRanges >= 2) {
+                                                        mount = [input substringWithRange:[match rangeAtIndex:2]];
+                                                    }
+                                                    if (mount.length > 0) {
+                                                        // お気に入り登録
+                                                        Channel *channel = [[Channel alloc] init];
+                                                        channel.mnt = [[NSString alloc] initWithFormat:@"/%@", mount];
+                                                        [channel setFavorite:YES];
+                                                    }
+                                                    
+                                                    [self updateFavolitesArray];
+                                                    [self.tableView reloadData];
+                                                }]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     // Select a favorite
     else {
@@ -478,58 +508,6 @@
     #error "Not defined LADIO_TAIL or RADIO_EDGE"
 #endif
 }
-
-#pragma mark - UIAlertViewDelegate methods
-
-#if defined(LADIO_TAIL)
-- (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0: // Cancel
-            break;
-        case 1: // Add
-        {
-            UITextField *alertTextField = [alertView textFieldAtIndex:0];
-            NSString *input = alertTextField.text;
-            if (input.length <= 0) {
-                break;
-            }
-            
-            NSError *error = nil;
-            NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"^(/*)(\\w*)"
-                                                                                        options:0
-                                                                                          error:&error];
-            if (error != nil) {
-                NSLog(@"NSRegularExpression regularExpressionWithPattern. Error:%@", [error localizedDescription]);
-                break;
-            }
-            
-            NSString *mount = nil;
-            NSTextCheckingResult *match = [expression firstMatchInString:input
-                                                                 options:0
-                                                                   range:NSMakeRange(0, input.length)];
-            if (match.numberOfRanges >= 2) {
-                mount = [input substringWithRange:[match rangeAtIndex:2]];
-            }
-            if (mount.length > 0) {
-                // お気に入り登録
-                Channel *channel = [[Channel alloc] init];
-                channel.mnt = [[NSString alloc] initWithFormat:@"/%@", mount];
-                [channel setFavorite:YES];
-            }
-
-            [self updateFavolitesArray];
-            [self.tableView reloadData];
-            break;
-        }
-        default:
-            break;
-    }
-
-    // ハイライト解除
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-#endif
 
 #pragma mark - iCloud notification
 

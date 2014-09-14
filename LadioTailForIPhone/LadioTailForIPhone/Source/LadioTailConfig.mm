@@ -192,15 +192,6 @@ UIColor * const HEADLINE_CELL_PLAY_SWIPE_BACKGROUND_BOTTOM_COLOR = [UIColor colo
                                                                               brightness:(57.0f / 100.0f)
                                                                                    alpha:1.0f];
 
-// Pull Refreshのテキスト色
-UIColor * const PULL_REFRESH_TEXT_COLOR = [UIColor darkGrayColor];
-
-// Pull Refreshの矢印イメージ
-NSString * const PULL_REFRESH_ARROW_IMAGE = @"EGOTableViewPullRefresh.bundle/grayArrow.png";
-
-// Pull Refreshの背景色
-UIColor * const PULL_REFRESH_TEXT_BACKGROUND_COLOR = [UIColor lightGrayColor];
-
 #if defined(LADIO_TAIL)
     /// 一文字ごとに検索を実行するか
     const BOOL SEARCH_EACH_CHAR = YES;

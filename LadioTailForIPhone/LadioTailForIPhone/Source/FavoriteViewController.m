@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "OpenInChrome/OpenInChromeController.h"
+#import <OpenInChrome/OpenInChromeController.h>
 #import "WebPageViewController.h"
 #import "FavoriteViewController.h"
 

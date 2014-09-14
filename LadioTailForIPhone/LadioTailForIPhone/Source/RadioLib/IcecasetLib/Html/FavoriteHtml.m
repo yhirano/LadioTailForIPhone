@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "../../../GRMustache/GRMustache.h"
+#import <GRMustache/GRMustache.h>
 #import "ChannelHtml.h"
 #import "FavoriteHtml.h"
 

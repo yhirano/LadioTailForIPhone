@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#import "ViewDeck/IIViewDeckController.h"
+#import <ViewDeck/IIViewDeckController.h>
 #import "LadioTailConfig.h"
 #import "Views/SideMenuTableViewCell.h"
 #import "Views/SideMenuTableViewSectionLabel.h"
@@ -32,8 +32,6 @@
 #import "HistoryTableViewController.h"
 #import "SleepTimer.h"
 #import "SideMenuViewController.h"
-
-static const NSInteger ALERT_SLEEP_TIMER = 1;
 
 @implementation SideMenuViewController
 
@@ -484,7 +482,7 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Others - Sleep Timer
-    if (indexPath.section == 2 && indexPath.row == 1) {
+    if (indexPath.section == 2 && indexPath.row == 2) {
         // スリープタイマーの設定がある場合
         if ([[SleepTimer sharedInstance] fireDate]) {
             return 60;
@@ -743,18 +741,45 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
                 case 2: // Sleep timer
                 {
                     // 再生停止までの時間を選択してくださいダイアログを表示
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", @"キャンセル")
-                                                          otherButtonTitles:NSLocalizedString(@"Off", @"オフ"),
-                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 15],
-                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 30],
-                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 60],
-                                                                            [NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 120],
-                                                                            nil];
-                    alert.tag = ALERT_SLEEP_TIMER;
-                    [alert show];
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                                   message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Off", @"オフ")
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction *action) {
+                                                                [[SleepTimer sharedInstance] stop];
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [alert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 15]
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction *action) {
+                                                                [[SleepTimer sharedInstance] setSleepTimerWithInterval:15 * 60];
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [alert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 30]
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction *action) {
+                                                                [[SleepTimer sharedInstance] setSleepTimerWithInterval:30 * 60];
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [alert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 60]
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction *action) {
+                                                                [[SleepTimer sharedInstance] setSleepTimerWithInterval:60 * 60];
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [alert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"%d mins after", @"xx分後"), 120]
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction *action) {
+                                                                [[SleepTimer sharedInstance] setSleepTimerWithInterval:120 * 60];
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"キャンセル")
+                                                              style:UIAlertActionStyleCancel
+                                                            handler:^(UIAlertAction *action) {
+                                                                [self.viewDeckController closeLeftViewAnimated:YES];
+                                                            }]];
+                    [self presentViewController:alert animated:YES completion:nil];
                     break;
                 }
                 default:
@@ -763,37 +788,6 @@ static const NSInteger ALERT_SLEEP_TIMER = 1;
             break;
         default:
             break;
-    }
-}
-
-#pragma mark - UIAlertViewDelegate methods
-
--(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == ALERT_SLEEP_TIMER) {
-        SleepTimer *sleepTimer = [SleepTimer sharedInstance];
-        switch (buttonIndex) {
-            case 1: // オフ
-                [sleepTimer stop];
-                break;
-            case 2: // 15分後
-                [sleepTimer setSleepTimerWithInterval:15 * 60];
-                break;
-            case 3: // 30分後
-                [sleepTimer setSleepTimerWithInterval:30 * 60];
-                break;
-            case 4: // 60分後
-                [sleepTimer setSleepTimerWithInterval:60 * 60];
-                break;
-            case 5: // 120分後
-                [sleepTimer setSleepTimerWithInterval:120 * 60];
-                break;
-            case 0: // キャンセル
-            default:
-                break;
-        }
-        
-        [self.viewDeckController closeLeftViewAnimated:YES];
     }
 }
 
