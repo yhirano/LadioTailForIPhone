@@ -40,9 +40,17 @@
         [[ApnsStorage sharedInstance] registApnsService];
 
         // Remote Notification を受信するためにデバイスを登録する
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
-                                                                               | UIRemoteNotificationTypeSound
-                                                                               | UIRemoteNotificationTypeAlert)];
+        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound
+                                                                                                        | UIUserNotificationTypeAlert |
+                                                                                                        UIUserNotificationTypeBadge)
+                                                                                            categories:nil]];
+            [application registerForRemoteNotifications];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
+                                                                                   | UIRemoteNotificationTypeSound
+                                                                                   | UIRemoteNotificationTypeAlert)];
+        }
     }
 
     // ナビゲーションバーの色を変える
@@ -91,7 +99,6 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {
-    
 #if DEBUG
     NSLog(@"DeviceToken: %@", devToken);
 #endif // #if DEBUG
