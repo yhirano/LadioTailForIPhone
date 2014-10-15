@@ -133,7 +133,7 @@
             if (alert != nil) {
                 // iOS8
                 if (NSClassFromString(@"UIAlertController")) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@""
                                                                                              message:alert
                                                                                       preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
@@ -144,6 +144,7 @@
                 // iOS7
                 else {
                     UIAlertView *alertView = [[UIAlertView alloc] init];
+                    alertView.title = @"";
                     alertView.message = alert;
                     NSString *buttonTitle = NSLocalizedString(@"OK", @"OK");
                     [alertView addButtonWithTitle:buttonTitle];

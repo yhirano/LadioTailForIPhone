@@ -743,7 +743,7 @@
                     // 再生停止までの時間を選択してくださいダイアログを表示
                     // iOS8
                     if (NSClassFromString(@"UIAlertController")) {
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@""
                                                                                        message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
                         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Off", @"オフ")
@@ -785,7 +785,7 @@
                     }
                     // iOS7
                     else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                                         message:NSLocalizedString(@"Select a time to stop playing.", @"再生停止までの時間を選択してください")
                                                                        delegate:self
                                                               cancelButtonTitle:NSLocalizedString(@"Cancel", @"キャンセル")
