@@ -863,6 +863,9 @@ typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
     // テーブルの境界線の色を変える
     _headlineTableView.separatorColor = HEADLINE_TABLE_SEPARATOR_COLOR;
 
+    // テーブルビューをスクロールするとキーボードが隠れるようにする
+    _headlineTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+
     // ヘッドライン表示方式を設定
     headlineViewDisplayType_ = [[self class] headlineViewDisplayType];
 
@@ -1148,14 +1151,6 @@ typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
             [self performSegueWithIdentifier:@"SelectChannel" sender:self];
         }
     }
-}
-
-#pragma mark - UIScrollViewDelegate Methods
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // キーボードを閉じる
-    [_headlineSearchBar resignFirstResponder];
 }
 
 #pragma mark - SwipableTableViewDelegate methods
