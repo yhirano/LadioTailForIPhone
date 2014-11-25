@@ -25,6 +25,8 @@
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
+		8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
+		8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
 		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
 		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
@@ -196,6 +198,9 @@
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
 		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
+		8E17DF431A24D03700BFA034 /* NADInterstitial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADInterstitial.h; sourceTree = "<group>"; };
+		8E17DF481A24D79B00BFA034 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
 		8E428CFD178DA1C7000A6684 /* AdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdViewCell.h; path = Views/AdViewCell.h; sourceTree = "<group>"; };
@@ -345,6 +350,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */,
+				8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */,
 				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
@@ -527,6 +534,7 @@
 				8E6CB5C918FA3F3D00CBC550 /* NADIconArrayView.h */,
 				8E4B62E516C8E9C000218055 /* NADView.h */,
 				8E632343183C5FEC00FB385A /* NADIconLoader.h */,
+				8E17DF431A24D03700BFA034 /* NADInterstitial.h */,
 				8E632344183C5FEC00FB385A /* NADIconView.h */,
 			);
 			path = NendAd;
@@ -619,6 +627,8 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */,
+				8E17DF481A24D79B00BFA034 /* EventKit.framework */,
 				8ECB8F5B196AC69C0006D74F /* ImageIO.framework */,
 				8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */,
 				8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */,

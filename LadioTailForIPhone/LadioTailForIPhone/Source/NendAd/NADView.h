@@ -2,8 +2,6 @@
 //  NADView.h
 //  NendAd
 //
-//  Ver 2.4.0
-//
 //  広告枠ベースビュークラス
 
 #import <UIKit/UIKit.h>
@@ -11,7 +9,7 @@
 #define NAD_ADVIEW_SIZE_320x50  CGSizeMake(320,50)
 
 // エラー種別
-typedef enum {
+NS_ENUM(NSInteger, NADViewErrorCode) {
     // 広告サイズがディスプレイサイズよりも大きい
     NADVIEW_AD_SIZE_TOO_LARGE,
     // 不明な広告ビュータイプ
@@ -22,7 +20,7 @@ typedef enum {
     NADVIEW_FAILED_AD_DOWNLOAD,
     // リクエストしたサイズと取得したサイズが異なる
     NADVIEW_AD_SIZE_DIFFERENCES
-}NADViewErrorCode;
+};
 
 @class NADView;
 
