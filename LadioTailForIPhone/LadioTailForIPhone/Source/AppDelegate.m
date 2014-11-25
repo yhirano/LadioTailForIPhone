@@ -41,13 +41,13 @@
 
         // Remote Notification を受信するためにデバイスを登録する
         if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound
-                                                                                                        | UIUserNotificationTypeAlert |
-                                                                                                        UIUserNotificationTypeBadge)
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(  UIUserNotificationTypeSound
+                                                                                                        | UIUserNotificationTypeAlert
+                                                                                                        | UIUserNotificationTypeBadge)
                                                                                             categories:nil]];
             [application registerForRemoteNotifications];
         } else {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(  UIRemoteNotificationTypeBadge
                                                                                    | UIRemoteNotificationTypeSound
                                                                                    | UIRemoteNotificationTypeAlert)];
         }
@@ -87,14 +87,16 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Remote Notification を受信しないようにする
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-    
     // お気に入りをプロバイダに送信しないようにする
     [[ApnsStorage sharedInstance] unregistApnsService];
 
     // iCloudからの通知を受けなくする
     [[ICloudStorage sharedInstance] unregistICloudNotification];
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
