@@ -27,6 +27,8 @@
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
 		8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
+		8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
+		8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
 		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
 		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
@@ -383,6 +385,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */,
+				8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */,
 				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
