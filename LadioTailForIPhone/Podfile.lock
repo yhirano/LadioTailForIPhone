@@ -1,11 +1,11 @@
 PODS:
   - FBNetworkReachability (1.0.1)
-  - GRMustache (7.3.0):
+  - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - LINEActivity (0.3.0)
   - OpenInChrome (0.0.1)
-  - SVProgressHUD (1.0)
+  - SVProgressHUD (1.1.3)
   - ViewDeck (2.2.10)
 
 DEPENDENCIES:
@@ -23,13 +23,21 @@ EXTERNAL SOURCES:
     :branch: my_pod
     :git: https://github.com/yhirano/LINEActivity.git
 
-SPEC CHECKSUMS:
-  FBNetworkReachability: 9738b60a9f5c30c14e4e50a156b889717d68daf3
-  GRMustache: efecd3b603f0a7a99cf6bdf3998782ee0c465726
-  JRSwizzle: 30da7a2c539a4ebf954b16d15f6dd8221c9f6fa5
-  LINEActivity: 8153955c780ace81f0020e0aee4f7ec127dee1be
-  OpenInChrome: b7c73ddf8fe0a1788dc0549c3c4c70e3c84da578
-  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
-  ViewDeck: 28df1a67b806a7a02ef15741df0a5c88cd4f4fb6
+CHECKOUT OPTIONS:
+  FBNetworkReachability:
+    :commit: 8ce19e10c6ce08b448d10d01b5124988a1f99fba
+    :git: https://github.com/dev5tec/FBNetworkReachability.git
+  LINEActivity:
+    :commit: 7848d6deb5b4bc41c991fb63b49303b5d2b38e4b
+    :git: https://github.com/yhirano/LINEActivity.git
 
-COCOAPODS: 0.33.1
+SPEC CHECKSUMS:
+  FBNetworkReachability: 8afc4a2a1d6d24a5fd78db732b48fce9351519f9
+  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  LINEActivity: 744311e00c62afbbe8498f119af823f919dfbef4
+  OpenInChrome: f1f3f9dec682216fe78a0d7fe0b5b263d6312c32
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  ViewDeck: 2c718b1199a88e06015b10c1616785193cb69a5b
+
+COCOAPODS: 0.37.2
