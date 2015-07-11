@@ -6,10 +6,15 @@
 
 #import <UIKit/UIKit.h>
 
-#define NAD_ADVIEW_SIZE_320x50  CGSizeMake(320,50)
+// 広告サイズ
+#define NAD_ADVIEW_SIZE_320x50   CGSizeMake(320,50)
+#define NAD_ADVIEW_SIZE_320x100  CGSizeMake(320,100)
+#define NAD_ADVIEW_SIZE_300x100  CGSizeMake(300,100)
+#define NAD_ADVIEW_SIZE_300x250  CGSizeMake(300,250)
+#define NAD_ADVIEW_SIZE_728x90   CGSizeMake(728,90)
 
 // エラー種別
-NS_ENUM(NSInteger, NADViewErrorCode) {
+typedef NS_ENUM(NSInteger, NADViewErrorCode) {
     // 広告サイズがディスプレイサイズよりも大きい
     NADVIEW_AD_SIZE_TOO_LARGE,
     // 不明な広告ビュータイプ
@@ -66,6 +71,9 @@ NS_ENUM(NSInteger, NADViewErrorCode) {
 #pragma 広告枠ID
 @property (nonatomic,assign) NSString *nendSpotID;
 
+#pragma mark - 広告初期化と画面幅サイズ調整有無の指定
+- (id)initWithIsAdjustAdSize:(BOOL)isAdjust;
+- (id)initWithFrame:(CGRect)frame isAdjustAdSize:(BOOL)isAdjust;
 
 #pragma mark - 広告枠のapiKeyとspotIDをセット
 - (void)setNendID:(NSString *)apiKey spotID:(NSString *)spotID;
