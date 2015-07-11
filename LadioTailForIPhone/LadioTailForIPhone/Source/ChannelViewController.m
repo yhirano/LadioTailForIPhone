@@ -23,7 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Twitter/Twitter.h>
 #import <OpenInChrome/OpenInChromeController.h>
-#import "GoogleAdMobAds/GADBannerView.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 #import "LadioTailConfig.h"
 #import "RadioLib/ReplaceUrlUtil.h"
 #import "Player.h"
