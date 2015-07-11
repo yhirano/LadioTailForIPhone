@@ -53,10 +53,14 @@ typedef enum {
  */
 - (void) didFinishLoadInterstitialAdWithStatus:(NADInterstitialStatusCode)status;
 
+- (void) didFinishLoadInterstitialAdWithStatus:(NADInterstitialStatusCode)status spotId:(NSString *)spotId;
+
 /**
  Notify the event of the ad click.
  */
 - (void) didClickWithType:(NADInterstitialClickType)type;
+
+- (void) didClickWithType:(NADInterstitialClickType)type spotId:(NSString *)spotId;
 
 @end
 
@@ -80,7 +84,7 @@ typedef enum {
 /**
  Supported Orientations.
  */
-@property (nonatomic, assign) NSArray* supportedOrientations;
+@property (nonatomic, retain) NSArray* supportedOrientations;
 
 ///-----------------------------------------------
 /// @name Creating and Initializing Nend Instance
@@ -120,6 +124,8 @@ typedef enum {
  @return NADInterstitialShowResult
  */
 - (NADInterstitialShowResult) showAd;
+
+- (NADInterstitialShowResult) showAdWithSpotId:(NSString *)spotId;
 
 /**
  Dismiss the Interstitial-AD.

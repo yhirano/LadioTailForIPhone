@@ -27,6 +27,8 @@
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
 		8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
+		8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
+		8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
 		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
 		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
@@ -66,7 +68,6 @@
 		8E9EC6EB165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8E9EC6EC165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
-		8EAC42561632EB2B009C2871 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */; };
 		8EAC42581632F193009C2871 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42571632F193009C2871 /* StoreKit.framework */; };
 		8EAC425C1632F252009C2871 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425B1632F252009C2871 /* AudioToolbox.framework */; };
 		8EAC425F1632F2BD009C2871 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
@@ -89,6 +90,10 @@
 		8EC587E31969FD6B0056A592 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E11969FD6B0056A592 /* HistoryViewController.m */; };
 		8EC587E6196A01EF0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E5196A01EF0056A592 /* HistoryHtml.m */; };
 		8EC587EC196A0C3D0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587EB196A0C3D0056A592 /* HistoryHtml.m */; };
+		8EC5B6841B509011009B7D91 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */; };
+		8EC5B6851B509027009B7D91 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */; };
+		8EC5B6871B50926E009B7D91 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6861B50926E009B7D91 /* CoreMedia.framework */; };
+		8EC5B6881B509281009B7D91 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6861B50926E009B7D91 /* CoreMedia.framework */; };
 		8EC75A791968BD77008BA30B /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A781968BD77008BA30B /* HistoryItem.m */; };
 		8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7B1968BFDF008BA30B /* HistoryManager.m */; };
 		8EC75A7F1968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */; };
@@ -144,7 +149,6 @@
 		8ED117E616588DCB001BD731 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
 		8ED117E716588DCB001BD731 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8ED117E816588DCB001BD731 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
-		8ED117E916588DCB001BD731 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */; };
 		8ED117EB16588DCB001BD731 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B54153712BB007352FD /* InfoPlist.strings */; };
 		8ED117EC16588DCB001BD731 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
 		8ED117ED16588DCB001BD731 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
@@ -169,6 +173,8 @@
 
 /* Begin PBXFileReference section */
 		3BE553A0882D433788042EB4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E09EDF016CF38A900A60E19 /* ChannelHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelHtml.h; path = RadioLib/IcecasetLib/Html/ChannelHtml.h; sourceTree = "<group>"; };
 		8E09EDF116CF38A900A60E19 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = RadioLib/IcecasetLib/Html/ChannelHtml.m; sourceTree = "<group>"; };
 		8E09EDF216CF38A900A60E19 /* FavoriteHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteHtml.h; path = RadioLib/IcecasetLib/Html/FavoriteHtml.h; sourceTree = "<group>"; };
@@ -221,9 +227,6 @@
 		8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/ChannelHtml.m; sourceTree = SOURCE_ROOT; };
 		8E5ECD8A16CAA64900D20F16 /* FavoriteHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/FavoriteHtml.h; sourceTree = SOURCE_ROOT; };
 		8E5ECD8B16CAA64900D20F16 /* FavoriteHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoriteHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/FavoriteHtml.m; sourceTree = SOURCE_ROOT; };
-		8E632343183C5FEC00FB385A /* NADIconLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADIconLoader.h; sourceTree = "<group>"; };
-		8E632344183C5FEC00FB385A /* NADIconView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADIconView.h; sourceTree = "<group>"; };
-		8E6CB5C918FA3F3D00CBC550 /* NADIconArrayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADIconArrayView.h; sourceTree = "<group>"; };
 		8E749E5A165DBCA0003FE515 /* BottomBarGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomBarGradientLayer.h; path = Views/GradientView/BottomBarGradientLayer.h; sourceTree = "<group>"; };
 		8E749E5B165DBCA0003FE515 /* BottomBarGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BottomBarGradientLayer.m; path = Views/GradientView/BottomBarGradientLayer.m; sourceTree = "<group>"; };
 		8E749E5C165DBCA0003FE515 /* BottomBarGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomBarGradientView.h; path = Views/GradientView/BottomBarGradientView.h; sourceTree = "<group>"; };
@@ -245,7 +248,6 @@
 		8E9EC6E8165D0F3A00FE5369 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = Views/GradientView/GradientView.m; sourceTree = "<group>"; };
 		8EAB5729155E42DB00F2202C /* LadioTailConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailConfig.h; sourceTree = "<group>"; };
 		8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LadioTailConfig.mm; sourceTree = "<group>"; };
-		8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = LadioTailForIPhone/Libraries/libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		8EAC42571632F193009C2871 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8EAC425B1632F252009C2871 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8EAC425E1632F2BD009C2871 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -273,6 +275,8 @@
 		8EC587E5196A01EF0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/HistoryHtml.m; sourceTree = SOURCE_ROOT; };
 		8EC587EA196A0C3D0056A592 /* HistoryHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryHtml.h; path = RadioLib/IcecasetLib/Html/HistoryHtml.h; sourceTree = "<group>"; };
 		8EC587EB196A0C3D0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = RadioLib/IcecasetLib/Html/HistoryHtml.m; sourceTree = "<group>"; };
+		8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = LadioTailForIPhone/Libraries/GoogleMobileAds.framework; sourceTree = "<group>"; };
+		8EC5B6861B50926E009B7D91 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8EC75A771968BD77008BA30B /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryItem.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.h; sourceTree = SOURCE_ROOT; };
 		8EC75A781968BD77008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.m; sourceTree = SOURCE_ROOT; };
 		8EC75A7A1968BFDF008BA30B /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryManager.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryManager.h; sourceTree = SOURCE_ROOT; };
@@ -296,18 +300,6 @@
 		8EC9F3AB17903DFB00DA4662 /* SideMenuTableViewSectionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewSectionLabel.h; path = Views/SideMenuTableViewSectionLabel.h; sourceTree = "<group>"; };
 		8EC9F3AC17903DFB00DA4662 /* SideMenuTableViewSectionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuTableViewSectionLabel.m; path = Views/SideMenuTableViewSectionLabel.m; sourceTree = "<group>"; };
 		8ECB8F5B196AC69C0006D74F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		8ECB8F6A196AC7280006D74F /* GADAdMobExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
-		8ECB8F6B196AC7280006D74F /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
-		8ECB8F6C196AC7280006D74F /* GADAdSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
-		8ECB8F6D196AC7280006D74F /* GADBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
-		8ECB8F6E196AC7280006D74F /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
-		8ECB8F6F196AC7280006D74F /* GADInAppPurchase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
-		8ECB8F70196AC7280006D74F /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
-		8ECB8F71196AC7280006D74F /* GADInterstitial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
-		8ECB8F72196AC7280006D74F /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
-		8ECB8F73196AC7280006D74F /* GADModules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
-		8ECB8F74196AC7280006D74F /* GADRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
-		8ECB8F75196AC7280006D74F /* GADRequestError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		8ED117371658779F001BD731 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Channel.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.h; sourceTree = SOURCE_ROOT; };
 		8ED117381658779F001BD731 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Channel.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Channel.m; sourceTree = SOURCE_ROOT; };
 		8ED117391658779F001BD731 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Favorite.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Favorite.h; sourceTree = SOURCE_ROOT; };
@@ -342,7 +334,6 @@
 		8EF9890817F1E9FE0060005A /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
 		8EFA757B17083E16002B445A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		9A07573CABA344C0A56E7F30 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +341,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC5B6841B509011009B7D91 /* GoogleMobileAds.framework in Frameworks */,
+				8EC5B6871B50926E009B7D91 /* CoreMedia.framework in Frameworks */,
 				8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */,
 				8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */,
 				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
@@ -371,7 +364,6 @@
 				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
 				8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */,
 				8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */,
-				8EAC42561632EB2B009C2871 /* libGoogleAdMobAds.a in Frameworks */,
 				8E4B62E716C8E9ED00218055 /* libNendAd.a in Frameworks */,
 				8E9EAAF31758D2CD00F276E5 /* libAdapterNend.a in Frameworks */,
 				8E9EAAF71758D86000F276E5 /* libAdapterIAd.a in Frameworks */,
@@ -383,6 +375,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC5B6851B509027009B7D91 /* GoogleMobileAds.framework in Frameworks */,
+				8EC5B6881B509281009B7D91 /* CoreMedia.framework in Frameworks */,
+				8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */,
+				8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */,
 				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
@@ -402,7 +398,6 @@
 				8ED117E616588DCB001BD731 /* CoreGraphics.framework in Frameworks */,
 				8ED117E716588DCB001BD731 /* QuartzCore.framework in Frameworks */,
 				8ED117E816588DCB001BD731 /* SystemConfiguration.framework in Frameworks */,
-				8ED117E916588DCB001BD731 /* libGoogleAdMobAds.a in Frameworks */,
 				8E4B62E816C8EA0400218055 /* libNendAd.a in Frameworks */,
 				8E9EAAF41758D2EA00F276E5 /* libAdapterNend.a in Frameworks */,
 				8E9EAAF61758D84A00F276E5 /* libAdapterIAd.a in Frameworks */,
@@ -413,6 +408,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44B35095BB4F494439284AFB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */,
+				6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		8E09EDEF16CF37F100A60E19 /* Html */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,7 +450,6 @@
 		8E0B831D1543DC770097984D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8EAC424B1632EB1C009C2871 /* GoogleAdMobAds */,
 				8E4B62E416C8E9C000218055 /* NendAd */,
 				8E9EC6E3165D0E2C00FE5369 /* Views */,
 				8ED1173616587773001BD731 /* RadioLib */,
@@ -531,11 +534,8 @@
 		8E4B62E416C8E9C000218055 /* NendAd */ = {
 			isa = PBXGroup;
 			children = (
-				8E6CB5C918FA3F3D00CBC550 /* NADIconArrayView.h */,
 				8E4B62E516C8E9C000218055 /* NADView.h */,
-				8E632343183C5FEC00FB385A /* NADIconLoader.h */,
 				8E17DF431A24D03700BFA034 /* NADInterstitial.h */,
-				8E632344183C5FEC00FB385A /* NADIconView.h */,
 			);
 			path = NendAd;
 			sourceTree = "<group>";
@@ -574,25 +574,6 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		8EAC424B1632EB1C009C2871 /* GoogleAdMobAds */ = {
-			isa = PBXGroup;
-			children = (
-				8ECB8F6A196AC7280006D74F /* GADAdMobExtras.h */,
-				8ECB8F6B196AC7280006D74F /* GADAdNetworkExtras.h */,
-				8ECB8F6C196AC7280006D74F /* GADAdSize.h */,
-				8ECB8F6D196AC7280006D74F /* GADBannerView.h */,
-				8ECB8F6E196AC7280006D74F /* GADBannerViewDelegate.h */,
-				8ECB8F6F196AC7280006D74F /* GADInAppPurchase.h */,
-				8ECB8F70196AC7280006D74F /* GADInAppPurchaseDelegate.h */,
-				8ECB8F71196AC7280006D74F /* GADInterstitial.h */,
-				8ECB8F72196AC7280006D74F /* GADInterstitialDelegate.h */,
-				8ECB8F73196AC7280006D74F /* GADModules.h */,
-				8ECB8F74196AC7280006D74F /* GADRequest.h */,
-				8ECB8F75196AC7280006D74F /* GADRequestError.h */,
-			);
-			path = GoogleAdMobAds;
-			sourceTree = "<group>";
-		};
 		8EB398B516CE9EFD00763AEF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,7 +592,7 @@
 				8EC23B51153712BB007352FD /* LadioTailForIPhone */,
 				8EC23B4A153712BB007352FD /* Frameworks */,
 				8EC23B48153712BB007352FD /* Products */,
-				9A07573CABA344C0A56E7F30 /* Pods.xcconfig */,
+				44B35095BB4F494439284AFB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -627,12 +608,13 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */,
+				8EC5B6861B50926E009B7D91 /* CoreMedia.framework */,
 				8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */,
 				8E17DF481A24D79B00BFA034 /* EventKit.framework */,
 				8ECB8F5B196AC69C0006D74F /* ImageIO.framework */,
 				8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */,
 				8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */,
-				8EAC42551632EB2B009C2871 /* libGoogleAdMobAds.a */,
 				8E4B62E616C8E9ED00218055 /* libNendAd.a */,
 				8E4982881579AA3200B43FB8 /* libz.dylib */,
 				8EAC42601632F331009C2871 /* AdSupport.framework */,
@@ -883,7 +865,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		54952FEB851445428724AFBD /* Copy Pods Resources */ = {
@@ -898,7 +880,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8A84F3FD80F14EEB8EE9A2BB /* Check Pods Manifest.lock */ = {
@@ -1143,13 +1125,17 @@
 		};
 		8EC23B60153712BB007352FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A07573CABA344C0A56E7F30 /* Pods.xcconfig */;
+			baseConfigurationReference = 6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1164,7 +1150,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1175,16 +1164,23 @@
 		};
 		8EC23B61153712BB007352FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A07573CABA344C0A56E7F30 /* Pods.xcconfig */;
+			baseConfigurationReference = 6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = LADIO_TAIL;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					LADIO_TAIL,
+				);
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1192,7 +1188,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1203,13 +1202,17 @@
 		};
 		8ED1185116588DCB001BD731 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A07573CABA344C0A56E7F30 /* Pods.xcconfig */;
+			baseConfigurationReference = 6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Radio Edge.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1224,7 +1227,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "Radio Edge";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1235,16 +1241,23 @@
 		};
 		8ED1185216588DCB001BD731 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A07573CABA344C0A56E7F30 /* Pods.xcconfig */;
+			baseConfigurationReference = 6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Radio Edge.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = RADIO_EDGE;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					RADIO_EDGE,
+				);
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1252,7 +1265,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "Radio Edge";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
