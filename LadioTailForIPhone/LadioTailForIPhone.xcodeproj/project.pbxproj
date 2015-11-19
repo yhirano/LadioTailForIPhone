@@ -34,7 +34,6 @@
 		8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */; };
 		8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */; };
 		8E4982851579AA0200B43FB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */; };
-		8E4982871579AA1500B43FB8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982861579AA1400B43FB8 /* CFNetwork.framework */; };
 		8E4B62EA16C8ED3800218055 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E916C8ED3800218055 /* Security.framework */; };
 		8E4B62EB16C8ED4200218055 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E916C8ED3800218055 /* Security.framework */; };
 		8E5ECD8C16CAA64900D20F16 /* ChannelHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */; };
@@ -117,7 +116,6 @@
 		8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
 		8ED117DF16588DCB001BD731 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF24FAB15C4C99E00F18C3F /* Twitter.framework */; };
 		8ED117E016588DCB001BD731 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */; };
-		8ED117E116588DCB001BD731 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982861579AA1400B43FB8 /* CFNetwork.framework */; };
 		8ED117E316588DCB001BD731 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
 		8ED117E416588DCB001BD731 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
 		8ED117E516588DCB001BD731 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
@@ -176,9 +174,6 @@
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
 		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
-		8E17DF481A24D79B00BFA034 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
 		8E428CFD178DA1C7000A6684 /* AdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdViewCell.h; path = Views/AdViewCell.h; sourceTree = "<group>"; };
 		8E428CFE178DA1C7000A6684 /* AdViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdViewCell.m; path = Views/AdViewCell.m; sourceTree = "<group>"; };
@@ -189,7 +184,6 @@
 		8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteTableViewCell.h; path = Views/FavoriteTableViewCell.h; sourceTree = "<group>"; };
 		8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoriteTableViewCell.m; path = Views/FavoriteTableViewCell.m; sourceTree = "<group>"; };
 		8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		8E4982861579AA1400B43FB8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		8E4B62E916C8ED3800218055 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8E5ECD8816CAA64900D20F16 /* ChannelHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/ChannelHtml.h; sourceTree = SOURCE_ROOT; };
 		8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/ChannelHtml.m; sourceTree = SOURCE_ROOT; };
@@ -214,9 +208,6 @@
 		8E9EC6E8165D0F3A00FE5369 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientView.m; path = Views/GradientView/GradientView.m; sourceTree = "<group>"; };
 		8EAB5729155E42DB00F2202C /* LadioTailConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadioTailConfig.h; sourceTree = "<group>"; };
 		8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LadioTailConfig.mm; sourceTree = "<group>"; };
-		8EAC42571632F193009C2871 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		8EAC425B1632F252009C2871 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		8EAC425E1632F2BD009C2871 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8EAC42601632F331009C2871 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		8EAFBF611537C2EA00DDBB6A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8EAFBF631537C8E000DDBB6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -241,7 +232,6 @@
 		8EC587E5196A01EF0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/HistoryHtml.m; sourceTree = SOURCE_ROOT; };
 		8EC587EA196A0C3D0056A592 /* HistoryHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryHtml.h; path = RadioLib/IcecasetLib/Html/HistoryHtml.h; sourceTree = "<group>"; };
 		8EC587EB196A0C3D0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = RadioLib/IcecasetLib/Html/HistoryHtml.m; sourceTree = "<group>"; };
-		8EC5B6861B50926E009B7D91 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8EC75A771968BD77008BA30B /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryItem.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.h; sourceTree = SOURCE_ROOT; };
 		8EC75A781968BD77008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.m; sourceTree = SOURCE_ROOT; };
 		8EC75A7A1968BFDF008BA30B /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryManager.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryManager.h; sourceTree = SOURCE_ROOT; };
@@ -298,7 +288,6 @@
 		8EF9890717F1E9FE0060005A /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
 		8EF9890817F1E9FE0060005A /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
 		8EFA757B17083E16002B445A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,7 +301,6 @@
 				8E4B62EA16C8ED3800218055 /* Security.framework in Frameworks */,
 				8EF24FAC15C4C99E00F18C3F /* Twitter.framework in Frameworks */,
 				8E4982851579AA0200B43FB8 /* MobileCoreServices.framework in Frameworks */,
-				8E4982871579AA1500B43FB8 /* CFNetwork.framework in Frameworks */,
 				8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */,
 				8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */,
 				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
@@ -332,7 +320,6 @@
 				8E4B62EB16C8ED4200218055 /* Security.framework in Frameworks */,
 				8ED117DF16588DCB001BD731 /* Twitter.framework in Frameworks */,
 				8ED117E016588DCB001BD731 /* MobileCoreServices.framework in Frameworks */,
-				8ED117E116588DCB001BD731 /* CFNetwork.framework in Frameworks */,
 				8ED117E316588DCB001BD731 /* UIKit.framework in Frameworks */,
 				8ED117E416588DCB001BD731 /* Foundation.framework in Frameworks */,
 				8ED117E516588DCB001BD731 /* AVFoundation.framework in Frameworks */,
@@ -535,25 +522,16 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8EC5B6861B50926E009B7D91 /* CoreMedia.framework */,
-				8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */,
-				8E17DF481A24D79B00BFA034 /* EventKit.framework */,
 				8ECB8F5B196AC69C0006D74F /* ImageIO.framework */,
 				8EAC42601632F331009C2871 /* AdSupport.framework */,
-				8EAC425B1632F252009C2871 /* AudioToolbox.framework */,
 				8EC23B901537147B007352FD /* AVFoundation.framework */,
-				8E4982861579AA1400B43FB8 /* CFNetwork.framework */,
 				8EC23B4F153712BB007352FD /* CoreGraphics.framework */,
-				8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */,
 				8EC23B4D153712BB007352FD /* Foundation.framework */,
 				8E9EAAF81758D8B800F276E5 /* iAd.framework */,
-				8EAC425E1632F2BD009C2871 /* MessageUI.framework */,
 				8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */,
 				8E16282215383107007A2DBE /* QuartzCore.framework */,
 				8E4B62E916C8ED3800218055 /* Security.framework */,
 				8EFA757B17083E16002B445A /* Social.framework */,
-				8EAC42571632F193009C2871 /* StoreKit.framework */,
-				8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */,
 				8EF24FAB15C4C99E00F18C3F /* Twitter.framework */,
 				8EC23B4B153712BB007352FD /* UIKit.framework */,
 				3BE553A0882D433788042EB4 /* libPods.a */,
