@@ -20,8 +20,6 @@
  * THE SOFTWARE.
  */
 
-#import <AVFoundation/AVFoundation.h>
-#import <Foundation/Foundation.h>
 #import "RadioLib/RadioLib.h"
 
 /// 再生準備開始のNotification
@@ -46,7 +44,6 @@ typedef NS_ENUM(NSInteger, PlayerStopReason)
     PlayerStopReasonAnotherUrlPlay,
     PlayerStopReasonPlayTimeOut,
     PlayerStopReasonDidPlayToEndTime,
-    PlayerStopReasonFailedToPlayToEndTime,
     PlayerStopReasonStatusFailed,
     PlayerStopReasonInterruption,
 };
