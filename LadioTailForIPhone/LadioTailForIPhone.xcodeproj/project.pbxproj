@@ -25,11 +25,6 @@
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
-		8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
-		8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
-		8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF481A24D79B00BFA034 /* EventKit.framework */; };
-		8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */; };
-		8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
 		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
 		8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
@@ -40,9 +35,6 @@
 		8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */; };
 		8E4982851579AA0200B43FB8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */; };
 		8E4982871579AA1500B43FB8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982861579AA1400B43FB8 /* CFNetwork.framework */; };
-		8E4982891579AA3200B43FB8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982881579AA3200B43FB8 /* libz.dylib */; };
-		8E4B62E716C8E9ED00218055 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E616C8E9ED00218055 /* libNendAd.a */; };
-		8E4B62E816C8EA0400218055 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E616C8E9ED00218055 /* libNendAd.a */; };
 		8E4B62EA16C8ED3800218055 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E916C8ED3800218055 /* Security.framework */; };
 		8E4B62EB16C8ED4200218055 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62E916C8ED3800218055 /* Security.framework */; };
 		8E5ECD8C16CAA64900D20F16 /* ChannelHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */; };
@@ -57,10 +49,6 @@
 		8E749E6A165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E749E65165DBDD6003FE515 /* PlaySwipeGradientLayer.m */; };
 		8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
-		8E9EAAF31758D2CD00F276E5 /* libAdapterNend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */; };
-		8E9EAAF41758D2EA00F276E5 /* libAdapterNend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */; };
-		8E9EAAF61758D84A00F276E5 /* libAdapterIAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */; };
-		8E9EAAF71758D86000F276E5 /* libAdapterIAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */; };
 		8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
 		8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
 		8E9EC6E9165D0F3A00FE5369 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */; };
@@ -68,10 +56,6 @@
 		8E9EC6EB165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8E9EC6EC165D0F3A00FE5369 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC6E8165D0F3A00FE5369 /* GradientView.m */; };
 		8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
-		8EAC42581632F193009C2871 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42571632F193009C2871 /* StoreKit.framework */; };
-		8EAC425C1632F252009C2871 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425B1632F252009C2871 /* AudioToolbox.framework */; };
-		8EAC425F1632F2BD009C2871 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
-		8EAC42611632F331009C2871 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8EAFBF641537C8E000DDBB6A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
 		8EB398B716CEA01C00763AEF /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB398B616CEA01C00763AEF /* Resources.bundle */; };
 		8EB398B816CEA01C00763AEF /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB398B616CEA01C00763AEF /* Resources.bundle */; };
@@ -90,10 +74,6 @@
 		8EC587E31969FD6B0056A592 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E11969FD6B0056A592 /* HistoryViewController.m */; };
 		8EC587E6196A01EF0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587E5196A01EF0056A592 /* HistoryHtml.m */; };
 		8EC587EC196A0C3D0056A592 /* HistoryHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC587EB196A0C3D0056A592 /* HistoryHtml.m */; };
-		8EC5B6841B509011009B7D91 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */; };
-		8EC5B6851B509027009B7D91 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */; };
-		8EC5B6871B50926E009B7D91 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6861B50926E009B7D91 /* CoreMedia.framework */; };
-		8EC5B6881B509281009B7D91 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC5B6861B50926E009B7D91 /* CoreMedia.framework */; };
 		8EC75A791968BD77008BA30B /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A781968BD77008BA30B /* HistoryItem.m */; };
 		8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7B1968BFDF008BA30B /* HistoryManager.m */; };
 		8EC75A7F1968CC96008BA30B /* PlayerDidStopNotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC75A7E1968CC96008BA30B /* PlayerDidStopNotificationObject.m */; };
@@ -135,20 +115,14 @@
 		8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB572A155E42DB00F2202C /* LadioTailConfig.mm */; };
 		8ED117CF16588DCB001BD731 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8ED117D916588DCB001BD731 /* ReplaceUrlUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED1175316587F8D001BD731 /* ReplaceUrlUtil.m */; };
-		8ED117DB16588DCB001BD731 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		8ED117DC16588DCB001BD731 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425E1632F2BD009C2871 /* MessageUI.framework */; };
-		8ED117DD16588DCB001BD731 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC425B1632F252009C2871 /* AudioToolbox.framework */; };
-		8ED117DE16588DCB001BD731 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42571632F193009C2871 /* StoreKit.framework */; };
 		8ED117DF16588DCB001BD731 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF24FAB15C4C99E00F18C3F /* Twitter.framework */; };
 		8ED117E016588DCB001BD731 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */; };
 		8ED117E116588DCB001BD731 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982861579AA1400B43FB8 /* CFNetwork.framework */; };
-		8ED117E216588DCB001BD731 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4982881579AA3200B43FB8 /* libz.dylib */; };
 		8ED117E316588DCB001BD731 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4B153712BB007352FD /* UIKit.framework */; };
 		8ED117E416588DCB001BD731 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4D153712BB007352FD /* Foundation.framework */; };
 		8ED117E516588DCB001BD731 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B901537147B007352FD /* AVFoundation.framework */; };
 		8ED117E616588DCB001BD731 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC23B4F153712BB007352FD /* CoreGraphics.framework */; };
 		8ED117E716588DCB001BD731 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
-		8ED117E816588DCB001BD731 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */; };
 		8ED117EB16588DCB001BD731 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B54153712BB007352FD /* InfoPlist.strings */; };
 		8ED117EC16588DCB001BD731 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC23B8915371432007352FD /* MainStoryboard.storyboard */; };
 		8ED117ED16588DCB001BD731 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EAFBF621537C8E000DDBB6A /* Localizable.strings */; };
@@ -166,8 +140,6 @@
 		8EF9890A17F1E9FE0060005A /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF9890817F1E9FE0060005A /* UIImage+Util.m */; };
 		8EFA757C17083E16002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8EFA757D17083E21002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		8EFE80ED16E65FCC00C8575B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */; };
-		8EFE80EE16E65FD500C8575B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE80EC16E65FCC00C8575B /* CoreTelephony.framework */; };
 		AA9B0D0E17FA4ED785ECCCD7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE553A0882D433788042EB4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -204,7 +176,6 @@
 		8E16282215383107007A2DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
 		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
-		8E17DF431A24D03700BFA034 /* NADInterstitial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADInterstitial.h; sourceTree = "<group>"; };
 		8E17DF481A24D79B00BFA034 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		8E1BA6B3153AA36F00070E71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -219,9 +190,6 @@
 		8E428D0A178DC07A000A6684 /* FavoriteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoriteTableViewCell.m; path = Views/FavoriteTableViewCell.m; sourceTree = "<group>"; };
 		8E4982841579AA0200B43FB8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E4982861579AA1400B43FB8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		8E4982881579AA3200B43FB8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		8E4B62E516C8E9C000218055 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADView.h; sourceTree = "<group>"; };
-		8E4B62E616C8E9ED00218055 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNendAd.a; path = LadioTailForIPhone/Libraries/libNendAd.a; sourceTree = "<group>"; };
 		8E4B62E916C8ED3800218055 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8E5ECD8816CAA64900D20F16 /* ChannelHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelHtml.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/ChannelHtml.h; sourceTree = SOURCE_ROOT; };
 		8E5ECD8916CAA64900D20F16 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/ChannelHtml.m; sourceTree = SOURCE_ROOT; };
@@ -239,8 +207,6 @@
 		8E9928D215490D230015CA5D /* ICloudStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStorage.m; sourceTree = "<group>"; };
 		8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApnsStorage.h; sourceTree = "<group>"; };
 		8E9AFC8016317DFB0094C738 /* ApnsStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApnsStorage.m; sourceTree = "<group>"; };
-		8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdapterNend.a; path = LadioTailForIPhone/Libraries/libAdapterNend.a; sourceTree = "<group>"; };
-		8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdapterIAd.a; path = LadioTailForIPhone/Libraries/libAdapterIAd.a; sourceTree = "<group>"; };
 		8E9EAAF81758D8B800F276E5 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		8E9EC6E5165D0F3A00FE5369 /* GradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientLayer.h; path = Views/GradientView/GradientLayer.h; sourceTree = "<group>"; };
 		8E9EC6E6165D0F3A00FE5369 /* GradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientLayer.m; path = Views/GradientView/GradientLayer.m; sourceTree = "<group>"; };
@@ -275,7 +241,6 @@
 		8EC587E5196A01EF0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/Html/HistoryHtml.m; sourceTree = SOURCE_ROOT; };
 		8EC587EA196A0C3D0056A592 /* HistoryHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryHtml.h; path = RadioLib/IcecasetLib/Html/HistoryHtml.h; sourceTree = "<group>"; };
 		8EC587EB196A0C3D0056A592 /* HistoryHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryHtml.m; path = RadioLib/IcecasetLib/Html/HistoryHtml.m; sourceTree = "<group>"; };
-		8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = LadioTailForIPhone/Libraries/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		8EC5B6861B50926E009B7D91 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8EC75A771968BD77008BA30B /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryItem.h; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.h; sourceTree = SOURCE_ROOT; };
 		8EC75A781968BD77008BA30B /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryItem.m; path = LadioTailForIPhone/Source/RadioLib/LadioLib/HistoryItem.m; sourceTree = SOURCE_ROOT; };
@@ -341,32 +306,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EC5B6841B509011009B7D91 /* GoogleMobileAds.framework in Frameworks */,
-				8EC5B6871B50926E009B7D91 /* CoreMedia.framework in Frameworks */,
-				8E17DF4B1A24D7AC00BFA034 /* EventKitUI.framework in Frameworks */,
-				8E17DF491A24D79B00BFA034 /* EventKit.framework in Frameworks */,
 				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
-				8EFE80ED16E65FCC00C8575B /* CoreTelephony.framework in Frameworks */,
 				8E4B62EA16C8ED3800218055 /* Security.framework in Frameworks */,
-				8EAC42611632F331009C2871 /* AdSupport.framework in Frameworks */,
-				8EAC425F1632F2BD009C2871 /* MessageUI.framework in Frameworks */,
-				8EAC425C1632F252009C2871 /* AudioToolbox.framework in Frameworks */,
-				8EAC42581632F193009C2871 /* StoreKit.framework in Frameworks */,
 				8EF24FAC15C4C99E00F18C3F /* Twitter.framework in Frameworks */,
 				8E4982851579AA0200B43FB8 /* MobileCoreServices.framework in Frameworks */,
 				8E4982871579AA1500B43FB8 /* CFNetwork.framework in Frameworks */,
-				8E4982891579AA3200B43FB8 /* libz.dylib in Frameworks */,
 				8EC23B4C153712BB007352FD /* UIKit.framework in Frameworks */,
 				8EC23B4E153712BB007352FD /* Foundation.framework in Frameworks */,
 				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
 				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
 				8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */,
-				8E1BA6B4153AA36F00070E71 /* SystemConfiguration.framework in Frameworks */,
-				8E4B62E716C8E9ED00218055 /* libNendAd.a in Frameworks */,
-				8E9EAAF31758D2CD00F276E5 /* libAdapterNend.a in Frameworks */,
-				8E9EAAF71758D86000F276E5 /* libAdapterIAd.a in Frameworks */,
 				AA9B0D0E17FA4ED785ECCCD7 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,32 +326,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EC5B6851B509027009B7D91 /* GoogleMobileAds.framework in Frameworks */,
-				8EC5B6881B509281009B7D91 /* CoreMedia.framework in Frameworks */,
-				8E17DF4E1A24DD5700BFA034 /* EventKit.framework in Frameworks */,
-				8E17DF4F1A24DD5700BFA034 /* EventKitUI.framework in Frameworks */,
 				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
-				8EFE80EE16E65FD500C8575B /* CoreTelephony.framework in Frameworks */,
 				8E4B62EB16C8ED4200218055 /* Security.framework in Frameworks */,
-				8ED117DB16588DCB001BD731 /* AdSupport.framework in Frameworks */,
-				8ED117DC16588DCB001BD731 /* MessageUI.framework in Frameworks */,
-				8ED117DD16588DCB001BD731 /* AudioToolbox.framework in Frameworks */,
-				8ED117DE16588DCB001BD731 /* StoreKit.framework in Frameworks */,
 				8ED117DF16588DCB001BD731 /* Twitter.framework in Frameworks */,
 				8ED117E016588DCB001BD731 /* MobileCoreServices.framework in Frameworks */,
 				8ED117E116588DCB001BD731 /* CFNetwork.framework in Frameworks */,
-				8ED117E216588DCB001BD731 /* libz.dylib in Frameworks */,
 				8ED117E316588DCB001BD731 /* UIKit.framework in Frameworks */,
 				8ED117E416588DCB001BD731 /* Foundation.framework in Frameworks */,
 				8ED117E516588DCB001BD731 /* AVFoundation.framework in Frameworks */,
 				8ED117E616588DCB001BD731 /* CoreGraphics.framework in Frameworks */,
 				8ED117E716588DCB001BD731 /* QuartzCore.framework in Frameworks */,
-				8ED117E816588DCB001BD731 /* SystemConfiguration.framework in Frameworks */,
-				8E4B62E816C8EA0400218055 /* libNendAd.a in Frameworks */,
-				8E9EAAF41758D2EA00F276E5 /* libAdapterNend.a in Frameworks */,
-				8E9EAAF61758D84A00F276E5 /* libAdapterIAd.a in Frameworks */,
 				6AFA27233DBD4717B760FA1C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,7 +387,6 @@
 		8E0B831D1543DC770097984D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8E4B62E416C8E9C000218055 /* NendAd */,
 				8E9EC6E3165D0E2C00FE5369 /* Views */,
 				8ED1173616587773001BD731 /* RadioLib */,
 				8EAB5729155E42DB00F2202C /* LadioTailConfig.h */,
@@ -531,15 +467,6 @@
 			path = Views/SwipableTableViewCell;
 			sourceTree = "<group>";
 		};
-		8E4B62E416C8E9C000218055 /* NendAd */ = {
-			isa = PBXGroup;
-			children = (
-				8E4B62E516C8E9C000218055 /* NADView.h */,
-				8E17DF431A24D03700BFA034 /* NADInterstitial.h */,
-			);
-			path = NendAd;
-			sourceTree = "<group>";
-		};
 		8E5ECD8716CAA62500D20F16 /* Html */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,15 +535,10 @@
 		8EC23B4A153712BB007352FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8EC5B6831B509011009B7D91 /* GoogleMobileAds.framework */,
 				8EC5B6861B50926E009B7D91 /* CoreMedia.framework */,
 				8E17DF4A1A24D7AC00BFA034 /* EventKitUI.framework */,
 				8E17DF481A24D79B00BFA034 /* EventKit.framework */,
 				8ECB8F5B196AC69C0006D74F /* ImageIO.framework */,
-				8E9EAAF51758D84A00F276E5 /* libAdapterIAd.a */,
-				8E9EAAF21758D2CD00F276E5 /* libAdapterNend.a */,
-				8E4B62E616C8E9ED00218055 /* libNendAd.a */,
-				8E4982881579AA3200B43FB8 /* libz.dylib */,
 				8EAC42601632F331009C2871 /* AdSupport.framework */,
 				8EAC425B1632F252009C2871 /* AudioToolbox.framework */,
 				8EC23B901537147B007352FD /* AVFoundation.framework */,
@@ -1132,10 +1054,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1146,10 +1065,7 @@
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1171,10 +1087,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Ladio Tail.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1184,10 +1097,7 @@
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1209,10 +1119,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Radio Edge.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1223,10 +1130,7 @@
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1248,10 +1152,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Radio Edge.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LadioTailForIPhone/Libraries",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LadioTailForIPhone/LadioTailForIPhone-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1261,10 +1162,7 @@
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/LadioTailForIPhone/Libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
