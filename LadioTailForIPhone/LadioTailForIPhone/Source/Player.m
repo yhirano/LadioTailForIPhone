@@ -20,26 +20,26 @@
  * THE SOFTWARE.
  */
 
+#import <AVFoundation/AVFoundation.h>
+#import <StreamingKit/STKAudioPlayer.h>
 #import "LadioTailConfig.h"
 #import "PlayerDidStopNotificationObject.h"
 #import "Player.h"
 
-@interface Player () <AVAudioSessionDelegate>
+@interface Player () <STKAudioPlayerDelegate>
 
 @end
 
 @implementation Player
 {
     // Player
-    AVPlayer *player_;
+    STKAudioPlayer *player_;
     // 再生状態
     PlayerState state_;
     // 再生中のURL
     NSURL *playUrl_;
     // 再生中の番組
     Channel *playChannel_;
-    // 再生開始タイムアウト監視タイマー
-    NSTimer *playTimeOutTimer_;
 }
 
 + (Player *)sharedInstance
@@ -69,16 +69,6 @@
         if (setCategoryError) {
             NSLog(@"Audio session setCategory error.");
         }
-
-        // 再生が終端ないしエラーで終了した際に通知を受け取り、状態を変更する
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(stoppedDidPlayToEndTime:)
-                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(stoppedFailedToPlayToEndTime:)
-                                                     name:AVPlayerItemFailedToPlayToEndTimeNotification
-                                                   object:nil];
     }
     return self;
 }
@@ -86,13 +76,6 @@
 - (void)dealloc
 {
     [self stop];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemFailedToPlayToEndTimeNotification
-                                                  object:nil];
 }
 
 - (void)play
@@ -334,46 +317,9 @@
     NSLog(@"Play start %@", [playUrl_ absoluteString]);
     [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerPrepareNotification object:playChannel_];
     [self acviveAudioSession];
-    player_ = [AVPlayer playerWithURL:url];
-    player_.allowsExternalPlayback = NO; // VideoをAirPlayしない場合はNOにしてしまった方がいいらしい
-    [player_ addObserver:self forKeyPath:@"status" options:0 context:nil];
-    [player_ play];
-    
-    // 再生タイムアウトを監視する
-    if (playTimeOutTimer_ != nil) {
-        // 再生タイムアウトタイマーが走っている場合は止める
-        [playTimeOutTimer_ invalidate];
-#if DEBUG
-        NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
-    }
-    playTimeOutTimer_ = [NSTimer scheduledTimerWithTimeInterval:PLAY_TIMEOUT_SEC
-                                                         target:self
-                                                       selector:@selector(playTimeOut:)
-                                                       userInfo:nil
-                                                        repeats:NO];
-#if DEBUG
-    NSLog(@"Play time out timer started.");
-#endif /* #if DEBUG */
-}
-
-/// 再生開始後処理
-- (void)playStartedProc
-{
-    state_ = PlayerStatePlay;
-    NSLog(@"Play started.");
-    
-    // 再生タイムアウトのタイマーが走っている場合は止める
-    if (playTimeOutTimer_ != nil) {
-        [playTimeOutTimer_ invalidate];
-        playTimeOutTimer_ = nil;
-#if DEBUG
-        NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
-                                                        object:playChannel_];
+    player_ = [[STKAudioPlayer alloc] init];
+    player_.delegate = self;
+    [player_ playURL:url];
 }
 
 /// 停止処理
@@ -382,8 +328,7 @@
     // 通知のためローカルでいったん保持
     Channel *playChannel = playChannel_;
     
-    [player_ pause];
-    [player_ removeObserver:self forKeyPath:@"status"];
+    [player_ stop];
     // ユーザーが停止した場合以外はURLと番組を残さない。
     // ユーザーが停止した場合は、リモコンから再度再生できるようにする（switchPlayStop method）ためにこれらを残しておく
     if (reason != PlayerStopReasonUser) {
@@ -405,9 +350,6 @@
         case PlayerStopReasonDidPlayToEndTime:
             NSLog(@"Play stopped because play finished.");
             break;
-        case PlayerStopReasonFailedToPlayToEndTime:
-            NSLog(@"Play stopped because failed play.");
-            break;
         case PlayerStopReasonStatusFailed:
             NSLog(@"Play stopped because status faild.");
             break;
@@ -428,97 +370,60 @@
     if (reason != PlayerStopReasonAnotherUrlPlay) {
         [self deacviveAudioSession];
     }
-
-    // 再生タイムアウトのタイマーが走っている場合は止める（走っていることはないはずだが一応）
-    if (playTimeOutTimer_ != nil) {
-        [playTimeOutTimer_ invalidate];
-        playTimeOutTimer_ = nil;
-#if DEBUG
-        NSLog(@"Play time out timer invalidate.");
-#endif /* #if DEBUG */
-    }
 }
 
-- (void)playTimeOut:(NSTimer *)timer
+#pragma mark - STKAudioPlayerDelegate method
+
+-(void)audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
 {
-    @synchronized (self) {
-        switch (state_) {
-            case PlayerStatePrepare:
-                [self stopProcWithReason:PlayerStopReasonPlayTimeOut];
-                NSLog(@"Player time outed.");
-                break;
-            case PlayerStateIdle:
-            case PlayerStatePlay:
-            default:
-                break;
+}
+
+-(void)audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
+{
+}
+
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer
+       stateChanged:(STKAudioPlayerState)state
+      previousState:(STKAudioPlayerState)previousState
+{
+    switch (state) {
+        case STKAudioPlayerStateReady:
+            break;
+        case STKAudioPlayerStateRunning:
+        case STKAudioPlayerStatePlaying: {
+            state_ = PlayerStatePlay;
+            NSLog(@"Play started.");
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailPlayerDidPlayNotification
+                                                                object:playChannel_];
+            break;
         }
-    }
-}
-
-- (void)stoppedDidPlayToEndTime:(NSNotification *)notification
-{
-    @synchronized (self) {
-        switch (state_) {
-            case PlayerStatePrepare:
-            case PlayerStatePlay:
+        case STKAudioPlayerStateBuffering:
+        case STKAudioPlayerStatePaused:
+            break;
+        case STKAudioPlayerStateStopped:
+            if (player_.stopReason == STKAudioPlayerStopReasonEof) {
                 [self stopProcWithReason:PlayerStopReasonDidPlayToEndTime];
-                break;
-            case PlayerStateIdle:
-            default:
-                break;
-        }
+            }
+            break;
+        case STKAudioPlayerStateError:
+        case STKAudioPlayerStateDisposed:
+            [self stopProcWithReason:PlayerStopReasonStatusFailed];
+            break;
     }
 }
 
-- (void)stoppedFailedToPlayToEndTime:(NSNotification *)notification
+-(void)         audioPlayer:(STKAudioPlayer*)audioPlayer
+didFinishPlayingQueueItemId:(NSObject*)queueItemId
+                 withReason:(STKAudioPlayerStopReason)stopReason
+                andProgress:(double)progress
+                andDuration:(double)duration
 {
-    @synchronized (self) {
-        switch (state_) {
-            case PlayerStatePrepare:
-            case PlayerStatePlay:
-                [self stopProcWithReason:PlayerStopReasonFailedToPlayToEndTime];
-                break;
-            case PlayerStateIdle:
-            default:
-                break;
-        }
-    }
 }
 
-#pragma mark - AVPlayer notifications
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+-(void)audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
 {
-    if (object == player_ && [keyPath isEqualToString:@"status"]) {
-        if (player_.status == AVPlayerStatusReadyToPlay) {
-            @synchronized (self) {
-                switch (state_) {
-                    case PlayerStatePrepare:
-                        [self playStartedProc];
-                        break;
-                    case PlayerStateIdle:
-                    case PlayerStatePlay:
-                    default:
-                        break;
-                }
-            }
-        } else if (player_.status == AVPlayerStatusFailed) {
-            @synchronized (self) {
-                switch (state_) {
-                    case PlayerStatePrepare:
-                    case PlayerStatePlay:
-                        [self stopProcWithReason:PlayerStopReasonStatusFailed];
-                        break;
-                    case PlayerStateIdle:
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    NSLog(@"Occurred unexpectedError. errorCode=%d.", errorCode);
 }
 
 #pragma mark - AVAudioSession notification
