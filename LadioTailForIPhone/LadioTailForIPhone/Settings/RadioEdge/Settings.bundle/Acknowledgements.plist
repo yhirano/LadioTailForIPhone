@@ -93,7 +93,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2015 F@N Communications, Inc. All Rights Reserved.</string>
+			<string>Copyright 2016 F@N Communications, Inc. All Rights Reserved.</string>
 			<key>Title</key>
 			<string>NendSDK_iOS</string>
 			<key>Type</key>
@@ -148,7 +148,7 @@ respective headers for the terms of their individual licenses.</string>
  Inspired by Matt Gallagher's AudioStreamer:
  https://github.com/mattgallagher/AudioStreamer
  
- Copyright (c) 2012 Thong Nguyen (tumtumtum@gmail.com). All rights reserved.
+ Copyright (c) 2015 Thong Nguyen (tumtumtum@gmail.com). All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -159,12 +159,12 @@ respective headers for the terms of their individual licenses.</string>
  documentation and/or other materials provided with the distribution.
  3. All advertising materials mentioning features or use of this software
  must display the following acknowledgement:
- This product includes software developed by the &lt;organization&gt;.
+ This product includes software developed by Thong Nguyen.
  4. Neither the name of the &lt;organization&gt; nor the
  names of its contributors may be used to endorse or promote products
  derived from this software without specific prior written permission.
  
- THIS SOFTWARE IS PROVIDED BY &lt;COPYRIGHT HOLDER&gt; ''AS IS'' AND ANY
+ THIS SOFTWARE IS PROVIDED BY THONG NGUYEN ''AS IS'' AND ANY
  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  DISCLAIMED. IN NO EVENT SHALL &lt;COPYRIGHT HOLDER&gt; BE LIABLE FOR ANY
