@@ -7,10 +7,10 @@ PODS:
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - LINEActivity (0.3.0)
-  - NendSDK_iOS (2.7.4)
+  - NendSDK_iOS (3.0.3)
   - NendSDK_iOS_MediationAdapter (1.2.2)
   - OpenInChrome (0.0.1)
-  - StreamingKit (0.1.25)
+  - StreamingKit (0.1.29)
   - SVProgressHUD (1.1.3)
   - ViewDeck (2.4.0)
 
@@ -44,10 +44,10 @@ SPEC CHECKSUMS:
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   LINEActivity: 744311e00c62afbbe8498f119af823f919dfbef4
-  NendSDK_iOS: 919e6ba37eb88bd93fb0df05eec24551e625300a
+  NendSDK_iOS: c1440bb15197139473d47a1541a6f9368bc71583
   NendSDK_iOS_MediationAdapter: f15502f99f12a83a00d061989eef3d17f60a405f
   OpenInChrome: f1f3f9dec682216fe78a0d7fe0b5b263d6312c32
-  StreamingKit: f00c054cfd0f59d88c8be7a2270e208302ce48c4
+  StreamingKit: c329785aaef3ac142d4ae388345bfe1ed23cfd45
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   ViewDeck: ed686005abd02e81c1d393704f14eb071f5d29b3
 
