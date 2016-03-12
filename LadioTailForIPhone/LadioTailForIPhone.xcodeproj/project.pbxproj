@@ -856,21 +856,6 @@
 			shellPath = /bin/sh;
 			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/RadioEdgeForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:5:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/RadioEdge/Settings.bundle/Root.plist";
 		};
-		C8E78288394889D33A440A62 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
