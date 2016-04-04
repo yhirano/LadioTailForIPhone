@@ -38,6 +38,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *reloadButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 - (IBAction)back:(id)sender;

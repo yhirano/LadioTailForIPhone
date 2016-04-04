@@ -108,6 +108,12 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:url
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        // iPadでクラッシュしないように設定する
+        alert.popoverPresentationController.sourceView = _menuButton;
+        alert.popoverPresentationController.sourceRect = CGRectMake(0, -_bottomView.bounds.size.height - 10, 0, 0);
+        alert.popoverPresentationController.permittedArrowDirections = 0;
+
         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Open in Safari", @"Safariで開く")
                                                   style:UIAlertActionStyleDefault
                                                 handler:^(UIAlertAction *action) {
