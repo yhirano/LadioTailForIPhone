@@ -214,6 +214,12 @@
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
                                                         initWithActivityItems:activityItems
                                                         applicationActivities:applicationActivities];
+
+    // iPadでクラッシュしないように設定する
+    activityViewController.popoverPresentationController.sourceView = _shareButton;
+    activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, -135, 0, 0); // Popupの位置の決まり方がよく分からないのでとりあえず-135の定数にしておく
+    activityViewController.popoverPresentationController.permittedArrowDirections = 0;
+    
     activityViewController.excludedActivityTypes = @[UIActivityTypeMail, UIActivityTypeMessage,
                                                      UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact,
                                                      UIActivityTypePrint, UIActivityTypeSaveToCameraRoll,
