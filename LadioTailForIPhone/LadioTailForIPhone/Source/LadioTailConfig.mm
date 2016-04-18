@@ -339,4 +339,16 @@ NSString * const PROVIDER_URL = nil;
     return nil;
 }
 
+#pragma mark - Nend config
+
++ (NSString *)nendApiKey
+{
+    return nil;
+}
+
++ (NSString *)nendSpotId
+{
+    return nil;
+}
+
 @end

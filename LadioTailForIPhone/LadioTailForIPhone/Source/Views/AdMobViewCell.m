@@ -21,14 +21,14 @@
  */
 
 #import <GoogleMobileAds/GoogleMobileAds.h>
-#import "AdViewCell.h"
+#import "AdMobViewCell.h"
 #import "LadioTailConfig.h"
 
-@interface AdViewCell () <GADBannerViewDelegate>
+@interface AdMobViewCell () <GADBannerViewDelegate>
 
 @end
 
-@implementation AdViewCell
+@implementation AdMobViewCell
 {
     /// AdMob View
     __weak GADBannerView *adMobView_;

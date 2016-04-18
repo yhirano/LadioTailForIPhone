@@ -288,4 +288,10 @@ FOUNDATION_EXPORT NSString * const PROVIDER_URL;
 /// AdMob Publisher ID
 + (NSString *)admobUnitId;
 
+#pragma mark - Nend config
+
++ (NSString *)nendApiKey;
+
++ (NSString *)nendSpotId;
+
 @end
