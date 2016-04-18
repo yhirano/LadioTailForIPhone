@@ -25,8 +25,8 @@
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
-		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
-		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
+		8E428D01178DA1C7000A6684 /* AdMobViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */; };
+		8E428D02178DA1C7000A6684 /* AdMobViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */; };
 		8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
 		8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
 		8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */; };
@@ -47,6 +47,10 @@
 		8E749E69165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E749E65165DBDD6003FE515 /* PlaySwipeGradientLayer.m */; };
 		8E749E6A165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E749E65165DBDD6003FE515 /* PlaySwipeGradientLayer.m */; };
 		8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
+		8E9A0E6E1CC5280400CBF437 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
+		8E9A0E6F1CC531CC00CBF437 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
+		8E9A0E721CC535AB00CBF437 /* AdNendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */; };
+		8E9A0E731CC535AB00CBF437 /* AdNendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */; };
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
 		8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
@@ -175,8 +179,8 @@
 		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
 		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
 		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
-		8E428CFD178DA1C7000A6684 /* AdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdViewCell.h; path = Views/AdViewCell.h; sourceTree = "<group>"; };
-		8E428CFE178DA1C7000A6684 /* AdViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdViewCell.m; path = Views/AdViewCell.m; sourceTree = "<group>"; };
+		8E428CFD178DA1C7000A6684 /* AdMobViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobViewCell.h; path = Views/AdMobViewCell.h; sourceTree = "<group>"; };
+		8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdMobViewCell.m; path = Views/AdMobViewCell.m; sourceTree = "<group>"; };
 		8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelTableViewCell.h; path = Views/ChannelTableViewCell.h; sourceTree = "<group>"; };
 		8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelTableViewCell.m; path = Views/ChannelTableViewCell.m; sourceTree = "<group>"; };
 		8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewCell.h; path = Views/SideMenuTableViewCell.h; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 		8E749E66165DBDD6003FE515 /* PlaySwipeGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaySwipeGradientView.h; path = Views/GradientView/PlaySwipeGradientView.h; sourceTree = "<group>"; };
 		8E9928D115490D230015CA5D /* ICloudStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStorage.h; sourceTree = "<group>"; };
 		8E9928D215490D230015CA5D /* ICloudStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStorage.m; sourceTree = "<group>"; };
+		8E9A0E701CC535AB00CBF437 /* AdNendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdNendViewCell.h; path = Views/AdNendViewCell.h; sourceTree = "<group>"; };
+		8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdNendViewCell.m; path = Views/AdNendViewCell.m; sourceTree = "<group>"; };
 		8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApnsStorage.h; sourceTree = "<group>"; };
 		8E9AFC8016317DFB0094C738 /* ApnsStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApnsStorage.m; sourceTree = "<group>"; };
 		8E9EAAF81758D8B800F276E5 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -295,6 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9A0E6E1CC5280400CBF437 /* AdSupport.framework in Frameworks */,
 				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
@@ -314,6 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9A0E6F1CC531CC00CBF437 /* AdSupport.framework in Frameworks */,
 				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
@@ -472,8 +480,10 @@
 			children = (
 				8ED1174516587BA4001BD731 /* GradientView */,
 				8E17581D179A85870098F07F /* SwipableTableViewCell */,
-				8E428CFD178DA1C7000A6684 /* AdViewCell.h */,
-				8E428CFE178DA1C7000A6684 /* AdViewCell.m */,
+				8E428CFD178DA1C7000A6684 /* AdMobViewCell.h */,
+				8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */,
+				8E9A0E701CC535AB00CBF437 /* AdNendViewCell.h */,
+				8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */,
 				8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */,
 				8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */,
 				8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */,
@@ -879,6 +889,7 @@
 				8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */,
 				8E0B83781543DC770097984D /* Player.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
+				8E9A0E721CC535AB00CBF437 /* AdNendViewCell.m in Sources */,
 				8EDED1C918143A1B003F9C75 /* SleepTimer.m in Sources */,
 				8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
@@ -904,7 +915,7 @@
 				8E5ECD8D16CAA64900D20F16 /* FavoriteHtml.m in Sources */,
 				8E09EDFD16CF394D00A60E19 /* TempleteInfo.m in Sources */,
 				8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */,
-				8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */,
+				8E428D01178DA1C7000A6684 /* AdMobViewCell.m in Sources */,
 				8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
@@ -933,6 +944,7 @@
 				8ED117AE16588DCB001BD731 /* Player.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
 				8EC75A901968DCB6008BA30B /* HistoryNaviViewController.m in Sources */,
+				8E9A0E731CC535AB00CBF437 /* AdNendViewCell.m in Sources */,
 				8EDED1CA18143A1B003F9C75 /* SleepTimer.m in Sources */,
 				8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
@@ -958,7 +970,7 @@
 				8E09EDFE16CF394D00A60E19 /* TempleteInfo.m in Sources */,
 				8EC75A9C1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */,
 				8EC75AA01968E13C008BA30B /* HistoryTableViewController.m in Sources */,
-				8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */,
+				8E428D02178DA1C7000A6684 /* AdMobViewCell.m in Sources */,
 				8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
