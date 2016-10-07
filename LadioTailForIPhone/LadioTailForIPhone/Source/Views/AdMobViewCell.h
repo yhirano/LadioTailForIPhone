@@ -22,8 +22,8 @@
 
 #import <UIKit/UIKit.h>
 
-/// 広告TableViewCell
-@interface AdViewCell : UITableViewCell
+/// 広告AdMobのTableViewCell
+@interface AdMobViewCell : UITableViewCell
 
 @property (nonatomic) UIViewController *rootViewController;
 

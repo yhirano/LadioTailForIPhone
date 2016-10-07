@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6AFA27233DBD4717B760FA1C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE553A0882D433788042EB4 /* libPods.a */; };
+		4AFBC3210F4092C5CAD66F10 /* libPods-Radio Edge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3963EB2FD459E5BDF6AECF36 /* libPods-Radio Edge.a */; };
 		8E09EDF616CF38A900A60E19 /* ChannelHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E09EDF116CF38A900A60E19 /* ChannelHtml.m */; };
 		8E09EDF716CF38A900A60E19 /* FavoriteHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E09EDF316CF38A900A60E19 /* FavoriteHtml.m */; };
 		8E09EDFD16CF394D00A60E19 /* TempleteInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E09EDFC16CF394D00A60E19 /* TempleteInfo.m */; };
@@ -25,8 +25,8 @@
 		8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E16282215383107007A2DBE /* QuartzCore.framework */; };
 		8E175820179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
 		8E175821179A85870098F07F /* SwipableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E17581F179A85870098F07F /* SwipableTableViewCell.m */; };
-		8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
-		8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdViewCell.m */; };
+		8E428D01178DA1C7000A6684 /* AdMobViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */; };
+		8E428D02178DA1C7000A6684 /* AdMobViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */; };
 		8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
 		8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */; };
 		8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E428D06178DA225000A6684 /* SideMenuTableViewCell.m */; };
@@ -47,6 +47,10 @@
 		8E749E69165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E749E65165DBDD6003FE515 /* PlaySwipeGradientLayer.m */; };
 		8E749E6A165DBDD6003FE515 /* PlaySwipeGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E749E65165DBDD6003FE515 /* PlaySwipeGradientLayer.m */; };
 		8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9928D215490D230015CA5D /* ICloudStorage.m */; };
+		8E9A0E6E1CC5280400CBF437 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
+		8E9A0E6F1CC531CC00CBF437 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAC42601632F331009C2871 /* AdSupport.framework */; };
+		8E9A0E721CC535AB00CBF437 /* AdNendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */; };
+		8E9A0E731CC535AB00CBF437 /* AdNendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */; };
 		8E9AFC8116317DFB0094C738 /* ApnsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AFC8016317DFB0094C738 /* ApnsStorage.m */; };
 		8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
 		8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9EAAF81758D8B800F276E5 /* iAd.framework */; };
@@ -138,13 +142,13 @@
 		8EF9890A17F1E9FE0060005A /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF9890817F1E9FE0060005A /* UIImage+Util.m */; };
 		8EFA757C17083E16002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8EFA757D17083E21002B445A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA757B17083E16002B445A /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		AA9B0D0E17FA4ED785ECCCD7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE553A0882D433788042EB4 /* libPods.a */; };
+		C502DE6E9AA06AFA45992915 /* libPods-Ladio Tail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8966D4B31574CAE5F4FD57 /* libPods-Ladio Tail.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3BE553A0882D433788042EB4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		3963EB2FD459E5BDF6AECF36 /* libPods-Radio Edge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Radio Edge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6073EA92ABDA5F6849369DDE /* Pods-Radio Edge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio Edge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Radio Edge/Pods-Radio Edge.debug.xcconfig"; sourceTree = "<group>"; };
+		658979D3201CD681C538F419 /* Pods-Radio Edge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio Edge.release.xcconfig"; path = "Pods/Target Support Files/Pods-Radio Edge/Pods-Radio Edge.release.xcconfig"; sourceTree = "<group>"; };
 		8E09EDF016CF38A900A60E19 /* ChannelHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelHtml.h; path = RadioLib/IcecasetLib/Html/ChannelHtml.h; sourceTree = "<group>"; };
 		8E09EDF116CF38A900A60E19 /* ChannelHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelHtml.m; path = RadioLib/IcecasetLib/Html/ChannelHtml.m; sourceTree = "<group>"; };
 		8E09EDF216CF38A900A60E19 /* FavoriteHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoriteHtml.h; path = RadioLib/IcecasetLib/Html/FavoriteHtml.h; sourceTree = "<group>"; };
@@ -175,8 +179,8 @@
 		8E17581E179A85870098F07F /* SwipableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableTableViewCell.h; sourceTree = "<group>"; };
 		8E17581F179A85870098F07F /* SwipableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableTableViewCell.m; sourceTree = "<group>"; };
 		8E1ED55915491B3400F80704 /* Ladio Tail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Ladio Tail.entitlements"; path = "../Ladio Tail.entitlements"; sourceTree = "<group>"; };
-		8E428CFD178DA1C7000A6684 /* AdViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdViewCell.h; path = Views/AdViewCell.h; sourceTree = "<group>"; };
-		8E428CFE178DA1C7000A6684 /* AdViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdViewCell.m; path = Views/AdViewCell.m; sourceTree = "<group>"; };
+		8E428CFD178DA1C7000A6684 /* AdMobViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobViewCell.h; path = Views/AdMobViewCell.h; sourceTree = "<group>"; };
+		8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdMobViewCell.m; path = Views/AdMobViewCell.m; sourceTree = "<group>"; };
 		8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelTableViewCell.h; path = Views/ChannelTableViewCell.h; sourceTree = "<group>"; };
 		8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelTableViewCell.m; path = Views/ChannelTableViewCell.m; sourceTree = "<group>"; };
 		8E428D05178DA225000A6684 /* SideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuTableViewCell.h; path = Views/SideMenuTableViewCell.h; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 		8E749E66165DBDD6003FE515 /* PlaySwipeGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaySwipeGradientView.h; path = Views/GradientView/PlaySwipeGradientView.h; sourceTree = "<group>"; };
 		8E9928D115490D230015CA5D /* ICloudStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudStorage.h; sourceTree = "<group>"; };
 		8E9928D215490D230015CA5D /* ICloudStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudStorage.m; sourceTree = "<group>"; };
+		8E9A0E701CC535AB00CBF437 /* AdNendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdNendViewCell.h; path = Views/AdNendViewCell.h; sourceTree = "<group>"; };
+		8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdNendViewCell.m; path = Views/AdNendViewCell.m; sourceTree = "<group>"; };
 		8E9AFC7F16317DFB0094C738 /* ApnsStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApnsStorage.h; sourceTree = "<group>"; };
 		8E9AFC8016317DFB0094C738 /* ApnsStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApnsStorage.m; sourceTree = "<group>"; };
 		8E9EAAF81758D8B800F276E5 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -288,6 +294,9 @@
 		8EF9890717F1E9FE0060005A /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
 		8EF9890817F1E9FE0060005A /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
 		8EFA757B17083E16002B445A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		935D2DBEA682A6BF5FE3EA6D /* Pods-Ladio Tail.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ladio Tail.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ladio Tail/Pods-Ladio Tail.debug.xcconfig"; sourceTree = "<group>"; };
+		C7D06EDE880EC19CC5031386 /* Pods-Ladio Tail.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ladio Tail.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ladio Tail/Pods-Ladio Tail.release.xcconfig"; sourceTree = "<group>"; };
+		DB8966D4B31574CAE5F4FD57 /* libPods-Ladio Tail.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ladio Tail.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +304,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9A0E6E1CC5280400CBF437 /* AdSupport.framework in Frameworks */,
 				8ECB8F5C196AC69C0006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAF91758D8B800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757C17083E16002B445A /* Social.framework in Frameworks */,
@@ -306,7 +316,7 @@
 				8EC23B911537147B007352FD /* AVFoundation.framework in Frameworks */,
 				8EC23B50153712BB007352FD /* CoreGraphics.framework in Frameworks */,
 				8E16282315383107007A2DBE /* QuartzCore.framework in Frameworks */,
-				AA9B0D0E17FA4ED785ECCCD7 /* libPods.a in Frameworks */,
+				C502DE6E9AA06AFA45992915 /* libPods-Ladio Tail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +324,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9A0E6F1CC531CC00CBF437 /* AdSupport.framework in Frameworks */,
 				8ECB8F5D196AC6A80006D74F /* ImageIO.framework in Frameworks */,
 				8E9EAAFA1758D8C800F276E5 /* iAd.framework in Frameworks */,
 				8EFA757D17083E21002B445A /* Social.framework in Frameworks */,
@@ -325,18 +336,20 @@
 				8ED117E516588DCB001BD731 /* AVFoundation.framework in Frameworks */,
 				8ED117E616588DCB001BD731 /* CoreGraphics.framework in Frameworks */,
 				8ED117E716588DCB001BD731 /* QuartzCore.framework in Frameworks */,
-				6AFA27233DBD4717B760FA1C /* libPods.a in Frameworks */,
+				4AFBC3210F4092C5CAD66F10 /* libPods-Radio Edge.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		44B35095BB4F494439284AFB /* Pods */ = {
+		1644AED9D301A87662DB75BD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */,
-				6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */,
+				935D2DBEA682A6BF5FE3EA6D /* Pods-Ladio Tail.debug.xcconfig */,
+				C7D06EDE880EC19CC5031386 /* Pods-Ladio Tail.release.xcconfig */,
+				6073EA92ABDA5F6849369DDE /* Pods-Radio Edge.debug.xcconfig */,
+				658979D3201CD681C538F419 /* Pods-Radio Edge.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -472,8 +485,10 @@
 			children = (
 				8ED1174516587BA4001BD731 /* GradientView */,
 				8E17581D179A85870098F07F /* SwipableTableViewCell */,
-				8E428CFD178DA1C7000A6684 /* AdViewCell.h */,
-				8E428CFE178DA1C7000A6684 /* AdViewCell.m */,
+				8E428CFD178DA1C7000A6684 /* AdMobViewCell.h */,
+				8E428CFE178DA1C7000A6684 /* AdMobViewCell.m */,
+				8E9A0E701CC535AB00CBF437 /* AdNendViewCell.h */,
+				8E9A0E711CC535AB00CBF437 /* AdNendViewCell.m */,
 				8E428CFF178DA1C7000A6684 /* ChannelTableViewCell.h */,
 				8E428D00178DA1C7000A6684 /* ChannelTableViewCell.m */,
 				8E428D09178DC07A000A6684 /* FavoriteTableViewCell.h */,
@@ -506,7 +521,7 @@
 				8EC23B51153712BB007352FD /* LadioTailForIPhone */,
 				8EC23B4A153712BB007352FD /* Frameworks */,
 				8EC23B48153712BB007352FD /* Products */,
-				44B35095BB4F494439284AFB /* Pods */,
+				1644AED9D301A87662DB75BD /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -534,7 +549,8 @@
 				8EFA757B17083E16002B445A /* Social.framework */,
 				8EF24FAB15C4C99E00F18C3F /* Twitter.framework */,
 				8EC23B4B153712BB007352FD /* UIKit.framework */,
-				3BE553A0882D433788042EB4 /* libPods.a */,
+				DB8966D4B31574CAE5F4FD57 /* libPods-Ladio Tail.a */,
+				3963EB2FD459E5BDF6AECF36 /* libPods-Radio Edge.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -642,13 +658,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8EC23B5F153712BB007352FD /* Build configuration list for PBXNativeTarget "Ladio Tail" */;
 			buildPhases = (
-				8A84F3FD80F14EEB8EE9A2BB /* Check Pods Manifest.lock */,
+				2DD7A40DFC35689FAA786BA8 /* [CP] Check Pods Manifest.lock */,
 				8EC23B43153712BB007352FD /* Sources */,
 				8EC23B44153712BB007352FD /* Frameworks */,
 				8E31758516A0967100F0C6BA /* ShellScript */,
 				8EC23B45153712BB007352FD /* Resources */,
-				369C096C855141959724C323 /* Copy Pods Resources */,
-				13E66482CAC90B7953FDE5BA /* Embed Pods Frameworks */,
+				F11FEEFA89C92E7CC6C57688 /* [CP] Embed Pods Frameworks */,
+				0DFB4C680139BF3767386AED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -663,13 +679,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8ED1185016588DCB001BD731 /* Build configuration list for PBXNativeTarget "Radio Edge" */;
 			buildPhases = (
-				08BAE977B514492BBB5B597D /* Check Pods Manifest.lock */,
+				865833482B835E8444D21D9B /* [CP] Check Pods Manifest.lock */,
 				8ED117A116588DCB001BD731 /* Sources */,
 				8ED117DA16588DCB001BD731 /* Frameworks */,
 				8E4C7BBE17AD3C010024FCFC /* ShellScript */,
 				8ED117EA16588DCB001BD731 /* Resources */,
-				54952FEB851445428724AFBD /* Copy Pods Resources */,
-				88AA70976C3FFCCC12CDA5BD /* Embed Pods Frameworks */,
+				6FDEDE5872424A74C3C64C1B /* [CP] Embed Pods Frameworks */,
+				B6BDBE2C3FEDFD87343F14D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -686,7 +702,7 @@
 		8EC23B3E153712BB007352FD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 8EC23B41153712BB007352FD /* Build configuration list for PBXProject "LadioTailForIPhone" */;
@@ -740,14 +756,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		08BAE977B514492BBB5B597D /* Check Pods Manifest.lock */ = {
+		0DFB4C680139BF3767386AED /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ladio Tail/Pods-Ladio Tail-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2DD7A40DFC35689FAA786BA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,74 +786,29 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		13E66482CAC90B7953FDE5BA /* Embed Pods Frameworks */ = {
+		6FDEDE5872424A74C3C64C1B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Radio Edge/Pods-Radio Edge-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		369C096C855141959724C323 /* Copy Pods Resources */ = {
+		865833482B835E8444D21D9B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		54952FEB851445428724AFBD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88AA70976C3FFCCC12CDA5BD /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A84F3FD80F14EEB8EE9A2BB /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -856,6 +842,36 @@
 			shellPath = /bin/sh;
 			shellScript = "VersionNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"./LadioTailForIPhone/RadioEdgeForIPhone-Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:5:DefaultValue ${VersionNumber}\" ./LadioTailForIPhone/Settings/RadioEdge/Settings.bundle/Root.plist";
 		};
+		B6BDBE2C3FEDFD87343F14D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Radio Edge/Pods-Radio Edge-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F11FEEFA89C92E7CC6C57688 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ladio Tail/Pods-Ladio Tail-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -879,6 +895,7 @@
 				8E0B83771543DC770097984D /* SideMenuViewController.m in Sources */,
 				8E0B83781543DC770097984D /* Player.m in Sources */,
 				8E0B837D1543DC770097984D /* WebPageViewController.m in Sources */,
+				8E9A0E721CC535AB00CBF437 /* AdNendViewCell.m in Sources */,
 				8EDED1C918143A1B003F9C75 /* SleepTimer.m in Sources */,
 				8E9928D315490D230015CA5D /* ICloudStorage.m in Sources */,
 				8EAB572B155E42DB00F2202C /* LadioTailConfig.mm in Sources */,
@@ -904,7 +921,7 @@
 				8E5ECD8D16CAA64900D20F16 /* FavoriteHtml.m in Sources */,
 				8E09EDFD16CF394D00A60E19 /* TempleteInfo.m in Sources */,
 				8EC75A7C1968BFDF008BA30B /* HistoryManager.m in Sources */,
-				8E428D01178DA1C7000A6684 /* AdViewCell.m in Sources */,
+				8E428D01178DA1C7000A6684 /* AdMobViewCell.m in Sources */,
 				8E428D03178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D07178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0B178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
@@ -933,6 +950,7 @@
 				8ED117AE16588DCB001BD731 /* Player.m in Sources */,
 				8ED117B116588DCB001BD731 /* WebPageViewController.m in Sources */,
 				8EC75A901968DCB6008BA30B /* HistoryNaviViewController.m in Sources */,
+				8E9A0E731CC535AB00CBF437 /* AdNendViewCell.m in Sources */,
 				8EDED1CA18143A1B003F9C75 /* SleepTimer.m in Sources */,
 				8ED117B216588DCB001BD731 /* ICloudStorage.m in Sources */,
 				8ED117B316588DCB001BD731 /* LadioTailConfig.mm in Sources */,
@@ -958,7 +976,7 @@
 				8E09EDFE16CF394D00A60E19 /* TempleteInfo.m in Sources */,
 				8EC75A9C1968E08B008BA30B /* FavoriteNaviViewController.m in Sources */,
 				8EC75AA01968E13C008BA30B /* HistoryTableViewController.m in Sources */,
-				8E428D02178DA1C7000A6684 /* AdViewCell.m in Sources */,
+				8E428D02178DA1C7000A6684 /* AdMobViewCell.m in Sources */,
 				8E428D04178DA1C7000A6684 /* ChannelTableViewCell.m in Sources */,
 				8E428D08178DA225000A6684 /* SideMenuTableViewCell.m in Sources */,
 				8E428D0C178DC07A000A6684 /* FavoriteTableViewCell.m in Sources */,
@@ -1003,17 +1021,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1021,10 +1047,13 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1035,20 +1064,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1058,7 +1098,7 @@
 		};
 		8EC23B60153712BB007352FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 935D2DBEA682A6BF5FE3EA6D /* Pods-Ladio Tail.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1076,7 +1116,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1093,7 +1133,7 @@
 		};
 		8EC23B61153712BB007352FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */;
+			baseConfigurationReference = C7D06EDE880EC19CC5031386 /* Pods-Ladio Tail.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1110,7 +1150,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/LadioTailForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1127,7 +1167,7 @@
 		};
 		8ED1185116588DCB001BD731 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DCF76F346A3C6E1807DD777 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 6073EA92ABDA5F6849369DDE /* Pods-Radio Edge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1145,7 +1185,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1162,7 +1202,7 @@
 		};
 		8ED1185216588DCB001BD731 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FE66C312706534E0723CDD0 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 658979D3201CD681C538F419 /* Pods-Radio Edge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1179,7 +1219,7 @@
 				);
 				INFOPLIST_FILE = "LadioTailForIPhone/RadioEdgeForIPhone-Info.plist";
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -26,7 +26,7 @@
 #import "LadioTailConfig.h"
 #import "Player.h"
 #import "ChannelViewController.h"
-#import "Views/AdViewCell.h"
+#import "Views/AdMobViewCell.h"
 #import "HeadlineViewController.h"
 
 /// 選択されたソート種類を覚えておくためのキー
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
     UIRefreshControl *refreshControl_;
 
     /// 広告セル
-    AdViewCell *adViewCell_;
+    AdMobViewCell *adViewCell_;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -879,7 +879,7 @@ typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
 
     if ([LadioTailConfig admobUnitId] != nil) {
         // 広告Viewを生成
-        adViewCell_ = [[AdViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
+        adViewCell_ = [[AdMobViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ChannelCell_Ad"];
         adViewCell_.rootViewController = self;
         [adViewCell_ load];
     }
