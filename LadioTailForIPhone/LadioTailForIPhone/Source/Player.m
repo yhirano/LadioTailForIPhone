@@ -423,7 +423,7 @@ didFinishPlayingQueueItemId:(NSObject*)queueItemId
 
 -(void)audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
 {
-    NSLog(@"Occurred unexpectedError. errorCode=%d.", errorCode);
+    NSLog(@"Occurred unexpectedError. errorCode=%ld.", (long)errorCode);
 }
 
 #pragma mark - AVAudioSession notification
