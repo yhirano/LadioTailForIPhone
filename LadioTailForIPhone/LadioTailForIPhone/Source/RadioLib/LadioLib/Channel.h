@@ -130,6 +130,20 @@
 /// 番組画面用のHTMLを取得する
 - (NSString *)descriptionHtml;
 
+#pragma mark - Comparison Methods
+
+- (NSComparisonResult)compareNewly:(Channel *)channel;
+
+- (NSComparisonResult)compareListeners:(Channel *)channel;
+
+- (NSComparisonResult)compareTitle:(Channel *)channel;
+
+- (NSComparisonResult)compareDj:(Channel *)channel;
+
++ (NSComparisonResult)compareString:(NSString *)str1 compared:(NSString *)str2;
+
++ (NSComparisonResult)compareFavorite:(Channel *)channel1 compared:(Channel *)channel2;
+
 @end
 
 #endif // #ifdef LADIO_TAIL

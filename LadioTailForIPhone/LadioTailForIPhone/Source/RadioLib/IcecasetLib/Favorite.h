@@ -38,6 +38,10 @@
 /// お気に入り画面用のHTMLを取得する
 - (NSString *)descriptionHtml;
 
+#pragma mark - Comparison Methods
+
+- (NSComparisonResult)compareNewly:(Favorite *)favorite;
+
 @end
 
 #endif // #ifdef RADIO_EDGE
