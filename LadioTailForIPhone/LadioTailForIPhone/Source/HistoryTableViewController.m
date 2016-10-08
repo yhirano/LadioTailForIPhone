@@ -85,7 +85,7 @@
     // 番組画面からの戻るボタンのテキストを書き換える
     NSString *backButtonString = NSLocalizedString(@"History", @"履歴");
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
-                                                                       style:UIBarButtonItemStyleBordered
+                                                                       style:UIBarButtonItemStylePlain
                                                                       target:nil
                                                                       action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;

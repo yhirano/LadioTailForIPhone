@@ -100,7 +100,7 @@
         backButtonString = NSLocalizedString(@"Back", @"戻る");
     }
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:backButtonString
-                                                                       style:UIBarButtonItemStyleBordered
+                                                                       style:UIBarButtonItemStylePlain
                                                                       target:nil
                                                                       action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
