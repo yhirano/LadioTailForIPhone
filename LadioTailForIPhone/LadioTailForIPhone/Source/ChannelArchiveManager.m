@@ -73,7 +73,7 @@
                             [url absoluteString]];
 
     NSURLSessionConfiguration* sessionConfig =
-        [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
+        [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
     sessionConfig.allowsCellularAccess = YES;
 
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
