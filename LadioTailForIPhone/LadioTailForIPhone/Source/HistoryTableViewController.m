@@ -251,7 +251,7 @@
     [self performSegueWithIdentifier:@"SelectHistory" sender:self];
 }
 
-- (void)channelFavoritesChanged:(NSNotification *)notification
+- (void)channelHistoryChange:(NSNotification *)notification
 {
     [self.tableView reloadData];
 }
