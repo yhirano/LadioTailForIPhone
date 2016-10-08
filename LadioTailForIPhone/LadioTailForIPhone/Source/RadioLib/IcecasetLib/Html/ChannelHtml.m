@@ -40,7 +40,7 @@
                                   stringByAppendingString:channel.genre];
     }
 
-    NSMutableArray *info = [[NSMutableArray alloc] init];
+    NSMutableArray<TempleteSubInfo*> *info = [[NSMutableArray alloc] init];
 
     NSString *tag;
     NSString *value;
@@ -67,7 +67,7 @@
     templeteInfo.info = [NSArray arrayWithArray:info];
 
 #if DEBUG
-    NSMutableArray *debugInfo = [[NSMutableArray alloc] init];
+    NSMutableArray<TempleteSubInfo*> *debugInfo = [[NSMutableArray alloc] init];
 
     // fid
     value = [[NSString alloc] initWithFormat:@"%ld", (long)channel.fid];
@@ -103,7 +103,7 @@
     templeteInfo.debugInfo = [NSArray arrayWithArray:debugInfo];
 #endif /* #if DEBUG */
 
-    NSDictionary *data = @{@"templete_info": templeteInfo};
+    NSDictionary<NSString*, TempleteInfo*> *data = @{@"templete_info": templeteInfo};
 
     static GRMustacheTemplate *channelPageHtmlTemplate = nil;
     static dispatch_once_t onceToken = 0;

@@ -30,7 +30,7 @@
 
 @implementation ChannelArchiveManager
 {
-    NSMutableDictionary *tasks_;
+    NSMutableDictionary<NSURLSessionTask*, Channel*> *tasks_;
 }
 
 + (ChannelArchiveManager *)sharedInstance
@@ -95,7 +95,7 @@ didFinishDownloadingToURL:(NSURL *)location
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     // ドキュメントディレクトリを取得
-    NSArray *documentDirectoryUrls = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSArray<NSURL*> *documentDirectoryUrls = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *documentsDirectory = [documentDirectoryUrls objectAtIndex:0];
 
     // コピー先のファイル名を設定

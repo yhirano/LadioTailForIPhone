@@ -105,11 +105,11 @@
 
     // お気に入り送信
     dispatch_async(sendFavoritesDispatchQueue_, ^ {
-        NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
+        NSArray<Favorite*> *favorites = [[FavoriteManager sharedInstance].favorites allValues];
         NSLog(@"Send %lu favorite(s) to the provider.", (unsigned long)[favorites count]);
         
         // 端末の言語設定を取得
-        NSArray *languages = [NSLocale preferredLanguages];
+        NSArray<NSString*> *languages = [NSLocale preferredLanguages];
         NSString *lang = @"";
         if (languages != nil && [languages count] > 0) {
             lang = [languages objectAtIndex:0];

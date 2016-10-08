@@ -208,7 +208,7 @@
 }
 
 - (IBAction)shareChannel:(id)sender {
-    NSArray *activityItems = @[[self shareText]];
+    NSArray<NSString*> *activityItems = @[[self shareText]];
     NSArray *applicationActivities = @[[[LINEActivity alloc] initWithPerformIfLineNotInstalled:NO]];
 
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]

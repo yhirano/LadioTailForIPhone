@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, ChannelSortType)
  *
  * @return 番組リスト
  */
-- (NSArray *)channels;
+- (NSArray<Channel*> *)channels;
 
 /**
  * 指定したソート順で番組リストを取得する
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, ChannelSortType)
  * @see ChannelSortTypeTitle
  * @see ChannelSortTypeDj
  */
-- (NSArray *)channels:(ChannelSortType)sortType;
+- (NSArray<Channel*> *)channels:(ChannelSortType)sortType;
 
 /**
  * 番組リストを取得する
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, ChannelSortType)
  * @see ChannelSortTypeTitle
  * @see ChannelSortTypeDj
  */
-- (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord;
+- (NSArray<Channel*> *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord;
 
 /**
  * 一致する再生URLを持つ番組を取得する

@@ -22,7 +22,6 @@
 
 #import "../Notifications.h"
 #import "Headline.h"
-#import "Favorite.h"
 #import "FavoriteManager.h"
 
 #define FAVORITES_KEY_V1 @"FAVORITES_V1"
@@ -30,7 +29,7 @@
 
 @implementation FavoriteManager
 {
-    NSMutableDictionary *_favorites;
+    NSMutableDictionary<NSString*, Favorite*> *_favorites;
 }
 
 + (FavoriteManager *)sharedInstance
@@ -64,7 +63,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
 }
 
-- (NSDictionary *)favorites
+- (NSDictionary<NSString*, Favorite*> *)favorites
 {
     @synchronized(self) {
         return _favorites;
@@ -76,7 +75,7 @@
     [self addFavorites:@[channel]];
 }
 
-- (void)addFavorites:(NSArray *)channels
+- (void)addFavorites:(NSArray<Channel*> *)channels
 {
     if ([channels count] == 0) {
         return;
@@ -146,7 +145,7 @@
     }
 }
 
-- (void)replace:(NSArray *)favorites
+- (void)replace:(NSArray<Favorite*> *)favorites
 {
     @synchronized(self) {
         // 今までのお気に入りをクリア
@@ -171,7 +170,7 @@
     }
 }
 
-- (void)merge:(NSArray *)favorites
+- (void)merge:(NSArray<Favorite*> *)favorites
 {
     @synchronized(self) {
         BOOL added = NO;
@@ -220,7 +219,7 @@
 - (void)headlineChannelChanged:(NSNotification *)notification
 {
     // お気に入りの番組情報を更新する
-    NSArray *channels = [Headline sharedInstance].channels;
+    NSArray<Channel*> *channels = [Headline sharedInstance].channels;
     __block BOOL changed = NO;
     dispatch_apply([channels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
         Channel *channel = channels[i];
@@ -251,7 +250,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *favoritesData = [defaults objectForKey:FAVORITES_KEY_V2];
     if (favoritesData != nil) {
-        NSDictionary *favoritesArray = [NSKeyedUnarchiver unarchiveObjectWithData:favoritesData];
+        NSDictionary<NSString*, Favorite*> *favoritesArray = [NSKeyedUnarchiver unarchiveObjectWithData:favoritesData];
         if (favoritesArray != nil) {
             _favorites = [[NSMutableDictionary alloc] initWithDictionary:favoritesArray];
         } else {
@@ -316,7 +315,7 @@
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favorites = [[defaults arrayForKey:FAVORITES_KEY_V1] mutableCopy];
+    NSMutableArray<NSString*> *favorites = [[defaults arrayForKey:FAVORITES_KEY_V1] mutableCopy];
     if (favorites == nil) {
         favorites = [[NSMutableArray alloc] initWithCapacity:1];
     }
@@ -329,7 +328,7 @@
 - (void)removeFavoriteV1:(NSString *)mount
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favorites = [[defaults arrayForKey:FAVORITES_KEY_V1] mutableCopy];
+    NSMutableArray<NSString*> *favorites = [[defaults arrayForKey:FAVORITES_KEY_V1] mutableCopy];
     
     // 登録されているお気に入りを探索してリストから削除
     for (NSString *favoritedMount in favorites) {
@@ -359,7 +358,7 @@
     BOOL result = NO;
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *favorites = [defaults arrayForKey:FAVORITES_KEY_V1];
+    NSArray<NSString*> *favorites = [defaults arrayForKey:FAVORITES_KEY_V1];
 
     // 登録されているお気に入りを探索
     for (NSString *favoritedMount in favorites) {
@@ -376,10 +375,10 @@
 {
     // V1のデータを読み込む
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *favoritesV1 = [defaults arrayForKey:FAVORITES_KEY_V1];
+    NSArray<NSString*> *favoritesV1 = [defaults arrayForKey:FAVORITES_KEY_V1];
 
     // V1のデータから番組を生成し（マウントしか入っていないが）、お気に入りに書き込む
-    NSMutableArray* favorites = [[NSMutableArray alloc] initWithCapacity:[favoritesV1 count]];
+    NSMutableArray<Channel*> *favorites = [[NSMutableArray alloc] initWithCapacity:[favoritesV1 count]];
     for (NSString *favoritedV1Mount in favoritesV1) {
         Channel *channel = [[Channel alloc] init];
         channel.mnt = favoritedV1Mount;

@@ -120,7 +120,7 @@
     if (syncFavorites_) {
         NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
         NSData *archive = [icStore objectForKey:FAVORITES_V1];
-        NSArray *favorites = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+        NSArray<Favorite*> *favorites = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
         [[FavoriteManager sharedInstance] replace:favorites];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailICloudStorageChangedFavoritesNotification
@@ -154,7 +154,7 @@
     if (mergeFavorite) {
         NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];
         NSData *archive = [icStore objectForKey:FAVORITES_V1];
-        NSArray *favorites = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+        NSArray<Favorite*> *favorites = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
         [[FavoriteManager sharedInstance] merge:favorites];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:LadioTailICloudStorageChangedFavoritesNotification
@@ -170,7 +170,7 @@
     // お気に入りをiCloudに送信
     if (syncFavorites_) {
         dispatch_async(sendFavoritesDispatchQueue_, ^ {
-            NSArray *favorites = [[FavoriteManager sharedInstance].favorites allValues];
+            NSArray<Favorite*> *favorites = [[FavoriteManager sharedInstance].favorites allValues];
             NSLog(@"Send %lu favorite to iCloud.", (unsigned long)[favorites count]);
             NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:favorites];
             NSUbiquitousKeyValueStore *icStore = [NSUbiquitousKeyValueStore defaultStore];

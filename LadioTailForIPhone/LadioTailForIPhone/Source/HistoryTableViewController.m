@@ -29,7 +29,7 @@
 
 @implementation HistoryTableViewController
 {
-    NSArray *history_;
+    NSArray<HistoryItem*> *history_;
 }
 
 - (void)dealloc
@@ -47,7 +47,7 @@
 - (void)updateHistoryArray
 {
     // お気に入りを取得し、新しい順にならべてfavorites_に格納
-    NSArray *historyGlobal = [HistoryManager sharedInstance].history;
+    NSArray<HistoryItem*> *historyGlobal = [HistoryManager sharedInstance].history;
     history_ = [historyGlobal sortedArrayUsingSelector:@selector(compareNewly:)];
 }
 

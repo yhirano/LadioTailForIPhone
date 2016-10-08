@@ -24,6 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Channel.h"
+#import "HistoryItem.h"
 
 /**
  * 履歴を管理するシングルトンクラス
@@ -31,7 +32,7 @@
 @interface HistoryManager : NSObject
 
 /// 履歴のリスト
-@property (nonatomic, strong, readonly) NSArray *history;
+@property (nonatomic, strong, readonly) NSArray<HistoryItem*> *history;
 
 /**
  * HistoryManagerを取得する

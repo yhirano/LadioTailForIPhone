@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+@class TempleteSubInfo;
+
 /// テンプレートに渡す情報
 @interface TempleteInfo : NSObject
 
@@ -34,11 +36,11 @@
 
 /// 表示情報
 /// TempleteSubInfoのリスト
-@property (nonatomic, strong) NSArray *info;
+@property (nonatomic, strong) NSArray<TempleteSubInfo*> *info;
 
 /// デバッグ情報
 /// TempleteSubInfoのリスト
-@property (nonatomic, strong) NSArray *debugInfo;
+@property (nonatomic, strong) NSArray<TempleteSubInfo*> *debugInfo;
 
 @end
 

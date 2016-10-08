@@ -28,7 +28,7 @@
 @property (nonatomic, assign) ChannelSortType channelSortType;
 
 /// テーブルに表示している番組
-@property (nonatomic, strong ,readonly) NSArray *showedChannels;
+@property (nonatomic, strong ,readonly) NSArray<Channel*> *showedChannels;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigateionItem;
 

@@ -31,7 +31,7 @@
 
 @implementation FavoritesTableViewController
 {
-    NSMutableArray *favorites_;
+    NSMutableArray<Favorite*> *favorites_;
     UITextField *addFavoriteTextField_;
 }
 
@@ -50,9 +50,9 @@
 - (void)updateFavolitesArray
 {
     // お気に入りを取得し、新しい順にならべてfavorites_に格納
-    NSDictionary *favoritesGlobal = [FavoriteManager sharedInstance].favorites;
+    NSDictionary<NSString*, Favorite*> *favoritesGlobal = [FavoriteManager sharedInstance].favorites;
     favorites_ = [[NSMutableArray alloc] initWithCapacity:[favoritesGlobal count]];
-    NSArray *sortedKeyList = [favoritesGlobal keysSortedByValueUsingSelector:@selector(compareNewly:)];
+    NSArray<NSString*> *sortedKeyList = [favoritesGlobal keysSortedByValueUsingSelector:@selector(compareNewly:)];
     for (NSString *key in sortedKeyList) {
         [favorites_ addObject:favoritesGlobal[key]];
     }

@@ -29,7 +29,7 @@
 
 @implementation HistoryManager
 {
-    NSMutableArray *_history;
+    NSMutableArray<HistoryItem*> *_history;
 }
 
 + (HistoryManager *)sharedInstance
@@ -66,7 +66,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LadioTailPlayerDidStopNotification object:nil];
 }
 
-- (NSArray *)history
+- (NSArray<HistoryItem*> *)history
 {
     @synchronized(self) {
         return _history;
@@ -134,7 +134,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *hisotoryData = [defaults objectForKey:HISTORY_KEY_V1];
     if (hisotoryData != nil) {
-        NSMutableArray *historyItemArray = [NSKeyedUnarchiver unarchiveObjectWithData:hisotoryData];
+        NSMutableArray<HistoryItem*> *historyItemArray = [NSKeyedUnarchiver unarchiveObjectWithData:hisotoryData];
         if (historyItemArray != nil) {
             _history = [[NSMutableArray alloc] initWithArray:historyItemArray];
         } else {

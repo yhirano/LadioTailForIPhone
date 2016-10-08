@@ -22,14 +22,13 @@
 
 #import "../Notifications.h"
 #import "Headline.h"
-#import "Favorite.h"
 #import "FavoriteManager.h"
 
 #define FAVORITES_KEY_V2 @"FAVORITES_V2"
 
 @implementation FavoriteManager
 {
-    NSMutableDictionary *_favorites;
+    NSMutableDictionary<NSString*, Favorite*> *_favorites;
 }
 
 + (FavoriteManager *)sharedInstance
@@ -61,7 +60,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RadioLibHeadlineChannelChangedNotification object:nil];
 }
 
-- (NSDictionary *)favorites
+- (NSDictionary<NSString*, Favorite*> *)favorites
 {
     @synchronized(self) {
         return _favorites;
@@ -73,7 +72,7 @@
     [self addFavorites:@[channel]];
 }
 
-- (void)addFavorites:(NSArray *)channels
+- (void)addFavorites:(NSArray<Channel*> *)channels
 {
     if ([channels count] == 0) {
         return;
@@ -144,7 +143,7 @@
     }
 }
 
-- (void)replace:(NSArray *)favorites
+- (void)replace:(NSArray<Favorite*> *)favorites
 {
     @synchronized(self) {
         // 今までのお気に入りをクリア
@@ -169,7 +168,7 @@
     }
 }
 
-- (void)merge:(NSArray *)favorites
+- (void)merge:(NSArray<Favorite*> *)favorites
 {
     @synchronized(self) {
         BOOL added = NO;
@@ -215,7 +214,7 @@
 - (void)headlineChannelChanged:(NSNotification *)notification
 {
     // お気に入りの番組情報を更新する
-    NSArray *channels = [Headline sharedInstance].channels;
+    NSArray<Channel*> *channels = [Headline sharedInstance].channels;
     __block BOOL changed = NO;
     dispatch_apply([channels count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
         Channel *channel = channels[i];
@@ -247,7 +246,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *favoritesData = [defaults objectForKey:FAVORITES_KEY_V2];
     if (favoritesData != nil) {
-        NSDictionary *favoritesArray = [NSKeyedUnarchiver unarchiveObjectWithData:favoritesData];
+        NSDictionary<NSString*, Favorite*> *favoritesArray = [NSKeyedUnarchiver unarchiveObjectWithData:favoritesData];
         if (favoritesArray != nil) {
             _favorites = [[NSMutableDictionary alloc] initWithDictionary:favoritesArray];
         } else {

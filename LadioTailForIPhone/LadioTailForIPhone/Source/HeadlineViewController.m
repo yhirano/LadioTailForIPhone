@@ -616,7 +616,7 @@ typedef NS_ENUM(NSInteger, HeadlineViewDisplayType)
     }
     
     Headline *headline = [Headline sharedInstance];
-    NSArray *channels = [headline channels:_channelSortType searchWord:searchWord];
+    NSArray<Channel*> *channels = [headline channels:_channelSortType searchWord:searchWord];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         _showedChannels = channels;

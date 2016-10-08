@@ -180,7 +180,7 @@
 
     if (headlineViewController != nil) {
         // 番組を取得する
-        NSArray *channels = headlineViewController.showedChannels;
+        NSArray<Channel*> *channels = headlineViewController.showedChannels;
         __block NSInteger playingChannelIndex;
         __block BOOL found = NO;
         // 再生している番組が表示しているHeadlineViewControllerの何番目かを探索する
@@ -251,7 +251,7 @@
     // HeadlineViewControllerタブを選択している場合
     if (headlineViewController != nil) {
         // 番組を取得する
-        NSArray *channels = headlineViewController.showedChannels;
+        NSArray<Channel*> *channels = headlineViewController.showedChannels;
         
         if ([channels count] > 0) {
             result = channels[(arc4random() % [channels count])];

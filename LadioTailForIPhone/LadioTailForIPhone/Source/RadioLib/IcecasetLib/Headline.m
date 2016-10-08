@@ -30,14 +30,14 @@
 @implementation Headline
 {
     /// 番組データリスト
-    NSArray *channels_;
+    NSArray<Channel*> *channels_;
     /// 番組取得処理のNSOperationQueue
     NSOperationQueue *fetchQueue_;
     /// channelsのロック
     NSObject *channelsLock_;
     /// 番組データリストのキャッシュ
     /// ソートやフィルタリングの結果をキャッシュしておく
-    NSCache *channelsCache_;
+    NSCache<NSString*, id> *channelsCache_;
     /// ヘッドラインを取得中か
     BOOL isFetching_;
     /// isFetchingのロック
@@ -53,7 +53,7 @@
     BOOL xmlParseInSampleRateElement_;
     BOOL xmlParseInGenreElement_;
     BOOL xmlParseInCurrentSongElement_;
-    NSMutableArray *xmlParseChannels_;
+    NSMutableArray<Channel*> *xmlParseChannels_;
     Channel *xmlParseChannel_;
     NSInteger xmlParseChannelFid_;
 }
@@ -180,26 +180,26 @@
     }
 }
 
-- (NSArray *)channels
+- (NSArray<Channel*> *)channels
 {
     return [self channels:ChannelSortTypeNone searchWord:nil];
 }
 
-- (NSArray *)channels:(ChannelSortType)sortType
+- (NSArray<Channel*> *)channels:(ChannelSortType)sortType
 {
     return [self channels:sortType searchWord:nil];
 }
 
-- (NSArray *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+- (NSArray<Channel*> *)channels:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
     // キャッシュがヒットしたらそれを返す
-    NSArray *cacheResult = [self channelsFromCache:sortType searchWord:searchWord];
+    NSArray<Channel*> *cacheResult = [self channelsFromCache:sortType searchWord:searchWord];
     if ([cacheResult count] != 0) {
         return cacheResult;
     }
 
-    NSArray *result = nil;
-    NSMutableArray *channels = nil;
+    NSArray<Channel*> *result = nil;
+    NSMutableArray<Channel*> *channels = nil;
 
     @synchronized (channelsLock_) {
         channels = [channels_ mutableCopy];
@@ -211,7 +211,7 @@
 
     // フィルタリング
     if ([searchWord length] > 0) {
-        NSArray *words = [[self class] splitStringByWhiteSpace:searchWord];
+        NSArray<NSString*> *words = [[self class] splitStringByWhiteSpace:searchWord];
         NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
 
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
@@ -341,7 +341,7 @@
 didStartElement:(NSString *)elementName
    namespaceURI:(NSString *)namespaceURI
   qualifiedName:(NSString *)qualifiedName
-     attributes:(NSDictionary *)attributeDict {
+     attributes:(NSDictionary<NSString*, NSString*> *)attributeDict {
 	if ([elementName isEqualToString:@"entry"]) {
         xmlParseChannel_ = [[Channel alloc] init];
         xmlParseChannel_.fid = xmlParseChannelFid_;
@@ -433,11 +433,11 @@ didStartElement:(NSString *)elementName
  * @param 文字列
  * @return ホワイトスペースで区切った結果
  */
-+ (NSArray *)splitStringByWhiteSpace:(NSString *)word
++ (NSArray<NSString*> *)splitStringByWhiteSpace:(NSString *)word
 {
     // 文字列を空白文字で分割し、検索単語列を生成する
     NSCharacterSet *separator = [NSCharacterSet characterSetWithCharactersInString:@" \t　"];
-    NSMutableArray *words = [[word componentsSeparatedByCharactersInSet:separator] mutableCopy];
+    NSMutableArray<NSString*> *words = [[word componentsSeparatedByCharactersInSet:separator] mutableCopy];
     
     // 空白文字を除外する
     NSMutableIndexSet *removeItemIndexes = [NSMutableIndexSet indexSet];
@@ -453,10 +453,10 @@ didStartElement:(NSString *)elementName
     return words;
 }
 
-- (NSArray *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+- (NSArray<Channel*> *)channelsFromCache:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
     NSString *key = [[NSString alloc] initWithFormat:@"%ld//%@", (long)sortType, searchWord];
-    NSArray *result = [channelsCache_ objectForKey:key];
+    NSArray<Channel*> *result = [channelsCache_ objectForKey:key];
 #if DEBUG
     if (result != nil) {
         NSLog(@"%@ has channels cache. key:%@", NSStringFromClass([self class]), key);
@@ -467,7 +467,7 @@ didStartElement:(NSString *)elementName
     return result;
 }
 
-- (void)setChannelsCache:(NSArray *)channels sortType:(ChannelSortType)sortType searchWord:(NSString *)searchWord
+- (void)setChannelsCache:(NSArray<Channel*> *)channels sortType:(ChannelSortType)sortType searchWord:(NSString *)searchWord
 {
     // nilの場合はキャッシュに突っ込めない
     if (channels == nil) {

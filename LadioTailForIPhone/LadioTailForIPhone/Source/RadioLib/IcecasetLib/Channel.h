@@ -63,7 +63,7 @@
 
 - (void)switchFavorite;
 
-- (BOOL)isMatch:(NSArray *)searchWords;
+- (BOOL)isMatch:(NSArray<NSString*> *)searchWords;
 
 - (BOOL)isSameName:(Channel *)channel;
 

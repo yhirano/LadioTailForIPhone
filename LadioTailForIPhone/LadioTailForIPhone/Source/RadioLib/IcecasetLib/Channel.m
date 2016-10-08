@@ -265,7 +265,7 @@ static NSCache *matchCache = nil;
     [favoriteManager switchFavorite:self];
 }
 
-- (BOOL)isMatch:(NSArray *)searchWords
+- (BOOL)isMatch:(NSArray<NSString*> *)searchWords
 {
     // フィルタリング単語が指定されていない場合は無条件に合致する
     if ([searchWords count] == 0) {
@@ -284,7 +284,7 @@ static NSCache *matchCache = nil;
     
     // 検索単語を辞書に登録する
     // 辞書は Key:検索単語 Value:マッチしたか
-    NSMutableDictionary *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
+    NSMutableDictionary<NSString*, NSNumber*> *searchDictionary = [[NSMutableDictionary alloc] initWithCapacity:[searchWords count]];
     for (NSString *word in searchWords) {
         if ([word length] > 0) {
             searchDictionary[word] = @NO;
@@ -292,7 +292,7 @@ static NSCache *matchCache = nil;
     }
 
     // 検索対象文字列を配列にする
-    NSMutableArray *searchedWords = [[NSMutableArray alloc] initWithCapacity:2];
+    NSMutableArray<NSString*> *searchedWords = [[NSMutableArray alloc] initWithCapacity:2];
     if ([serverName_ length] > 0) {
         [searchedWords addObject:serverName_];
     }

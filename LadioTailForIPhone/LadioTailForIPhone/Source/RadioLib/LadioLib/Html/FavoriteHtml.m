@@ -41,7 +41,7 @@
                                  stringByAppendingString:channel.dj];
     }
     
-    NSMutableArray *info = [[NSMutableArray alloc] init];
+    NSMutableArray<TempleteSubInfo*> *info = [[NSMutableArray alloc] init];
     
     NSString *tag;
     NSString *value;
@@ -134,7 +134,7 @@
     templeteInfo.info = [NSArray arrayWithArray:info];
 
 #if DEBUG
-    NSMutableArray *debugInfo = [[NSMutableArray alloc] init];
+    NSMutableArray<TempleteSubInfo*> *debugInfo = [[NSMutableArray alloc] init];
 
     // 番組の詳細内容を表示するサイトのURL
     value = [channel.surl absoluteString];
@@ -215,7 +215,7 @@
     templeteInfo.debugInfo = [NSArray arrayWithArray:debugInfo];
 #endif /* #if DEBUG */
 
-    NSDictionary *data = @{@"templete_info": templeteInfo};
+    NSDictionary<NSString*, TempleteInfo*> *data = @{@"templete_info": templeteInfo};
     
     static GRMustacheTemplate *channelPageHtmlTemplate = nil;
     static dispatch_once_t onceToken = 0;

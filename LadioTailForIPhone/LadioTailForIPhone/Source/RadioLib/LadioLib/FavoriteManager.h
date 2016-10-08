@@ -24,6 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Channel.h"
+#import "Favorite.h"
 
 /**
  * お気に入りを管理するシングルトンクラス
@@ -32,7 +33,7 @@
 
 /// お気に入りリスト
 /// Channel.mntがキー、FavoriteがオブジェクトのNSDictionary
-@property (nonatomic, strong, readonly) NSDictionary *favorites;
+@property (nonatomic, strong, readonly) NSDictionary<NSString*, Favorite*> *favorites;
 
 /**
  * FavoriteManagerを取得する
@@ -53,7 +54,7 @@
  *
  * @param channels お気に入りに追加する番組
  */
-- (void)addFavorites:(NSArray *)channels;
+- (void)addFavorites:(NSArray<Channel*> *)channels;
 
 /**
  * お気に入りを削除する
@@ -74,14 +75,14 @@
  *
  * @param favorites 置き換えるお気に入り
  */
-- (void)replace:(NSArray *)favorites;
+- (void)replace:(NSArray<Favorite*> *)favorites;
 
 /**
  * お気に入りをマージする
  *
  * @param favorites 加えるお気に入り
  */
-- (void)merge:(NSArray *)favorites;
+- (void)merge:(NSArray<Favorite*> *)favorites;
 
 /**
  * お気に入りかを取得する
