@@ -17,6 +17,10 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+# Gem
+.bundle/
+vendor/
+
 # CocoaPods
 Pods/
 

@@ -11,8 +11,8 @@ PODS:
   - NendSDK_iOS_MediationAdapter (1.2.5)
   - OpenInChrome (0.0.1)
   - StreamingKit (0.1.29)
-  - SVProgressHUD (2.0.3)
-  - ViewDeck (2.4.0)
+  - SVProgressHUD (2.1.2)
+  - ViewDeck (2.4.2)
 
 DEPENDENCIES:
   - AdMobMediationAdapterIAd
@@ -24,8 +24,8 @@ DEPENDENCIES:
   - NendSDK_iOS_MediationAdapter
   - OpenInChrome (~> 0.0.1)
   - StreamingKit
-  - SVProgressHUD (~> 2.0.3)
-  - ViewDeck (= 2.4.0)
+  - SVProgressHUD (~> 2.1.2)
+  - ViewDeck (= 2.4.2)
 
 EXTERNAL SOURCES:
   LINEActivity:
@@ -48,9 +48,9 @@ SPEC CHECKSUMS:
   NendSDK_iOS_MediationAdapter: debc3f103911e10c9900e653b9624aeac426e0ef
   OpenInChrome: f1f3f9dec682216fe78a0d7fe0b5b263d6312c32
   StreamingKit: c329785aaef3ac142d4ae388345bfe1ed23cfd45
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  ViewDeck: ed686005abd02e81c1d393704f14eb071f5d29b3
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  ViewDeck: 0b7b83bc2782a20dfb76207d0a2e8c5e6a6d182d
 
-PODFILE CHECKSUM: c2f52801130f6e925a768ce60f237df29c938a1c
+PODFILE CHECKSUM: e980dd457586cc4b79233a1223abfd583acef48a
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.3.1
