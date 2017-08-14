@@ -9,6 +9,8 @@ def pods
   pod "LINEActivity", :git => 'https://github.com/yhirano/LINEActivity.git', :branch => 'my_pod'
   pod 'StreamingKit'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'FBAudienceNetwork'
+  pod 'AdMobMediationAdapterFB'
   pod 'NendSDK_iOS'
   pod 'NendSDK_iOS_MediationAdapter'
 end
