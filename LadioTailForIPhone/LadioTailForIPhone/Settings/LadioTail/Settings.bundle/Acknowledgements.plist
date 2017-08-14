@@ -14,17 +14,6 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2009 - 2016 Google, Inc. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>AdMobMediationAdapterIAd</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>MIT
 
 Copyright (c) 2014 Five-technology
